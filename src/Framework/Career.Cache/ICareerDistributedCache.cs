@@ -3,11 +3,8 @@ using System.Threading.Tasks;
 
 namespace Career.Cache
 {
-    public interface ICareerIDistributedCache
+    public interface ICareerDistributedCache
     {
-        bool Exist(string cacheKey);
-        Task<bool> ExistAsync(string cacheKey);
-        
         object Get(string cacheKey);
         Task<object> GetAsync(string cacheKey);
         
@@ -20,7 +17,7 @@ namespace Career.Cache
         void Remove(string cacheKey);
         Task RemoveAsync(string cacheKey);
         
-        void Set(string cacheKey, TimeSpan lifeTime, bool slidingExpiration, object data);
-        Task SetAsync(string cacheKey, TimeSpan lifeTime, bool slidingExpiration, object data);
+        void Set(string cacheKey, TimeSpan duration, bool slidingExpiration, object data);
+        Task SetAsync(string cacheKey, TimeSpan duration, bool slidingExpiration, object data);
     }
 }

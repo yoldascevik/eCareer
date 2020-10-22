@@ -1,5 +1,6 @@
 using ARConsistency;
 using AutoMapper;
+using Career.Cache.Redis;
 using Career.Exceptions;
 using Career.IoC;
 using Career.Migration.DataSeeder;
@@ -42,7 +43,8 @@ namespace Definition.Api
             services.AddAutoMapper(typeof(CityMappingProfile));
             services.AddMongoContext<DefinitionContext>();
             services.AddMongo();
-            
+
+            services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options));
             services.AddSwagger();
             
             services.RegisterModule<DefinitionModule>();

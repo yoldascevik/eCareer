@@ -11,18 +11,18 @@ namespace Career.Cache
     {
         private readonly string _cacheNamePrefix;
         private readonly bool _slidingExpiration;
-        private readonly TimeSpan _lifeTimeSpan;
-        private ICareerIDistributedCache _distributedCache;
+        private readonly TimeSpan _duration;
+        private ICareerDistributedCache _distributedCache;
         
         public CacheAttribute()
         {
             _slidingExpiration = false;
-            _lifeTimeSpan = TimeSpan.FromMinutes(30);
+            _duration = TimeSpan.FromMinutes(30);
         }
         
-        public CacheAttribute(TimeSpan lifeTime, bool slidingExpiration = false)
+        public CacheAttribute(TimeSpan duration, bool slidingExpiration = false)
         {
-            _lifeTimeSpan = lifeTime;
+            _duration = duration;
             _slidingExpiration = slidingExpiration;
         }
         
@@ -35,10 +35,10 @@ namespace Career.Cache
             _cacheNamePrefix = cacheNamePrefix;
         }
         
-        public CacheAttribute(string cacheNamePrefix, TimeSpan lifeTime, bool slidingExpiration = false)
+        public CacheAttribute(string cacheNamePrefix, TimeSpan duration, bool slidingExpiration = false)
             : this(cacheNamePrefix)
         {
-            _lifeTimeSpan = lifeTime;
+            _duration = duration;
             _slidingExpiration = slidingExpiration;
         }
         
@@ -64,7 +64,7 @@ namespace Career.Cache
             
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
             if (args.ReturnValue != null)
-                _distributedCache.Set(cacheKey, _lifeTimeSpan, _slidingExpiration, args.ReturnValue);
+                _distributedCache.Set(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
@@ -73,12 +73,12 @@ namespace Career.Cache
             
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
             if (args.ReturnValue != null)
-                await _distributedCache.SetAsync(cacheKey, _lifeTimeSpan, _slidingExpiration, args.ReturnValue);
+                await _distributedCache.SetAsync(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
         }
 
-        private ICareerIDistributedCache CreateDistributedCacheInstance(IServiceProvider serviceProvider)
+        private ICareerDistributedCache CreateDistributedCacheInstance(IServiceProvider serviceProvider)
         {
-            ICareerIDistributedCache instance =  _distributedCache ?? serviceProvider.GetService<ICareerIDistributedCache>();
+            ICareerDistributedCache instance =  _distributedCache ?? serviceProvider.GetService<ICareerDistributedCache>();
             if (instance == null)
                 throw new ArgumentException("ICareerIDistributedCache is not registered on DI.", nameof(instance));
 

@@ -10,7 +10,7 @@ services:
   seq:
     image: datalust/seq:latest
     
-  definition-api:
+  definition.api:
     image: ${DOCKER_REGISTRY-}definition.api
     build:
       context: .

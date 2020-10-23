@@ -18,7 +18,7 @@ namespace Career.Cache.Redis
             => Get<object>(cacheKey);
 
         public async Task<object> GetAsync(string cacheKey)
-            => GetAsync<object>(cacheKey);
+            => await GetAsync<object>(cacheKey);
        
         public T Get<T>(string cacheKey)
         {

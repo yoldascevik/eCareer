@@ -5,8 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AspectCore" Version="1.0.0" />
       <PackageReference Include="MessagePack" Version="2.2.60" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="AspectCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\references\AspectCore.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using AspectCore;
 using MessagePack;
@@ -11,8 +10,8 @@ namespace Career.Cache
         public static string GetCacheKey(MethodExecutionArgs args, string cacheNamePrefix = null)
         {
             string cacheNamePattern = string.IsNullOrEmpty(cacheNamePrefix)
-                ? $"{args.Method.DeclaringType.Name}_{args.Method.Name}_{{0}}"
-                : $"{cacheNamePrefix}_{args.Method.DeclaringType.Name}_{args.Method.Name}_{{0}}";
+                ? $"{args.Method.DeclaringType?.Name}_{args.Method.Name}_{{0}}"
+                : $"{cacheNamePrefix}_{args.Method.DeclaringType?.Name}_{args.Method.Name}_{{0}}";
 
             string parametersHash = CalculateObjectMd5Hash(args.Arguments);
             return string.Format(cacheNamePattern, parametersHash);

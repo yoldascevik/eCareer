@@ -20,4 +20,10 @@
       <Content Include="SeedData\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="AspectCore, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\..\references\AspectCore.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

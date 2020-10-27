@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MessagePack;
+using MessagePack.Resolvers;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Career.Cache.Redis
@@ -26,10 +27,10 @@ namespace Career.Cache.Redis
                 throw new ArgumentNullException(nameof(cacheKey));
             
             byte[] cacheData = _distributedCache.Get(cacheKey);
-            if (cacheData.Length == 0)
+            if (cacheData == null)
                 return default(T);
             
-            return MessagePackSerializer.Deserialize<T>(cacheData);
+            return MessagePackSerializer.Deserialize<T>(cacheData, ContractlessStandardResolver.Options);
         }
 
         public async Task<T> GetAsync<T>(string cacheKey)
@@ -38,10 +39,10 @@ namespace Career.Cache.Redis
                 throw new ArgumentNullException(nameof(cacheKey));
             
             byte[] cacheData = await _distributedCache.GetAsync(cacheKey);
-            if (cacheData.Length == 0)
+            if (cacheData == null)
                 return default(T);
             
-            return MessagePackSerializer.Deserialize<T>(cacheData);
+            return MessagePackSerializer.Deserialize<T>(cacheData, ContractlessStandardResolver.Options);
         }
         
         public void Set(string cacheKey, TimeSpan duration, bool slidingExpiration, object data)
@@ -52,7 +53,7 @@ namespace Career.Cache.Redis
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            byte[] cacheData = MessagePackSerializer.Serialize(data);
+            byte[] cacheData = MessagePackSerializer.Serialize(data, ContractlessStandardResolver.Options);
             
             _distributedCache.Set(cacheKey, cacheData, new DistributedCacheEntryOptions()
             {
@@ -68,8 +69,8 @@ namespace Career.Cache.Redis
 
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
-
-            byte[] cacheData = MessagePackSerializer.Serialize(data);
+            
+            byte[] cacheData = MessagePackSerializer.Serialize(data, ContractlessStandardResolver.Options);
             
             await _distributedCache.SetAsync(cacheKey, cacheData, new DistributedCacheEntryOptions()
             {

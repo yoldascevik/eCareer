@@ -9,9 +9,10 @@ namespace Career.Cache
     [AttributeUsage(AttributeTargets.Method)]
     public class CacheAttribute: AspectAttribute
     {
-        private readonly string _cacheNamePrefix;
-        private readonly bool _slidingExpiration;
+        private bool _dataReceivedFromCache;
         private readonly TimeSpan _duration;
+        private readonly bool _slidingExpiration;
+        private readonly string _cacheNamePrefix;
         private ICareerDistributedCache _distributedCache;
         
         public CacheAttribute()
@@ -44,45 +45,43 @@ namespace Career.Cache
         
         public override void OnBefore(MethodExecutionArgs args)
         {
-            _distributedCache = CreateDistributedCacheInstance(args.ServiceProvider);
-            
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
-            args.ReturnValue = _distributedCache.Get(cacheKey); 
+            args.ReturnValue = _distributedCache.Get(cacheKey);
+            _dataReceivedFromCache = args.ReturnValue != null;
         }
 
         public override async Task OnBeforeAsync(MethodExecutionArgs args)
         {
-            _distributedCache = CreateDistributedCacheInstance(args.ServiceProvider);
-            
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
-            args.ReturnValue = await _distributedCache.GetAsync(cacheKey); 
+            args.ReturnValue = await _distributedCache.GetAsync(cacheKey);
+            _dataReceivedFromCache = args.ReturnValue != null;
         }
 
         public override void OnSuccess(MethodExecutionArgs args)
         {
-            _distributedCache = CreateDistributedCacheInstance(args.ServiceProvider);
+            if(_dataReceivedFromCache || args.ReturnValue == null)
+                return;
             
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
-            if (args.ReturnValue != null)
-                _distributedCache.Set(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
+            _distributedCache.Set(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
         {
-            _distributedCache = CreateDistributedCacheInstance(args.ServiceProvider);
+            if(_dataReceivedFromCache || args.ReturnValue == null)
+                return;
             
             string cacheKey = CacheHelper.GetCacheKey(args, _cacheNamePrefix);
-            if (args.ReturnValue != null)
-                await _distributedCache.SetAsync(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
+            await _distributedCache.SetAsync(cacheKey, _duration, _slidingExpiration, args.ReturnValue);
         }
 
-        private ICareerDistributedCache CreateDistributedCacheInstance(IServiceProvider serviceProvider)
+        public override AspectAttribute LoadDependencies(IServiceProvider serviceProvider)
         {
-            ICareerDistributedCache instance =  _distributedCache ?? serviceProvider.GetService<ICareerDistributedCache>();
-            if (instance == null)
-                throw new ArgumentException("ICareerIDistributedCache is not registered on DI.", nameof(instance));
-
-            return instance;
+            _distributedCache ??= serviceProvider.GetRequiredService<ICareerDistributedCache>();
+            if (_distributedCache == null)
+                throw new ArgumentException("ICareerIDistributedCache is not registered on DI.");
+            
+            return base.LoadDependencies(serviceProvider);
         }
     }
 }

@@ -6,7 +6,10 @@ namespace Career.Cache
     public interface ICareerDistributedCache
     {
         object Get(string cacheKey);
+        object Get(string cacheKey, Type deserializeType);
+ 
         Task<object> GetAsync(string cacheKey);
+        Task<object> GetAsync(string cacheKey, Type deserializeType);
         
         T Get<T>(string cacheKey);
         Task<T> GetAsync<T>(string cacheKey);

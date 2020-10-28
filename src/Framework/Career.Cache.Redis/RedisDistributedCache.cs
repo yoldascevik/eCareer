@@ -15,35 +15,47 @@ namespace Career.Cache.Redis
             _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
         }
 
-        public object Get(string cacheKey)
-            => Get<object>(cacheKey);
+        public object Get(string cacheKey) 
+            => Get(cacheKey, typeof(object));
 
-        public async Task<object> GetAsync(string cacheKey)
-            => await GetAsync<object>(cacheKey);
-       
-        public T Get<T>(string cacheKey)
+        public object Get(string cacheKey, Type deserializeType)
         {
             if(string.IsNullOrEmpty(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
+
+            if (deserializeType == null)
+                throw new ArgumentNullException(nameof(deserializeType));
             
             byte[] cacheData = _distributedCache.Get(cacheKey);
             if (cacheData == null)
-                return default(T);
+                return null;
             
-            return MessagePackSerializer.Deserialize<T>(cacheData, ContractlessStandardResolver.Options);
+            return MessagePackSerializer.Deserialize(deserializeType, cacheData, ContractlessStandardResolver.Options);
         }
 
-        public async Task<T> GetAsync<T>(string cacheKey)
+        public async Task<object> GetAsync(string cacheKey) 
+            => await GetAsync(cacheKey, typeof(object));
+
+        public async Task<object> GetAsync(string cacheKey, Type deserializeType)
         {
             if(string.IsNullOrEmpty(cacheKey))
                 throw new ArgumentNullException(nameof(cacheKey));
             
+            if (deserializeType == null)
+                throw new ArgumentNullException(nameof(deserializeType));
+            
             byte[] cacheData = await _distributedCache.GetAsync(cacheKey);
             if (cacheData == null)
-                return default(T);
+                return null;
             
-            return MessagePackSerializer.Deserialize<T>(cacheData, ContractlessStandardResolver.Options);
+            return MessagePackSerializer.Deserialize(deserializeType, cacheData, ContractlessStandardResolver.Options);
         }
+
+        public T Get<T>(string cacheKey) 
+            => (T) Get(cacheKey, typeof(T));
+
+        public async Task<T> GetAsync<T>(string cacheKey)
+            => await (GetAsync(cacheKey, typeof(T)) as Task<T>);
         
         public void Set(string cacheKey, TimeSpan duration, bool slidingExpiration, object data)
         {

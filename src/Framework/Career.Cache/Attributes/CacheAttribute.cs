@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Career.Cache.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
     public class CacheAttribute: AspectAttribute
     {
         private const int DefaultTTL = 30 * TTLMultiplier.Minute;
@@ -70,7 +70,7 @@ namespace Career.Cache.Attributes
             string cacheKey = CacheHelper.GetCacheKey(args, CacheKey);
             _distributedCache.Set(cacheKey, TimeSpan.FromSeconds(TTL), SlidingExpiration, args.ReturnValue);
             
-            _logger.LogInformation("[{0}] Data cached by key: {1}", this.GetType().Name, cacheKey );
+            _logger.LogInformation("Data cached with key: {0}", cacheKey );
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
@@ -81,7 +81,7 @@ namespace Career.Cache.Attributes
             string cacheKey = CacheHelper.GetCacheKey(args, CacheKey);
             await _distributedCache.SetAsync(cacheKey, TimeSpan.FromSeconds(TTL), SlidingExpiration, args.ReturnValue);
             
-            _logger.LogInformation("[{0}] Data cached by key: {1}", this.GetType().Name, cacheKey );
+            _logger.LogInformation("Data cached with key: {0}", cacheKey );
         }
 
         public override AspectAttribute LoadDependencies(IServiceProvider serviceProvider)

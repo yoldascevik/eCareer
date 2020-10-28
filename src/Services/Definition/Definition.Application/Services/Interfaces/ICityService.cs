@@ -16,6 +16,9 @@ namespace Definition.Application.Services.Interfaces
         Task<CityDto> GetByIdAsync(string id);
         
         Task<CityDto> CreateAsync(CityRequestModel requestModel);
+        
+        [CacheInvalidate(typeof(ICityService), "GetAsync")]
+        [CacheInvalidate(typeof(ICityService), "GetByIdAsync")]
         Task<CityDto> UpdateAsync(string id, CityRequestModel requestModel);
         Task DeleteAsync(string id);
     }

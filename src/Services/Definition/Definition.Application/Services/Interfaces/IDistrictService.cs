@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Career.Cache;
+using Career.Cache.Attributes;
+using Career.Cache.Helpers;
 using Career.Utilities.Pagination;
 using Definition.Application.Dtos;
 using Definition.Application.Models.RequestModels;

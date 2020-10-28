@@ -3,15 +3,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspectCore;
 using AspectCore.Aspects;
+using Career.Cache.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Career.Cache
+namespace Career.Cache.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class CacheAttribute: AspectAttribute
     {
-        private const int DefaultTTL = 30 * 60;
+        private const int DefaultTTL = 30 * TTLMultiplier.Minute;
         
         private bool _dataReceivedFromCache;
         private ILogger<CacheAttribute> _logger;

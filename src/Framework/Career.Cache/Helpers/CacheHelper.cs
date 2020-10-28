@@ -3,7 +3,7 @@ using System.Text;
 using AspectCore;
 using MessagePack;
 
-namespace Career.Cache
+namespace Career.Cache.Helpers
 {
     internal static class CacheHelper
     {

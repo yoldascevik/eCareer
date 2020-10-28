@@ -1,4 +1,4 @@
-﻿namespace Career.Cache
+﻿namespace Career.Cache.Helpers
 {
     public struct TTLMultiplier
     {

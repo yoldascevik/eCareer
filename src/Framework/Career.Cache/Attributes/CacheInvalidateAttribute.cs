@@ -45,9 +45,13 @@ namespace Career.Cache.Attributes
         
         public override void OnSuccess(MethodExecutionArgs args)
         {
-            // string cacheKey = CacheHelper.GetCacheKey(args, CacheKey);
-            // _distributedCache.Set(cacheKey, TimeSpan.FromSeconds(TTL), SlidingExpiration, args.ReturnValue);
-            // _logger.LogInformation("[{0}] Cache invalidate by key: {1}", this.GetType().Name, cacheKey );
+            string cacheKey = string.IsNullOrEmpty(_cacheKey)
+                ? CacheHelper.GetCacheKey(_targetType, _targetMethodName)
+                : CacheHelper.GetCacheKey(_cacheKey);
+            
+            _distributedCache.RemoveByPatternAsync(cacheKey);
+            
+            _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
@@ -56,7 +60,7 @@ namespace Career.Cache.Attributes
                 ? CacheHelper.GetCacheKey(_targetType, _targetMethodName)
                 : CacheHelper.GetCacheKey(_cacheKey);
             
-            await _distributedCache.RemoveAsync(cacheKey);
+            await _distributedCache.RemoveByPatternAsync(cacheKey);
             
             _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
         }

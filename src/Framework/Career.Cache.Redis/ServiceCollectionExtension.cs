@@ -1,6 +1,7 @@
 ﻿using System;
-using Microsoft.Extensions.Caching.Redis;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace Career.Cache.Redis
 {
@@ -11,10 +12,15 @@ namespace Career.Cache.Redis
             Action<RedisCacheOptions> options, 
             params Type[] assemblyPointerTypes)
         {
-            services.AddDistributedRedisCache(options);
+            var redisOptions = new RedisCacheOptions();
+            options.Invoke(redisOptions);
+
+            var multiplexer = ConnectionMultiplexer.Connect(redisOptions.Configuration);
+            services.AddStackExchangeRedisCache(options);
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
             services.AddSingleton<ICareerDistributedCache, RedisDistributedCache>();
             services.DecorateAllInterfacesUsingAspect(assemblyPointerTypes);
-
+            
             return services;
         }
     }

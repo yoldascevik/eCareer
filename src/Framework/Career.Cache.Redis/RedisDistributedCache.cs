@@ -1,20 +1,33 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MessagePack;
 using MessagePack.Resolvers;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 
 namespace Career.Cache.Redis
 {
     public class RedisDistributedCache : ICareerDistributedCache
     {
+        private readonly IDatabase _cache;
         private readonly IDistributedCache _distributedCache;
+        private readonly IConnectionMultiplexer _connectionMultiplexer;
+        private readonly string _instanceName;
 
-        public RedisDistributedCache(IDistributedCache distributedCache)
+        public RedisDistributedCache(
+            IDistributedCache distributedCache, 
+            IConnectionMultiplexer connectionMultiplexer, 
+            IOptions<RedisCacheOptions> redisCacheOptions)
         {
             _distributedCache = distributedCache ?? throw new ArgumentNullException(nameof(distributedCache));
+            _connectionMultiplexer = connectionMultiplexer ?? throw new ArgumentNullException(nameof(connectionMultiplexer));
+            _instanceName = redisCacheOptions.Value.InstanceName ?? string.Empty;
+            _cache = connectionMultiplexer.GetDatabase();
         }
-
+        
         public object Get(string cacheKey) 
             => Get(cacheKey, typeof(object));
 
@@ -121,6 +134,42 @@ namespace Career.Cache.Redis
                 throw new ArgumentNullException(nameof(cacheKey));
 
             await _distributedCache.RemoveAsync(cacheKey);
+        }
+
+        public void RemoveByPattern(string cachePattern)
+        {
+            foreach (var endpoint in _connectionMultiplexer.GetEndPoints(true))
+            {
+                var server = _connectionMultiplexer.GetServer(endpoint);
+                var keys = server.Keys(database: _cache.Database, pattern: _instanceName + cachePattern).ToArray();
+                _cache.KeyDeleteAsync(keys);
+            }
+        }
+
+        public async Task RemoveByPatternAsync(string cachePattern)
+        {
+            foreach (var endpoint in _connectionMultiplexer.GetEndPoints(true))
+            {
+                var server = _connectionMultiplexer.GetServer(endpoint);
+                var keys = server.Keys(database: _cache.Database, pattern: _instanceName + cachePattern).ToArray();
+                await _cache.KeyDeleteAsync(keys);
+            }
+        }
+
+        public void Clear()
+        {
+            foreach (var endpoint in _connectionMultiplexer.GetEndPoints(true))
+            {
+                _connectionMultiplexer.GetServer(endpoint).FlushDatabase(_cache.Database);
+            }
+        }
+
+        public async Task ClearAsync()
+        {
+            foreach (var endpoint in _connectionMultiplexer.GetEndPoints(true))
+            {
+               await _connectionMultiplexer.GetServer(endpoint).FlushDatabaseAsync(_cache.Database);
+            }
         }
     }
 }

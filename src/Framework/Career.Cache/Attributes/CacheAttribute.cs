@@ -47,7 +47,7 @@ namespace Career.Cache.Attributes
             _dataReceivedFromCache = args.ReturnValue != null;
             
             if(_dataReceivedFromCache)
-                _logger.LogInformation("[{0}] Data received from cache by key: {1}", this.GetType().Name, cacheKey );
+                _logger.LogInformation("Data received from cache by key: {0}", cacheKey );
         }
 
         public override async Task OnBeforeAsync(MethodExecutionArgs args)
@@ -59,7 +59,7 @@ namespace Career.Cache.Attributes
             _dataReceivedFromCache = args.ReturnValue != null;
             
             if(_dataReceivedFromCache)
-                _logger.LogInformation("[{0}] Data received from cache by key: {1}", this.GetType().Name, cacheKey );
+                _logger.LogInformation("Data received from cache by key: {0}", cacheKey );
         }
 
         public override void OnSuccess(MethodExecutionArgs args)

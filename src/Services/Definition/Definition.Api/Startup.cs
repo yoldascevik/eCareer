@@ -1,5 +1,6 @@
 using ARConsistency;
 using AutoMapper;
+using Career.Cache.Redis;
 using Career.Exceptions;
 using Career.IoC;
 using Career.Migration.DataSeeder;
@@ -8,6 +9,7 @@ using Career.Mongo;
 using Career.Swagger;
 using Definition.Application.MappingProfiles;
 using Definition.Application.Modules;
+using Definition.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -42,11 +44,13 @@ namespace Definition.Api
             services.AddAutoMapper(typeof(CityMappingProfile));
             services.AddMongoContext<DefinitionContext>();
             services.AddMongo();
-            
+
             services.AddSwagger();
             
             services.RegisterModule<DefinitionModule>();
             services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
+            
+            services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Cache\Career.Cache.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
@@ -17,6 +18,12 @@
 
     <ItemGroup>
       <Content Include="SeedData\**" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="AspectCore, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\..\references\AspectCore.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

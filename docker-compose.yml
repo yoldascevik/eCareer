@@ -4,14 +4,18 @@ services:
   nosqldata:
     image: mongo
     
+  redis:
+    image: "redis:alpine"
+
   seq:
     image: datalust/seq:latest
     
-  definition-api:
+  definition.api:
     image: ${DOCKER_REGISTRY-}definition.api
     build:
       context: .
       dockerfile: src/Services/Definition/Definition.Api/Dockerfile
     depends_on:
       - nosqldata
+      - redis
       - seq

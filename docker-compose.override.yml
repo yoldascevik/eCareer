@@ -7,6 +7,15 @@ services:
       - "27017:27017"
     volumes:
       - ${HOST_VOLUMES_PATH}/mongo:/data/db
+      
+  redis:
+    container_name: "redis"
+    command: redis-server --requirepass 123456
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${HOST_VOLUMES_PATH}/redis-data:/var/lib/redis
+      - ${HOST_VOLUMES_PATH}/redis.conf:/usr/local/etc/redis/redis.conf
         
   seq:
     container_name: "seq"
@@ -17,8 +26,8 @@ services:
     volumes:
       - ${HOST_VOLUMES_PATH}/seq:/data
 
-  definition-api:
-    container_name: "definition-api"
+  definition.api:
+    container_name: "definition.api"
     environment:
       - ASPNETCORE_ENVIRONMENT=${ENV}
       - ASPNETCORE_URLS=http://+:80

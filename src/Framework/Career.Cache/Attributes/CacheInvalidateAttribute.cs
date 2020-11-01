@@ -18,6 +18,13 @@ namespace Career.Cache.Attributes
         private ILogger<CacheInvalidateAttribute> _logger;
         private ICareerDistributedCache _distributedCache;
 
+        #region Ctors
+
+        public CacheInvalidateAttribute()
+        {
+            
+        }
+        
         public CacheInvalidateAttribute(string cacheKey)
         {
             if (string.IsNullOrEmpty(cacheKey))
@@ -42,13 +49,12 @@ namespace Career.Cache.Attributes
 
             _targetMethodName = targetMethodName;
         }
+
+        #endregion
         
         public override void OnSuccess(MethodExecutionArgs args)
         {
-            string cacheKey = string.IsNullOrEmpty(_cacheKey)
-                ? CacheHelper.GetCacheKey(_targetType, _targetMethodName)
-                : CacheHelper.GetCacheKey(_cacheKey);
-            
+            string cacheKey = GetCacheName(args);
             _distributedCache.RemoveByPatternAsync(cacheKey);
             
             _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
@@ -56,10 +62,7 @@ namespace Career.Cache.Attributes
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
         {
-            string cacheKey = string.IsNullOrEmpty(_cacheKey)
-                ? CacheHelper.GetCacheKey(_targetType, _targetMethodName)
-                : CacheHelper.GetCacheKey(_cacheKey);
-            
+            string cacheKey = GetCacheName(args);
             await _distributedCache.RemoveByPatternAsync(cacheKey);
             
             _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
@@ -74,6 +77,17 @@ namespace Career.Cache.Attributes
             _logger ??= serviceProvider.GetRequiredService<ILogger<CacheInvalidateAttribute>>();
           
             return base.LoadDependencies(serviceProvider);
+        }
+
+        private string GetCacheName(MethodExecutionArgs args)
+        {
+            if (!string.IsNullOrEmpty(_cacheKey))
+                return CacheHelper.GetCacheKey(_cacheKey);
+
+            if (_targetType != null)
+                return CacheHelper.GetCacheKey(_targetType, _targetMethodName);
+
+            return CacheHelper.GetCacheKey(args.Method.DeclaringType);
         }
     }
 }

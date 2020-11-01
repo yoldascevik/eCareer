@@ -15,16 +15,13 @@ namespace Definition.Application.Services.Interfaces
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<CityDto> GetByIdAsync(string id);
         
-        [CacheInvalidate(typeof(ICityService), "GetAsync")]
-        [CacheInvalidate(typeof(ICityService), "GetByIdAsync")]
+        [CacheInvalidate]
         Task<CityDto> CreateAsync(CityRequestModel requestModel);
         
-        [CacheInvalidate(typeof(ICityService), "GetAsync")]
-        [CacheInvalidate(typeof(ICityService), "GetByIdAsync")]
+        [CacheInvalidate]
         Task<CityDto> UpdateAsync(string id, CityRequestModel requestModel);
         
-        [CacheInvalidate(typeof(ICityService), "GetAsync")]
-        [CacheInvalidate(typeof(ICityService), "GetByIdAsync")]
+        [CacheInvalidate]
         Task DeleteAsync(string id);
     }
 }

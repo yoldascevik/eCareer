@@ -15,8 +15,13 @@ namespace Definition.Application.Services.Interfaces
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<DistrictDto> GetByIdAsync(string id);
         
+        [CacheInvalidate]
         Task<DistrictDto> CreateAsync(DistrictRequestModel requestModel);
+
+        [CacheInvalidate]
         Task<DistrictDto> UpdateAsync(string id, DistrictRequestModel requestModel);
+        
+        [CacheInvalidate]
         Task DeleteAsync(string id);
     }
 }

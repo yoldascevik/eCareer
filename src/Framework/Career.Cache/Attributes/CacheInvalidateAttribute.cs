@@ -55,9 +55,9 @@ namespace Career.Cache.Attributes
         public override void OnSuccess(MethodExecutionArgs args)
         {
             string cacheKey = GetCacheName(args);
-            _distributedCache.RemoveByPatternAsync(cacheKey);
+            _distributedCache.RemoveByPattern(cacheKey);
             
-            _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
+            _logger.LogInformation("Cache invalidated for key: {CacheKey} after invoked method : {MethodName}", cacheKey, args.Method.Name);
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
@@ -65,7 +65,7 @@ namespace Career.Cache.Attributes
             string cacheKey = GetCacheName(args);
             await _distributedCache.RemoveByPatternAsync(cacheKey);
             
-            _logger.LogInformation("Cache invalidated for key: {0} after invoked method : {1}", cacheKey, args.Method.Name);
+            _logger.LogInformation("Cache invalidated for key: {CacheKey} after invoked method : {MethodName}", cacheKey, args.Method.Name);
         }
 
         public override AspectAttribute LoadDependencies(IServiceProvider serviceProvider)

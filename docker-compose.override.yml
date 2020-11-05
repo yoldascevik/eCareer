@@ -8,8 +8,8 @@ services:
     volumes:
       - ${HOST_VOLUMES_PATH}/mongo:/data/db
       
-  redis:
-    container_name: "redis"
+  cache:
+    container_name: "cache"
     command: redis-server --requirepass 123456
     ports:
       - "6379:6379"

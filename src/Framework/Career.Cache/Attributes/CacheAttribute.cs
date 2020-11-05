@@ -24,7 +24,6 @@ namespace Career.Cache.Attributes
             SlidingExpiration = true;
         }
 
-        
         /// <summary>
         /// Cache life time (seconds)
         /// </summary>
@@ -47,7 +46,7 @@ namespace Career.Cache.Attributes
             _dataReceivedFromCache = args.ReturnValue != null;
             
             if(_dataReceivedFromCache)
-                _logger.LogInformation("Data received from cache by key: {0}", cacheKey );
+                _logger.LogInformation("Data received from cache by key: {CacheKey}", cacheKey );
         }
 
         public override async Task OnBeforeAsync(MethodExecutionArgs args)
@@ -59,7 +58,7 @@ namespace Career.Cache.Attributes
             _dataReceivedFromCache = args.ReturnValue != null;
             
             if(_dataReceivedFromCache)
-                _logger.LogInformation("Data received from cache by key: {0}", cacheKey );
+                _logger.LogInformation("Data received from cache by key: {CacheKey}", cacheKey );
         }
 
         public override void OnSuccess(MethodExecutionArgs args)
@@ -70,7 +69,7 @@ namespace Career.Cache.Attributes
             string cacheKey = CacheHelper.GetCacheKey(args, CacheKey);
             _distributedCache.Set(cacheKey, TimeSpan.FromSeconds(TTL), SlidingExpiration, args.ReturnValue);
             
-            _logger.LogInformation("Data cached with key: {0}", cacheKey );
+            _logger.LogInformation("Data cached with key: {CacheKey}", cacheKey );
         }
 
         public override async Task OnSuccessAsync(MethodExecutionArgs args)
@@ -81,7 +80,7 @@ namespace Career.Cache.Attributes
             string cacheKey = CacheHelper.GetCacheKey(args, CacheKey);
             await _distributedCache.SetAsync(cacheKey, TimeSpan.FromSeconds(TTL), SlidingExpiration, args.ReturnValue);
             
-            _logger.LogInformation("Data cached with key: {0}", cacheKey );
+            _logger.LogInformation("Data cached with key: {CacheKey}", cacheKey );
         }
 
         public override AspectAttribute LoadDependencies(IServiceProvider serviceProvider)

@@ -15,6 +15,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\ARConsistency\ARConsistency\ARConsistency.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Cache.Redis\Career.Cache.Redis.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />
@@ -24,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ARConsistency" Version="1.1.0" />
+        <PackageReference Include="ARConsistency" Version="1.1.2" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
         <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />

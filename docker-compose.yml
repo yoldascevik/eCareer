@@ -4,7 +4,7 @@ services:
   nosqldata:
     image: mongo
     
-  redis:
+  cache:
     image: "redis:alpine"
 
   seq:
@@ -17,5 +17,5 @@ services:
       dockerfile: src/Services/Definition/Definition.Api/Dockerfile
     depends_on:
       - nosqldata
-      - redis
+      - cache
       - seq

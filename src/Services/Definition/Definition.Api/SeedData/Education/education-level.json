@@ -1,0 +1,42 @@
+﻿[
+  {
+    "Level": 1,
+    "Name": "Primary education",
+    "IsDeleted": false
+  },
+  {
+    "Level": 2,
+    "Name": "Lower secondary education",
+    "IsDeleted": false
+  },
+  {
+    "Level": 3,
+    "Name": "Upper secondary education",
+    "IsDeleted": false
+  },
+  {
+    "Level": 4,
+    "Name": "Post-secondary non-tertiary education",
+    "IsDeleted": false
+  },
+  {
+    "Level": 5,
+    "Name": "Short-cycle tertiary education",
+    "IsDeleted": false
+  },
+  {
+    "Level": 6,
+    "Name": "Bachelor or equivalent",
+    "IsDeleted": false
+  },
+  {
+    "Level": 7,
+    "Name": "Master or equivalent",
+    "IsDeleted": false
+  },
+  {
+    "Level": 8,
+    "Name": "Doctoral or equivalent",
+    "IsDeleted": false
+  }
+]

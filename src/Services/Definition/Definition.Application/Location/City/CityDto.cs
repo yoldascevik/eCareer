@@ -1,7 +1,11 @@
-﻿namespace Definition.Data.Entities
+﻿using System;
+
+namespace Definition.Application.Location.City
 {
-    public class City : LookupDocument
+    [Serializable]
+    public class CityDto
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string CountryId { get; set; }
         public string CountryCode { get; set; }

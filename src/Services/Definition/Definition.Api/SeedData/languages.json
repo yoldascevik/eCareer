@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Name": "Turkish",
+    "NativeName": "Türkçe",
+    "Culture": "tr-TR",
+    "ParentCulture": "tr",
+    "TwoLetterISOLanguageName": "tr",
+    "ThreeLetterISOLanguageName": "tur",
+    "IsDeleted": false
+  },
+  {
+    "Name": "English",
+    "NativeName": "English",
+    "Culture": "en-US",
+    "ParentCulture": "en",
+    "TwoLetterISOLanguageName": "en",
+    "ThreeLetterISOLanguageName": "eng",
+    "IsDeleted": false
+  }
+]

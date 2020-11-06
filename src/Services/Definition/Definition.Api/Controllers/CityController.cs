@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
-using Definition.Application.Dtos;
-using Definition.Application.Models.RequestModels;
-using Definition.Application.Services.Interfaces;
+using Definition.Application.Location.City;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/location/[controller]")]
     public class CityController : DefinitionApiController
     {
         private readonly ICityService _cityService;

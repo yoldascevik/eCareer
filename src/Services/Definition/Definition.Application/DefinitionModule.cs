@@ -1,5 +1,6 @@
 ﻿using Career.IoC.IoCModule;
 using Definition.Application.Education.EducationLevel;
+using Definition.Application.Education.EducationType;
 using Definition.Application.Language;
 using Definition.Application.Location.City;
 using Definition.Application.Location.Country;
@@ -18,6 +19,7 @@ namespace Definition.Application
             services.AddScoped<IDistrictService, DistrictService>();
             
             services.AddScoped<IEducationLevelService, EducationLevelService>();
+            services.AddScoped<IEducationTypeService, EducationTypeService>();
             
             services.AddScoped<ILanguageService, LanguageService>();
         }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Career.Shared.Interfaces;
 using MongoDB.Bson;
 
 namespace Career.Mongo.Repository
@@ -64,17 +65,75 @@ namespace Career.Mongo.Repository
         }
 
         public virtual void Delete(object key)
-            => Collection.DeleteOne(FilterId(key));
+        {
+            if (typeof(ISoftDeletable).IsAssignableFrom(typeof(T)))
+            {
+                FilterDefinition<T> keyFilter = FilterId(key);
+                T entity = Collection.Find(keyFilter).SingleOrDefault();
+                if (entity != null)
+                {
+                    (entity as ISoftDeletable).IsDeleted = true;
+                    Collection.ReplaceOne(keyFilter, entity);
+                }
+            }
+            else
+            {
+                Collection.DeleteOne(FilterId(key));
+            }
+        }
 
-        public virtual Task DeleteAsync(object key)
-            => Collection.DeleteOneAsync(FilterId(key));
+        public virtual async Task DeleteAsync(object key)
+        {
+            FilterDefinition<T> keyFilter = FilterId(key);
+            if (typeof(ISoftDeletable).IsAssignableFrom(typeof(T)))
+            {
+                T entity = await Collection.Find(keyFilter).SingleOrDefaultAsync();
+                if (entity != null)
+                {
+                    (entity as ISoftDeletable).IsDeleted = true;
+                    await Collection.ReplaceOneAsync(keyFilter, entity);
+                }
+            }
+            else
+            {
+                await Collection.DeleteOneAsync(FilterId(key));
+            }
+        }
 
         public virtual void Delete(Expression<Func<T, bool>> condition)
-            => Collection.DeleteOne(condition);
+        {
+            if (typeof(ISoftDeletable).IsAssignableFrom(typeof(T)))
+            {
+                T entity = Collection.Find(condition).FirstOrDefault();
+                if (entity != null)
+                {
+                    (entity as ISoftDeletable).IsDeleted = true;
+                    Collection.ReplaceOne(condition, entity);
+                }
+            }
+            else
+            {
+                Collection.DeleteOne(condition);
+            }
+        }
 
-        public virtual Task DeleteAsync(Expression<Func<T, bool>> condition)
-            => Collection.DeleteOneAsync(condition);
-
+        public virtual async Task DeleteAsync(Expression<Func<T, bool>> condition)
+        {
+            if (typeof(ISoftDeletable).IsAssignableFrom(typeof(T)))
+            {
+                T entity = await Collection.Find(condition).FirstOrDefaultAsync();
+                if (entity != null)
+                {
+                    (entity as ISoftDeletable).IsDeleted = true;
+                    await Collection.ReplaceOneAsync(condition, entity);
+                }
+            }
+            else
+            {
+                await Collection.DeleteOneAsync(condition);
+            }
+        }
+        
         protected FilterDefinition<T> FilterId(object key)
             => Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
     }

@@ -29,7 +29,7 @@ namespace Definition.Application.Services
 
         public async Task<PagedList<DistrictDto>> GetAsync(PaginationFilter paginationFilter)
         {
-            return await _districtRepository.Get()
+            return await _districtRepository.Get(district => !district.IsDeleted)
                 .ProjectTo<DistrictDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -86,7 +86,8 @@ namespace Definition.Application.Services
             bool isDistrictExist = await _districtRepository.AnyAsync(district => 
                 (string.IsNullOrEmpty(id) || district.Id != id)
                 && district.CityId == requestModel.CityId
-                && district.Name == requestModel.Name);
+                && district.Name == requestModel.Name
+                && district.IsDeleted == false);
             
             if (isDistrictExist)
                 throw new ItemAlreadyExistsException(requestModel.Name);

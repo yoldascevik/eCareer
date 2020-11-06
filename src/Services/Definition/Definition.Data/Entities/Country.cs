@@ -2,7 +2,7 @@
 
 namespace Definition.Data.Entities
 {
-    public class Country : Document
+    public class Country : LookupDocument
     {
         public string Name { get; set; }
         public string Iso3 { get; set; }

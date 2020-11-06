@@ -25,7 +25,7 @@ namespace Definition.Application.Services
 
         public async Task<PagedList<CountryDto>> GetAsync(PaginationFilter paginationFilter)
         {
-            return await _countryRepository.Get()
+            return await _countryRepository.Get(country => !country.IsDeleted)
                 .ProjectTo<CountryDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -70,6 +70,7 @@ namespace Definition.Application.Services
         {
             var existingCountry = await _countryRepository.FirstOrDefaultAsync(country => 
                 (string.IsNullOrEmpty(id) || country.Id != id)
+                && country.IsDeleted == false
                 && (country.Name == requestModel.Name 
                 || country.Iso2 == requestModel.Iso2
                 || country.Iso3 == requestModel.Iso3

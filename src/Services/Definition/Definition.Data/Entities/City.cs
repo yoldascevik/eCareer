@@ -2,7 +2,7 @@
 
 namespace Definition.Data.Entities
 {
-    public class City : Document
+    public class City : LookupDocument
     {
         public string Name { get; set; }
         public string CountryId { get; set; }

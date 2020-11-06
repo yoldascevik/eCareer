@@ -29,7 +29,7 @@ namespace Definition.Application.Services
 
         public async Task<PagedList<CityDto>> GetAsync(PaginationFilter paginationFilter)
         {
-            return await _cityRepository.Get()
+            return await _cityRepository.Get(city => !city.IsDeleted)
                 .ProjectTo<CityDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -85,6 +85,7 @@ namespace Definition.Application.Services
             var existingCity = await _cityRepository.FirstOrDefaultAsync(city =>
                 (string.IsNullOrEmpty(id) || city.Id != id) &&
                 city.CountryId == requestModel.CountryId &&
+                city.IsDeleted == false &&
                 (city.Name == requestModel.Name || city.CityCode == requestModel.CityCode));
 
             if (existingCity != null)

@@ -1,0 +1,62 @@
+﻿[
+  {
+    "Name":"Computing Technician",
+    "SectorId":"5fa6dd64aa6c500001a72423",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Computing Expert",
+    "SectorId":"5fa6dd64aa6c500001a72423",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Computing Manager",
+    "SectorId":"5fa6dd64aa6c500001a72423",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Junior Software Developer",
+    "SectorId":"5fa6dd64aa6c500001a72424",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Mid Level Software Developer",
+    "SectorId":"5fa6dd64aa6c500001a72424",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Senior Software Developer",
+    "SectorId":"5fa6dd64aa6c500001a72424",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Software Development Manager",
+    "SectorId":"5fa6dd64aa6c500001a72424",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Waiter",
+    "SectorId":"5fa6dd64aa6c500001a72425",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Chef",
+    "SectorId":"5fa6dd64aa6c500001a72425",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Doctor",
+    "SectorId":"5fa6dd64aa6c500001a72426",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Asistant",
+    "SectorId":"5fa6dd64aa6c500001a72426",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Nurse",
+    "SectorId":"5fa6dd64aa6c500001a72426",
+    "IsDeleted": false
+  }
+]

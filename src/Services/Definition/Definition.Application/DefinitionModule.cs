@@ -6,6 +6,7 @@ using Definition.Application.Language;
 using Definition.Application.Location.City;
 using Definition.Application.Location.Country;
 using Definition.Application.Location.District;
+using Definition.Application.Work.JobPosition;
 using Definition.Application.Work.Sector;
 using Definition.Application.Work.WorkType;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace Definition.Application
             // work services
             services.AddScoped<ISectorService, SectorService>();
             services.AddScoped<IWorkTypeService, WorkTypeService>();
+            services.AddScoped<IJobPositionService, JobPositionService>();
 
             // other
             services.AddScoped<ILanguageService, LanguageService>();

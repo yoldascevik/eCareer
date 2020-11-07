@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/education/[controller]")]
+    [Route("api/v{version:apiVersion}/education/scholarshiptype")]
     public class ScholarshipTypeController : DefinitionApiController
     {
         private readonly IScholarshipTypeService _scholarshipTypeService;

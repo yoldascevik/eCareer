@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/location/[controller]")]
+    [Route("api/v{version:apiVersion}/location/district")]
     public class DistrictController : DefinitionApiController
     {
         private readonly IDistrictService _districtService;

@@ -6,6 +6,7 @@ using Definition.Application.Language;
 using Definition.Application.Location.City;
 using Definition.Application.Location.Country;
 using Definition.Application.Location.District;
+using Definition.Application.Work.Sector;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Definition.Application
@@ -14,15 +15,20 @@ namespace Definition.Application
     {
         protected override void Load(IServiceCollection services)
         {
-            // Services registration
+            // location services
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IDistrictService, DistrictService>();
             
+            // education services
             services.AddScoped<IEducationLevelService, EducationLevelService>();
             services.AddScoped<IEducationTypeService, EducationTypeService>();
             services.AddScoped<IScholarshipTypeService, ScholarshipTypeService>();
             
+            // work services
+            services.AddScoped<ISectorService, SectorService>();
+
+            // other
             services.AddScoped<ILanguageService, LanguageService>();
         }
     }

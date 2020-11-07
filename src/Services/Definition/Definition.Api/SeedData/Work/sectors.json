@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Name":"IT",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Software",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Engineering",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Sales",
+    "IsDeleted": false
+  }
+]

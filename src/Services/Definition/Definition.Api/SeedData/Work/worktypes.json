@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Name":"Free",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Part Time",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Full Time",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Seasonal",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Intern",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Volunteer",
+    "IsDeleted": false
+  }
+]

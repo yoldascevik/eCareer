@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
+using Definition.Application.Work.JobPosition;
 using Definition.Application.Work.Sector;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace Definition.Api.Controllers
     public class SectorController : DefinitionApiController
     {
         private readonly ISectorService _sectorService;
+        private readonly IJobPositionService _jobPositionService;
 
-        public SectorController(ISectorService sectorService)
+        public SectorController(ISectorService sectorService, IJobPositionService jobPositionService)
         {
             _sectorService = sectorService;
+            _jobPositionService = jobPositionService;
         }
         
         /// <summary>
@@ -23,6 +26,15 @@ namespace Definition.Api.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter)
             => Ok(await _sectorService.GetAsync(paginationFilter));
+        
+        /// <summary>
+        /// Get job positions of sector
+        /// </summary>
+        /// <param name="id">Sector id</param>
+        /// <param name="paginationFilter">Pagination configuration</param>
+        [HttpGet("{id}/positions")]
+        public virtual async Task<IActionResult> Get(string id, [FromQuery] PaginationFilter paginationFilter)
+            => Ok(await _jobPositionService.GetBySectorId(id, paginationFilter));
         
         /// <summary>
         /// Get specific sector by id

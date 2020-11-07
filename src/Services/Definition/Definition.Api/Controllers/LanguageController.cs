@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/language")]
     public class LanguageController : DefinitionApiController
     {
         private readonly ILanguageService _languageService;
@@ -31,11 +32,12 @@ namespace Definition.Api.Controllers
         public virtual async Task<IActionResult> Get(string id)
             => Ok(await _languageService.GetByIdAsync(id));
         
+        // TODO: route will be fix
         /// <summary>
         /// Get specific language by culture name
         /// </summary>
         /// <param name="culture">Language culture name. (eg: en-US)</param>
-        [HttpGet("ByCulture/{culture}")]
+        [HttpGet("culture/{culture}")]
         public virtual async Task<IActionResult> GetByCulture(string culture)
             => Ok(await _languageService.GetByCultureAsync(culture));
         

@@ -11,6 +11,9 @@ namespace Definition.Application.Location.District
         Task<PagedList<DistrictDto>> GetAsync(PaginationFilter paginationFilter);
         
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+        Task<PagedList<DistrictDto>> GetByCityId(string cityId, PaginationFilter paginationFilter);
+        
+        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<DistrictDto> GetByIdAsync(string id);
         
         [CacheInvalidate]

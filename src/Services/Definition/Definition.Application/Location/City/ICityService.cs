@@ -11,6 +11,9 @@ namespace Definition.Application.Location.City
         Task<PagedList<CityDto>> GetAsync(PaginationFilter paginationFilter);
         
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+        Task<PagedList<CityDto>> GetByCountryId(string countryId, PaginationFilter paginationFilter);
+        
+        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<CityDto> GetByIdAsync(string id);
         
         [CacheInvalidate]

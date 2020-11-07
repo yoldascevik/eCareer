@@ -11,6 +11,9 @@ namespace Definition.Application.Work.JobPosition
         Task<PagedList<JobPositionDto>> GetAsync(PaginationFilter paginationFilter);
         
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+        Task<PagedList<JobPositionDto>> GetBySectorId(string sectorId, PaginationFilter paginationFilter);
+        
+        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<JobPositionDto> GetByIdAsync(string id);
 
         [CacheInvalidate]

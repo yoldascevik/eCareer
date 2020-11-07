@@ -35,6 +35,15 @@ namespace Definition.Application.Location.Country
             return _mapper.Map<CountryDto>(country);
         }
 
+        public async Task<CountryDto> GetByCodeAsync(string code)
+        {
+            var country = await _countryRepository.FirstOrDefaultAsync(c => c.Iso2.ToLowerInvariant() == code.ToLowerInvariant());
+            if (country == null)
+                throw new ItemNotFoundException(code);
+
+            return _mapper.Map<CountryDto>(country);
+        }
+
         public async Task<CountryDto> CreateAsync(CountryRequestModel requestModel)
         {
             await CheckCountryExist(requestModel);

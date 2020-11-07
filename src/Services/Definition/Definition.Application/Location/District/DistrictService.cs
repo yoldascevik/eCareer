@@ -30,6 +30,16 @@ namespace Definition.Application.Location.District
                 .ToPagedListAsync(paginationFilter);
         }
 
+        public async Task<PagedList<DistrictDto>> GetByCityId(string cityId, PaginationFilter paginationFilter)
+        {
+            if (!await _cityRepository.AnyAsync(city => city.Id == cityId))
+                throw new NotFoundException($"City not found for Id:{cityId}");
+            
+            return await _districtRepository.Get(district => district.CityId == cityId && !district.IsDeleted)
+                .ProjectTo<DistrictDto>(_mapper.ConfigurationProvider)
+                .ToPagedListAsync(paginationFilter);
+        }
+
         public async Task<DistrictDto> GetByIdAsync(string id)
         {
             var district = await _districtRepository.GetByKeyAsync(id);

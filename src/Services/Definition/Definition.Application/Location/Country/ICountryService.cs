@@ -13,6 +13,9 @@ namespace Definition.Application.Location.Country
         [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
         Task<CountryDto> GetByIdAsync(string id);
         
+        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+        Task<CountryDto> GetByCodeAsync(string code);
+        
         [CacheInvalidate]
         Task<CountryDto> CreateAsync(CountryRequestModel requestModel);
         

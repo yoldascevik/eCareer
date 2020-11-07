@@ -39,7 +39,9 @@ namespace Definition.Application.Language
 
         public async Task<LanguageDto> GetByCultureAsync(string culture)
         {
-            var language = await _languageRepository.FirstOrDefaultAsync(lang => lang.Culture == culture && !lang.IsDeleted);
+            var language = await _languageRepository.FirstOrDefaultAsync(lang => 
+                lang.Culture.ToLowerInvariant() == culture.ToLowerInvariant() && !lang.IsDeleted);
+            
             if (language == null)
                 throw new ItemNotFoundException(culture);
 

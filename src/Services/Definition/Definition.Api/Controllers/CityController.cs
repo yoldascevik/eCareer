@@ -2,6 +2,7 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Location.City;
+using Definition.Application.Location.District;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
@@ -11,10 +12,12 @@ namespace Definition.Api.Controllers
     public class CityController : DefinitionApiController
     {
         private readonly ICityService _cityService;
+        private readonly IDistrictService _districtService;
 
-        public CityController(ICityService cityService)
+        public CityController(ICityService cityService, IDistrictService districtService)
         {
             _cityService = cityService;
+            _districtService = districtService;
         }
 
         /// <summary>
@@ -23,6 +26,15 @@ namespace Definition.Api.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter)
             => Ok(await _cityService.GetAsync(paginationFilter));
+        
+        /// <summary>
+        /// Get districts of city
+        /// </summary>
+        /// <param name="id">City id</param>
+        /// <param name="paginationFilter">Pagination configuration</param>
+        [HttpGet("{id}/districts")]
+        public virtual async Task<IActionResult> Get(string id, [FromQuery] PaginationFilter paginationFilter)
+            => Ok(await _districtService.GetByCityId(id, paginationFilter));
 
         /// <summary>
         /// Get specific city by id

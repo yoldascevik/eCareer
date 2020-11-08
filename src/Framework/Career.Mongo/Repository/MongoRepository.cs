@@ -133,8 +133,10 @@ namespace Career.Mongo.Repository
 
         public virtual void Delete(Expression<Func<T, bool>> condition)
             => _mongoCommandRepository.Delete(condition);
+        
         public virtual Task DeleteAsync(object key)
             => _mongoCommandRepository.DeleteAsync(key);
+        
         public virtual Task DeleteAsync(Expression<Func<T, bool>> condition)
             => _mongoCommandRepository.DeleteAsync(condition);
     }

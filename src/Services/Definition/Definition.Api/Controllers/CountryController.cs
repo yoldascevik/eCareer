@@ -1,21 +1,23 @@
 ﻿using System.Threading.Tasks;
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
-using Definition.Application.Dtos;
-using Definition.Application.Models.RequestModels;
-using Definition.Application.Services.Interfaces;
+using Definition.Application.Location.City;
+using Definition.Application.Location.Country;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/location/country")]
     public class CountryController : DefinitionApiController
     {
         private readonly ICountryService _countryService;
+        private readonly ICityService _cityService;
 
-        public CountryController(ICountryService countryService)
+        public CountryController(ICountryService countryService, ICityService cityService)
         {
             _countryService = countryService;
+            _cityService = cityService;
         }
         
         /// <summary>
@@ -24,6 +26,15 @@ namespace Definition.Api.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Get([FromQuery] PaginationFilter paginationFilter)
             => Ok(await _countryService.GetAsync(paginationFilter));
+
+        /// <summary>
+        /// Get cities of country
+        /// </summary>
+        /// <param name="id">Country id</param>
+        /// <param name="paginationFilter">Pagination configuration</param>
+        [HttpGet("{id}/cities")]
+        public virtual async Task<IActionResult> Get(string id, [FromQuery] PaginationFilter paginationFilter)
+            => Ok(await _cityService.GetByCountryId(id, paginationFilter));
         
         /// <summary>
         /// Get specific country by id
@@ -32,6 +43,14 @@ namespace Definition.Api.Controllers
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Get(string id)
             => Ok(await _countryService.GetByIdAsync(id));
+
+        /// <summary>
+        /// Get specific country by code
+        /// </summary>
+        /// <param name="code">Country code</param>
+        [HttpGet("code/{code}")]
+        public virtual async Task<IActionResult> GetByCode(string code)
+            => Ok(await _countryService.GetByCodeAsync(code));
         
         /// <summary>
         /// Create new Country

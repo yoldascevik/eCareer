@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Name":"Open Education",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Secondary Education",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Formal Education",
+    "IsDeleted": false
+  },
+  {
+    "Name":"Distance Learning",
+    "IsDeleted": false
+  }
+]

@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id": "5fa6dd64aa6c500001a72423",
+    "Name":"IT",
+    "IsDeleted": false
+  },
+  {
+    "Id": "5fa6dd64aa6c500001a72424",
+    "Name":"Software",
+    "IsDeleted": false
+  },
+  {
+    "Id": "5fa6dd64aa6c500001a72425",
+    "Name":"Service",
+    "IsDeleted": false
+  },
+  {
+    "Id": "5fa6dd64aa6c500001a72426",
+    "Name":"Health",
+    "IsDeleted": false
+  }
+]

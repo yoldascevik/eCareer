@@ -1,8 +1,6 @@
-﻿using Career.Mongo.Document;
-
-namespace Definition.Data.Entities
+﻿namespace Definition.Data.Entities
 {
-    public sealed class District : Document
+    public sealed class District : LookupDocument
     {
         public string Name { get; set; }
         public string CityId { get; set; }

@@ -7,9 +7,8 @@ using Career.Migration.DataSeeder;
 using Career.Mvc.Extensions;
 using Career.Mongo;
 using Career.Swagger;
-using Definition.Application.MappingProfiles;
-using Definition.Application.Modules;
-using Definition.Application.Services.Interfaces;
+using Definition.Application;
+using Definition.Application.Location.City;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Definition.Data;
-using Definition.Data.DataSeeders;
+using Definition.Data.DataSeeders.Location;
 
 namespace Definition.Api
 {

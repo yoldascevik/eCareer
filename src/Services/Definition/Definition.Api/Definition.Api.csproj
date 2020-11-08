@@ -15,7 +15,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\..\ARConsistency\ARConsistency\ARConsistency.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Cache.Redis\Career.Cache.Redis.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Location.Country
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class CountryDto

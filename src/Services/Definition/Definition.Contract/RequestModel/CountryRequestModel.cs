@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Location.Country
+namespace Definition.Contract.RequestModel
 {
     public class CountryRequestModel
     {

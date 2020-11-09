@@ -43,7 +43,7 @@ namespace Definition.Api
             services.AddAutoMapper(typeof(CityMappingProfile));
             services.AddMongoContext<DefinitionContext>();
             services.AddMongo();
-
+            
             services.AddSwagger();
             
             services.RegisterModule<DefinitionModule>();

@@ -2,7 +2,6 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Work.JobPosition;
-using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 

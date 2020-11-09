@@ -34,7 +34,6 @@ namespace Definition.Api.Controllers
         public virtual async Task<IActionResult> Get(string id)
             => Ok(await _languageService.GetByIdAsync(id));
         
-        // TODO: route will be fix
         /// <summary>
         /// Get specific language by culture name
         /// </summary>

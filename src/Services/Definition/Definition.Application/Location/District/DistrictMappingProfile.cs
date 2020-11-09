@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
 namespace Definition.Application.Location.District

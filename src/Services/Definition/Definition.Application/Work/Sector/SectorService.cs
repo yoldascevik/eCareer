@@ -4,7 +4,6 @@ using AutoMapper.QueryableExtensions;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
 using Career.Utilities.Pagination;
-using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
 namespace Definition.Application.Work.Sector

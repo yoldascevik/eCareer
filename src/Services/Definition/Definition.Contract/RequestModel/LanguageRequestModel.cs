@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Language
+namespace Definition.Contract.RequestModel
 {
     public class LanguageRequestModel
     {

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Work.Sector
+namespace Definition.Contract.RequestModel
 {
-    public class SectorRequestModel
+    public class EducationTypeRequestModel
     {
         [Required]
         public string Name { get; set; }

@@ -3,6 +3,8 @@ using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Location.City;
 using Definition.Application.Location.District;
+using Definition.Contract.Dto;
+using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers

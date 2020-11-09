@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Education.EducationLevel
+namespace Definition.Contract.RequestModel
 {
-    public class EducationLevelRequestModel
+    public class JobPositionRequestModel
     {
         [Required]
-        public int Level { get; set; }
-
+        public string SectorId { get; set; }
+        
         [Required]
         public string Name { get; set; }
     }

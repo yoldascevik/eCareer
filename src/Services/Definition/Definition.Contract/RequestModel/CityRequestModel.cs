@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Location.City
+namespace Definition.Contract.RequestModel
 {
     public class CityRequestModel
     {

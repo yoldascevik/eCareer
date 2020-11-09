@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Application.Work.WorkType
+namespace Definition.Contract.RequestModel
 {
-    public class WorkTypeRequestModel
+    public class ScholarshipTypeRequestModel
     {
         [Required]
         public string Name { get; set; }

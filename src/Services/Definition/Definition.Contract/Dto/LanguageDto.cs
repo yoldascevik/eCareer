@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Language
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class LanguageDto 

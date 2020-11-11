@@ -6,7 +6,7 @@ namespace Career.Http
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddCaareerHttpClient(this IServiceCollection services)
+        public static IServiceCollection AddCareerHttpClient(this IServiceCollection services)
         {
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpClient();

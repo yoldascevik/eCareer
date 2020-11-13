@@ -6,6 +6,7 @@ namespace Career.Mvc.Base
     public class CareerApiController : ControllerBase
     {
         [Route("api/ping")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Ping() => Ok("Pong!");
     }
 }

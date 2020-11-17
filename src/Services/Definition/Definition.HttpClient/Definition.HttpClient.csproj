@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Http\Career.Http.csproj" />
+      <ProjectReference Include="..\Definition.Contract\Definition.Contract.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ARConsistency.Abstractions" Version="1.0.1" />
+    </ItemGroup>
+
+</Project>

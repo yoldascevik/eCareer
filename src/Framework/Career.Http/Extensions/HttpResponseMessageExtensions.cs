@@ -9,7 +9,7 @@ namespace Career.Http.Extensions
         internal static async Task<TResponse> DeSerializeResponseAsync<TResponse>(this HttpResponseMessage httpResponseMessage)
         {
             string resultContent = await httpResponseMessage.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(resultContent);
+            return JsonSerializer.Deserialize<TResponse>(resultContent, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
         }
     }
 }

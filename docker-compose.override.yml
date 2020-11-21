@@ -33,3 +33,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5001:80"
+
+  company.api:
+    container_name: "company.api"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENV}
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"

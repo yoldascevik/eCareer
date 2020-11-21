@@ -19,3 +19,13 @@ services:
       - nosqldata
       - cache
       - seq
+        
+  company.api:
+    image: ${DOCKER_REGISTRY-}company.api
+    build:
+      context: .
+      dockerfile: src/Services/Company/Company.Api/Dockerfile
+    depends_on:
+      - nosqldata
+      - cache
+      - seq

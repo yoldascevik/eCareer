@@ -6,10 +6,13 @@
 
     <ItemGroup>
       <PackageReference Include="ARConsistency" Version="1.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.3" />
+      <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Mvc\Career.Mvc.csproj" />
     </ItemGroup>
 

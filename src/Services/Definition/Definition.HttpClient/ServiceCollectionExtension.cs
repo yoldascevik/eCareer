@@ -18,5 +18,16 @@ namespace Definition.HttpClient
 
             return services;
         }
+        
+        public static IServiceCollection AddDefinitionApiHttpClient(this IServiceCollection services, Action<ApiEndpointOptions> options)
+        {
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+            
+            var apiEndpointOptions = new ApiEndpointOptions();
+            options.Invoke(apiEndpointOptions);
+
+            return services.AddDefinitionApiHttpClient(apiEndpointOptions);
+        }
     }
 }

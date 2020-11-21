@@ -7,38 +7,46 @@ using Microsoft.AspNetCore.Http;
 
 namespace Definition.HttpClient.Country
 {
-    public class CountryHttpClient: CareerHttpClient, ICountryHttpClient
+    public class CountryHttpClient : CareerHttpClient, ICountryHttpClient
     {
-        private readonly string _countryBaseUrl;
+        private readonly ApiEndpointOptions _apiEndpointOptions;
 
-        public CountryHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext, ApiEndpointOptions endpointOptions) 
+        public CountryHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext, ApiEndpointOptions endpointOptions)
             : base(httpClient, httpContext)
         {
-            _countryBaseUrl = $"{endpointOptions.ApiUrl}/api/v{endpointOptions.Version}/location/country";
+            _apiEndpointOptions = endpointOptions;
         }
 
-        // get
-        public async Task<ConsistentApiResponse<PagedList<CountryDto>>> GetAsync(PaginationFilter paginationFilter)
+        // api/v{version}/location/country";
+        public async Task<ConsistentApiResponse<PagedList<CountryDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<CountryDto>>>(_countryBaseUrl, paginationFilter);
+            return await GetAsync<ConsistentApiResponse<PagedList<CountryDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
-        // {id}
-        public async Task<ConsistentApiResponse<CountryDto>> GetByIdAsync(string id)
+        // api/v{version}/location/country/{id}";
+        public async Task<ConsistentApiResponse<CountryDto>> GetByIdAsync(string id, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<CountryDto>>(_countryBaseUrl, id);
+            return await GetAsync<ConsistentApiResponse<CountryDto>>(CreateUrl(null, version), id);
         }
 
-        // code/{code}
-        public async Task<ConsistentApiResponse<CountryDto>> GetByCodeAsync(string code)
+        // api/v{version}/location/country/code/{code}
+        public async Task<ConsistentApiResponse<CountryDto>> GetByCodeAsync(string code, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<CountryDto>>($"{_countryBaseUrl}/code", code);
+            return await GetAsync<ConsistentApiResponse<CountryDto>>(CreateUrl("/code", version), code);
         }
 
-        // {countryId}/cities
-        public async Task<ConsistentApiResponse<PagedList<CityDto>>> GetCitiesByCountryAsync(string countryId, PaginationFilter paginationFilter)
+        // api/v{version}/location/country/{countryId}/cities
+        public async Task<ConsistentApiResponse<PagedList<CityDto>>> GetCitiesOfCountryAsync(string countryId, PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<CityDto>>>($"{_countryBaseUrl}/{countryId}/cities", paginationFilter);
+            return await GetAsync<ConsistentApiResponse<PagedList<CityDto>>>(CreateUrl($"/{countryId}/cities", version), paginationFilter);
+        }
+
+        private string CreateUrl(string requestPath, string version)
+        {
+            if (string.IsNullOrEmpty(version))
+                version = _apiEndpointOptions.DefaultVersion;
+
+            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/location/country{requestPath ?? string.Empty}";
         }
     }
 }

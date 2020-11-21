@@ -4,17 +4,17 @@
     {
         public ApiEndpointOptions()
         {
-            Version = "1";
+            DefaultVersion = "1";
         }
         
-        public ApiEndpointOptions(string apiUrl, string version)
+        public ApiEndpointOptions(string apiUrl, string defaultVersion)
             : this()
         {
             ApiUrl = apiUrl;
-            Version = version;
+            DefaultVersion = defaultVersion;
         }
 
         public string ApiUrl { get; set; }
-        public string Version { get; set; }
+        public string DefaultVersion { get; set; }
     }
 }

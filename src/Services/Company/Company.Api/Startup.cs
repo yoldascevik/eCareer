@@ -1,6 +1,7 @@
 using ARConsistency;
 using Career.Exceptions;
 using Career.Mvc.Extensions;
+using Career.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -29,12 +30,16 @@ namespace Company.Api
                     options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+
+            app.UseSwagger();
 
             app.UseRouting();
             app.UseApiResponseConsistency();

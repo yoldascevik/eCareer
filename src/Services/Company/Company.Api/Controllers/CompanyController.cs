@@ -15,6 +15,7 @@ namespace Company.Api.Controllers
             _logger.LogInformation("company api created!");
         }
 
+        [HttpGet]
         public IActionResult Test()
         {
             throw new NotImplementedException("henuz hazır değil!");

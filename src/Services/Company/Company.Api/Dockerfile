@@ -9,6 +9,7 @@ COPY ["src/Services/Company/Company.Api/Company.Api.csproj", "src/Services/Compa
 COPY ["src/Framework/Career.Mvc/Career.Mvc.csproj", "src/Framework/Career.Mvc/"]
 COPY ["src/Framework/Career.Logging/Career.Logging.csproj", "src/Framework/Career.Logging/"]
 COPY ["src/Framework/Career.Exceptions/Career.Exceptions.csproj", "src/Framework/Career.Exceptions/"]
+COPY ["src/Framework/Career.Swagger/Career.Swagger.csproj", "src/Framework/Career.Swagger/"]
 RUN dotnet restore "src/Services/Company/Company.Api/Company.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Company/Company.Api"

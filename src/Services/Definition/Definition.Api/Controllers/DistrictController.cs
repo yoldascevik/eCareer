@@ -2,13 +2,14 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Location.District;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/location/district")]
+    [Route("api/v{version:apiVersion}/locations/districts")]
     public class DistrictController : DefinitionApiController
     {
         private readonly IDistrictService _districtService;

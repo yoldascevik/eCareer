@@ -17,25 +17,25 @@ namespace Definition.HttpClient.Country
             _apiEndpointOptions = endpointOptions;
         }
 
-        // api/v{version}/location/country";
+        // api/v{version}/locations/countries";
         public async Task<ConsistentApiResponse<PagedList<CountryDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<CountryDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
-        // api/v{version}/location/country/{id}";
+        // api/v{version}/locations/countries/{id}";
         public async Task<ConsistentApiResponse<CountryDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<CountryDto>>(CreateUrl(null, version), id);
         }
 
-        // api/v{version}/location/country/code/{code}
+        // api/v{version}/locations/countries/code/{code}
         public async Task<ConsistentApiResponse<CountryDto>> GetByCodeAsync(string code, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<CountryDto>>(CreateUrl("/code", version), code);
         }
 
-        // api/v{version}/location/country/{countryId}/cities
+        // api/v{version}/locations/countries/{countryId}/cities
         public async Task<ConsistentApiResponse<PagedList<CityDto>>> GetCitiesOfCountryAsync(string countryId, PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<CityDto>>>(CreateUrl($"/{countryId}/cities", version), paginationFilter);

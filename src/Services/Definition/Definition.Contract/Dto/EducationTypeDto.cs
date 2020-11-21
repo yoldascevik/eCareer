@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Education.EducationType
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class EducationTypeDto

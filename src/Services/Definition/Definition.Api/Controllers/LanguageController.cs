@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/language")]
+    [Route("api/v{version:apiVersion}/languages")]
     public class LanguageController : DefinitionApiController
     {
         private readonly ILanguageService _languageService;

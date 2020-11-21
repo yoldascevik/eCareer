@@ -2,6 +2,7 @@
 using Career.Cache.Attributes;
 using Career.Cache.Helpers;
 using Career.Utilities.Pagination;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
 namespace Definition.Application.Work.WorkType

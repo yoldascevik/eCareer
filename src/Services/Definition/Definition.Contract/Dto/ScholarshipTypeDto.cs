@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Education.ScholarshipType
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class ScholarshipTypeDto

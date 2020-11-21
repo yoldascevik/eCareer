@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Work.JobPosition
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class JobPositionDto

@@ -2,13 +2,14 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Education.ScholarshipType;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/education/scholarshiptype")]
+    [Route("api/v{version:apiVersion}/education/scholarshiptypes")]
     public class ScholarshipTypeController : DefinitionApiController
     {
         private readonly IScholarshipTypeService _scholarshipTypeService;

@@ -1,6 +1,6 @@
 ﻿using System;
 using Career.Http;
-using Definition.HttpClient.Country;
+using Career.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Definition.HttpClient
@@ -14,7 +14,7 @@ namespace Definition.HttpClient
             
             services.AddCareerHttpClient();
             services.AddSingleton(options);
-            services.AddTransient<ICountryHttpClient, CountryHttpClient>();
+            services.RegisterModule(new DefinitionHttpClientModule());
 
             return services;
         }

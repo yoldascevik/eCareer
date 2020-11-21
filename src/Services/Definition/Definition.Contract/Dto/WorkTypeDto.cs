@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Work.WorkType
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class WorkTypeDto

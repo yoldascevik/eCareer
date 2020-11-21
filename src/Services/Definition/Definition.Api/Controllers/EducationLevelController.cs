@@ -2,13 +2,14 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Education.EducationLevel;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/education/level")]
+    [Route("api/v{version:apiVersion}/education/levels")]
     public class EducationLevelController : DefinitionApiController
     {
         private readonly IEducationLevelService _educationLevelService;

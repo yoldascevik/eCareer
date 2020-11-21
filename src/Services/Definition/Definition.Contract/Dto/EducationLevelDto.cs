@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Education.EducationLevel
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class EducationLevelDto

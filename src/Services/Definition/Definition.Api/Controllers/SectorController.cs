@@ -3,13 +3,14 @@ using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Work.JobPosition;
 using Definition.Application.Work.Sector;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/work/sector")]
+    [Route("api/v{version:apiVersion}/work/sectors")]
     public class SectorController : DefinitionApiController
     {
         private readonly ISectorService _sectorService;

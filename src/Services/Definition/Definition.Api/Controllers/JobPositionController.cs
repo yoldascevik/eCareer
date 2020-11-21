@@ -2,13 +2,14 @@
 using Career.Utilities.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Work.JobPosition;
+using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/work/position")]
+    [Route("api/v{version:apiVersion}/work/positions")]
     public class JobPositionController : DefinitionApiController
     {
         private readonly IJobPositionService _jobPositionService;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Work.Sector
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class SectorDto

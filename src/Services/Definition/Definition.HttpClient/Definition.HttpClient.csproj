@@ -7,6 +7,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Http\Career.Http.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\Definition.Contract\Definition.Contract.csproj" />
     </ItemGroup>
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Definition.Application.Location.District
+namespace Definition.Contract.Dto
 {
     [Serializable]
     public class DistrictDto

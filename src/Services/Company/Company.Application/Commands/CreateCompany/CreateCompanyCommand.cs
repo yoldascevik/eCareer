@@ -1,7 +1,6 @@
-using Company.Application.Dtos;
 using MediatR;
 
-namespace Company.Application.Company.CreateCompany
+namespace Company.Application.Commands.CreateCompany
 {
     public class CreateCompanyCommand: IRequest<CompanyDto>
     {

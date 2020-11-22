@@ -1,6 +1,6 @@
 using System;
 
-namespace Company.Application.Dtos
+namespace Company.Application
 {
     public class CompanyDto
     {

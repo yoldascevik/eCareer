@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Company.Api.Controllers.Base;
-using Company.Application.Company.CreateCompany;
-using Company.Application.Company.GetCompanies;
-using Company.Application.Company.GetCompanyById;
-using Company.Application.Dtos;
+using Company.Application;
+using Company.Application.Commands.CreateCompany;
+using Company.Application.Commands.UpdateCompany;
+using Company.Application.Queries.GetCompanies;
+using Company.Application.Queries.GetCompanyById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -57,15 +58,16 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Updated company info</returns>
         [HttpPut("{id}")]
-        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] CompanyRequestModel request)
-            => throw new NotImplementedException(); // ok
+        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] UpdateCompanyCommand request)
+            => Ok(await _mediator.Send(request));
 
-        /// <summary>
-        /// Delete existing company
-        /// </summary>
-        /// <param name="id">Company id to be deleted</param>
-        [HttpDelete("{id}")]
-        public virtual async Task DeleteAsync(Guid id)
-            => throw new NotImplementedException(); // ok
+        //
+        // /// <summary>
+        // /// Delete existing company
+        // /// </summary>
+        // /// <param name="id">Company id to be deleted</param>
+        // [HttpDelete("{id}")]
+        // public virtual async Task DeleteAsync(Guid id)
+        //     => throw new NotImplementedException(); // ok
     }
 }

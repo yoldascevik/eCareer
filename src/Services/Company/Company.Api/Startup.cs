@@ -3,7 +3,7 @@ using Career.Exceptions;
 using Career.IoC;
 using Career.Mvc.Extensions;
 using Career.Swagger;
-using Company.Application.Modules;
+using Company.Application;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

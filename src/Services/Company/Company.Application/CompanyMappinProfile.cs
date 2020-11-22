@@ -1,8 +1,8 @@
 using AutoMapper;
-using Company.Application.Company.CreateCompany;
-using Company.Application.Dtos;
+using Company.Application.Commands.CreateCompany;
+using Company.Application.Commands.UpdateCompany;
 
-namespace Company.Application.Mapping
+namespace Company.Application
 {
     public class CompanyMappinProfile: Profile
     {
@@ -10,6 +10,7 @@ namespace Company.Application.Mapping
         {
             CreateMap<Domain.Company, CompanyDto>();
             CreateMap<CreateCompanyCommand, Domain.Company>();
+            CreateMap<UpdateCompanyCommand, Domain.Company>();
         }
     }
 }

@@ -15,6 +15,10 @@ namespace Career.Http.Extensions
             if (queryParamObj == null)
                 throw new ArgumentNullException(nameof(queryParamObj));
 
+            Type queryParamObjType = queryParamObj.GetType();
+            if (queryParamObjType.IsValueType || queryParamObjType == typeof(string))
+                return $"{url}/{queryParamObj}";
+
             var parameters = new Dictionary<string, string>();
             PropertyInfo[] properties = queryParamObj.GetType().GetProperties();
             foreach (PropertyInfo propertyInfo in properties)

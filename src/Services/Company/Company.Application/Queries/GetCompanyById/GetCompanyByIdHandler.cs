@@ -2,11 +2,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
-using Company.Application.Dtos;
 using Company.Domain.Repository;
 using MediatR;
 
-namespace Company.Application.Company.GetCompanyById
+namespace Company.Application.Queries.GetCompanyById
 {
     public class GetCompanyByIdHandler: IRequestHandler<GetCompanyByIdQuery, CompanyDto>
     {

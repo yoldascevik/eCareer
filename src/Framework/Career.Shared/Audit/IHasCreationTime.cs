@@ -4,6 +4,6 @@ namespace Career.Shared.Audit
 {
     public interface IHasCreationTime
     {
-        DateTime? CreationTime { get; set; }
+        DateTime CreationTime { get; set; }
     }
 }

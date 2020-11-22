@@ -12,9 +12,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Mvc\Career.Mvc.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Swagger\Career.Swagger.csproj" />
+      <ProjectReference Include="..\Company.Application\Company.Application.csproj" />
     </ItemGroup>
 
 </Project>

@@ -8,8 +8,8 @@ namespace Definition.HttpClient.ScholarshipType
 {
     public interface IScholarshipTypeHttpClient: ICareerHttpClient
     {
-        Task<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version);
+        Task<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null);
         
-        Task<ConsistentApiResponse<ScholarshipTypeDto>> GetByIdAsync(string id, string version);
+        Task<ConsistentApiResponse<ScholarshipTypeDto>> GetByIdAsync(string id, string version = null);
     }
 }

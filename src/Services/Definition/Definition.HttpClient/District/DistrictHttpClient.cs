@@ -18,13 +18,13 @@ namespace Definition.HttpClient.District
         }
 
         // api/v{version}/locations/districts"
-        public async Task<ConsistentApiResponse<PagedList<DistrictDto>>> GetAsync(PaginationFilter paginationFilter, string version)
+        public async Task<ConsistentApiResponse<PagedList<DistrictDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<DistrictDto>>>(CreateUrl(null, version));
         }
 
         // api/v{version}/locations/districts/{id}";
-        public async Task<ConsistentApiResponse<DistrictDto>> GetByIdAsync(string id, string version)
+        public async Task<ConsistentApiResponse<DistrictDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<DistrictDto>>(CreateUrl(null, version), id);
         }

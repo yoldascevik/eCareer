@@ -18,13 +18,13 @@ namespace Definition.HttpClient.City
         }
         
         // api/v{version}/locations/cities";
-        public async Task<ConsistentApiResponse<PagedList<CityDto>>> GetAsync(PaginationFilter paginationFilter, string version)
+        public async Task<ConsistentApiResponse<PagedList<CityDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<CityDto>>>(CreateUrl(null, version));
         }
 
         // api/v{version}/locations/cities/{id}";
-        public async Task<ConsistentApiResponse<CityDto>> GetByIdAsync(string id, string version)
+        public async Task<ConsistentApiResponse<CityDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<CityDto>>(CreateUrl(null, version), id);
         }

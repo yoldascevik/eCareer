@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Repositories\Career.Repositories.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Shared\Career.Shared.csproj" />
     </ItemGroup>
 

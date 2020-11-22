@@ -8,8 +8,8 @@ namespace Definition.HttpClient.WorkType
 {
     public interface IWorkTypeHttpClient: ICareerHttpClient
     {
-        Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version);
+        Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null);
         
-        Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id, string version);
+        Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id, string version = null);
     }
 }

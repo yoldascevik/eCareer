@@ -18,13 +18,13 @@ namespace Definition.HttpClient.WorkType
         }
 
         // api/v{version}/work/types"
-        public async Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version)
+        public async Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<WorkTypeDto>>>(CreateUrl(null, version));
         }
 
         // api/v{version}/work/types/{id}";
-        public async Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id, string version)
+        public async Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<WorkTypeDto>>(CreateUrl(null, version), id);
         }

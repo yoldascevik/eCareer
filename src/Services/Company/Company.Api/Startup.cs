@@ -4,6 +4,7 @@ using Career.IoC;
 using Career.Mvc.Extensions;
 using Career.Swagger;
 using Company.Application.Modules;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +33,9 @@ namespace Company.Api
                     options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+            
             services.RegisterModule<ApplicationModule>();
+            services.AddMediatR(typeof(ApplicationModule));
             services.AddSwagger();
         }
 

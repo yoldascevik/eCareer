@@ -8,8 +8,8 @@ namespace Definition.HttpClient.EducationLevel
 {
     public interface IEducationLevelHttpClient: ICareerHttpClient
     {
-        Task<ConsistentApiResponse<PagedList<EducationLevelDto>>> GetAsync(PaginationFilter paginationFilter, string version);
+        Task<ConsistentApiResponse<PagedList<EducationLevelDto>>> GetAsync(PaginationFilter paginationFilter, string version = null);
         
-        Task<ConsistentApiResponse<EducationLevelDto>> GetByIdAsync(string id, string version);
+        Task<ConsistentApiResponse<EducationLevelDto>> GetByIdAsync(string id, string version = null);
     }
 }

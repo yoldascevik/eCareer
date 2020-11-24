@@ -4,6 +4,9 @@ services:
   nosqldata:
     image: mongo
     
+  postgres:
+    image: postgres
+    
   cache:
     image: "redis:alpine"
 
@@ -26,6 +29,5 @@ services:
       context: .
       dockerfile: src/Services/Company/Company.Api/Dockerfile
     depends_on:
-      - nosqldata
-      - cache
+      - postgres
       - seq

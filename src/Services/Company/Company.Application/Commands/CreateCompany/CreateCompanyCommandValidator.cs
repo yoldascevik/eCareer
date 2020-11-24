@@ -15,7 +15,7 @@ namespace Company.Application.Commands.CreateCompany
             RuleFor(x => x.CityId).NotEmpty();
             RuleFor(x => x.SectorId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.Address).MaximumLength(500);
+            RuleFor(x => x.Address).NotEmpty().MaximumLength(500);
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.Phone).NotEmpty().MaximumLength(50);
             RuleFor(x => x.MobilePhone).MaximumLength(50);
@@ -42,14 +42,12 @@ namespace Company.Application.Commands.CreateCompany
             RuleFor(x => x)
                 .MustAsync(async (command, cancellation) => await sectorService.IsSectorExistsAsync(command.SectorId))
                 .WithMessage("Company sector is not found!");
-            
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await companyRepository.IsTaxNumberValidAsync(command.TaxNumber, command.CountryId))
-                .WithMessage("Invalid Tax number!");
-            
+
             RuleFor(x => x)
                 .MustAsync(async (command, cancellation) => !await companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId))
                 .WithMessage("Tax number is already registered!");
+            
+            //TODO: Tax Number validation
         }
     }
 }

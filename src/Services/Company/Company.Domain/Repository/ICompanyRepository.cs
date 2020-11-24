@@ -7,6 +7,5 @@ namespace Company.Domain.Repository
     public interface ICompanyRepository: IRepository<Company>
     {
         Task<bool> IsTaxNumberExistsAsync(string taxNumber, string countryId, Guid companyId = default);
-        Task<bool> IsTaxNumberValidAsync(string taxNumber, string countryId);
     }
 }

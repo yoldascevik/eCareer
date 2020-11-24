@@ -6,6 +6,7 @@ using Company.Application.Services;
 using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
 using Company.Infrastructure;
+using Company.Infrastructure.Repositories;
 using Definition.HttpClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,40 +1,52 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Company.Domain.Repository;
+using Career.Repositories.Repository;
+using Microsoft.EntityFrameworkCore;
 
-namespace Company.Infrastructure
+namespace Career.EntityFramework.Repositories
 {
-    public class CompanyRepository: ICompanyRepository
+    public class EfRepository<TContext, TEntity> : IRepository<TEntity> 
+        where TContext : DbContext
+        where TEntity : class
     {
-        public IQueryable<Domain.Company> Get()
+        private readonly TContext _dbContext;
+        private readonly DbSet<TEntity> _dbSet;
+
+        public EfRepository(TContext dbContext)
+        {
+            _dbContext = dbContext;
+            _dbSet = dbContext.Set<TEntity>();
+        }
+
+        public IQueryable<TEntity> Get()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Domain.Company> Get(Expression<Func<Domain.Company, bool>> condition)
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Domain.Company>> GetAsync()
+        public async Task<IEnumerable<TEntity>> GetAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Domain.Company>> GetAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company GetByKey(object key)
+        public TEntity GetByKey(object key)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> GetByKeyAsync(object key)
+        public async Task<TEntity> GetByKeyAsync(object key)
         {
             throw new NotImplementedException();
         }
@@ -44,7 +56,7 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public bool Any(Expression<Func<Domain.Company, bool>> condition)
+        public bool Any(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
@@ -54,7 +66,7 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +76,7 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public long Count(Expression<Func<Domain.Company, bool>> condition)
+        public long Count(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
@@ -74,117 +86,117 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public async Task<long> CountAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<long> CountAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company First()
+        public TEntity First()
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company First(Expression<Func<Domain.Company, bool>> condition)
+        public TEntity First(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> FirstAsync()
+        public async Task<TEntity> FirstAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> FirstAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company FirstOrDefault()
+        public TEntity FirstOrDefault()
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company FirstOrDefault(Expression<Func<Domain.Company, bool>> condition)
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> FirstOrDefaultAsync()
+        public async Task<TEntity> FirstOrDefaultAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> FirstOrDefaultAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company Single()
+        public TEntity Single()
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company Single(Expression<Func<Domain.Company, bool>> condition)
+        public TEntity Single(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> SingleAsync()
+        public async Task<TEntity> SingleAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> SingleAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company SingleOrDefault()
+        public TEntity SingleOrDefault()
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company SingleOrDefault(Expression<Func<Domain.Company, bool>> condition)
+        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> SingleOrDefaultAsync()
+        public async Task<TEntity> SingleOrDefaultAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> SingleOrDefaultAsync(Expression<Func<Domain.Company, bool>> condition)
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company Add(Domain.Company item)
+        public TEntity Add(TEntity item)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> AddAsync(Domain.Company item)
+        public async Task<TEntity> AddAsync(TEntity item)
         {
             throw new NotImplementedException();
         }
 
-        public void AddRange(IEnumerable<Domain.Company> items)
+        public void AddRange(IEnumerable<TEntity> items)
         {
             throw new NotImplementedException();
         }
 
-        public async Task AddRangeAsync(IEnumerable<Domain.Company> items)
+        public async Task AddRangeAsync(IEnumerable<TEntity> items)
         {
             throw new NotImplementedException();
         }
 
-        public Domain.Company Update(object key, Domain.Company item)
+        public TEntity Update(object key, TEntity item)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Domain.Company> UpdateAsync(object key, Domain.Company item)
+        public async Task<TEntity> UpdateAsync(object key, TEntity item)
         {
             throw new NotImplementedException();
         }
@@ -194,7 +206,7 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public void Delete(Expression<Func<Domain.Company, bool>> condition)
+        public void Delete(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }
@@ -204,17 +216,7 @@ namespace Company.Infrastructure
             throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(Expression<Func<Domain.Company, bool>> condition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> IsTaxNumberExistsAsync(string taxNumber, string countryId, Guid companyId = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> IsTaxNumberValidAsync(string taxNumber, string countryId)
+        public async Task DeleteAsync(Expression<Func<TEntity, bool>> condition)
         {
             throw new NotImplementedException();
         }

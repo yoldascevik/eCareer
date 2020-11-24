@@ -1,9 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Company.Api.Controllers.Base;
-using Company.Application;
 using Company.Application.Commands.CreateCompany;
+using Company.Application.Commands.DeleteCompany;
 using Company.Application.Commands.UpdateCompany;
+using Company.Application.Dtos;
 using Company.Application.Queries.GetCompanies;
 using Company.Application.Queries.GetCompanyById;
 using MediatR;
@@ -14,11 +16,13 @@ namespace Company.Api.Controllers
     [Route("api/v{version:apiVersion}/companies")]
     public class CompanyController: CompanyApiController
     {
+        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         
-        public CompanyController(IMediator mediator)
+        public CompanyController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -58,16 +62,21 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Updated company info</returns>
         [HttpPut("{id}")]
-        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] UpdateCompanyCommand request)
-            => Ok(await _mediator.Send(request));
+        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] CompanyCommandModel request)
+        {
+            var updateCompanyCommand = _mapper.Map<UpdateCompanyCommand>(request);
+            updateCompanyCommand.Id = id;
 
-        //
-        // /// <summary>
-        // /// Delete existing company
-        // /// </summary>
-        // /// <param name="id">Company id to be deleted</param>
-        // [HttpDelete("{id}")]
-        // public virtual async Task DeleteAsync(Guid id)
-        //     => throw new NotImplementedException(); // ok
+            return await _mediator.Send(updateCompanyCommand);
+        }
+
+
+        /// <summary>
+        /// Delete existing company
+        /// </summary>
+        /// <param name="id">Company id to be deleted</param>
+        [HttpDelete("{id}")]
+        public virtual async Task DeleteAsync(Guid id)
+            => Ok(await _mediator.Send(new DeleteCompanyCommand(id)));
     }
 }

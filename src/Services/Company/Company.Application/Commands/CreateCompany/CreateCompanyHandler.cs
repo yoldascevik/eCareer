@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Company.Application.Dtos;
 using Company.Domain.Repository;
 using MediatR;
 

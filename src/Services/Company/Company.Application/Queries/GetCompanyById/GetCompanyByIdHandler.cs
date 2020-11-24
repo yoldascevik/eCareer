@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
+using Company.Application.Dtos;
 using Company.Domain.Repository;
 using MediatR;
 

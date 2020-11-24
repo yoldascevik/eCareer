@@ -1,4 +1,5 @@
 using System;
+using Company.Application.Dtos;
 using MediatR;
 
 namespace Company.Application.Queries.GetCompanyById

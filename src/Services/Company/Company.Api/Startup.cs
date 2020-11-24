@@ -4,7 +4,6 @@ using Career.IoC;
 using Career.Mvc.Extensions;
 using Career.Swagger;
 using Company.Application;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +34,6 @@ namespace Company.Api
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             services.RegisterModule<ApplicationModule>();
-            services.AddMediatR(typeof(ApplicationModule));
             services.AddSwagger();
         }
 

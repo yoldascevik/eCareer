@@ -213,5 +213,10 @@ namespace Company.Infrastructure
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> IsTaxNumberValidAsync(string taxNumber, string countryId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

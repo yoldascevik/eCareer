@@ -1,5 +1,5 @@
-using AutoMapper;
-using Company.Application.Specifications.Company;
+using Company.Application.Services.Abstractions;
+using Company.Domain.Repository;
 using FluentValidation;
 
 namespace Company.Application.Commands.CreateCompany
@@ -7,10 +7,9 @@ namespace Company.Application.Commands.CreateCompany
     public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyCommand>
     {
         public CreateCompanyCommandValidator(
-            IMapper mapper,
-            ICompanyLocationSpecification companyLocationSpecification,
-            ICompanySectorSpecification companySectorSpecification,
-            ICompanyTaxNumberSpecification companyTaxNumberSpecification)
+            ISectorService sectorService,
+            ILocationService locationService,
+            ICompanyRepository companyRepository)
         {
             RuleFor(x => x.CountryId).NotEmpty();
             RuleFor(x => x.CityId).NotEmpty();
@@ -26,15 +25,31 @@ namespace Company.Application.Commands.CreateCompany
             RuleFor(x => x.FaxNumber).MaximumLength(50);
             RuleFor(x => x.TaxNumber).NotEmpty().MaximumLength(50);
             RuleFor(x => x.TaxOffice).NotEmpty().MaximumLength(50);
+
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => await locationService.IsCountryExistsAsync(command.CountryId))
+                .WithMessage("Country is not found!");
+
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => await locationService.IsCityExistsInCountryAsync(command.CityId, command.CountryId))
+                .WithMessage("City is not found in country!");
+
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => await locationService.IsDistrictExistsInCityAsync(command.DistrictId, command.CityId))
+                .WithMessage("District is not found in city!")
+                .Unless(x => string.IsNullOrEmpty(x.DistrictId));
+
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => await sectorService.IsSectorExistsAsync(command.SectorId))
+                .WithMessage("Company sector is not found!");
             
-            RuleFor(x => x).MustAsync(async (command, cancellation) 
-                => await companyLocationSpecification.IsSatisfiedByAsync(mapper.Map<Domain.Company>(command)));
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => await companyRepository.IsTaxNumberValidAsync(command.TaxNumber, command.CountryId))
+                .WithMessage("Invalid Tax number!");
             
-            RuleFor(x => x).MustAsync(async (command, cancellation) 
-                => await companySectorSpecification.IsSatisfiedByAsync(mapper.Map<Domain.Company>(command)));
-            
-            RuleFor(x => x).MustAsync(async (command, cancellation) 
-                => await companyTaxNumberSpecification.IsSatisfiedByAsync(mapper.Map<Domain.Company>(command)));
+            RuleFor(x => x)
+                .MustAsync(async (command, cancellation) => !await companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId))
+                .WithMessage("Tax number is already registered!");
         }
     }
 }

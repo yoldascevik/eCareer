@@ -1,10 +1,11 @@
 using System;
-using Company.Application.Commands.CreateCompany;
+using Company.Application.Dtos;
+using MediatR;
 
 namespace Company.Application.Commands.UpdateCompany
 {
-    public class UpdateCompanyCommand: CreateCompanyCommand
-    { 
-        internal Guid Id { get; set; }
+    public class UpdateCompanyCommand: CompanyCommandModel, IRequest<CompanyDto>
+    {
+        public Guid Id { get; set; }
     }
 }

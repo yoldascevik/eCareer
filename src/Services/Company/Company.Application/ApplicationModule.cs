@@ -2,12 +2,11 @@ using AutoMapper;
 using Career.Configuration;
 using Career.IoC.IoCModule;
 using Career.MediatR;
-using Career.Shared.OS;
-using Company.Application.Specifications.Company;
+using Company.Application.Services;
+using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
 using Company.Infrastructure;
 using Definition.HttpClient;
-using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,17 +19,14 @@ namespace Company.Application
             IConfiguration configuration = ConfigurationHelper.GetConfiguration();
             var definitionApiEndPoint = configuration.GetSection("ApiEndpoints:DefinitionApi").Get<ApiEndpointOptions>();
             
-            services.AddDateTimeProvider();
             services.AddDefinitionApiHttpClient(definitionApiEndPoint);
-            services.AddValidatorsFromAssembly(typeof(ApplicationModule).Assembly);
-            services.AddMediatRPipelineBehavior();
-            
-            services.AddScoped<ICompanySectorSpecification, CompanySectorSpecification>();
-            services.AddScoped<ICompanyLocationSpecification, CompanyLocationSpecification>();
-            services.AddScoped<ICompanyTaxNumberSpecification, CompanyTaxNumberSpecification>();
+            services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
+
+            services.AddTransient<ILocationService, LocationService>();
+            services.AddTransient<ISectorService, SectorService>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             services.AddAutoMapper(typeof(CompanyMappinProfile));
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
         }
     }
 }

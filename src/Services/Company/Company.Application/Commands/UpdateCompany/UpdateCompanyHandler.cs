@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Career.Exceptions.Exceptions;
+using Company.Application.Dtos;
 using Company.Domain.Repository;
 using MediatR;
 
@@ -17,10 +19,16 @@ namespace Company.Application.Commands.UpdateCompany
             _companyRepository = companyRepository;
         }
 
-
         public async Task<CompanyDto> Handle(UpdateCompanyCommand request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var company = await _companyRepository.GetByKeyAsync(request.Id);
+            if (company == null)
+                throw new ItemNotFoundException($"Company is not found by id: {request.Id}");
+
+            _mapper.Map(request, company);
+            var updatedCompany = await _companyRepository.UpdateAsync(request.Id, company);
+
+            return _mapper.Map<CompanyDto>(updatedCompany);
         }
     }
 }

@@ -7,13 +7,15 @@ namespace Company.Infrastructure.Repositories
 {
     public class CompanyRepository: EfRepository<CompanyDbContext, Domain.Company>, ICompanyRepository
     {
-        public CompanyRepository(CompanyDbContext dbContext) : base(dbContext)
-        {
-        }
+        public CompanyRepository(CompanyDbContext dbContext) : base(dbContext) { }
 
         public async Task<bool> IsTaxNumberExistsAsync(string taxNumber, string countryId, Guid companyId = default)
         {
-            throw new NotImplementedException();
+            return await AnyAsync(company =>
+                company.TaxNumber == taxNumber
+                && company.IsDeleted == false
+                && company.CountryId == countryId
+                && (companyId == default || company.Id != companyId));
         }
     }
 }

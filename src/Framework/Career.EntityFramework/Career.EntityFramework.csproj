@@ -5,11 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.Repositories\Career.Repositories.csproj" />
+      <ProjectReference Include="..\Career.Shared\Career.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

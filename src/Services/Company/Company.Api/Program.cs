@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Career.EntityFramework;
+using Company.Infrastructure;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +21,9 @@ namespace Company.Api
             {
                 Log.Information("Application starting up...");
 
-                CreateHostBuilder(args).Build() .Run();
+                 CreateHostBuilder(args).Build()
+                     .MigrateEntityFrameworkDatabase<CompanyDbContext>()
+                     .Run();
             }
             catch (Exception ex)
             {

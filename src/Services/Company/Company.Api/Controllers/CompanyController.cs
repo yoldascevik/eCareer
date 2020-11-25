@@ -52,7 +52,7 @@ namespace Company.Api.Controllers
             if (createdCompany == null)
                 return BadRequest();
                 
-            return CreatedAtAction("Get", createdCompany.Id);
+            return CreatedAtAction(nameof(Get), new { id = createdCompany.Id });
         }
 
         /// <summary>

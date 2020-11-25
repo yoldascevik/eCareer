@@ -1,5 +1,6 @@
 using AutoMapper;
 using Career.Configuration;
+using Career.EntityFramework;
 using Career.IoC.IoCModule;
 using Career.MediatR;
 using Company.Application.Services;
@@ -23,8 +24,10 @@ namespace Company.Application
             services.AddDefinitionApiHttpClient(definitionApiEndPoint);
             services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
 
-            services.AddTransient<ILocationService, LocationService>();
-            services.AddTransient<ISectorService, SectorService>();
+            services.AddUnitOfWork();
+            
+            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<ISectorService, SectorService>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             services.AddAutoMapper(typeof(CompanyMappinProfile));

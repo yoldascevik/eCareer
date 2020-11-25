@@ -22,7 +22,6 @@ namespace Company.Application.Queries.GetCompanies
 
         public async Task<PagedList<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
-            //TODO: relation id mapping ?
             return await _companyRepository.Get(company => !company.IsDeleted)
                 .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(request);

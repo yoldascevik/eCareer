@@ -21,7 +21,7 @@ namespace Company.Application.Queries.GetCompanyById
 
         public async Task<CompanyDto> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken)
         {
-            var company = await _companyRepository.GetByKeyAsync(request.CompanyId);
+            var company = await _companyRepository.FirstOrDefaultAsync(c => c.Id == request.CompanyId && !c.IsDeleted);
             if (company == null)
                 throw new ItemNotFoundException(request.CompanyId);
             

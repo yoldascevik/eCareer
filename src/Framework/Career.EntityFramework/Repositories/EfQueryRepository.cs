@@ -8,107 +8,110 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Career.EntityFramework.Repositories
 {
+    /// <summary>
+    /// Warning: All methods call with AsNoTracking
+    /// </summary>
     public class EfQueryRepository<TContext, TEntity> : IQueryRepository<TEntity> 
         where TContext : DbContext
         where TEntity : class
     {
-        private readonly TContext _dbContext;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly TContext DbContext;
+        protected readonly DbSet<TEntity> DbSet;
 
         public EfQueryRepository(TContext dbContext)
         {
-            _dbContext = dbContext;
-            _dbSet = dbContext.Set<TEntity>();
+            DbContext = dbContext;
+            DbSet = dbContext.Set<TEntity>();
         }
 
         public IQueryable<TEntity> Get()
-            => _dbSet.AsNoTracking();
+            => DbSet.AsNoTracking();
 
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().Where(condition);
+            => DbSet.AsNoTracking().Where(condition);
 
         public async Task<IEnumerable<TEntity>> GetAsync()
-            => await _dbSet.AsNoTracking().ToListAsync();
+            => await DbSet.AsNoTracking().ToListAsync();
 
         public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().Where(condition).ToListAsync();
+            => await DbSet.AsNoTracking().Where(condition).ToListAsync();
 
         public TEntity GetByKey(object key)
-            => _dbSet.Find(key);
+            => DbSet.Find(key);
 
         public async Task<TEntity> GetByKeyAsync(object key)
-            => await _dbSet.FindAsync(key);
+            => await DbSet.FindAsync(key);
 
         public bool Any()
-            => _dbSet.AsNoTracking().Any();
+            => DbSet.AsNoTracking().Any();
 
         public bool Any(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().Any(condition);
+            => DbSet.AsNoTracking().Any(condition);
 
         public async Task<bool> AnyAsync()
-            => await _dbSet.AsNoTracking().AnyAsync();
+            => await DbSet.AsNoTracking().AnyAsync();
 
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().AnyAsync(condition);
+            => await DbSet.AsNoTracking().AnyAsync(condition);
 
         public long Count()
-            => _dbSet.AsNoTracking().Count();
+            => DbSet.AsNoTracking().Count();
 
         public long Count(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().Count(condition);
+            => DbSet.AsNoTracking().Count(condition);
 
         public async Task<long> CountAsync()
-            => await _dbSet.AsNoTracking().CountAsync();
+            => await DbSet.AsNoTracking().CountAsync();
 
         public async Task<long> CountAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().CountAsync(condition);
+            => await DbSet.AsNoTracking().CountAsync(condition);
 
         public TEntity First()
-            => _dbSet.AsNoTracking().First();
+            => DbSet.AsNoTracking().First();
 
         public TEntity First(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().First(condition);
+            => DbSet.AsNoTracking().First(condition);
 
         public async Task<TEntity> FirstAsync()
-            => await _dbSet.AsNoTracking().FirstAsync();
+            => await DbSet.AsNoTracking().FirstAsync();
 
         public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().FirstAsync(condition);
+            => await DbSet.AsNoTracking().FirstAsync(condition);
 
         public TEntity FirstOrDefault()
-            => _dbSet.AsNoTracking().FirstOrDefault();
+            => DbSet.AsNoTracking().FirstOrDefault();
 
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().FirstOrDefault(condition);
+            => DbSet.AsNoTracking().FirstOrDefault(condition);
 
         public async Task<TEntity> FirstOrDefaultAsync()
-            => await _dbSet.AsNoTracking().FirstOrDefaultAsync();
+            => await DbSet.AsNoTracking().FirstOrDefaultAsync();
 
         public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().FirstOrDefaultAsync(condition);
+            => await DbSet.AsNoTracking().FirstOrDefaultAsync(condition);
 
         public TEntity Single()
-            => _dbSet.AsNoTracking().Single();
+            => DbSet.AsNoTracking().Single();
 
         public TEntity Single(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().Single(condition);
+            => DbSet.AsNoTracking().Single(condition);
 
         public async Task<TEntity> SingleAsync()
-            => await _dbSet.AsNoTracking().SingleAsync();
+            => await DbSet.AsNoTracking().SingleAsync();
 
         public async Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().SingleAsync(condition);
+            => await DbSet.AsNoTracking().SingleAsync(condition);
 
         public TEntity SingleOrDefault()
-            => _dbSet.AsNoTracking().SingleOrDefault();
+            => DbSet.AsNoTracking().SingleOrDefault();
 
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> condition)
-            => _dbSet.AsNoTracking().SingleOrDefault();
+            => DbSet.AsNoTracking().SingleOrDefault();
 
         public async Task<TEntity> SingleOrDefaultAsync()
-            => await _dbSet.AsNoTracking().SingleOrDefaultAsync();
+            => await DbSet.AsNoTracking().SingleOrDefaultAsync();
         
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> condition)
-            => await _dbSet.AsNoTracking().SingleOrDefaultAsync(condition);
+            => await DbSet.AsNoTracking().SingleOrDefaultAsync(condition);
     }
 }

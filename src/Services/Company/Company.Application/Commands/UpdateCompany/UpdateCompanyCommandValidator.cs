@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Company.Application.Commands.UpdateCompany
 {
-    public class UpdateCompanyCommandValidator : AbstractValidator<UpdateCompanyCommand>
+    public class UpdateCompanyCommandValidator : AbstractValidator<UpdateCompanyCommmand>
     {
         public UpdateCompanyCommandValidator(
             ISectorService sectorService,
@@ -12,40 +12,40 @@ namespace Company.Application.Commands.UpdateCompany
             ICompanyRepository companyRepository)
         {
             RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.CountryId).NotEmpty();
-            RuleFor(x => x.CityId).NotEmpty();
-            RuleFor(x => x.SectorId).NotEmpty();
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.Address).NotEmpty().MaximumLength(500);
-            RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Phone).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.MobilePhone).MaximumLength(50);
-            RuleFor(x => x.Website).MaximumLength(50);
-            RuleFor(x => x.EmployeesCount).GreaterThan(0);
-            RuleFor(x => x.EstablishedYear).GreaterThan((short) 0);
-            RuleFor(x => x.FaxNumber).MaximumLength(50);
-            RuleFor(x => x.TaxNumber).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.TaxOffice).NotEmpty().MaximumLength(50);
-
+            RuleFor(x => x.Company.CountryId).NotEmpty();
+            RuleFor(x => x.Company.CityId).NotEmpty();
+            RuleFor(x => x.Company.SectorId).NotEmpty();
+            RuleFor(x => x.Company.Name).NotEmpty().MaximumLength(100);
+            RuleFor(x => x.Company.Address).NotEmpty().MaximumLength(500);
+            RuleFor(x => x.Company.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.Company.Phone).NotEmpty().MaximumLength(50);
+            RuleFor(x => x.Company.MobilePhone).MaximumLength(50);
+            RuleFor(x => x.Company.Website).MaximumLength(50);
+            RuleFor(x => x.Company.EmployeesCount).GreaterThan(0);
+            RuleFor(x => x.Company.EstablishedYear).GreaterThan((short) 0);
+            RuleFor(x => x.Company.FaxNumber).MaximumLength(50);
+            RuleFor(x => x.Company.TaxNumber).NotEmpty().MaximumLength(50);
+            RuleFor(x => x.Company.TaxOffice).NotEmpty().MaximumLength(50);
+                          
             RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsCountryExistsAsync(command.CountryId))
+                .MustAsync(async (command, cancellation) => await locationService.IsCountryExistsAsync(command.Company.CountryId))
                 .WithMessage("Country is not found!");
 
             RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsCityExistsInCountryAsync(command.CityId, command.CountryId))
+                .MustAsync(async (command, cancellation) => await locationService.IsCityExistsInCountryAsync(command.Company.CityId, command.Company.CountryId))
                 .WithMessage("City is not found in country!");
 
             RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsDistrictExistsInCityAsync(command.DistrictId, command.CityId))
+                .MustAsync(async (command, cancellation) => await locationService.IsDistrictExistsInCityAsync(command.Company.DistrictId, command.Company.CityId))
                 .WithMessage("District is not found in city!")
-                .Unless(x => string.IsNullOrEmpty(x.DistrictId));
+                .Unless(x => string.IsNullOrEmpty(x.Company.DistrictId));
 
             RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await sectorService.IsSectorExistsAsync(command.SectorId))
+                .MustAsync(async (command, cancellation) => await sectorService.IsSectorExistsAsync(command.Company.SectorId))
                 .WithMessage("Company sector is not found!");
 
             RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => !await companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId, command.Id))
+                .MustAsync(async (command, cancellation) => !await companyRepository.IsTaxNumberExistsAsync(command.Company.TaxNumber, command.Company.CountryId, command.Id))
                 .WithMessage("Tax number is already registered!");
             
             //TODO: Tax Number validation

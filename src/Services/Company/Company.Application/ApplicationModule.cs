@@ -3,6 +3,7 @@ using Career.Configuration;
 using Career.EntityFramework;
 using Career.IoC.IoCModule;
 using Career.MediatR;
+using Company.Application.Mapping;
 using Company.Application.Services;
 using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;

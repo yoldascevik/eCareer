@@ -6,7 +6,7 @@ using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using MediatR;
 
-namespace Company.Application.Queries.GetCompanyById
+namespace Company.Application.Queries.Company.GetCompanyById
 {
     public class GetCompanyByIdHandler: IRequestHandler<GetCompanyByIdQuery, CompanyDto>
     {

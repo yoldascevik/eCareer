@@ -13,5 +13,10 @@ namespace Company.Infrastructure.Repositories
         {
             return Get(follower => follower.CompanyId == companyId && !follower.IsDeleted);
         }
+
+        public IQueryable<CompanyFollower> GetFollowedCompaniesOfUser(Guid userId)
+        {
+            return Get(follower => follower.UserId == userId && !follower.IsDeleted);
+        }
     }
 }

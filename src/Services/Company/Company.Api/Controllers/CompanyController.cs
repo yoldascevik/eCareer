@@ -1,14 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Company.Api.Controllers.Base;
 using Company.Application.Commands.CreateCompany;
 using Company.Application.Commands.DeleteCompany;
 using Company.Application.Commands.UpdateCompany;
 using Company.Application.Dtos.Company;
-using Company.Application.Queries.GetCompanies;
-using Company.Application.Queries.GetCompanyById;
-using Company.Application.Queries.GetCompanyFollowers;
+using Company.Application.Queries.Company.GetCompanies;
+using Company.Application.Queries.Company.GetCompanyById;
+using Company.Application.Queries.Company.GetCompanyFollowers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +16,11 @@ namespace Company.Api.Controllers
     [Route("api/v{version:apiVersion}/companies")]
     public class CompanyController: CompanyApiController
     {
-        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         
-        public CompanyController(IMediator mediator, IMapper mapper)
+        public CompanyController(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -44,10 +41,9 @@ namespace Company.Api.Controllers
         /// <summary>
         /// Get company followers
         /// </summary>
-        /// <param name="id">Company id</param>
         [HttpGet("{id}/followers")]
-        public virtual async Task<IActionResult> GetCompanyFollowers(Guid id)
-            => Ok(await _mediator.Send(new GetCompanyFollowersQuery(id)));
+        public virtual async Task<IActionResult> GetCompanyFollowers([FromQuery] GetCompanyFollowersQuery request)
+            => Ok(await _mediator.Send(request));
 
         /// <summary>
         /// Create new company
@@ -71,13 +67,8 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Updated company info</returns>
         [HttpPut("{id}")]
-        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] CompanyCommandModel request)
-        {
-            var updateCompanyCommand = _mapper.Map<UpdateCompanyCommand>(request);
-            updateCompanyCommand.Id = id;
-
-            return await _mediator.Send(updateCompanyCommand);
-        }
+        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] CompanyRequest request)
+            => await _mediator.Send(new UpdateCompanyCommmand(id, request));
 
 
         /// <summary>

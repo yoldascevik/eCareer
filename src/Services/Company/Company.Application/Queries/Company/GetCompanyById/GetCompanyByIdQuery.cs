@@ -2,7 +2,7 @@ using System;
 using Company.Application.Dtos.Company;
 using MediatR;
 
-namespace Company.Application.Queries.GetCompanyById
+namespace Company.Application.Queries.Company.GetCompanyById
 {
     public class GetCompanyByIdQuery: IRequest<CompanyDto>
     {

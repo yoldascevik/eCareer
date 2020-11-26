@@ -11,17 +11,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Commands.UpdateCompany
 {
-    public class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommand, CompanyDto>
+    public class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommmand, CompanyDto>
     {
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;
-        private readonly ILogger<UpdateCompanyCommand> _logger;
+        private readonly ILogger<UpdateCompanyCommmand> _logger;
         private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
 
         public UpdateCompanyHandler(
             IMapper mapper,
             ICompanyRepository companyRepository,
-            ILogger<UpdateCompanyCommand> logger,
+            ILogger<UpdateCompanyCommmand> logger,
             IUnitOfWork<CompanyDbContext> unitOfWork)
         {
             _companyRepository = companyRepository;
@@ -30,7 +30,7 @@ namespace Company.Application.Commands.UpdateCompany
             _mapper = mapper;
         }
 
-        public async Task<CompanyDto> Handle(UpdateCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CompanyDto> Handle(UpdateCompanyCommmand request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository.FirstOrDefaultAsync(c => c.Id == request.Id && !c.IsDeleted);
             if (company == null)

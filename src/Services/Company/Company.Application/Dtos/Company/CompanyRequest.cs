@@ -1,6 +1,6 @@
 ﻿namespace Company.Application.Dtos.Company
 {
-    public class CompanyCommandModel
+    public class CompanyRequest
     {
         public string Name { get; set; }
         public string TaxNumber { get; set; }

@@ -8,5 +8,6 @@ namespace Company.Domain.Repository
     public interface ICompanyFollowerRepository: IRepository<CompanyFollower>
     {
         public IQueryable<CompanyFollower> GetActiveCompanyFollowers(Guid companyId);
+        public IQueryable<CompanyFollower> GetFollowedCompaniesOfUser(Guid userId);
     }
 }

@@ -5,5 +5,6 @@ namespace Company.Application.Dtos.Company
     public class CompanyFollowerDto
     {
         public Guid UserId { get; set; }
+        public Guid CompanyId { get; set; }
     }
 }

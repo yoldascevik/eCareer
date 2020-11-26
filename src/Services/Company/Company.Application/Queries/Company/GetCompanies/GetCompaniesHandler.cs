@@ -7,7 +7,7 @@ using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using MediatR;
 
-namespace Company.Application.Queries.GetCompanies
+namespace Company.Application.Queries.Company.GetCompanies
 {
     public class GetCompaniesHandler : IRequestHandler<GetCompaniesQuery, PagedList<CompanyDto>>
     {

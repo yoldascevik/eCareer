@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Repositories;
-using Company.Application.Dtos;
+using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using Company.Infrastructure;
 using MediatR;
@@ -31,7 +31,7 @@ namespace Company.Application.Commands.CreateCompany
 
         public async Task<CompanyDto> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
         {
-            var company = _mapper.Map<Domain.Company>(request);
+            var company = _mapper.Map<Domain.Entities.Company>(request);
             var createdCompany = await _companyRepository.AddAsync(company);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);

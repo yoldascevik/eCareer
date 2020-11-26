@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Career.Shared.Audit;
 using Career.Shared.Entities;
 using Career.Shared.Interfaces;
 
-namespace Company.Domain
+namespace Company.Domain.Entities
 {
     public class Company : IEntity<Guid>, IAudited, ISoftDeletable
     {
@@ -12,7 +13,6 @@ namespace Company.Domain
         public string CountryId { get; set; }
         public string CityId { get; set; }
         public string DistrictId { get; set; }
-        
         public string Name { get; set; }
         public string TaxNumber { get; set; }
         public string TaxOffice { get; set; }
@@ -24,11 +24,12 @@ namespace Company.Domain
         public string Address { get; set; }
         public int EmployeesCount { get; set; }
         public short EstablishedYear { get; set; }
-        
         public bool IsDeleted { get; set; }
         public DateTime CreationTime { get; set; }
         public long? CreatorUserId { get; set; }
         public DateTime? LastModificationTime { get; set; }
         public long? LastModifierUserId { get; set; }
+
+        public ICollection<CompanyFollower> Followers { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using Company.Application.Dtos;
+using Company.Application.Dtos.Company;
 using MediatR;
 
 namespace Company.Application.Commands.CreateCompany

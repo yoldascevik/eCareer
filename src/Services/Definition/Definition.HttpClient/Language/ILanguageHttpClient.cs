@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
+using Career.Data.Pagination;
 using Career.Http;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 
 namespace Definition.HttpClient.Language

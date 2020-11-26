@@ -1,4 +1,4 @@
-﻿namespace Company.Application.Dtos
+﻿namespace Company.Application.Dtos.Company
 {
     public class CompanyCommandModel
     {

@@ -1,4 +1,4 @@
-﻿namespace Career.Utilities.Pagination
+﻿namespace Career.Data.Pagination
 {
     public class PaginationFilter
     {

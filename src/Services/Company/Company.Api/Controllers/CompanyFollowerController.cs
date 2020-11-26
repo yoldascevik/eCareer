@@ -8,26 +8,25 @@ using Company.Application.Commands.UpdateCompany;
 using Company.Application.Dtos.Company;
 using Company.Application.Queries.GetCompanies;
 using Company.Application.Queries.GetCompanyById;
-using Company.Application.Queries.GetCompanyFollowers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/companies")]
-    public class CompanyController: CompanyApiController
+    [Route("api/v{version:apiVersion}/companies/followers")]
+    public class CompanyFollowerController: CompanyApiController
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         
-        public CompanyController(IMediator mediator, IMapper mapper)
+        public CompanyFollowerController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
         }
 
         /// <summary>
-        /// Get all companies
+        /// Get all compa
         /// </summary>
         [HttpGet]
         public virtual async Task<IActionResult> Get([FromQuery] GetCompaniesQuery request)
@@ -40,14 +39,6 @@ namespace Company.Api.Controllers
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> Get(Guid id)
             => Ok(await _mediator.Send(new GetCompanyByIdQuery(id)));
-        
-        /// <summary>
-        /// Get company followers
-        /// </summary>
-        /// <param name="id">Company id</param>
-        [HttpGet("{id}/followers")]
-        public virtual async Task<IActionResult> GetCompanyFollowers(Guid id)
-            => Ok(await _mediator.Send(new GetCompanyFollowersQuery(id)));
 
         /// <summary>
         /// Create new company

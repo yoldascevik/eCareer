@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Infrastructure.EntityTypeConfigurations
 {
-    public class CompanyConfiguration: IEntityTypeConfiguration<Domain.Company>
+    public class CompanyConfiguration: IEntityTypeConfiguration<Domain.Entities.Company>
     {
-        public void Configure(EntityTypeBuilder<Domain.Company> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.Company> builder)
         {
             builder.HasKey(o => o.Id);
             builder.Property(t => t.SectorId)
@@ -67,6 +67,9 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             
             builder.Property(t => t.CreationTime)
                 .IsRequired();
+            
+            builder.HasMany(c => c.Followers)
+                .WithOne(e => e.Company);
         }
     }
 }

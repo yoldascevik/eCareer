@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.Repositories;
-using Company.Application.Dtos;
+using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using Company.Infrastructure;
 using MediatR;

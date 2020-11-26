@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
-using Career.Utilities.Pagination;
+using Career.Data.Pagination;
 using Definition.Contract.Dto;
 using Definition.HttpClient;
 using Definition.HttpClient.Country;

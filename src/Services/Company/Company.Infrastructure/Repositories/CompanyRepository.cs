@@ -5,7 +5,7 @@ using Company.Domain.Repository;
 
 namespace Company.Infrastructure.Repositories
 {
-    public class CompanyRepository: EfRepository<CompanyDbContext, Domain.Company>, ICompanyRepository
+    public class CompanyRepository: EfRepository<CompanyDbContext, Domain.Entities.Company>, ICompanyRepository
     {
         public CompanyRepository(CompanyDbContext dbContext) : base(dbContext) { }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Career.Utilities.Pagination
+namespace Career.Data.Pagination
 {
     public static class PaginationExtension
     {

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Career.Utilities.Pagination;
+using Career.Data.Pagination;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Education.EducationType;
 using Definition.Contract.Dto;

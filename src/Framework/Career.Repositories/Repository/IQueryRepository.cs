@@ -10,7 +10,6 @@ namespace Career.Repositories.Repository
     {
         IQueryable<T> Get();
         IQueryable<T> Get(Expression<Func<T, bool>> condition);
-        Task<IEnumerable<T>> GetAsync();
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> condition);
 
         T GetByKey(object key);

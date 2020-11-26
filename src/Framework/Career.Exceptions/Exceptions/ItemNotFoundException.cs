@@ -10,6 +10,12 @@ namespace Career.Exceptions.Exceptions
             Message = $"Item \"{displayName}\" not found!";
         }
 
+        public ItemNotFoundException(string message)
+        {
+            StatusCode = (int)HttpStatusCode.NotFound;
+            Message = message;
+        }
+
         public override string Message { get; }
     }
 }

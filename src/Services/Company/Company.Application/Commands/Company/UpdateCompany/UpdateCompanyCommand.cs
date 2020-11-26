@@ -2,7 +2,7 @@ using System;
 using Company.Application.Dtos.Company;
 using MediatR;
 
-namespace Company.Application.Commands.UpdateCompany
+namespace Company.Application.Commands.Company.UpdateCompany
 {
     public class UpdateCompanyCommmand: IRequest<CompanyDto>
     {

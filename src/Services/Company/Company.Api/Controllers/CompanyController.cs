@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using Career.Data.Pagination;
 using Company.Api.Controllers.Base;
-using Company.Application.Commands.CreateCompany;
-using Company.Application.Commands.DeleteCompany;
-using Company.Application.Commands.UpdateCompany;
+using Company.Application.Commands.Company.CreateCompany;
+using Company.Application.Commands.Company.DeleteCompany;
+using Company.Application.Commands.Company.UpdateCompany;
 using Company.Application.Dtos.Company;
 using Company.Application.Queries.Company.GetCompanies;
 using Company.Application.Queries.Company.GetCompanyById;
@@ -14,10 +15,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Company.Api.Controllers
 {
     [Route("api/v{version:apiVersion}/companies")]
-    public class CompanyController: CompanyApiController
+    public class CompanyController : CompanyApiController
     {
         private readonly IMediator _mediator;
-        
+
         public CompanyController(IMediator mediator)
         {
             _mediator = mediator;
@@ -27,7 +28,7 @@ namespace Company.Api.Controllers
         /// Get all companies
         /// </summary>
         [HttpGet]
-        public virtual async Task<IActionResult> Get([FromQuery] GetCompaniesQuery request)
+        public async Task<IActionResult> Get([FromQuery] GetCompaniesQuery request)
             => Ok(await _mediator.Send(request));
 
         /// <summary>
@@ -35,15 +36,8 @@ namespace Company.Api.Controllers
         /// </summary>
         /// <param name="id">Company id</param>
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
             => Ok(await _mediator.Send(new GetCompanyByIdQuery(id)));
-        
-        /// <summary>
-        /// Get company followers
-        /// </summary>
-        [HttpGet("{id}/followers")]
-        public virtual async Task<IActionResult> GetCompanyFollowers([FromQuery] GetCompanyFollowersQuery request)
-            => Ok(await _mediator.Send(request));
 
         /// <summary>
         /// Create new company
@@ -51,13 +45,13 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Created company url</returns>
         [HttpPost]
-        public virtual async Task<IActionResult> CreateAsync([FromBody] CreateCompanyCommand request)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateCompanyCommand request)
         {
             var createdCompany = await _mediator.Send(request);
             if (createdCompany == null)
                 return BadRequest();
-                
-            return CreatedAtAction(nameof(Get), new { id = createdCompany.Id });
+
+            return CreatedAtAction(nameof(Get), new {id = createdCompany.Id});
         }
 
         /// <summary>
@@ -67,16 +61,25 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Updated company info</returns>
         [HttpPut("{id}")]
-        public virtual async Task<CompanyDto> UpdateAsync(Guid id, [FromBody] CompanyRequest request)
-            => await _mediator.Send(new UpdateCompanyCommmand(id, request));
-
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] CompanyRequest request)
+            => Ok(await _mediator.Send(new UpdateCompanyCommmand(id, request)));
 
         /// <summary>
         /// Delete existing company
         /// </summary>
         /// <param name="id">Company id to be deleted</param>
         [HttpDelete("{id}")]
-        public virtual async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
             => Ok(await _mediator.Send(new DeleteCompanyCommand(id)));
+
+        /// <summary>
+        /// Get company followers
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="paginationFilter">Paging configuration</param>
+        /// <returns></returns>
+        [HttpGet("{id}/followers")]
+        public async Task<IActionResult> GetCompanyFollowers(Guid id, [FromQuery] PaginationFilter paginationFilter)
+            => Ok(await _mediator.Send(new GetCompanyFollowersQuery(id, paginationFilter)));
     }
 }

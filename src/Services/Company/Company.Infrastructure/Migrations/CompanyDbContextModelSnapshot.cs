@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+// ReSharper disable PartialTypeWithSinglePart
 
 namespace Company.Infrastructure.Migrations
 {

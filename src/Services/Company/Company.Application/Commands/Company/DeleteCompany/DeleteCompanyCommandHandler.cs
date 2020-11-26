@@ -7,7 +7,7 @@ using Company.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Application.Commands.DeleteCompany
+namespace Company.Application.Commands.Company.DeleteCompany
 {
     public class DeleteCompanyCommandHandler: IRequestHandler<DeleteCompanyCommand>
     {

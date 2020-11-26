@@ -2,7 +2,7 @@ using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
 using FluentValidation;
 
-namespace Company.Application.Commands.CreateCompany
+namespace Company.Application.Commands.Company.CreateCompany
 {
     public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyCommand>
     {

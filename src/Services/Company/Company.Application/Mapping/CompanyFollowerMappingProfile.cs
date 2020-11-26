@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Company.Application.Dtos.Company;
+using Company.Application.Commands.CompanyFollower.FollowCompany;
 using Company.Domain.Entities;
 
 namespace Company.Application.Mapping
@@ -8,7 +8,7 @@ namespace Company.Application.Mapping
     {
         public CompanyFollowerMappingProfile()
         {
-            CreateMap<CompanyFollower, CompanyFollowerDto>();
+            CreateMap<FollowCompanyCommand, CompanyFollower>();
         }
     }
 }

@@ -2,7 +2,7 @@ using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
 using FluentValidation;
 
-namespace Company.Application.Commands.UpdateCompany
+namespace Company.Application.Commands.Company.UpdateCompany
 {
     public class UpdateCompanyCommandValidator : AbstractValidator<UpdateCompanyCommmand>
     {

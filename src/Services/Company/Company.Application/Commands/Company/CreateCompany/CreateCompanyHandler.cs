@@ -8,7 +8,7 @@ using Company.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Application.Commands.CreateCompany
+namespace Company.Application.Commands.Company.CreateCompany
 {
     public class CreateCompanyHandler : IRequestHandler<CreateCompanyCommand, CompanyDto>
     {

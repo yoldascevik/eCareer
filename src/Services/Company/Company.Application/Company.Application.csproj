@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Commands\Company" />
       <Folder Include="Queries\Company" />
     </ItemGroup>
 

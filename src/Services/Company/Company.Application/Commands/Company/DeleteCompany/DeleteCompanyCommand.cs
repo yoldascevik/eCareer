@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Company.Application.Commands.DeleteCompany
+namespace Company.Application.Commands.Company.DeleteCompany
 {
     public class DeleteCompanyCommand: IRequest
     {

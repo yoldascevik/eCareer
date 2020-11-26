@@ -30,9 +30,6 @@ namespace Career.EntityFramework.Repositories
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> condition)
             => DbSet.AsNoTracking().Where(condition);
 
-        public async Task<IEnumerable<TEntity>> GetAsync()
-            => await DbSet.AsNoTracking().ToListAsync();
-
         public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> condition)
             => await DbSet.AsNoTracking().Where(condition).ToListAsync();
 

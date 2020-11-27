@@ -11,18 +11,18 @@ namespace Company.Application.Commands.Company.DeleteCompany
 {
     public class DeleteCompanyCommandHandler: IRequestHandler<DeleteCompanyCommand>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;
-        private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
         private readonly ILogger<DeleteCompanyCommandHandler> _logger;
 
         public DeleteCompanyCommandHandler(
+            IUnitOfWork unitOfWork, 
             ICompanyRepository companyRepository, 
-            IUnitOfWork<CompanyDbContext> unitOfWork, 
             ILogger<DeleteCompanyCommandHandler> logger)
         {
-            _companyRepository = companyRepository;
-            _unitOfWork = unitOfWork;
             _logger = logger;
+            _unitOfWork = unitOfWork;
+            _companyRepository = companyRepository;
         }
 
         public async Task<Unit> Handle(DeleteCompanyCommand request, CancellationToken cancellationToken)

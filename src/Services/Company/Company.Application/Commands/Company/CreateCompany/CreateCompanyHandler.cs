@@ -13,20 +13,20 @@ namespace Company.Application.Commands.Company.CreateCompany
     public class CreateCompanyHandler : IRequestHandler<CreateCompanyCommand, CompanyDto>
     {
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CreateCompanyHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
-        private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
 
         public CreateCompanyHandler(
             IMapper mapper, 
+            IUnitOfWork unitOfWork,
             ICompanyRepository companyRepository, 
-            ILogger<CreateCompanyHandler> logger,
-            IUnitOfWork<CompanyDbContext> unitOfWork) 
+            ILogger<CreateCompanyHandler> logger) 
         {
-            _companyRepository = companyRepository;
-            _unitOfWork = unitOfWork;
-            _logger = logger;
             _mapper = mapper;
+            _logger = logger;
+            _unitOfWork = unitOfWork;
+            _companyRepository = companyRepository;
         }
 
         public async Task<CompanyDto> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)

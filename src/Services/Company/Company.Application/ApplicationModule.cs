@@ -7,6 +7,7 @@ using Company.Application.Mapping;
 using Company.Application.Services;
 using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
+using Company.Infrastructure;
 using Company.Infrastructure.Repositories;
 using Definition.HttpClient;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace Company.Application
             services.AddDefinitionApiHttpClient(definitionApiEndPoint);
             services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
 
-            services.AddUnitOfWork();
+            services.AddUnitOfWork<CompanyDbContext>();
 
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ISectorService, SectorService>();

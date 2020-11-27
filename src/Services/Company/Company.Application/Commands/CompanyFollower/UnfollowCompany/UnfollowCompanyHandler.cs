@@ -12,13 +12,13 @@ namespace Company.Application.Commands.CompanyFollower.UnfollowCompany
 {
     public class UnfollowCompanyHandler: IRequestHandler<UnfollowCompanyCommand>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UnfollowCompanyHandler> _logger;
-        private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
         private readonly ICompanyFollowerRepository _companyFollowerRepository;
 
         public UnfollowCompanyHandler(
+            IUnitOfWork unitOfWork, 
             ILogger<UnfollowCompanyHandler> logger, 
-            IUnitOfWork<CompanyDbContext> unitOfWork, 
             ICompanyFollowerRepository companyFollowerRepository)
         {
             _logger = logger;

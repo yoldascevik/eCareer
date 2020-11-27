@@ -4,7 +4,6 @@ using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.Repositories;
 using Company.Domain.Repository;
-using Company.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -13,16 +12,16 @@ namespace Company.Application.Commands.CompanyFollower.FollowCompany
     public class FollowCompanyHandler : IRequestHandler<FollowCompanyCommand>
     {
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<FollowCompanyHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
-        private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
         private readonly ICompanyFollowerRepository _companyFollowerRepository;
 
         public FollowCompanyHandler(
             IMapper mapper,
+            IUnitOfWork unitOfWork,
             ILogger<FollowCompanyHandler> logger,
             ICompanyRepository companyRepository,
-            IUnitOfWork<CompanyDbContext> unitOfWork,
             ICompanyFollowerRepository companyFollowerRepository)
         {
             _logger = logger;

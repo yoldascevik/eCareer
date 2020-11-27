@@ -14,20 +14,20 @@ namespace Company.Application.Commands.Company.UpdateCompany
     public class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommmand, CompanyDto>
     {
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;
         private readonly ILogger<UpdateCompanyCommmand> _logger;
-        private readonly IUnitOfWork<CompanyDbContext> _unitOfWork;
 
         public UpdateCompanyHandler(
             IMapper mapper,
+            IUnitOfWork unitOfWork,
             ICompanyRepository companyRepository,
-            ILogger<UpdateCompanyCommmand> logger,
-            IUnitOfWork<CompanyDbContext> unitOfWork)
+            ILogger<UpdateCompanyCommmand> logger)
         {
-            _companyRepository = companyRepository;
-            _unitOfWork = unitOfWork;
-            _logger = logger;
             _mapper = mapper;
+            _logger = logger;
+            _unitOfWork = unitOfWork;
+            _companyRepository = companyRepository;
         }
 
         public async Task<CompanyDto> Handle(UpdateCompanyCommmand request, CancellationToken cancellationToken)

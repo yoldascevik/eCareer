@@ -1,14 +1,16 @@
-﻿using Company.Domain.Entities;
+﻿using Career.EntityFramework;
+using Career.Shared.OS;
+using Company.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Infrastructure
 {
-    public class CompanyDbContext: DbContext
+    public class CompanyDbContext: AuditedDbContext
     {
         public CompanyDbContext() { }
         
-        public CompanyDbContext(DbContextOptions<CompanyDbContext> options)
-            : base(options)
+        public CompanyDbContext(DbContextOptions options, IDateTimeProvider dateTimeProvider)
+            : base(options, dateTimeProvider)
         {
             
         }

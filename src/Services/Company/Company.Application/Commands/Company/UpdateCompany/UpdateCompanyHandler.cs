@@ -35,7 +35,7 @@ namespace Company.Application.Commands.Company.UpdateCompany
             if (company == null)
                 throw new ItemNotFoundException($"Company is not found by id: {request.Id}");
 
-            _mapper.Map(request, company);
+            _mapper.Map(request.Company, company);
             var updatedCompany = await _companyRepository.UpdateAsync(request.Id, company);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);

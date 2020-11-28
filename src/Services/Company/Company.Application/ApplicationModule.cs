@@ -2,6 +2,7 @@ using AutoMapper;
 using Career.Configuration;
 using Career.EntityFramework;
 using Career.IoC.IoCModule;
+using Career.Shared.OS;
 using Company.Application.Mapping;
 using Company.Application.Services;
 using Company.Application.Services.Abstractions;
@@ -23,7 +24,7 @@ namespace Company.Application
             var definitionApiEndPoint = configuration.GetSection("ApiEndpoints:DefinitionApi").Get<ApiEndpointOptions>();
             
             services.AddDefinitionApiHttpClient(definitionApiEndPoint);
-
+            
             services.AddDbContext<CompanyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("CompanyDatabase")));
             services.AddUnitOfWork<CompanyDbContext>();
 
@@ -32,6 +33,8 @@ namespace Company.Application
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
+            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            
             services.AddAutoMapper(typeof(CompanyMappinProfile));
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
@@ -25,6 +26,7 @@ namespace Definition.Application.Education.EducationLevel
         public async Task<PagedList<EducationLevelDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _educationLevelRepository.Get(educationLevel => !educationLevel.IsDeleted)
+                .OrderBy(e=> e.Id)
                 .ProjectTo<EducationLevelDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }

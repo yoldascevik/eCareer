@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
@@ -25,6 +26,7 @@ namespace Definition.Application.Work.Sector
         public async Task<PagedList<SectorDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _sectorRepository.Get(sector => !sector.IsDeleted)
+                .OrderBy(s => s.Id)
                 .ProjectTo<SectorDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }

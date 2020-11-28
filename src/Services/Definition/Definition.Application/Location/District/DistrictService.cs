@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
@@ -16,7 +17,7 @@ namespace Definition.Application.Location.District
         private readonly IMongoRepository<Data.Entities.City> _cityRepository;
 
         public DistrictService(
-            IMongoRepository<Data.Entities.District> districtRepository, 
+            IMongoRepository<Data.Entities.District> districtRepository,
             IMongoRepository<Data.Entities.City> cityRepository,
             IMapper mapper)
         {
@@ -28,6 +29,7 @@ namespace Definition.Application.Location.District
         public async Task<PagedList<DistrictDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _districtRepository.Get(district => !district.IsDeleted)
+                .OrderBy(d => d.Id)
                 .ProjectTo<DistrictDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -36,8 +38,9 @@ namespace Definition.Application.Location.District
         {
             if (!await _cityRepository.AnyAsync(city => city.Id == cityId))
                 throw new NotFoundException($"City not found for Id:{cityId}");
-            
+
             return await _districtRepository.Get(district => district.CityId == cityId && !district.IsDeleted)
+                .OrderBy(d => d.Id)
                 .ProjectTo<DistrictDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -63,7 +66,7 @@ namespace Definition.Application.Location.District
             createdDistrict.CityCode = city.CityCode;
             createdDistrict.CountryCode = city.CountryCode;
             createdDistrict.CountryId = city.CountryId;
-            
+
             return _mapper.Map<DistrictDto>(await _districtRepository.AddAsync(createdDistrict));
         }
 
@@ -71,7 +74,7 @@ namespace Definition.Application.Location.District
         {
             if (!await _districtRepository.AnyAsync(district => district.Id == id))
                 throw new ItemNotFoundException(requestModel.Name);
-            
+
             if (!await _cityRepository.AnyAsync(city => city.Id == requestModel.CityId))
                 throw new NotFoundException($"City not found for Id:{requestModel.CityId}");
 
@@ -88,15 +91,15 @@ namespace Definition.Application.Location.District
 
             await _districtRepository.DeleteAsync(id);
         }
-        
+
         private async Task CheckDistrictExist(DistrictRequestModel requestModel, string id = null)
         {
-            bool isDistrictExist = await _districtRepository.AnyAsync(district => 
+            bool isDistrictExist = await _districtRepository.AnyAsync(district =>
                 (string.IsNullOrEmpty(id) || district.Id != id)
                 && district.CityId == requestModel.CityId
                 && district.Name == requestModel.Name
                 && district.IsDeleted == false);
-            
+
             if (isDistrictExist)
                 throw new ItemAlreadyExistsException(requestModel.Name);
         }

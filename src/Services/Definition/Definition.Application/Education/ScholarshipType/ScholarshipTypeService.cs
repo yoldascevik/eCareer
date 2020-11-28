@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
@@ -25,6 +26,7 @@ namespace Definition.Application.Education.ScholarshipType
         public async Task<PagedList<ScholarshipTypeDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _scholarshipTypeRepository.Get(scholarshipType => !scholarshipType.IsDeleted)
+                .OrderBy(s=> s.Id)
                 .ProjectTo<ScholarshipTypeDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }

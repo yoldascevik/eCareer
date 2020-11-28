@@ -20,6 +20,7 @@ namespace Company.Application.Queries.Company.GetCompanyFollowers
         public async Task<PagedList<Guid>> Handle(GetCompanyFollowersQuery request, CancellationToken cancellationToken)
         {
             return await _companyFollowerRepository.GetActiveCompanyFollowers(request.CompanyId)
+                .OrderBy(follower => follower.Id)
                 .Select(follower => follower.UserId)
                 .ToPagedListAsync(request.PaginationFilter);
         }

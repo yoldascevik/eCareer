@@ -1,3 +1,4 @@
+using System;
 using Company.Application.Services.Abstractions;
 using Company.Domain.Repository;
 using FluentValidation;
@@ -22,10 +23,13 @@ namespace Company.Application.Commands.Company.UpdateCompany
             RuleFor(x => x.Company.MobilePhone).MaximumLength(50);
             RuleFor(x => x.Company.Website).MaximumLength(50);
             RuleFor(x => x.Company.EmployeesCount).GreaterThan(0);
-            RuleFor(x => x.Company.EstablishedYear).GreaterThan((short) 0);
             RuleFor(x => x.Company.FaxNumber).MaximumLength(50);
             RuleFor(x => x.Company.TaxNumber).NotEmpty().MaximumLength(50);
             RuleFor(x => x.Company.TaxOffice).NotEmpty().MaximumLength(50);
+            
+            RuleFor(x => x.Company.EstablishedYear)
+                .GreaterThan((short) 1500)
+                .LessThanOrEqualTo((short)DateTime.UtcNow.Year);
                           
             RuleFor(x => x)
                 .MustAsync(async (command, cancellation) => await locationService.IsCountryExistsAsync(command.Company.CountryId))

@@ -8,6 +8,11 @@ namespace Company.Domain.Entities
 {
     public class Company : IEntity<Guid>, IAudited, ISoftDeletable
     {
+        public Company()
+        {
+            Followers = new List<CompanyFollower>();
+        }
+        
         public Guid Id { get; set; }
         public string SectorId { get; set; }
         public string CountryId { get; set; }
@@ -29,7 +34,6 @@ namespace Company.Domain.Entities
         public long? CreatorUserId { get; set; }
         public DateTime? LastModificationTime { get; set; }
         public long? LastModifierUserId { get; set; }
-
         public ICollection<CompanyFollower> Followers { get; set; }
     }
 }

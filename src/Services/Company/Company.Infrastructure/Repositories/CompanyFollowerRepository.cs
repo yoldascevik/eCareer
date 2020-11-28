@@ -9,6 +9,7 @@ namespace Company.Infrastructure.Repositories
     public class CompanyFollowerRepository: EfRepository<CompanyDbContext, CompanyFollower>, ICompanyFollowerRepository
     {
         public CompanyFollowerRepository(CompanyDbContext dbContext) : base(dbContext) { }
+        
         public IQueryable<CompanyFollower> GetActiveCompanyFollowers(Guid companyId)
         {
             return Get(follower => follower.CompanyId == companyId && !follower.IsDeleted);

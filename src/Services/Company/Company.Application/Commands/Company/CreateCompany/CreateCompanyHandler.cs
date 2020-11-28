@@ -4,7 +4,6 @@ using AutoMapper;
 using Career.Repositories;
 using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
-using Company.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

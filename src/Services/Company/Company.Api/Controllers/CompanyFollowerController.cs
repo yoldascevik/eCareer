@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Career.Data.Pagination;
 using Company.Api.Controllers.Base;
-using Company.Application.Commands.CompanyFollower.FollowCompany;
-using Company.Application.Commands.CompanyFollower.UnfollowCompany;
-using Company.Application.Queries.CompanyFollower.GetFollowedCompanies;
+using Company.Application.CompanyFollower.Commands.FollowCompany;
+using Company.Application.CompanyFollower.Commands.UnfollowCompany;
+using Company.Application.CompanyFollower.Queries.GetFollowedCompanies;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

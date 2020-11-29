@@ -27,9 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\Company" />
-      <Folder Include="Company" />
-      <Folder Include="Queries\Company" />
+      <Folder Include="CompanyFollower\Commands" />
+      <Folder Include="CompanyFollower\Queries" />
+      <Folder Include="Company\Commands" />
+      <Folder Include="Company\Queries" />
     </ItemGroup>
 
 </Project>

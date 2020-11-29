@@ -1,12 +1,13 @@
 using AutoMapper;
 using Career.Configuration;
 using Career.EntityFramework;
+using Career.IoC;
 using Career.IoC.IoCModule;
 using Career.Shared.OS;
 using Company.Application.Company;
 using Company.Application.Services.Location;
 using Company.Application.Services.Sector;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 using Company.Infrastructure;
 using Company.Infrastructure.Repositories;
 using Definition.HttpClient;
@@ -36,6 +37,7 @@ namespace Company.Application
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             
             services.AddAutoMapper(typeof(CompanyMappinProfile));
+            services.RegisterModule(new DomainModule());
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using Company.Application.Services.Location;
 using Company.Application.Services.Sector;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 using FluentValidation;
 
 namespace Company.Application.Company.Commands.CreateCompany

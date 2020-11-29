@@ -2,7 +2,7 @@
 using System.Linq;
 using Career.EntityFramework.Repositories;
 using Company.Domain.Entities;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 
 namespace Company.Infrastructure.Repositories
 {

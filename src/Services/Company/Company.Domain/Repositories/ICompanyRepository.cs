@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Career.Repositories.Repository;
 
-namespace Company.Domain.Repository
+namespace Company.Domain.Repositories
 {
     public interface ICompanyRepository: IRepository<Entities.Company>
     {

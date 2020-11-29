@@ -4,7 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
 using Career.MediatR.Query;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 
 namespace Company.Application.Company.Queries.GetCompanies
 {

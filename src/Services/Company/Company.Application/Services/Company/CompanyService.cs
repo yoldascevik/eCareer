@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Company.Application.Company;
 using Company.Application.Company.Commands.CreateCompany;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 
 namespace Company.Application.Services.Company
 {

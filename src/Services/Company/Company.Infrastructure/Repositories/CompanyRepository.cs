@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Career.EntityFramework.Repositories;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 
 namespace Company.Infrastructure.Repositories
 {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories;
-using Company.Domain.Repository;
+using Company.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

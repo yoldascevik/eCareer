@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
+using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Domain.Repository;
 using MediatR;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Commands.CompanyFollower.FollowCompany
 {
-    public class FollowCompanyHandler : IRequestHandler<FollowCompanyCommand>
+    public class FollowCompanyHandler : ICommandHandler<FollowCompanyCommand>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;

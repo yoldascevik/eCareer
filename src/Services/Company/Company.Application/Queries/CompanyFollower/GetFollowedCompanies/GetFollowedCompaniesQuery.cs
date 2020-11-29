@@ -1,10 +1,11 @@
 ﻿using System;
 using Career.Data.Pagination;
+using Career.MediatR.Query;
 using MediatR;
 
 namespace Company.Application.Queries.CompanyFollower.GetFollowedCompanies
 {
-    public class GetFollowedCompaniesQuery: IRequest<PagedList<Guid>>
+    public class GetFollowedCompaniesQuery: IQuery<PagedList<Guid>>
     {
         public GetFollowedCompaniesQuery(Guid userId, PaginationFilter paginationFilter)
         {

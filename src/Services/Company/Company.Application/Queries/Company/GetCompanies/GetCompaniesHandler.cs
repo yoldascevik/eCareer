@@ -3,13 +3,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
+using Career.MediatR.Query;
 using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using MediatR;
 
 namespace Company.Application.Queries.Company.GetCompanies
 {
-    public class GetCompaniesHandler : IRequestHandler<GetCompaniesQuery, PagedList<CompanyDto>>
+    public class GetCompaniesHandler : IQueryHandler<GetCompaniesQuery, PagedList<CompanyDto>>
     {
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;

@@ -1,9 +1,10 @@
 ﻿using System;
+using Career.MediatR.Command;
 using MediatR;
 
 namespace Company.Application.Commands.CompanyFollower.FollowCompany
 {
-    public class FollowCompanyCommand: IRequest
+    public class FollowCompanyCommand: ICommand
     {
         public FollowCompanyCommand(Guid userId, Guid companyId)
         {

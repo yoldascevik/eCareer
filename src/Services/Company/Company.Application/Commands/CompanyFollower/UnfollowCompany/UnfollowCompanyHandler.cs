@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
+using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Domain.Repository;
 using MediatR;
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Commands.CompanyFollower.UnfollowCompany
 {
-    public class UnfollowCompanyHandler: IRequestHandler<UnfollowCompanyCommand>
+    public class UnfollowCompanyHandler: ICommandHandler<UnfollowCompanyCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UnfollowCompanyHandler> _logger;

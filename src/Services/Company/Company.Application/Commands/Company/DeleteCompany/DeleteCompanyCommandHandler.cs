@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
+using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Domain.Repository;
 using MediatR;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Commands.Company.DeleteCompany
 {
-    public class DeleteCompanyCommandHandler: IRequestHandler<DeleteCompanyCommand>
+    public class DeleteCompanyCommandHandler: ICommandHandler<DeleteCompanyCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;

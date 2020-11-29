@@ -1,9 +1,10 @@
 ﻿using System;
+using Career.MediatR.Command;
 using MediatR;
 
 namespace Company.Application.Commands.CompanyFollower.UnfollowCompany
 {
-    public class UnfollowCompanyCommand: IRequest
+    public class UnfollowCompanyCommand: ICommand
     {
         public UnfollowCompanyCommand(Guid userId, Guid companyId)
         {

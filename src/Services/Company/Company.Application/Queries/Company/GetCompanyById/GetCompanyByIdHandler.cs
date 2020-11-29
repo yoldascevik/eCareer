@@ -2,13 +2,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
+using Career.MediatR.Query;
 using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
 using MediatR;
 
 namespace Company.Application.Queries.Company.GetCompanyById
 {
-    public class GetCompanyByIdHandler: IRequestHandler<GetCompanyByIdQuery, CompanyDto>
+    public class GetCompanyByIdHandler: IQueryHandler<GetCompanyByIdQuery, CompanyDto>
     {
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;

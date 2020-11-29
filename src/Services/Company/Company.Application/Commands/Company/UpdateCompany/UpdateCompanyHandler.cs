@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
+using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Application.Dtos.Company;
 using Company.Domain.Repository;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Commands.Company.UpdateCompany
 {
-    public class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommmand, CompanyDto>
+    public class UpdateCompanyHandler : ICommandHandler<UpdateCompanyCommmand, CompanyDto>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;

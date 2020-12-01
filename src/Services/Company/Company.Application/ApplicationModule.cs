@@ -5,6 +5,7 @@ using Career.IoC;
 using Career.IoC.IoCModule;
 using Career.Shared.OS;
 using Company.Application.Company;
+using Company.Application.Services.Company;
 using Company.Application.Services.Location;
 using Company.Application.Services.Sector;
 using Company.Domain.Repositories;
@@ -28,6 +29,8 @@ namespace Company.Application
             
             services.AddDbContext<CompanyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("CompanyDatabase")));
             services.AddUnitOfWork<CompanyDbContext>();
+            
+            services.AddScoped<ICompanyService, CompanyService>();
 
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ISectorService, SectorService>();

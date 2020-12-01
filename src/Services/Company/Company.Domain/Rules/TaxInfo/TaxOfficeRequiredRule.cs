@@ -1,5 +1,4 @@
 using Career.Domain;
-using Career.Exceptions;
 
 namespace Company.Domain.Rules.TaxInfo
 {

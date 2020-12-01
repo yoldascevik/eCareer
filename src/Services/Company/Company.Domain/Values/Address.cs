@@ -9,16 +9,14 @@ namespace Company.Domain.Values
             string countryId, 
             string cityId, 
             string districtId, 
-            string address,
-            IValidAddressSpecification validAddressSpecification)
+            string address)
         {
             CheckRule(new AddressMustHaveCountryIdRule(countryId));
             CheckRule(new AddressMustHaveCityIdRule(cityId));
-            CheckRule(new AddressMustBeValidRule(this, validAddressSpecification));
             
             CountryId = countryId;
-            CityId = cityId;
             DistrictId = districtId;
+            CityId = cityId;
             Address = address;
         }
         

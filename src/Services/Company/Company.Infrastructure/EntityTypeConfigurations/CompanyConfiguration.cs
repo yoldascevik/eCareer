@@ -12,29 +12,41 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                 .HasMaxLength(24)
                 .IsRequired();
             
-            builder.Property(t => t.CountryId)
-                .HasMaxLength(24)
-                .IsRequired();
-            
-            builder.Property(t => t.CityId)
-                .HasMaxLength(24)
-                .IsRequired();
-
-            builder.Property(t => t.DistrictId)
-                .HasMaxLength(24);
-
             builder.Property(t => t.Name)
                 .HasMaxLength(100)
                 .IsRequired();
-            
-            builder.Property(t => t.TaxNumber)
-                .HasMaxLength(50)
-                .IsRequired();
-            
-            builder.Property(t => t.TaxOffice)
-                .HasMaxLength(50)
-                .IsRequired();
 
+            // value object mapping
+            builder.OwnsOne(m => m.Address, a =>
+            {
+                a.Property(t => t.CountryId)
+                    .HasMaxLength(24)
+                    .IsRequired();
+            
+                a.Property(t => t.CityId)
+                    .HasMaxLength(24)
+                    .IsRequired();
+
+                a.Property(t => t.DistrictId)
+                    .HasMaxLength(24);
+                
+                a.Property(t => t.Address)
+                    .HasMaxLength(500)
+                    .IsRequired();
+            });
+
+            // value object mapping
+            builder.OwnsOne(m => m.TaxInfo, a =>
+            {
+                a.Property(t => t.TaxNumber)
+                    .HasMaxLength(50)
+                    .IsRequired();
+            
+                a.Property(t => t.TaxOffice)
+                    .HasMaxLength(50)
+                    .IsRequired();
+            });
+            
             builder.Property(t => t.Website)
                 .HasMaxLength(50);
             
@@ -51,10 +63,6 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             
             builder.Property(t => t.FaxNumber)
                 .HasMaxLength(50);
-            
-            builder.Property(t => t.Address)
-                .HasMaxLength(500)
-                .IsRequired();
 
             builder.Property(t => t.EmployeesCount)
                 .HasColumnType("smallint");

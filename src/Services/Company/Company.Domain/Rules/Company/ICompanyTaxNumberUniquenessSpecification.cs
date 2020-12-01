@@ -2,7 +2,7 @@
 
 namespace Company.Domain.Rules.Company
 {
-    public interface ICompanyTaxNumberUniquenessSpecification: ISpecification<Values.TaxInfo>
+    public interface ICompanyTaxNumberUniquenessSpecification: ISpecification<Entities.Company>
     {
         
     }

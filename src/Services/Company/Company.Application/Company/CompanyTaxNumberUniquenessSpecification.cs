@@ -1,7 +1,5 @@
 using Company.Domain.Repositories;
-using Company.Domain.Rules;
 using Company.Domain.Rules.Company;
-using Company.Domain.Values;
 
 namespace Company.Application.Company
 {
@@ -14,9 +12,11 @@ namespace Company.Application.Company
             _companyRepository = companyRepository;
         }
         
-        public bool IsSatisfiedBy(TaxInfo taxInfo)
+        public bool IsSatisfiedBy(Domain.Entities.Company company)
         {
-            return await _companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.CountryId);
+            return true;
+            // TODO: Async specification implemantation
+            //return await _companyRepository.IsTaxNumberExistsAsync(company.TaxInfo.TaxNumber, company.Address.CountryId, company.Id);
         }
     }
 }

@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
 using Career.MediatR.Query;
 using Company.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Company.Application.Company.Queries.GetCompanies
 {
@@ -22,6 +23,7 @@ namespace Company.Application.Company.Queries.GetCompanies
         public async Task<PagedList<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
             return await _companyRepository.Get(company => !company.IsDeleted)
+                .AsNoTracking()
                 .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(request);
         }

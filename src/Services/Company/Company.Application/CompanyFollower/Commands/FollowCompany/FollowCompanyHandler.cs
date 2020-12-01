@@ -34,27 +34,13 @@ namespace Company.Application.CompanyFollower.Commands.FollowCompany
 
         public async Task<Unit> Handle(FollowCompanyCommand request, CancellationToken cancellationToken)
         {
-            //TODO: check user exist
-            
-            var company = await _companyRepository.FirstOrDefaultAsync(c => c.Id == request.CompanyId && !c.IsDeleted);
+            var company = await _companyRepository.GetCompanyIncludeFollowers(request.CompanyId);
             if (company == null)
                 throw new ItemNotFoundException($"Company is not found: {request.CompanyId}");
 
-            var companyFollower = await _companyFollowerRepository.FirstOrDefaultAsync(c => c.UserId == request.UserId && c.CompanyId == request.CompanyId);
-            if (companyFollower != null && !companyFollower.IsDeleted)
-            {
-                throw new AlreadyExistsException($"User already follow the company.");
-            }
-            else if (companyFollower != null && companyFollower.IsDeleted)
-            {
-                companyFollower.IsDeleted = false;
-                await _companyFollowerRepository.UpdateAsync(companyFollower.Id, companyFollower);
-            }
-            else
-            {
-                await _companyFollowerRepository.AddAsync(_mapper.Map<Domain.Entities.CompanyFollower>(request));
-            }
-
+            // TODO: specification ?
+            company.Follow(request.UserId);
+            
             _logger.LogInformation("User {userId} followed company {companyName} ({companyId})", request.UserId, company.Name, company.Id);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             

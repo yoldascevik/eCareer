@@ -65,7 +65,7 @@ namespace Company.Domain.Entities
             return company;
         }
 
-        public void Follow(Guid userId)
+        public Company Follow(Guid userId)
         {
             Check.NotNull(userId, nameof(userId));
 
@@ -86,6 +86,8 @@ namespace Company.Domain.Entities
                     UserId = userId
                 });
             }
+
+            return this;
         }
 
         #endregion

@@ -1,5 +1,5 @@
 ﻿using Career.EntityFramework;
-using Career.Shared.OS;
+using Career.Shared.System.DateTimeProvider;
 using Company.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Career.Shared.OS
+namespace Career.Shared.System.DateTimeProvider
 {
     public  static class DateTimeProviderExtensions
     {

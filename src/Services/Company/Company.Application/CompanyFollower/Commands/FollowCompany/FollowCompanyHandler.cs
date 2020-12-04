@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories;
@@ -12,24 +11,17 @@ namespace Company.Application.CompanyFollower.Commands.FollowCompany
 {
     public class FollowCompanyHandler : ICommandHandler<FollowCompanyCommand>
     {
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<FollowCompanyHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
-        private readonly ICompanyFollowerRepository _companyFollowerRepository;
 
-        public FollowCompanyHandler(
-            IMapper mapper,
-            IUnitOfWork unitOfWork,
+        public FollowCompanyHandler(IUnitOfWork unitOfWork,
             ILogger<FollowCompanyHandler> logger,
-            ICompanyRepository companyRepository,
-            ICompanyFollowerRepository companyFollowerRepository)
+            ICompanyRepository companyRepository)
         {
             _logger = logger;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
             _companyRepository = companyRepository;
-            _companyFollowerRepository = companyFollowerRepository;
         }
 
         public async Task<Unit> Handle(FollowCompanyCommand request, CancellationToken cancellationToken)

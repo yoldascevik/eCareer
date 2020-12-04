@@ -4,7 +4,7 @@ using Career.IoC;
 using Career.MediatR;
 using Career.Mvc.Extensions;
 using Career.Swagger;
-using Company.Application;
+using Company.Application.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

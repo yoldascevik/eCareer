@@ -20,17 +20,21 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             builder.OwnsOne(m => m.Address, a =>
             {
                 a.Property(t => t.CountryId)
+                    .HasColumnName("CountryId")
                     .HasMaxLength(24)
                     .IsRequired();
             
                 a.Property(t => t.CityId)
+                    .HasColumnName("CityId")
                     .HasMaxLength(24)
                     .IsRequired();
 
                 a.Property(t => t.DistrictId)
+                    .HasColumnName("DistrictId")
                     .HasMaxLength(24);
                 
                 a.Property(t => t.Address)
+                    .HasColumnName("Address")
                     .HasMaxLength(500)
                     .IsRequired();
             });
@@ -39,10 +43,12 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             builder.OwnsOne(m => m.TaxInfo, a =>
             {
                 a.Property(t => t.TaxNumber)
+                    .HasColumnName("TaxNumber")
                     .HasMaxLength(50)
                     .IsRequired();
             
                 a.Property(t => t.TaxOffice)
+                    .HasColumnName("TaxOffice")
                     .HasMaxLength(50)
                     .IsRequired();
             });

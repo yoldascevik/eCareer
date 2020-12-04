@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
 using Career.MediatR.Query;
+using Company.Application.Company.Models;
 using Company.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 

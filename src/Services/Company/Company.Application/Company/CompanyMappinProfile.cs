@@ -1,5 +1,6 @@
 using AutoMapper;
 using Company.Application.Company.Commands.CreateCompany;
+using Company.Application.Company.Models;
 
 namespace Company.Application.Company
 {

@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using AutoMapper;
-using Company.Application.Company;
 using Company.Application.Company.Commands.CreateCompany;
+using Company.Application.Company.Models;
 using Company.Domain.Repositories;
 
-namespace Company.Application.Services.Company
+namespace Company.Application.Company.Services
 {
     internal class CompanyService: ICompanyService
     {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Company.Application.Company;
 using Company.Application.Company.Commands.CreateCompany;
+using Company.Application.Company.Models;
 
-namespace Company.Application.Services.Company
+namespace Company.Application.Company.Services
 {
     public interface ICompanyService
     {

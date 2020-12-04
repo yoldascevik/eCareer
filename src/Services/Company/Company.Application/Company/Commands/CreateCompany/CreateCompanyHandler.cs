@@ -2,7 +2,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
 using Career.Repositories;
-using Company.Application.Services.Company;
+using Company.Application.Company.Models;
+using Company.Application.Company.Services;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.CreateCompany

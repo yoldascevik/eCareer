@@ -4,6 +4,7 @@ using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories;
+using Company.Application.Company.Models;
 using Company.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 

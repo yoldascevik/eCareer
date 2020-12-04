@@ -1,4 +1,4 @@
-﻿namespace Company.Application.Company
+﻿namespace Company.Application.Company.Models
 {
     public class CompanyRequest
     {

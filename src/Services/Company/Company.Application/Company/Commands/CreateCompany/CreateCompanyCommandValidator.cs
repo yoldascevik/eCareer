@@ -1,17 +1,11 @@
 using System;
-using Company.Application.Services.Location;
-using Company.Application.Services.Sector;
-using Company.Domain.Repositories;
 using FluentValidation;
 
 namespace Company.Application.Company.Commands.CreateCompany
 {
     public class CreateCompanyCommandValidator : AbstractValidator<CreateCompanyCommand>
     {
-        public CreateCompanyCommandValidator(
-            ISectorService sectorService,
-            ILocationService locationService,
-            ICompanyRepository companyRepository)
+        public CreateCompanyCommandValidator()
         {
             RuleFor(x => x.CountryId).NotEmpty();
             RuleFor(x => x.CityId).NotEmpty();
@@ -29,30 +23,9 @@ namespace Company.Application.Company.Commands.CreateCompany
 
             RuleFor(x => x.EstablishedYear)
                 .GreaterThan((short) 1500)
-                .LessThanOrEqualTo((short)DateTime.UtcNow.Year);
+                .LessThanOrEqualTo((short) DateTime.UtcNow.Year);
 
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsCountryExistsAsync(command.CountryId))
-                .WithMessage("Country is not found!");
-
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsCityExistsInCountryAsync(command.CityId, command.CountryId))
-                .WithMessage("City is not found in country!");
-
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await locationService.IsDistrictExistsInCityAsync(command.DistrictId, command.CityId))
-                .WithMessage("District is not found in city!")
-                .Unless(x => string.IsNullOrEmpty(x.DistrictId));
-
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => await sectorService.IsSectorExistsAsync(command.SectorId))
-                .WithMessage("Company sector is not found!");
-
-            RuleFor(x => x)
-                .MustAsync(async (command, cancellation) => !await companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId))
-                .WithMessage("Tax number is already registered!");
-            
-            //TODO: Tax Number validation
+            //TODO: Tax Number 
         }
     }
 }

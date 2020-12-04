@@ -3,7 +3,7 @@ using Company.Application.Company;
 using Company.Domain.Rules.Company;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Company.Application
+namespace Company.Application.Modules
 {
     public class DomainModule: Module
     {

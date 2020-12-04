@@ -1,6 +1,6 @@
 using System;
 
-namespace Career.Shared.OS
+namespace Career.Shared.System.DateTimeProvider
 {
     public class DateTimeProvider : IDateTimeProvider
     {

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Query;
+using Company.Application.Company.Models;
 using Company.Domain.Repositories;
 
 namespace Company.Application.Company.Queries.GetCompanyById

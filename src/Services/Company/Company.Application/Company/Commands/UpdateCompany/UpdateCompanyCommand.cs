@@ -1,5 +1,6 @@
 using System;
 using Career.MediatR.Command;
+using Company.Application.Company.Models;
 
 namespace Company.Application.Company.Commands.UpdateCompany
 {

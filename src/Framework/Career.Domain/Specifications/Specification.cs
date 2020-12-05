@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Career.Domain.Specifications
 {
-    public abstract class ExpressionSpecification<T> : IExpressionSpecification<T>
+    public abstract class Specification<T> : ISpecification<T>
     {
         public virtual bool IsSatisfiedBy(T obj)
         {
@@ -12,9 +12,9 @@ namespace Career.Domain.Specifications
         
         public abstract Expression<Func<T, bool>> ToExpression();
 
-        public static implicit operator Expression<Func<T, bool>>(ExpressionSpecification<T> expressionSpecification)
+        public static implicit operator Expression<Func<T, bool>>(Specification<T> specification)
         {
-            return expressionSpecification.ToExpression();
+            return specification.ToExpression();
         }
     }
 }

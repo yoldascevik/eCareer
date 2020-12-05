@@ -1,9 +1,12 @@
+using System;
+using System.Linq.Expressions;
+using Career.Domain.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
 
 namespace Company.Application.Company
 {
-    public class CompanyTaxNumberUniquenessSpecification: ICompanyTaxNumberUniquenessSpecification
+    public class CompanyTaxNumberUniquenessSpecification: Specification<Domain.Entities.Company>, ICompanyTaxNumberUniquenessSpecification
     {
         private readonly ICompanyRepository _companyRepository;
         
@@ -11,12 +14,10 @@ namespace Company.Application.Company
         {
             _companyRepository = companyRepository;
         }
-        
-        public bool IsSatisfiedBy(Domain.Entities.Company company)
-        {
-            return true;
-            // TODO: Async specification implemantation
-            //return await _companyRepository.IsTaxNumberExistsAsync(company.TaxInfo.TaxNumber, company.Address.CountryId, company.Id);
+
+        public override Expression<Func<Domain.Entities.Company, bool>> ToExpression()
+        { 
+            return company => _companyRepository.IsTaxNumberExistsAsync(company.TaxInfo.TaxNumber, company.Address.CountryId, company.Id).Result;
         }
     }
 }

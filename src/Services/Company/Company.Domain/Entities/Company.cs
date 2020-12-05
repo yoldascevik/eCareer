@@ -12,7 +12,7 @@ using Company.Domain.Values;
 
 namespace Company.Domain.Entities
 {
-    public class Company : Entity<Guid>, IAggregateRoot, IAudited, ISoftDeletable
+    public class Company : DomainEntity<Guid>, IAggregateRoot, IAudited, ISoftDeletable
     {
         public Company()
         {

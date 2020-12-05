@@ -1,4 +1,4 @@
-﻿using Career.Shared.Entities;
+﻿using Career.Domain.Entities;
 
 namespace Career.Mongo.Document
 {

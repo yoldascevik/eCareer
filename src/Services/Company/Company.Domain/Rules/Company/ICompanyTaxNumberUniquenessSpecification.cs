@@ -2,8 +2,8 @@
 
 namespace Company.Domain.Rules.Company
 {
-    public interface ICompanyTaxNumberUniquenessSpecification: ISpecification<Entities.Company>
+    public interface ICompanyTaxNumberUniquenessSpecification : ISpecification<Entities.Company>
     {
-        
     }
+    
 }

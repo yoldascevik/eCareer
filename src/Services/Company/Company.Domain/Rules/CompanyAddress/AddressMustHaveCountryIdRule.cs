@@ -1,4 +1,4 @@
-using Career.Domain;
+using Career.Domain.BusinessRule;
 
 namespace Company.Domain.Rules.CompanyAddress
 {

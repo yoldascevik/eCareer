@@ -1,4 +1,4 @@
-﻿namespace Career.Shared.Interfaces
+﻿namespace Career.Domain
 {
     public interface ISoftDeletable
     {

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Career.Shared.Audit;
-using Career.Shared.System.DateTimeProvider;
+using Career.Domain.Audit;
+using Career.Shared.Timing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -11,14 +11,10 @@ namespace Career.EntityFramework
 {
     public class AuditedDbContext: DbContext
     {
-        private readonly IDateTimeProvider _dateTimeProvider;
-        
         protected AuditedDbContext() { }
         
-        protected AuditedDbContext(DbContextOptions options, IDateTimeProvider dateTimeProvider)
-            : base(options)
+        protected AuditedDbContext(DbContextOptions options) : base(options)
         {
-            _dateTimeProvider = dateTimeProvider;
         }
 
         public override int SaveChanges()
@@ -58,10 +54,10 @@ namespace Career.EntityFramework
                 if (entityEntry.Entity is ICreationAudited creationAuditedEntity)
                 {
                     creationAuditedEntity.CreatorUserId = null; // TODO: set current user id
-                    creationAuditedEntity.CreationTime = _dateTimeProvider.UtcNow;
+                    creationAuditedEntity.CreationTime = Clock.Now;
                 }
                 else if (entityEntry.Entity is IHasCreationTime hasCreationTimeEntity)
-                    hasCreationTimeEntity.CreationTime = _dateTimeProvider.UtcNow;
+                    hasCreationTimeEntity.CreationTime = Clock.Now;
             }
         }
 
@@ -70,10 +66,10 @@ namespace Career.EntityFramework
             if (entityEntry.Entity is IModificationAudited modificationAuditedEntity)
             {
                 modificationAuditedEntity.LastModifierUserId = null; // TODO: set current user id
-                modificationAuditedEntity.LastModificationTime = _dateTimeProvider.UtcNow;
+                modificationAuditedEntity.LastModificationTime = Clock.Now;
             }
             else if (entityEntry.Entity is IHasModificationTime hasModificationTimeEntity)
-                hasModificationTimeEntity.LastModificationTime = _dateTimeProvider.UtcNow;
+                hasModificationTimeEntity.LastModificationTime = Clock.Now;
         }
     }
 }

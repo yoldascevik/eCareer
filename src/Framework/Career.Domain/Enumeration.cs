@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Career.Shared
+namespace Career.Domain
 {
     public abstract class Enumeration : IComparable
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Career.Domain;
 using Career.Exceptions.Exceptions;
 using Career.Repositories.Repository;
-using Career.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Career.EntityFramework.Repositories

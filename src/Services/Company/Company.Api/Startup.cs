@@ -3,6 +3,7 @@ using Career.Exceptions;
 using Career.IoC;
 using Career.MediatR;
 using Career.Mvc.Extensions;
+using Career.Shared.Timing;
 using Career.Swagger;
 using Company.Application.Modules;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,8 @@ namespace Company.Api
         
         public void ConfigureServices(IServiceCollection services)
         {
+            Clock.Provider = ClockProviders.Utc;
+            
             services.AddApiVersion();
             services.AddControllers()
                 .AddApiResponseConsistency(options =>

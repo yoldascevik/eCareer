@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Career.Shared.Audit
+namespace Career.Domain.Audit
 {
     public interface IHasModificationTime
     {

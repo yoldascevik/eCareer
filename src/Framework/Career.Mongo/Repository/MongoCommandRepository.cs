@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Career.Shared.Interfaces;
+using Career.Domain;
 using MongoDB.Bson;
 
 namespace Career.Mongo.Repository
@@ -72,7 +72,7 @@ namespace Career.Mongo.Repository
                 T entity = Collection.Find(keyFilter).SingleOrDefault();
                 if (entity != null)
                 {
-                    (entity as ISoftDeletable).IsDeleted = true;
+                    ((ISoftDeletable) entity).IsDeleted = true;
                     Collection.ReplaceOne(keyFilter, entity);
                 }
             }
@@ -90,7 +90,7 @@ namespace Career.Mongo.Repository
                 T entity = await Collection.Find(keyFilter).SingleOrDefaultAsync();
                 if (entity != null)
                 {
-                    (entity as ISoftDeletable).IsDeleted = true;
+                    ((ISoftDeletable) entity).IsDeleted = true;
                     await Collection.ReplaceOneAsync(keyFilter, entity);
                 }
             }
@@ -107,7 +107,7 @@ namespace Career.Mongo.Repository
                 T entity = Collection.Find(condition).FirstOrDefault();
                 if (entity != null)
                 {
-                    (entity as ISoftDeletable).IsDeleted = true;
+                    ((ISoftDeletable) entity).IsDeleted = true;
                     Collection.ReplaceOne(condition, entity);
                 }
             }
@@ -124,7 +124,7 @@ namespace Career.Mongo.Repository
                 T entity = await Collection.Find(condition).FirstOrDefaultAsync();
                 if (entity != null)
                 {
-                    (entity as ISoftDeletable).IsDeleted = true;
+                    ((ISoftDeletable) entity).IsDeleted = true;
                     await Collection.ReplaceOneAsync(condition, entity);
                 }
             }

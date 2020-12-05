@@ -1,6 +1,6 @@
-using Career.Shared.Entities;
+using Career.Domain.BusinessRule;
 
-namespace Career.Domain
+namespace Career.Domain.Entities
 {
     public class Entity<TKey> : Entity, IEntity<TKey>
     {

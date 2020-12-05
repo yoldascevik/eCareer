@@ -1,5 +1,4 @@
 ﻿using Career.EntityFramework;
-using Career.Shared.System.DateTimeProvider;
 using Company.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +8,7 @@ namespace Company.Infrastructure
     {
         public CompanyDbContext() { }
         
-        public CompanyDbContext(DbContextOptions options, IDateTimeProvider dateTimeProvider)
-            : base(options, dateTimeProvider)
+        public CompanyDbContext(DbContextOptions options) : base(options)
         {
             
         }

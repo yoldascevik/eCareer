@@ -1,4 +1,4 @@
-namespace Career.Domain
+namespace Career.Domain.BusinessRule
 {
     public interface IBusinessRule
     {

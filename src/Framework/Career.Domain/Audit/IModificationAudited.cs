@@ -1,4 +1,4 @@
-﻿namespace Career.Shared.Audit
+﻿namespace Career.Domain.Audit
 {
     public interface IModificationAudited: IHasModificationTime
     {

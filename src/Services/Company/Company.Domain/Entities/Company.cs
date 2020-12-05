@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Career.Domain;
+using Career.Domain.Audit;
+using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Exceptions.Exceptions;
-using Career.Shared.Audit;
-using Career.Shared.Interfaces;
 using Company.Domain.Rules.Company;
 using Company.Domain.Values;
 

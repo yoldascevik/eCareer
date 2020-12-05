@@ -1,4 +1,4 @@
-﻿using Career.Domain;
+﻿using Career.Domain.BusinessRule;
 using Career.Exceptions;
 
 namespace Company.Domain.Rules.Company

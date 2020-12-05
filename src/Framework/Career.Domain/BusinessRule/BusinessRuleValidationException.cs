@@ -1,6 +1,6 @@
 using System;
 
-namespace Career.Domain
+namespace Career.Domain.BusinessRule
 {
     public class BusinessRuleValidationException : Exception
     {

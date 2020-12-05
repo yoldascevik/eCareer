@@ -1,6 +1,6 @@
 ﻿using System;
-using Career.Shared.Entities;
-using Career.Shared.Interfaces;
+using Career.Domain;
+using Career.Domain.Entities;
 
 namespace Company.Domain.Entities
 {

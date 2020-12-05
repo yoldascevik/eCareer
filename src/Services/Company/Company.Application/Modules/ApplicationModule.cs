@@ -3,7 +3,6 @@ using Career.Configuration;
 using Career.EntityFramework;
 using Career.IoC;
 using Career.IoC.IoCModule;
-using Career.Shared.System.DateTimeProvider;
 using Company.Application.Company;
 using Company.Application.Company.Services;
 using Company.Domain.Repositories;
@@ -28,8 +27,6 @@ namespace Company.Application.Modules
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
-            services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-            
             services.AddAutoMapper(typeof(CompanyMappinProfile));
             services.RegisterModule(new DomainModule());
         }

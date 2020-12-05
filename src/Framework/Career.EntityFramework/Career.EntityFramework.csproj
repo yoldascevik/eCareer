@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Career.Domain\Career.Domain.csproj" />
       <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.Repositories\Career.Repositories.csproj" />
       <ProjectReference Include="..\Career.Shared\Career.Shared.csproj" />

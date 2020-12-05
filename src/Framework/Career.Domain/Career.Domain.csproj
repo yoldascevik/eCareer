@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.Shared\Career.Shared.csproj" />
     </ItemGroup>
     

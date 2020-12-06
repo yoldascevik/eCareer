@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
@@ -14,27 +13,25 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UnfollowCompanyHandler> _logger;
-        private readonly ICompanyFollowerRepository _companyFollowerRepository;
+        private readonly ICompanyRepository _companyRepository;
 
         public UnfollowCompanyHandler(
             IUnitOfWork unitOfWork, 
             ILogger<UnfollowCompanyHandler> logger, 
-            ICompanyFollowerRepository companyFollowerRepository)
+            ICompanyRepository companyRepository)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _companyFollowerRepository = companyFollowerRepository;
+            _companyRepository = companyRepository;
         }
 
         public async Task<Unit> Handle(UnfollowCompanyCommand request, CancellationToken cancellationToken)
         {
-            var companyFollower = _companyFollowerRepository.GetActiveCompanyFollowers(request.CompanyId)
-                .FirstOrDefault(follower => follower.UserId == request.UserId);
+            var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
+            if (company == null)
+                throw new ItemNotFoundException($"Company is not found: {request.CompanyId}");
 
-            if (companyFollower == null)
-                throw new ItemNotFoundException("Company follower is not found");
-
-            await _companyFollowerRepository.DeleteAsync(companyFollower.Id);
+            // company.Unfollow(request.UserId); //TODO
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
             _logger.LogInformation("User {userId} unfollow the company {companyId}", request.UserId, request.CompanyId);

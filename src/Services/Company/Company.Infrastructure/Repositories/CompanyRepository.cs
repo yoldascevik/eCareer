@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Career.EntityFramework.Repositories;
 using Company.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace Company.Infrastructure.Repositories
 {
@@ -18,15 +16,13 @@ namespace Company.Infrastructure.Repositories
             return await AnyAsync(company =>
                 company.TaxInfo.TaxNumber == taxNumber
                 && company.IsDeleted == false
-                && company.Address.CountryId == countryId
+                && company.AddressInfo.CountryId == countryId
                 && (companyId == default || company.Id != companyId));
         }
 
-        public async Task<Domain.Entities.Company> GetCompanyIncludeFollowers(Guid companyId)
+        public async Task<Domain.Entities.Company> GetCompanyByIdAsync(Guid companyId)
         {
-            return await Get()
-                .Include(x => x.Followers.Where(s => !s.IsDeleted))
-                .FirstOrDefaultAsync(x => x.Id == companyId);
+            return await FirstOrDefaultAsync(c => c.Id == companyId && !c.IsDeleted);
         }
     }
 }

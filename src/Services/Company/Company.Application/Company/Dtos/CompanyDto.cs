@@ -1,7 +1,10 @@
-﻿namespace Company.Application.Company.Models
+using System;
+
+namespace Company.Application.Company.Dtos
 {
-    public class CompanyRequest
+    public class CompanyDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string TaxNumber { get; set; }
         public string TaxOffice { get; set; }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Query;
-using Company.Application.Company.Models;
+using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
 
 namespace Company.Application.Company.Queries.GetCompanyById
@@ -21,7 +21,7 @@ namespace Company.Application.Company.Queries.GetCompanyById
 
         public async Task<CompanyDto> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken)
         {
-            var company = await _companyRepository.FirstOrDefaultAsync(c => c.Id == request.CompanyId && !c.IsDeleted);
+            var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
                 throw new ItemNotFoundException(request.CompanyId);
             

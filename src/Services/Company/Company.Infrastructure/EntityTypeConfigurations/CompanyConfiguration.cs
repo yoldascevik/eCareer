@@ -17,7 +17,7 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                 .IsRequired();
 
             // value object mapping
-            builder.OwnsOne(m => m.Address, a =>
+            builder.OwnsOne(m => m.AddressInfo, a =>
             {
                 a.Property(t => t.CountryId)
                     .HasColumnName("CountryId")
@@ -50,6 +50,11 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                 a.Property(t => t.TaxOffice)
                     .HasColumnName("TaxOffice")
                     .HasMaxLength(50)
+                    .IsRequired();
+                
+                a.Property(t => t.CountryId)
+                    .HasColumnName("CountryId")
+                    .HasMaxLength(24)
                     .IsRequired();
             });
             

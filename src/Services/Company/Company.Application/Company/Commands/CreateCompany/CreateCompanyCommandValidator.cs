@@ -24,8 +24,6 @@ namespace Company.Application.Company.Commands.CreateCompany
             RuleFor(x => x.EstablishedYear)
                 .GreaterThan((short) 1500)
                 .LessThanOrEqualTo((short) DateTime.UtcNow.Year);
-
-            //TODO: Tax Number 
         }
     }
 }

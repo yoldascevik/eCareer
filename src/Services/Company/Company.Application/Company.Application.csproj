@@ -26,8 +26,6 @@
     <ItemGroup>
       <Folder Include="CompanyFollower\Commands" />
       <Folder Include="CompanyFollower\Queries" />
-      <Folder Include="Company\Commands" />
-      <Folder Include="Company\Queries" />
     </ItemGroup>
 
 </Project>

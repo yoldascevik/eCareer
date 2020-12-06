@@ -3,13 +3,13 @@ using Career.MediatR.Command;
 
 namespace Company.Application.Company.Commands.DeleteCompany
 {
-    public class DeleteCompanyCommand: ICommand
+    public class DeleteCompanyCommand : ICommand
     {
-        public DeleteCompanyCommand(Guid id)
+        public DeleteCompanyCommand(Guid companyId)
         {
-            Id = id;
+            CompanyId = companyId;
         }
-        
-        public Guid Id { get; set; }
+
+        public Guid CompanyId { get; set; }
     }
 }

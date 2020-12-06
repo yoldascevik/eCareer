@@ -1,6 +1,5 @@
 using AutoMapper;
-using Company.Application.Company.Commands.CreateCompany;
-using Company.Application.Company.Models;
+using Company.Application.Company.Dtos;
 
 namespace Company.Application.Company
 {
@@ -8,9 +7,17 @@ namespace Company.Application.Company
     {
         public CompanyMappinProfile()
         {
-            CreateMap<Domain.Entities.Company, CompanyDto>();
-            CreateMap<CreateCompanyCommand, Domain.Entities.Company>();
-            CreateMap<CompanyRequest, Domain.Entities.Company>();
+            CreateMap<Domain.Entities.Company, CompanyDto>()
+                .ForMember(dest => dest, opts => opts.MapFrom(src => src.AddressInfo))
+                .ForMember(dest => dest, opts => opts.MapFrom(src => src.TaxInfo));
+
+            CreateMap<Domain.Entities.Company, AddressDto>()
+                .ForMember(dest => dest, opts => opts.MapFrom(src => src.AddressInfo));
+            
+            CreateMap<Domain.Entities.Company, AddressDto>()
+                .ForMember(dest => dest, opts => opts.MapFrom(src => src.TaxInfo));
+            
+            CreateMap<Domain.Entities.Company, CompanyDetailDto>();
         }
     }
 }

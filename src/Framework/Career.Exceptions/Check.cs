@@ -12,5 +12,13 @@ namespace Career.Exceptions
                 throw new ArgumentNullException(paramName);
             }
         }
+        
+        public static void NotNullOrEmpty(string value, [NotNull] string paramName)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentNullException(paramName);
+            }
+        }
     }
 }

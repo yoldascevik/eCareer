@@ -5,7 +5,7 @@ using Career.MediatR;
 using Career.Mvc.Extensions;
 using Career.Shared.Timing;
 using Career.Swagger;
-using Company.Application.Modules;
+using Company.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

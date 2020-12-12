@@ -46,7 +46,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
             
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
-            _logger.LogInformation("Company detail info updated : {CompanyId} - {Info}", request.CompanyId , request.Company);
+            _logger.LogInformation("Company detail info updated : {CompanyId}", request.CompanyId);
             
             return _mapper.Map<CompanyDetailDto>(company);
         }

@@ -21,7 +21,7 @@ namespace Company.Domain.Rules.CompanyFollower
         
         public bool IsBroken()
         {
-            return _specification.IsSatisfiedBy(_companyFollower);
+            return !_specification.IsSatisfiedBy(_companyFollower);
         }
 
         public string Message => "This user already following company!";

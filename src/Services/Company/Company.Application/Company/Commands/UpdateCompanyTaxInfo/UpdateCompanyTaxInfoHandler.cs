@@ -44,7 +44,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo
 
             _logger.LogInformation("Company tax info updated : {CompanyId} - {TaxInfo}", company.Id, company.TaxInfo);
 
-            return _mapper.Map<TaxDto>(company);
+            return _mapper.Map<TaxDto>(company.TaxInfo);
         }
     }
 }

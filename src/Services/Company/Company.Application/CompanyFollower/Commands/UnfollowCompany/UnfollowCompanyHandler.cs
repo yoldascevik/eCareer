@@ -5,6 +5,7 @@ using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Domain.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
@@ -14,24 +15,33 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UnfollowCompanyHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
+        private readonly ICompanyFollowerRepository _companyFollowerRepository;
 
         public UnfollowCompanyHandler(
             IUnitOfWork unitOfWork, 
             ILogger<UnfollowCompanyHandler> logger, 
-            ICompanyRepository companyRepository)
+            ICompanyRepository companyRepository, 
+            ICompanyFollowerRepository companyFollowerRepository)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _companyRepository = companyRepository;
+            _companyFollowerRepository = companyFollowerRepository;
         }
 
         public async Task<Unit> Handle(UnfollowCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found: {request.CompanyId}");
 
-            // company.Unfollow(request.UserId); //TODO
+            var companyFollower = await _companyFollowerRepository.GetActiveCompanyFollowers(company.Id)
+                .FirstOrDefaultAsync(x => x.UserId == request.UserId && !x.IsDeleted, cancellationToken: cancellationToken);
+            
+            if (companyFollower == null)
+                throw new NotFoundException($"Company follower is not found: CompanyId: {request.CompanyId} UserId: {request.UserId}");
+
+            company.Unfollow(companyFollower);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
             _logger.LogInformation("User {userId} unfollow the company {companyId}", request.UserId, request.CompanyId);

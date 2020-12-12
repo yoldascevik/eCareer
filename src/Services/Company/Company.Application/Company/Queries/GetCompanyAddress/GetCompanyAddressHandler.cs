@@ -25,7 +25,7 @@ namespace Company.Application.Company.Queries.GetCompanyAddress
             if (company == null)
                 throw new ItemNotFoundException(request.CompanyId);
             
-            return _mapper.Map<AddressDto>(company);
+            return _mapper.Map<AddressDto>(company.AddressInfo);
         }
     }
 }

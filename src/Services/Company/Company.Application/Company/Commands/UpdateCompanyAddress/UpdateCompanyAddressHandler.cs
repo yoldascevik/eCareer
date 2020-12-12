@@ -41,9 +41,9 @@ namespace Company.Application.Company.Commands.UpdateCompanyAddress
             
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
-            _logger.LogInformation("Company address info updated : {CompanyId} - {Address}", request.CompanyId , company.AddressInfo);
+            _logger.LogInformation("Company address info updated : {CompanyId}", request.CompanyId);
             
-            return _mapper.Map<AddressDto>(company);
+            return _mapper.Map<AddressDto>(company.AddressInfo);
         }
     }
 }

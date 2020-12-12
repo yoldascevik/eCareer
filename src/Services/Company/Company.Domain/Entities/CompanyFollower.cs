@@ -23,10 +23,16 @@ namespace Company.Domain.Entities
             
             return new CompanyFollower()
             {
-                Company = company,
                 UserId = userId,
+                CompanyId = company.Id,
                 CreationTime = Clock.Now
             };
+        }
+
+        public void MarkDeleted()
+        {
+            IsDeleted = true;
+            LastModificationTime = Clock.Now;
         }
     }
 }

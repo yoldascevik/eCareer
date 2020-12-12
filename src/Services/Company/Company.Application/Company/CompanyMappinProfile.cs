@@ -1,22 +1,25 @@
 using AutoMapper;
 using Company.Application.Company.Dtos;
+using Company.Domain.Values;
 
 namespace Company.Application.Company
 {
-    public class CompanyMappinProfile: Profile
+    public class CompanyMappinProfile : Profile
     {
         public CompanyMappinProfile()
         {
-            CreateMap<Domain.Entities.Company, CompanyDto>()
-                .ForMember(dest => dest, opts => opts.MapFrom(src => src.AddressInfo))
-                .ForMember(dest => dest, opts => opts.MapFrom(src => src.TaxInfo));
+            // CompanyDto
+            CreateMap<Domain.Entities.Company, CompanyDto>().IncludeMembers(x => x.AddressInfo, x => x.TaxInfo);
+            CreateMap<AddressInfo, CompanyDto>();
+            CreateMap<TaxInfo, CompanyDto>();
 
-            CreateMap<Domain.Entities.Company, AddressDto>()
-                .ForMember(dest => dest, opts => opts.MapFrom(src => src.AddressInfo));
+            // AddressDto
+            CreateMap<AddressInfo, AddressDto>();
+
+            // TaxDto
+            CreateMap<TaxInfo, TaxDto>();
             
-            CreateMap<Domain.Entities.Company, AddressDto>()
-                .ForMember(dest => dest, opts => opts.MapFrom(src => src.TaxInfo));
-            
+            // CompanyDetailDto
             CreateMap<Domain.Entities.Company, CompanyDetailDto>();
         }
     }

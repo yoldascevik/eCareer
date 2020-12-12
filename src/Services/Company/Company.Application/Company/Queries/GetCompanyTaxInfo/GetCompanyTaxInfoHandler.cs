@@ -25,7 +25,7 @@ namespace Company.Application.Company.Queries.GetCompanyTaxInfo
             if (company == null)
                 throw new ItemNotFoundException(request.CompanyId);
             
-            return _mapper.Map<TaxDto>(company);
+            return _mapper.Map<TaxDto>(company.TaxInfo);
         }
     }
 }

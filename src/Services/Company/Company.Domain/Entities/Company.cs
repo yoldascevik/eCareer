@@ -86,6 +86,13 @@ namespace Company.Domain.Entities
             Followers.Add(companyFollower);
             return this;
         }
+        
+        public Company Unfollow(CompanyFollower companyFollower)
+        {
+            Check.NotNull(companyFollower, nameof(companyFollower));
+            companyFollower.MarkDeleted();
+            return this;
+        }
 
         public void UpdateName(string companyName)
         {

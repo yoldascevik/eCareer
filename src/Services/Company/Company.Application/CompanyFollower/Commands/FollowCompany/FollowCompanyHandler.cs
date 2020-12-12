@@ -38,7 +38,7 @@ namespace Company.Application.CompanyFollower.Commands.FollowCompany
             company.Follow(request.UserId, new CompanyFollowerUniquenessSpecification(_companyFollowerRepository));
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
-            _logger.LogInformation("User {userId} followed company {companyName} ({companyId})", request.UserId, company.Name, company.Id);
+            _logger.LogInformation("User {userId} followed company {companyId})", request.UserId, request.CompanyId);
             
             return Unit.Value;
         }

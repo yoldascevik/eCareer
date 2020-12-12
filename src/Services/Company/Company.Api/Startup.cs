@@ -37,8 +37,8 @@ namespace Company.Api
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
-            services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
             services.RegisterModule<ApplicationModule>();
+            services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
             services.AddSwagger();
         }
 

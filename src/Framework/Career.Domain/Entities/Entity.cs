@@ -1,11 +1,11 @@
 namespace Career.Domain.Entities
 {
-    public class Entity<TKey> : Entity, IEntity<TKey>
+    public abstract class Entity<TKey> : Entity, IEntity<TKey>
     {
         public TKey Id { get; set; }
     }
     
-    public class Entity: IEntity
+    public abstract class Entity: IEntity
     {
         
     }

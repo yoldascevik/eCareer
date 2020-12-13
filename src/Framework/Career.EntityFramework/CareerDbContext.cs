@@ -3,37 +3,59 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.Audit;
+using Career.Domain.Entities;
 using Career.Shared.Timing;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Career.EntityFramework
 {
-    public class AuditedDbContext: DbContext
+    public class CareerDbContext: DbContext
     {
-        protected AuditedDbContext() { }
+        private readonly IMediator _mediator;
         
-        protected AuditedDbContext(DbContextOptions options) : base(options)
+        protected CareerDbContext()
         {
+            
+        }
+        
+        protected CareerDbContext(DbContextOptions options, IMediator mediator) : base(options)
+        {
+            _mediator = mediator;
         }
 
         public override int SaveChanges()
         {
             SetAuditData();
-            return base.SaveChanges();
+            int result = base.SaveChanges();
+
+            Task.Run(DispatchDomainEventsAsync);
+
+            return result;
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             SetAuditData();
-            return base.SaveChangesAsync(cancellationToken);
+            int result = await base.SaveChangesAsync(cancellationToken);
+
+            await DispatchDomainEventsAsync();
+
+            return result;
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             SetAuditData();
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+            int result = base.SaveChanges(acceptAllChangesOnSuccess);
+
+            Task.Run(DispatchDomainEventsAsync);
+
+            return result;
         }
+
+        #region Private Helpers Of Audit Data
 
         private void SetAuditData()
         {
@@ -71,5 +93,30 @@ namespace Career.EntityFramework
             else if (entityEntry.Entity is IHasModificationTime hasModificationTimeEntity)
                 hasModificationTimeEntity.LastModificationTime = Clock.Now;
         }
+
+        #endregion
+
+        #region Private Helpers Of DomainEvent
+
+        private async Task DispatchDomainEventsAsync()
+        {
+            IEnumerable<DomainEntity> domainEntities = ChangeTracker.Entries()
+                .Where(e => e.Entity is DomainEntity)
+                .Select(e=> e.Entity)
+                .Cast<DomainEntity>();
+
+            foreach (DomainEntity domainEntity in domainEntities)
+            {
+                if (domainEntity.DomainEvents != null && domainEntity.DomainEvents.Any())
+                {
+                    foreach (var domainEvent in domainEntity.DomainEvents)
+                    {
+                        await _mediator.Publish(domainEvent);
+                    }
+                }
+            }
+        }
+
+        #endregion
     }
 }

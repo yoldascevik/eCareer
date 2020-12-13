@@ -1,14 +1,16 @@
 ﻿using Career.EntityFramework;
 using Company.Domain.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.Infrastructure
 {
-    public class CompanyDbContext: AuditedDbContext
+    public class CompanyDbContext: CareerDbContext
     {
         public CompanyDbContext() { }
         
-        public CompanyDbContext(DbContextOptions options) : base(options)
+        public CompanyDbContext(DbContextOptions options, IMediator mediator) 
+            : base(options, mediator)
         {
             
         }

@@ -40,7 +40,7 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
             
             if (companyFollower == null)
                 throw new NotFoundException($"Company follower is not found: CompanyId: {request.CompanyId} UserId: {request.UserId}");
-
+            
             company.Unfollow(companyFollower);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             

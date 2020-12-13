@@ -4,33 +4,33 @@ using Career.Domain.DomainEvent;
 
 namespace Career.Domain.Entities
 {
-    public class DomainEntity<TKey> : DomainEntity, IDomainEntity<TKey>
+    public abstract class DomainEntity<TKey> : DomainEntity, IDomainEntity<TKey>
     {
-        public TKey Id { get; set; }
+        public TKey Id { get; protected set; }
     }
     
-    public class DomainEntity: Entity, IDomainEntity
+    public abstract class DomainEntity: Entity, IDomainEntity
     {
         private List<IDomainEvent> _domainEvents;
 
         public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
-        protected void AddDomainEvent(IDomainEvent domainEvent)
+        public void AddDomainEvent(IDomainEvent domainEvent)
         {
             _domainEvents ??= new List<IDomainEvent>();
             _domainEvents.Add(domainEvent);
         }
-
-        void IDomainEntity.AddDomainEvent(IDomainEvent domainEvent)
+        
+        public void RemoveDomainEvent(IDomainEvent eventItem)
         {
-            AddDomainEvent(domainEvent);
+            _domainEvents?.Remove(eventItem);
         }
 
         public void ClearDomainEvents()
         {
             _domainEvents?.Clear();
         }
-
+        
         protected static void CheckRule(IBusinessRule rule)
         {
             if (rule.IsBroken())
@@ -38,7 +38,7 @@ namespace Career.Domain.Entities
                 throw new BusinessRuleValidationException(rule);
             }
         }
-
+        
         void IDomainEntity.CheckRule(IBusinessRule rule)
         {
             CheckRule(rule);

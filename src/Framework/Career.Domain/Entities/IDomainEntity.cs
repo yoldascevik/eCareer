@@ -8,11 +8,13 @@ namespace Career.Domain.Entities
     {
         IReadOnlyCollection<IDomainEvent> DomainEvents { get; }
         void AddDomainEvent(IDomainEvent domainEvent);
+        void RemoveDomainEvent(IDomainEvent eventItem);
         void ClearDomainEvents();
         void CheckRule(IBusinessRule rule);
     }
 
     public interface IDomainEntity<TKey> : IDomainEntity
     {
+        TKey Id { get; }
     }
 }

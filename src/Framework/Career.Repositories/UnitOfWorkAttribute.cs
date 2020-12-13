@@ -21,24 +21,16 @@ namespace Career.Repositories
             return base.LoadDependencies(serviceProvider);
         }
 
-        public override void OnBefore(MethodExecutionArgs args)
-        {
-            _transaction = _unitOfWork.BeginTransaction();
-        }
+        public override void OnBefore(MethodExecutionArgs args) => _transaction = _unitOfWork.BeginTransaction();
+        
+        public override async Task OnBeforeAsync(MethodExecutionArgs args) => _transaction = await _unitOfWork.BeginTransactionAsync();
+        
+        public override void OnSuccess(MethodExecutionArgs args) => _transaction.Commit();
 
-        public override async Task OnBeforeAsync(MethodExecutionArgs args)
-        {
-            _transaction = await _unitOfWork.BeginTransactionAsync();
-        }
+        public override async Task OnSuccessAsync(MethodExecutionArgs args) => await _transaction.CommitAsync();
 
-        public override void OnSuccess(MethodExecutionArgs args)
-        {
-            _transaction.Commit();
-        }
+        public override void OnException(MethodExecutionArgs args) => _transaction.Rollback();
 
-        public override async Task OnSuccessAsync(MethodExecutionArgs args)
-        {
-            await _transaction.CommitAsync();
-        }
+        public override async Task OnExceptionAsync(MethodExecutionArgs args) => await _transaction.RollbackAsync();
     }
 }

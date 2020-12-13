@@ -3,9 +3,9 @@ using Career.Shared.Timing;
 
 namespace Career.Domain.DomainEvent
 {
-    public class DomainEvent: IDomainEvent
+    public abstract class DomainEvent: IDomainEvent
     {
-        public DomainEvent()
+        protected DomainEvent()
         {
             EventId = Guid.NewGuid();
             OccurredOn = Clock.Now;

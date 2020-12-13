@@ -4,6 +4,8 @@ using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
+using Company.Domain.DomainEvents;
+using Company.Domain.DomainEvents.Company;
 using Company.Domain.Rules.Company;
 using Company.Domain.Rules.CompanyFollower;
 using Company.Domain.Values;
@@ -16,6 +18,7 @@ namespace Company.Domain.Entities
 
         private Company()
         {
+            Id = Guid.NewGuid();
             Followers = new List<CompanyFollower>();
         }
 
@@ -56,8 +59,8 @@ namespace Company.Domain.Entities
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
             CheckRule(new SectorIdRequiredRule(sectorId));
             CheckRule(new PhoneRequiredRule(phone));
-            
-            return new Company
+
+            var company = new Company
             {
                 Name = name,
                 Email = email,
@@ -75,6 +78,9 @@ namespace Company.Domain.Entities
                 LastModificationTime = Clock.Now,
                 LastModifierUserId = null // TODO
             };
+            
+            company.AddDomainEvent(new CompanyCreatedEvent(company));
+            return company;
         }
 
         public Company Follow(Guid userId, ICompanyFollowerUniquenessSpecification uniquenessSpecification)
@@ -96,9 +102,13 @@ namespace Company.Domain.Entities
 
         public void UpdateName(string companyName)
         {
+            string oldCompanyName = Name;
+            
             Name = companyName;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO
+            
+            AddDomainEvent(new CompanyNameUpdatedEvent(this, oldCompanyName));
         }
 
         public void UpdateTaxInfo(TaxInfo taxInfo, ITaxNumberUniquenessSpecification taxNumberUniquenessSpec)
@@ -108,24 +118,32 @@ namespace Company.Domain.Entities
             TaxInfo = taxInfo;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO
+            
+            AddDomainEvent(new CompanyTaxInfoUpdatedEvent(this));
         }
 
         public void UpdateAddress(AddressInfo address)
         {
             Check.NotNull(address, nameof(address));
-            
+
+            AddressInfo oldAddress = AddressInfo;
             AddressInfo = address;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO
+            
+            AddDomainEvent(new CompanyAddressUpdatedEvent(this));
         }
 
         public void UpdateEmailAddress(string email, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
-            
+
+            string oldEmailAdress = Email;
             Email = email;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO
+            
+            AddDomainEvent(new CompanyEmailAddressUpdatedEvent(this, oldEmailAdress));
         }
         
         public void UpdateDetails(string phone, string mobilePhone, string faxNumber, 
@@ -143,6 +161,8 @@ namespace Company.Domain.Entities
             SectorId = sectorId;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; //TODO
+            
+            AddDomainEvent(new CompanyDetailInfoUpdatedEvent(this));
         }
 
         public void MarkDeleted()
@@ -150,6 +170,8 @@ namespace Company.Domain.Entities
             IsDeleted = true;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO
+            
+            AddDomainEvent(new CompanyDeletedEvent(this));
         }
 
         #endregion

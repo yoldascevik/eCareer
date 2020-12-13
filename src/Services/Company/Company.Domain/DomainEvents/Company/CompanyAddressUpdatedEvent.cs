@@ -5,7 +5,7 @@ using Company.Domain.Values;
 
 namespace Company.Domain.DomainEvents.Company
 {
-    public class CompanyAddressUpdatedEvent : DomainEvent, IDomainEvent
+    public class CompanyAddressUpdatedEvent : DomainEvent
     {
         public CompanyAddressUpdatedEvent(Entities.Company company)
         {

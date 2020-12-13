@@ -4,7 +4,6 @@ using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
-using Company.Domain.DomainEvents;
 using Company.Domain.DomainEvents.Company;
 using Company.Domain.Rules.Company;
 using Company.Domain.Rules.CompanyFollower;
@@ -126,7 +125,6 @@ namespace Company.Domain.Entities
         {
             Check.NotNull(address, nameof(address));
 
-            AddressInfo oldAddress = AddressInfo;
             AddressInfo = address;
             LastModificationTime = Clock.Now;
             LastModifierUserId = null; // TODO

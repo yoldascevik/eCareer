@@ -3,7 +3,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.DomainEvents.Company
 {
-    public class CompanyDetailInfoUpdatedEvent : DomainEvent, IDomainEvent
+    public class CompanyDetailInfoUpdatedEvent : DomainEvent
     {
         public CompanyDetailInfoUpdatedEvent(Entities.Company company)
         {

@@ -4,7 +4,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.DomainEvents.Company
 {
-    public class CompanyDeletedEvent : DomainEvent,IDomainEvent
+    public class CompanyDeletedEvent : DomainEvent
     {
         public CompanyDeletedEvent(Entities.Company company)
         {

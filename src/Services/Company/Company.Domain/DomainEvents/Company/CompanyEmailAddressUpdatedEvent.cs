@@ -4,7 +4,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.DomainEvents.Company
 {
-    public class CompanyEmailAddressUpdatedEvent : DomainEvent, IDomainEvent
+    public class CompanyEmailAddressUpdatedEvent : DomainEvent
     {
         public CompanyEmailAddressUpdatedEvent(Entities.Company company, string oldEmailAdress)
         {

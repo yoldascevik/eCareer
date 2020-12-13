@@ -4,7 +4,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.DomainEvents.CompanyFollower
 {
-    public class FollowerDeletedEvent : DomainEvent,IDomainEvent
+    public class FollowerDeletedEvent : DomainEvent
     {
         public FollowerDeletedEvent(Entities.CompanyFollower follower)
         {

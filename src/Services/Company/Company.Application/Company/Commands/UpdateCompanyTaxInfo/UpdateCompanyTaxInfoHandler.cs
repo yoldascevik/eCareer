@@ -35,7 +35,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
             var taxInfo = TaxInfo.Create(request.TaxInfo.TaxNumber, request.TaxInfo.TaxOffice, request.TaxInfo.CountryId);
 

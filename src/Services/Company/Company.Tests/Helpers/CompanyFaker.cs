@@ -1,5 +1,4 @@
 using Bogus;
-using Company.Application.Company.Commands.CreateCompany;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.Values;
@@ -29,23 +28,6 @@ namespace Company.Tests.Helpers
                 address, faker.Phone.PhoneNumber(), faker.Random.Guid().ToString(), taxNumberUniquenessSpec, emailUniquenessSpec);
 
             return company;
-        }
-        
-        public static CreateCompanyCommand GetNewCreateCompanyCommand()
-        {
-            var faker = new Faker();
-            return new CreateCompanyCommand
-            {
-                CountryId = faker.Random.Guid().ToString(),
-                CityId = faker.Random.Guid().ToString(),
-                SectorId = faker.Random.Guid().ToString(),
-                Name = faker.Company.CompanyName(),
-                Address = faker.Address.FullAddress(),
-                Email = faker.Internet.Email(),
-                Phone = faker.Phone.PhoneNumber(),
-                TaxNumber = faker.Company.TaxNumber(),
-                TaxOffice = faker.Address.City()
-            };
         }
     }
 }

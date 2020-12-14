@@ -20,8 +20,8 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
         public UpdateCompanyDetailsHandler(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            ILogger<UpdateCompanyDetailsHandler> logger,
-            ICompanyRepository companyRepository)
+            ICompanyRepository companyRepository,
+            ILogger<UpdateCompanyDetailsHandler> logger)
         {
             _logger = logger;
             _mapper = mapper;
@@ -33,7 +33,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
             
             company.UpdateDetails(
                 request.Company.Phone, 

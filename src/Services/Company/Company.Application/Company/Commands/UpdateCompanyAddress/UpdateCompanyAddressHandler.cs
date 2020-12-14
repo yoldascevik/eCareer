@@ -34,11 +34,11 @@ namespace Company.Application.Company.Commands.UpdateCompanyAddress
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
             
             var address = AddressInfo.Create(request.Address.CountryId, request.Address.CityId, request.Address.DistrictId, request.Address.Address);
-            company.UpdateAddress(address);
             
+            company.UpdateAddress(address);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
             _logger.LogInformation("Company address info updated : {CompanyId}", request.CompanyId);

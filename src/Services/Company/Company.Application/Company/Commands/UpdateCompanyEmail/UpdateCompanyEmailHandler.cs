@@ -30,7 +30,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyEmail
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
             company.UpdateEmailAddress(request.Email, new EmailAddressUniquenessSpecification(_companyRepository, company.Id));
             await _unitOfWork.SaveChangesAsync(cancellationToken);

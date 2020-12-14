@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Repositories;
 using Company.Application.Company.Commands.CreateCompany;
@@ -30,7 +31,7 @@ namespace Company.Tests.IntegrationTests.Company
         public async Task CreateCompanyHandler_ShouldReturnCreatedCompanyId_WhenCompanyCreated()
         {
             // Arrange
-            var command = CompanyFaker.GetNewCreateCompanyCommand();
+            var command = GetCommand();
             var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
 
             // Act
@@ -45,7 +46,7 @@ namespace Company.Tests.IntegrationTests.Company
         public async Task CreateCompanyHandler_ShouldBeLogInformation_WhenCompanyCreated()
         {
             // Arrange
-            var command = CompanyFaker.GetNewCreateCompanyCommand();
+            var command = GetCommand();
             var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
 
             // Act
@@ -59,7 +60,7 @@ namespace Company.Tests.IntegrationTests.Company
         public async Task CreateCompanyHandler_ThrowBusinessRuleValidationException_For_TaxNumberMustBeUniqueRule_WhenTaxNumberExists()
         {
             // Arrange
-            var command = CompanyFaker.GetNewCreateCompanyCommand();
+            var command = GetCommand();
             var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
             
             _companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId).Returns(true);
@@ -75,7 +76,7 @@ namespace Company.Tests.IntegrationTests.Company
         public async Task CreateCompanyHandler_ThrowBusinessRuleValidationException_For_EmailAddressMustBeUniqueRule_WhenEmailAlreadyRegistered()
         {
             // Arrange
-            var command = CompanyFaker.GetNewCreateCompanyCommand();
+            var command = GetCommand();
             var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
             
             _companyRepository.IsCompanyEmailExists(command.Email).Returns(true);
@@ -85,6 +86,25 @@ namespace Company.Tests.IntegrationTests.Company
 
             // Assert
             Assert.Equal(typeof(EmailAddressMustBeUniqueRule), actualException.BrokenRule.GetType());
+        }
+        
+        private CreateCompanyCommand GetCommand()
+        {
+            var commandFaker = new Faker<CreateCompanyCommand>()
+                .Rules((faker,command) =>
+                {
+                    command.CountryId = faker.Random.Guid().ToString();
+                    command.CityId = faker.Random.Guid().ToString();
+                    command.SectorId = faker.Random.Guid().ToString();
+                    command.Name = faker.Company.CompanyName();
+                    command.Address = faker.Address.FullAddress();
+                    command.Email = faker.Internet.Email();
+                    command.Phone = faker.Phone.PhoneNumber();
+                    command.TaxNumber = faker.Company.TaxNumber();
+                    command.TaxOffice = faker.Address.City();
+                });
+
+            return commandFaker.Generate();
         }
     }
 }

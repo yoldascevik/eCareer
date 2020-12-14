@@ -4,7 +4,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.Rules.Company
 {
-    internal class EmailAddressMustBeUniqueRule : IBusinessRule
+    public class EmailAddressMustBeUniqueRule : IBusinessRule
     {
         private readonly string _emailAddress;
         private readonly IEmailAddressUniquenessSpecification _emailAddressUniquenessSpecification;

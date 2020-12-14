@@ -17,7 +17,12 @@ namespace Company.Infrastructure.Repositories
                 company.TaxInfo.TaxNumber == taxNumber
                 && company.IsDeleted == false
                 && company.AddressInfo.CountryId == countryId
-                && (companyId == default || company.Id != companyId));
+                && company.Id != companyId);
+        }
+
+        public bool IsCompanyEmailExists(string email, Guid companyId = default)
+        {
+            return Any(c => c.Email == email && c.Id != companyId);
         }
 
         public async Task<Domain.Entities.Company> GetCompanyByIdAsync(Guid companyId)

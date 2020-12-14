@@ -29,12 +29,12 @@ namespace Company.Application.Company.Commands.DeleteCompany
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
             company.MarkDeleted();
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation("Company is deleted : {CompanyId}", request.CompanyId);
+            _logger.LogInformation("Company is deleted : {CompanyId}", company.Id);
 
             return Unit.Value;
         }

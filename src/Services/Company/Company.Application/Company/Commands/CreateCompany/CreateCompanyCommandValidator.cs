@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Company.Application.Company.Commands.CreateCompany
@@ -14,16 +13,8 @@ namespace Company.Application.Company.Commands.CreateCompany
             RuleFor(x => x.Address).NotEmpty().MaximumLength(500);
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.Phone).NotEmpty().MaximumLength(50);
-            RuleFor(x => x.MobilePhone).MaximumLength(50);
-            RuleFor(x => x.Website).MaximumLength(50);
-            RuleFor(x => x.EmployeesCount).GreaterThan(0);
-            RuleFor(x => x.FaxNumber).MaximumLength(50);
             RuleFor(x => x.TaxNumber).NotEmpty().MaximumLength(50);
             RuleFor(x => x.TaxOffice).NotEmpty().MaximumLength(50);
-
-            RuleFor(x => x.EstablishedYear)
-                .GreaterThan((short) 1500)
-                .LessThanOrEqualTo((short) DateTime.UtcNow.Year);
         }
     }
 }

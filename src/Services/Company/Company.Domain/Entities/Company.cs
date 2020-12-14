@@ -47,8 +47,7 @@ namespace Company.Domain.Entities
 
         #region Methods
 
-        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string webSite, 
-            string phone, string mobilePhone, string faxNumber, int employeesCount, short establishedYear, string sectorId, 
+        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string phone, string sectorId, 
             ITaxNumberUniquenessSpecification taxNumberUniquenessSpec, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             Check.NotNullOrEmpty(name, nameof(name));
@@ -66,12 +65,7 @@ namespace Company.Domain.Entities
                 TaxInfo = taxInfo,
                 AddressInfo = addressInfo,
                 Phone = phone,
-                Website = webSite,
-                FaxNumber = faxNumber,
-                MobilePhone = mobilePhone,
                 SectorId = sectorId,
-                EmployeesCount = employeesCount,
-                EstablishedYear = establishedYear,
                 CreationTime = Clock.Now,
                 CreatorUserId = null, // TODO
                 LastModificationTime = Clock.Now,

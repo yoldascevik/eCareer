@@ -33,9 +33,8 @@ namespace Company.Application.Company.Commands.CreateCompany
 
             var taxInfo = TaxInfo.Create(request.TaxNumber, request.TaxOffice, request.CountryId);
             var address = AddressInfo.Create(request.CountryId, request.CityId, request.DistrictId, request.Address);
-            var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, address, request.Website,
-                request.Phone, request.MobilePhone, request.FaxNumber, request.EmployeesCount, request.EstablishedYear,
-                request.SectorId, taxNumberUniquenessSpec, emailUniquenessSpec);
+            var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, 
+                address, request.Phone, request.SectorId, taxNumberUniquenessSpec, emailUniquenessSpec);
 
             await _companyRepository.AddAsync(company);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

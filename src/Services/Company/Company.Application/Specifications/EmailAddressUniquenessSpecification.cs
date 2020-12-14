@@ -22,7 +22,7 @@ namespace Company.Application.Specifications
 
         public override Expression<Func<string, bool>> ToExpression()
         {
-            return email => !_companyRepository.Any(c => c.Email == email && c.Id != _companyId);
+            return email => !_companyRepository.IsCompanyEmailExists(email, _companyId);
         }
     }
 }

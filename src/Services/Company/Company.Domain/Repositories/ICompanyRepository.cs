@@ -6,7 +6,8 @@ namespace Company.Domain.Repositories
 {
     public interface ICompanyRepository : IRepository<Entities.Company>
     {
-        Task<bool> IsTaxNumberExistsAsync(string taxNumber, string countryId, Guid companyId = default);
+        bool IsCompanyEmailExists(string email, Guid companyId = default);
         Task<Entities.Company> GetCompanyByIdAsync(Guid companyId);
+        Task<bool> IsTaxNumberExistsAsync(string taxNumber, string countryId, Guid companyId = default);
     }
 }

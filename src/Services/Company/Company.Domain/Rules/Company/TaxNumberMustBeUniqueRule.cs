@@ -3,7 +3,7 @@ using Career.Exceptions;
 
 namespace Company.Domain.Rules.Company
 {
-    internal class TaxNumberMustBeUniqueRule : IBusinessRule
+    public class TaxNumberMustBeUniqueRule : IBusinessRule
     {
         private readonly Values.TaxInfo _taxInfo;
         private readonly ITaxNumberUniquenessSpecification _taxNumberUniquenessSpecification;

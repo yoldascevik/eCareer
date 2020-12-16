@@ -1,22 +1,16 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
 using Career.Repositories;
-using Company.Application.Company.Commands.UpdateCompanyAddress;
-using Company.Application.Company.Commands.UpdateCompanyDetails;
 using Company.Application.Company.Commands.UpdateCompanyEmail;
-using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
-using Company.Domain.Values;
 using Company.Tests.Helpers;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using NSubstitute.ClearExtensions;
 using NSubstitute.ReturnsExtensions;
 using Xunit;
 

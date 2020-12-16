@@ -5,7 +5,6 @@ using Career.MediatR.Command;
 using Career.Repositories;
 using Company.Domain.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
@@ -33,11 +32,9 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new NotFoundException($"Company is not found: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
-            var companyFollower = await _companyFollowerRepository.GetActiveCompanyFollowers(company.Id)
-                .FirstOrDefaultAsync(x => x.UserId == request.UserId && !x.IsDeleted, cancellationToken: cancellationToken);
-            
+            var companyFollower = await _companyFollowerRepository.GetCompanyFollower(request.CompanyId, request.UserId);
             if (companyFollower == null)
                 throw new NotFoundException($"Company follower is not found: CompanyId: {request.CompanyId} UserId: {request.UserId}");
             

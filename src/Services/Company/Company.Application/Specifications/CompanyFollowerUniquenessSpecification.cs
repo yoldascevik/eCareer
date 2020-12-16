@@ -17,7 +17,7 @@ namespace Company.Application.Specifications
 
         public override Expression<Func<Domain.Entities.CompanyFollower, bool>> ToExpression()
         {
-            return follower => !_companyFollowerRepository.Any(x => x.UserId == follower.UserId && x.CompanyId == follower.CompanyId && !x.IsDeleted);
+            return follower => !_companyFollowerRepository.CheckUserExistsInCompanyFollowers(follower.CompanyId, follower.UserId);
         }
     }
 }

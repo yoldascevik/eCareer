@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR ..
 COPY ["src/Services/Company/Company.Api/Company.Api.csproj", "src/Services/Company/Company.Api/"]
+COPY ["src/Services/Company/Company.Tests/Company.Tests.csproj", "src/Services/Company/Company.Tests/"]
 COPY ["src/Services/Company/Company.Application/Company.Application.csproj", "src/Services/Company/Company.Application/"]
 COPY ["src/Framework/Career.Exceptions/Career.Exceptions.csproj", "src/Framework/Career.Exceptions/"]
 COPY ["src/Framework/Career.IoC/Career.IoC.csproj", "src/Framework/Career.IoC/"]
@@ -17,6 +18,9 @@ RUN dotnet restore "src/Services/Company/Company.Api/Company.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Company/Company.Api"
 RUN dotnet build "Company.Api.csproj" -c Release -o /app/build
+
+FROM build AS test 
+RUN dotnet test -c Release ../Company.Tests/Company.Tests.csproj
 
 FROM build AS publish
 RUN dotnet publish "Company.Api.csproj" -c Release -o /app/publish

@@ -33,7 +33,7 @@ namespace Company.Application.CompanyFollower.Commands.FollowCompany
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new ItemNotFoundException($"Company is not found: {request.CompanyId}");
+                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
             company.Follow(request.UserId, new CompanyFollowerUniquenessSpecification(_companyFollowerRepository));
             await _unitOfWork.SaveChangesAsync(cancellationToken);

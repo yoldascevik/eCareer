@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Career.Data.Pagination;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
@@ -16,7 +17,7 @@ namespace Definition.Application.Work.JobPosition
         private readonly IMongoRepository<Data.Entities.Sector> _sectorRepository;
 
         public JobPositionService(
-            IMapper mapper, 
+            IMapper mapper,
             IMongoRepository<Data.Entities.JobPosition> jobPositionRepository,
             IMongoRepository<Data.Entities.Sector> sectorRepository)
         {
@@ -28,6 +29,7 @@ namespace Definition.Application.Work.JobPosition
         public async Task<PagedList<JobPositionDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _jobPositionRepository.Get(jobPosition => !jobPosition.IsDeleted)
+                .OrderBy(j => j.Id)
                 .ProjectTo<JobPositionDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -38,6 +40,7 @@ namespace Definition.Application.Work.JobPosition
                 throw new NotFoundException($"Sector not found for Id:{sectorId}");
 
             return await _jobPositionRepository.Get(jobPosition => jobPosition.SectorId == sectorId && !jobPosition.IsDeleted)
+                .OrderBy(j => j.Id)
                 .ProjectTo<JobPositionDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -54,10 +57,10 @@ namespace Definition.Application.Work.JobPosition
         public async Task<JobPositionDto> CreateAsync(JobPositionRequestModel requestModel)
         {
             await CheckJobPositionExist(requestModel);
-            
+
             if (!await _sectorRepository.AnyAsync(sector => sector.Id == requestModel.SectorId))
                 throw new NotFoundException($"Sector not found for Id:{requestModel.SectorId}");
-            
+
             var createdJobPosition = await _jobPositionRepository.AddAsync(_mapper.Map<Data.Entities.JobPosition>(requestModel));
 
             return _mapper.Map<JobPositionDto>(createdJobPosition);
@@ -67,7 +70,7 @@ namespace Definition.Application.Work.JobPosition
         {
             if (!await _jobPositionRepository.AnyAsync(jobPosition => jobPosition.Id == id))
                 throw new ItemNotFoundException(requestModel.Name);
-            
+
             if (!await _sectorRepository.AnyAsync(sector => sector.Id == requestModel.SectorId))
                 throw new NotFoundException($"Sector not found for Id:{requestModel.SectorId}");
 

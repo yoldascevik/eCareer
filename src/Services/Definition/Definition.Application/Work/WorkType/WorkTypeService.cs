@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Career.Data.Pagination;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
@@ -25,6 +26,7 @@ namespace Definition.Application.Work.WorkType
         public async Task<PagedList<WorkTypeDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _workTypeRepository.Get(workType => !workType.IsDeleted)
+                .OrderBy(w => w.Id)
                 .ProjectTo<WorkTypeDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }

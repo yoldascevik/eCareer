@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Career.Data.Pagination;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
@@ -25,6 +26,7 @@ namespace Definition.Application.Education.EducationType
         public async Task<PagedList<EducationTypeDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _educationTypeRepository.Get(educationType => !educationType.IsDeleted)
+                .OrderBy(e=> e.Id)
                 .ProjectTo<EducationTypeDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }

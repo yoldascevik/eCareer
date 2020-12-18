@@ -27,10 +27,7 @@ namespace Career.Mongo.Repository
 
         public virtual IQueryable<T> Get(Expression<Func<T, bool>> condition)
             => Get().Where(condition);
-
-        public virtual async Task<IEnumerable<T>> GetAsync()
-            => await Collection.Find(FilterDefinition<T>.Empty).ToListAsync().ConfigureAwait(false);
-
+        
         public virtual async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> condition)
             => await Collection.Find(condition).ToListAsync().ConfigureAwait(false);
 

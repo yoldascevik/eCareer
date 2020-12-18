@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ARConsistency.Abstractions;
+using Career.Data.Pagination;
 using Career.Http;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Microsoft.AspNetCore.Http;
 
@@ -46,7 +46,7 @@ namespace Definition.HttpClient.Country
             if (string.IsNullOrEmpty(version))
                 version = _apiEndpointOptions.DefaultVersion;
 
-            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/location/country{requestPath ?? string.Empty}";
+            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/locations/countries{requestPath ?? string.Empty}";
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Career.Data.Pagination;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
@@ -28,6 +29,7 @@ namespace Definition.Application.Location.City
         public async Task<PagedList<CityDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _cityRepository.Get(city => !city.IsDeleted)
+                .OrderBy(c => c.Id)
                 .ProjectTo<CityDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -36,8 +38,9 @@ namespace Definition.Application.Location.City
         {
             if (!await _countryRepository.AnyAsync(country => country.Id == countryId))
                 throw new NotFoundException($"Country not found for Id:{countryId}");
-            
+
             return await _cityRepository.Get(city => city.CountryId == countryId && !city.IsDeleted)
+                .OrderBy(c => c.Id)
                 .ProjectTo<CityDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -47,22 +50,22 @@ namespace Definition.Application.Location.City
             var city = await _cityRepository.GetByKeyAsync(id);
             if (city == null)
                 throw new ItemNotFoundException(id);
-            
+
             return _mapper.Map<CityDto>(city);
         }
 
         public async Task<CityDto> CreateAsync(CityRequestModel requestModel)
         {
             Data.Entities.Country country = await _countryRepository.FirstOrDefaultAsync(c => c.Id == requestModel.CountryId);
-            
+
             if (country == null)
                 throw new NotFoundException($"Country not found for Id:{requestModel.CountryId}");
 
             await CheckCityExist(requestModel);
 
             var createdCity = _mapper.Map<Data.Entities.City>(requestModel);
-            createdCity.CountryCode = country.Iso2; 
-            
+            createdCity.CountryCode = country.Iso2;
+
             return _mapper.Map<CityDto>(await _cityRepository.AddAsync(createdCity));
         }
 
@@ -75,7 +78,7 @@ namespace Definition.Application.Location.City
                 throw new NotFoundException($"Country not found for Id:{requestModel.CountryId}");
 
             await CheckCityExist(requestModel, id);
-            
+
             var updatedCity = await _cityRepository.UpdateAsync(id, _mapper.Map<Data.Entities.City>(requestModel));
             return _mapper.Map<CityDto>(updatedCity);
         }
@@ -87,7 +90,7 @@ namespace Definition.Application.Location.City
 
             await _cityRepository.DeleteAsync(id);
         }
-        
+
         private async Task CheckCityExist(CityRequestModel requestModel, string id = null)
         {
             var existingCity = await _cityRepository.FirstOrDefaultAsync(city =>
@@ -98,10 +101,10 @@ namespace Definition.Application.Location.City
 
             if (existingCity != null)
             {
-                string allreadyExistingData = existingCity.Name == requestModel.Name 
-                    ? requestModel.Name 
+                string allreadyExistingData = existingCity.Name == requestModel.Name
+                    ? requestModel.Name
                     : requestModel.CityCode;
-                
+
                 throw new ItemAlreadyExistsException(allreadyExistingData);
             }
         }

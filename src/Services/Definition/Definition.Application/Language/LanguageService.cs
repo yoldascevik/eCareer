@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Career.Data.Pagination;
 using Career.Exceptions.Exceptions;
 using Career.Mongo.Repository.Contracts;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
@@ -26,6 +27,7 @@ namespace Definition.Application.Language
         public async Task<PagedList<LanguageDto>> GetAsync(PaginationFilter paginationFilter)
         {
             return await _languageRepository.Get(language => !language.IsDeleted)
+                .OrderBy(l => l.Id)
                 .ProjectTo<LanguageDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(paginationFilter);
         }
@@ -41,9 +43,9 @@ namespace Definition.Application.Language
 
         public async Task<LanguageDto> GetByCultureAsync(string culture)
         {
-            var language = await _languageRepository.FirstOrDefaultAsync(lang => 
+            var language = await _languageRepository.FirstOrDefaultAsync(lang =>
                 lang.Culture.ToLowerInvariant() == culture.ToLowerInvariant() && !lang.IsDeleted);
-            
+
             if (language == null)
                 throw new ItemNotFoundException(culture);
 

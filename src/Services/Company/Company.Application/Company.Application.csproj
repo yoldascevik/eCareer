@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />
+      <ProjectReference Include="..\Company.Domain\Company.Domain.csproj" />
+      <ProjectReference Include="..\Company.Infrastructure\Company.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+      <PackageReference Include="FluentValidation" Version="9.3.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.3.0" />
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="CompanyFollower\Commands" />
+      <Folder Include="CompanyFollower\Queries" />
+    </ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
+using Career.Data.Pagination;
 using Career.Http;
-using Career.Utilities.Pagination;
 using Definition.Contract.Dto;
 using Microsoft.AspNetCore.Http;
 
@@ -18,19 +18,19 @@ namespace Definition.HttpClient.Sector
         }
 
         // api/v{version}/work/sectors"
-        public async Task<ConsistentApiResponse<PagedList<SectorDto>>> GetAsync(PaginationFilter paginationFilter, string version)
+        public async Task<ConsistentApiResponse<PagedList<SectorDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<SectorDto>>>(CreateUrl(null, version));
         }
 
         // api/v{version}/work/sectors/{id}/positions";
-        public async Task<ConsistentApiResponse<PagedList<JobPositionDto>>> GetJobPositionsOfSector(string sectorId, PaginationFilter paginationFilter, string version)
+        public async Task<ConsistentApiResponse<PagedList<JobPositionDto>>> GetJobPositionsOfSector(string sectorId, PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<JobPositionDto>>>(CreateUrl($"/{sectorId}/positions", version), paginationFilter);
         }
 
         // api/v{version}/work/sectors/{id}";
-        public async Task<ConsistentApiResponse<SectorDto>> GetByIdAsync(string id, string version)
+        public async Task<ConsistentApiResponse<SectorDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<SectorDto>>(CreateUrl(null, version), id);
         }

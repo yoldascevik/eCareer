@@ -25,10 +25,7 @@ namespace Career.Mongo.Repository
 
         public virtual IQueryable<T> Get(Expression<Func<T, bool>> condition)
             => _mongoQueryRepository.Get(condition);
-
-        public virtual Task<IEnumerable<T>> GetAsync()
-            => _mongoQueryRepository.GetAsync();
-
+        
         public virtual Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> condition)
             => _mongoQueryRepository.GetAsync(condition);
 

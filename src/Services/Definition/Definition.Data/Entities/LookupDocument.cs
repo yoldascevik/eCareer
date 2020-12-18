@@ -1,5 +1,5 @@
-﻿using Career.Mongo.Document;
-using Career.Shared.Interfaces;
+﻿using Career.Domain;
+using Career.Mongo.Document;
 
 namespace Definition.Data.Entities
 {

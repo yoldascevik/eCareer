@@ -91,7 +91,7 @@ namespace Career.Migration.DataSeeder
                     TimeSpan.FromSeconds(2),
                     TimeSpan.FromSeconds(4),
                     TimeSpan.FromSeconds(8)
-                }, (exception, duration, retryCount, context) =>
+                }, (exception, _ , retryCount, context) =>
                 {
                     _logger.LogError($"Retry {retryCount} of {context.PolicyKey}. Exception Details: {exception}.");
                 })

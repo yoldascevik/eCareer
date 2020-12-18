@@ -7,16 +7,28 @@ services:
       - "27017:27017"
     volumes:
       - ${HOST_VOLUMES_PATH}/mongo:/data/db
-      
+
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - ${HOST_VOLUMES_PATH}/postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    
   cache:
     container_name: "cache"
     command: redis-server --requirepass 123456
     ports:
       - "6379:6379"
     volumes:
-      - ${HOST_VOLUMES_PATH}/redis-data:/var/lib/redis
-      - ${HOST_VOLUMES_PATH}/redis.conf:/usr/local/etc/redis/redis.conf
-        
+      - ${HOST_VOLUMES_PATH}/redis/redis-data:/var/lib/redis
+      - ${HOST_VOLUMES_PATH}/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
   seq:
     container_name: "seq"
     environment:
@@ -33,3 +45,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5001:80"
+
+  company.api:
+    container_name: "company.api"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENV}
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"

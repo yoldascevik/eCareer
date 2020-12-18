@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="CompanyFollower" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Http\Career.Http.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+    </ItemGroup>
+
+</Project>

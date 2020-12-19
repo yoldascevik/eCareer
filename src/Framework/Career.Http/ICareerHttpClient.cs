@@ -22,7 +22,7 @@ namespace Career.Http
             Dictionary<string, string> requestHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where TResponse : class;
 
-        Task<TResponse> DeleteAsync<TResponse>(string urlPath, object @object,
+        Task<TResponse> DeleteAsync<TResponse>(string urlPath,
             Dictionary<string, string> requestHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where TResponse : class;
     }

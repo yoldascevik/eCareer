@@ -17,13 +17,13 @@ namespace Definition.HttpClient.EducationLevel
             _apiEndpointOptions = apiEndpointOptions;
         }
 
-        // api/v{version}/education/levels"
+        // api/v{version}/education/levels
         public async Task<ConsistentApiResponse<PagedList<EducationLevelDto>>> GetAsync(PaginationFilter paginationFilter, string version = null) 
         {
             return await GetAsync<ConsistentApiResponse<PagedList<EducationLevelDto>>>(CreateUrl(null, version));
         }
 
-        // api/v{version}/education/levels/{id}";
+        // api/v{version}/education/levels/{id}
         public async Task<ConsistentApiResponse<EducationLevelDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<EducationLevelDto>>(CreateUrl(null, version), id);

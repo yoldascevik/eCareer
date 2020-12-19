@@ -79,7 +79,6 @@ namespace Career.Http
 
         public virtual async Task<TResponse> DeleteAsync<TResponse>(
             string urlPath, 
-            object @object, 
             Dictionary<string, string> requestHeaders = null, 
             CancellationToken cancellationToken = default(CancellationToken)) 
             where TResponse : class

@@ -5,17 +5,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CompanyFollower" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <PackageReference Include="ARConsistency.Abstractions" Version="1.0.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Http\Career.Http.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+      <ProjectReference Include="..\Company.Application\Company.Application.csproj" />
     </ItemGroup>
 
 </Project>

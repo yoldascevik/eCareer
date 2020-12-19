@@ -17,19 +17,19 @@ namespace Definition.HttpClient.Language
             _apiEndpointOptions = apiEndpointOptions;
         }
 
-        // api/v{version}/languages"
+        // api/v{version}/languages
         public async Task<ConsistentApiResponse<PagedList<LanguageDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<LanguageDto>>>(CreateUrl(null, version));
         }
 
-        // api/v{version}/languages/{id}";
+        // api/v{version}/languages/{id}
         public async Task<ConsistentApiResponse<LanguageDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<LanguageDto>>(CreateUrl(null, version), id);
         }
 
-        // api/v{version}/languages/culture/{culture}";
+        // api/v{version}/languages/culture/{culture}
         public async Task<ConsistentApiResponse<LanguageDto>> GetByCultureAsync(string culture, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<LanguageDto>>(CreateUrl("/culture", version), culture);

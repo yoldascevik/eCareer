@@ -84,6 +84,17 @@ namespace Company.Api.Controllers
             Guid companyId = await _mediator.Send(request);
             return CreatedAtAction(nameof(Get), new {id = companyId});
         }
+        
+        /// <summary>
+        /// Update company tax info
+        /// </summary>
+        /// <param name="id">Company id to be updaed</param>
+        /// <param name="taxInfo">Tax info</param>
+        /// <returns>Updated company tax info</returns>
+        [HttpPut("{id}/tax")]
+        public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
+            => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
+
 
         /// <summary>
         /// Update company address
@@ -110,8 +121,8 @@ namespace Company.Api.Controllers
         /// </summary>
         /// <param name="id">Company id to be updaed</param>
         /// <param name="emailAddress">New email address</param>
-        [HttpPut("{id}/email")]
-        public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromRoute] string emailAddress)
+        [HttpPut("{id}/email/{emailAddress}")]
+        public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromBody] string emailAddress)
             => Ok(await _mediator.Send(new UpdateCompanyEmailCommand(id, emailAddress)));
 
         /// <summary>
@@ -119,20 +130,10 @@ namespace Company.Api.Controllers
         /// </summary>
         /// <param name="id">Company id to be updaed</param>
         /// <param name="companyName">New company name</param>
-        [HttpPut("{id}/name")]
-        public async Task<IActionResult> UpdateCompanyNameAsync(Guid id, [FromRoute] string companyName)
+        [HttpPut("{id}/name/{companyName}")]
+        public async Task<IActionResult> UpdateCompanyNameAsync(Guid id, [FromBody] string companyName)
             => Ok(await _mediator.Send(new UpdateCompanyNameCommand(id, companyName)));
-
-        /// <summary>
-        /// Update company tax info
-        /// </summary>
-        /// <param name="id">Company id to be updaed</param>
-        /// <param name="taxInfo">Tax info</param>
-        /// <returns>Updated company tax info</returns>
-        [HttpPut("{id}/tax")]
-        public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
-            => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
-
+        
         /// <summary>
         /// Delete existing company
         /// </summary>

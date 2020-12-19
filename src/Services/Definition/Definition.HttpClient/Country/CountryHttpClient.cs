@@ -17,13 +17,13 @@ namespace Definition.HttpClient.Country
             _apiEndpointOptions = endpointOptions;
         }
 
-        // api/v{version}/locations/countries";
+        // api/v{version}/locations/countries
         public async Task<ConsistentApiResponse<PagedList<CountryDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<CountryDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
-        // api/v{version}/locations/countries/{id}";
+        // api/v{version}/locations/countries/{id}
         public async Task<ConsistentApiResponse<CountryDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<CountryDto>>(CreateUrl(null, version), id);

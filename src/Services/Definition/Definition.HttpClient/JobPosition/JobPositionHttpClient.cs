@@ -20,7 +20,7 @@ namespace Definition.HttpClient.JobPosition
         // api/v{version}/work/positions
         public async Task<ConsistentApiResponse<PagedList<JobPositionDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<JobPositionDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<JobPositionDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/work/positions/{id}

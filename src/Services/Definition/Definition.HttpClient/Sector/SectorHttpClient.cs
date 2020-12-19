@@ -20,7 +20,7 @@ namespace Definition.HttpClient.Sector
         // api/v{version}/work/sectors
         public async Task<ConsistentApiResponse<PagedList<SectorDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<SectorDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<SectorDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/work/sectors/{id}/positions

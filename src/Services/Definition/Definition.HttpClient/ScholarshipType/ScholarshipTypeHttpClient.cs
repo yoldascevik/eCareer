@@ -20,7 +20,7 @@ namespace Definition.HttpClient.ScholarshipType
         // api/v{version}/education/scholarshiptypes
         public async Task<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/education/scholarshiptypes/{id}

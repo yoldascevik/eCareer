@@ -20,7 +20,7 @@ namespace Definition.HttpClient.Language
         // api/v{version}/languages
         public async Task<ConsistentApiResponse<PagedList<LanguageDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<LanguageDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<LanguageDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/languages/{id}

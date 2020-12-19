@@ -17,13 +17,13 @@ namespace Definition.HttpClient.EducationType
             _apiEndpointOptions = apiEndpointOptions;
         }
 
-        // api/v{version}/education/types"
+        // api/v{version}/education/types
         public async Task<ConsistentApiResponse<PagedList<EducationTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<PagedList<EducationTypeDto>>>(CreateUrl(null, version));
         }
 
-        // api/v{version}/education/types/{id}";
+        // api/v{version}/education/types/{id}
         public async Task<ConsistentApiResponse<EducationTypeDto>> GetByIdAsync(string id, string version = null)
         {
             return await GetAsync<ConsistentApiResponse<EducationTypeDto>>(CreateUrl(null, version), id);

@@ -20,7 +20,7 @@ namespace Definition.HttpClient.WorkType
         // api/v{version}/work/types
         public async Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<WorkTypeDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<WorkTypeDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/work/types/{id}

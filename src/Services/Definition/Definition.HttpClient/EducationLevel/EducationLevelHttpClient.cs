@@ -20,7 +20,7 @@ namespace Definition.HttpClient.EducationLevel
         // api/v{version}/education/levels
         public async Task<ConsistentApiResponse<PagedList<EducationLevelDto>>> GetAsync(PaginationFilter paginationFilter, string version = null) 
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<EducationLevelDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<EducationLevelDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/education/levels/{id}

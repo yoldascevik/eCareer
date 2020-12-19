@@ -20,7 +20,7 @@ namespace Definition.HttpClient.District
         // api/v{version}/locations/districts
         public async Task<ConsistentApiResponse<PagedList<DistrictDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<DistrictDto>>>(CreateUrl(null, version));
+            return await GetAsync<ConsistentApiResponse<PagedList<DistrictDto>>>(CreateUrl(null, version), paginationFilter);
         }
 
         // api/v{version}/locations/districts/{id}

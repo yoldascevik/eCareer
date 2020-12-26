@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Career.Http
+namespace Career.Http.HttpClient
 {
     public interface ICareerHttpClient
     {
@@ -25,5 +25,7 @@ namespace Career.Http
         Task<TResponse> DeleteAsync<TResponse>(string urlPath,
             Dictionary<string, string> requestHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken)) where TResponse : class;
+
+        void AppendCustomHttpHeader(string key, string value);
     }
 }

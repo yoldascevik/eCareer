@@ -9,15 +9,19 @@ namespace Career.Http.Extensions
     {
         public static string GetUrlWithQueryObject(string url, object queryParamObj)
         {
-            if (string.IsNullOrEmpty(url))
-                throw new ArgumentNullException(nameof(url));
-            
+            url ??= string.Empty;
+
             if (queryParamObj == null)
                 throw new ArgumentNullException(nameof(queryParamObj));
 
             Type queryParamObjType = queryParamObj.GetType();
             if (queryParamObjType.IsValueType || queryParamObjType == typeof(string))
+            {
+                if (string.IsNullOrEmpty(url))
+                    return queryParamObj.ToString();
+
                 return $"{url}/{queryParamObj}";
+            }
 
             var parameters = new Dictionary<string, string>();
             PropertyInfo[] properties = queryParamObj.GetType().GetProperties();

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
 using Career.Data.Pagination;
-using Career.Http;
+using Career.Http.HttpClient;
 using Company.Application.Company.Commands.CreateCompany;
 using Company.Application.Company.Dtos;
 using Company.Application.Company.Queries.GetCompanies;
@@ -12,98 +12,87 @@ namespace Company.HttpClient.Company
 {
     public class CompanyHttpClient : CareerHttpClient, ICompanyHttpClient
     {
-        private readonly ApiEndpointOptions _apiEndpointOptions;
-        
-        public CompanyHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext, 
-            ApiEndpointOptions apiEndpointOptions) : base(httpClient, httpContext)
+        public CompanyHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext)
+            : base(httpClient, httpContext)
         {
-            _apiEndpointOptions = apiEndpointOptions;
-        }
-        
-        // GET api/v{version}/companies
-        public async Task<ConsistentApiResponse<PagedList<CompanyDto>>> Get(GetCompaniesQuery query, string version = null)
-        {
-            return await GetAsync<ConsistentApiResponse<PagedList<CompanyDto>>>(CreateUrl(null, version), query);
         }
 
-        // GET api/v{version}/companies/{id}
-        public async Task<ConsistentApiResponse<CompanyDto>> GetById(Guid companyId, string version = null)
+        // GET api/companies
+        public async Task<ConsistentApiResponse<PagedList<CompanyDto>>> Get(GetCompaniesQuery query)
         {
-            return await GetAsync<ConsistentApiResponse<CompanyDto>>(CreateUrl($"/{companyId}", version));
+            return await GetAsync<ConsistentApiResponse<PagedList<CompanyDto>>>(string.Empty, query);
         }
 
-        // GET api/v{version}/companies/{id}/address
-        public async Task<ConsistentApiResponse<AddressDto>> GetCompanyAddress(Guid companyId, string version = null)
+        // GET api/companies/{id}
+        public async Task<ConsistentApiResponse<CompanyDto>> GetById(Guid companyId)
         {
-            return await GetAsync<ConsistentApiResponse<AddressDto>>(CreateUrl($"/{companyId}/address", version));
+            return await GetAsync<ConsistentApiResponse<CompanyDto>>(string.Empty, companyId);
         }
 
-        // GET api/v{version}/companies/{id}/detail
-        public async Task<ConsistentApiResponse<CompanyDetailDto>> GetCompanyDetails(Guid companyId, string version = null)
+        // GET api/companies/{id}/address
+        public async Task<ConsistentApiResponse<AddressDto>> GetCompanyAddress(Guid companyId)
         {
-            return await GetAsync<ConsistentApiResponse<CompanyDetailDto>>(CreateUrl($"/{companyId}/detail", version));
+            return await GetAsync<ConsistentApiResponse<AddressDto>>($"{companyId}/address");
         }
 
-        // GET api/v{version}/companies/{id}/tax
-        public async Task<ConsistentApiResponse<TaxDto>> GetCompanyTaxInfo(Guid companyId, string version = null)
+        // GET api/companies/{id}/detail
+        public async Task<ConsistentApiResponse<CompanyDetailDto>> GetCompanyDetails(Guid companyId)
         {
-            return await GetAsync<ConsistentApiResponse<TaxDto>>(CreateUrl($"/{companyId}/tax", version));
+            return await GetAsync<ConsistentApiResponse<CompanyDetailDto>>($"{companyId}/detail");
         }
 
-        // POST api/v{version}/companies
-        public async Task<ConsistentApiResponse<Guid>> Create(CreateCompanyCommand command, string version = null)
+        // GET api/companies/{id}/tax
+        public async Task<ConsistentApiResponse<TaxDto>> GetCompanyTaxInfo(Guid companyId)
         {
-            return await PostAsync<ConsistentApiResponse<Guid>>(CreateUrl(null, version), command);
+            return await GetAsync<ConsistentApiResponse<TaxDto>>($"{companyId}/tax");
         }
 
-        // PUT api/v{version}/companies/{id}/tax
-        public async Task<ConsistentApiResponse<TaxDto>> UpdateTaxInfo(Guid companyId, TaxDto taxInfo, string version = null)
+        // POST api/companies
+        public async Task<ConsistentApiResponse<object>> Create(CreateCompanyCommand command)
         {
-            return await PutAsync<ConsistentApiResponse<TaxDto>>(CreateUrl($"/{companyId}/tax", version), taxInfo);
+            return await PostAsync<ConsistentApiResponse<object>>(string.Empty, command);
         }
 
-        // PUT api/v{version}/companies/{id}/address
-        public async Task<ConsistentApiResponse<AddressDto>> UpdateAddress(Guid companyId, AddressDto address, string version = null)
+        // PUT api/companies/{id}/tax
+        public async Task<ConsistentApiResponse<TaxDto>> UpdateTaxInfo(Guid companyId, TaxDto taxInfo)
         {
-            return await PutAsync<ConsistentApiResponse<AddressDto>>(CreateUrl($"/{companyId}/address", version), address);
+            return await PutAsync<ConsistentApiResponse<TaxDto>>($"{companyId}/tax", taxInfo);
         }
 
-        // PUT api/v{version}/companies/{id}/detail
-        public async Task<ConsistentApiResponse<CompanyDetailDto>> UpdateDetail(Guid companyId, CompanyDetailDto detail, string version = null)
+        // PUT api/companies/{id}/address
+        public async Task<ConsistentApiResponse<AddressDto>> UpdateAddress(Guid companyId, AddressDto address)
         {
-            return await PutAsync<ConsistentApiResponse<CompanyDetailDto>>(CreateUrl($"/{companyId}/detail", version), detail);
+            return await PutAsync<ConsistentApiResponse<AddressDto>>($"{companyId}/address", address);
         }
 
-        // PUT api/v{version}/companies/{id}/email
-        public async Task<ConsistentApiResponse> UpdateEmailAddress(Guid companyId, string emailAddress, string version = null)
+        // PUT api/companies/{id}/detail
+        public async Task<ConsistentApiResponse<CompanyDetailDto>> UpdateDetail(Guid companyId, CompanyDetailDto detail)
         {
-            return await PutAsync<ConsistentApiResponse>(CreateUrl($"/{companyId}/email", version), emailAddress);
+            return await PutAsync<ConsistentApiResponse<CompanyDetailDto>>($"{companyId}/detail", detail);
         }
 
-        // PUT api/v{version}/companies/{id}/name
-        public async Task<ConsistentApiResponse> UpdateCompanyName(Guid companyId, string companyName, string version = null)
+        // PUT api/companies/{id}/email
+        public async Task<ConsistentApiResponse> UpdateEmailAddress(Guid companyId, string emailAddress)
         {
-            return await PutAsync<ConsistentApiResponse>(CreateUrl($"/{companyId}/name", version), companyName);
+            return await PutAsync<ConsistentApiResponse>($"{companyId}/email", emailAddress);
         }
 
-        // DELETE api/v{version}/companies/{id}
-        public async Task<ConsistentApiResponse> DeleteCompany(Guid companyId, string version = null)
+        // PUT api/companies/{id}/name
+        public async Task<ConsistentApiResponse> UpdateCompanyName(Guid companyId, string companyName)
         {
-            return await DeleteAsync<ConsistentApiResponse>(CreateUrl($"/{companyId}", version));
+            return await PutAsync<ConsistentApiResponse>($"{companyId}/name", companyName);
         }
 
-        // GET api/v{version}/companies/{id}/followers
-        public async Task<ConsistentApiResponse<PagedList<Guid>>> GetCompanyFollowers(Guid companyId, PaginationFilter paginationFilter, string version = null)
+        // DELETE api/companies/{id}
+        public async Task<ConsistentApiResponse> DeleteCompany(Guid companyId)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<Guid>>>(CreateUrl($"/{companyId}", version), paginationFilter);
+            return await DeleteAsync<ConsistentApiResponse>($"{companyId}");
         }
-        
-        private string CreateUrl(string requestPath, string version)
-        {
-            if (string.IsNullOrEmpty(version))
-                version = _apiEndpointOptions.DefaultVersion;
 
-            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/companies{requestPath ?? string.Empty}";
+        // GET api/companies/{id}/followers
+        public async Task<ConsistentApiResponse<PagedList<Guid>>> GetCompanyFollowers(Guid companyId, PaginationFilter paginationFilter)
+        {
+            return await GetAsync<ConsistentApiResponse<PagedList<Guid>>>($"{companyId}/followers", paginationFilter);
         }
     }
 }

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 using Career.Http.Extensions;
 using Microsoft.AspNetCore.Http;
 
-namespace Career.Http
+namespace Career.Http.HttpClient
 {
     public abstract class CareerHttpClient: ICareerHttpClient
     {
-        protected readonly HttpClient HttpClient;
+        protected readonly System.Net.Http.HttpClient HttpClient;
         protected readonly IHttpContextAccessor HttpContext;
         
-        protected CareerHttpClient(HttpClient httpClient, IHttpContextAccessor httpContext)
+        protected CareerHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext)
         {
             HttpClient = httpClient;
             HttpContext = httpContext;
@@ -89,6 +89,14 @@ namespace Career.Http
             return await responseHttpMessage.DeSerializeResponseAsync<TResponse>();
         }
         
+        public void AppendCustomHttpHeader(string key, string value)
+        {
+            if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(value))
+                return;
+
+            HttpClient.DefaultRequestHeaders.Add(key, value);
+        }
+
         protected StringContent ConvertToStringContent(string strContent, string contentType = "application/json")
         {
             return new StringContent(strContent, Encoding.UTF8, contentType);

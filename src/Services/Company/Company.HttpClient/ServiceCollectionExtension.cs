@@ -1,7 +1,8 @@
 ﻿using System;
 using Career.Exceptions;
 using Career.Http;
-using Career.IoC;
+using Company.HttpClient.Company;
+using Company.HttpClient.CompanyFollower;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.HttpClient
@@ -12,10 +13,21 @@ namespace Company.HttpClient
         {
             Check.NotNull(options, nameof(options));
             
+            var defaultApiVersion = Version.Parse(options.DefaultVersion ?? "1.0");
+            
             services.AddCareerHttpClient();
-            services.AddSingleton(options);
-            services.RegisterModule(new CompanyHttpClientModule());
-
+            services.AddHttpClient<ICompanyHttpClient, CompanyHttpClient>(config =>
+            {
+                config.BaseAddress = new Uri($"{options.ApiUrl}/api/companies/");
+                config.DefaultRequestVersion = defaultApiVersion;
+            });
+            
+            services.AddHttpClient<ICompanyFollowerHttpClient, CompanyFollowerHttpClient>(config =>
+            {
+                config.BaseAddress = new Uri($"{options.ApiUrl}/api/company-followers/");
+                config.DefaultRequestVersion = defaultApiVersion;
+            });
+            
             return services;
         }
         

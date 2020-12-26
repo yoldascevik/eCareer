@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/work/sectors")]
+    
+    [Route("api/work/sectors")]
     public class SectorController : DefinitionApiController
     {
         private readonly ISectorService _sectorService;

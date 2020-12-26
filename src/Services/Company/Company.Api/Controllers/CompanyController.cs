@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/companies")]
+    [Route("api/companies")]
     public class CompanyController : CompanyApiController
     {
         private readonly IMediator _mediator;

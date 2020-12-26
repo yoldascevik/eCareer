@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ARConsistency.Abstractions;
 using Career.Data.Pagination;
-using Career.Http;
+using Career.Http.HttpClient;
 
 namespace Company.HttpClient.CompanyFollower
 {

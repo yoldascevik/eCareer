@@ -1,6 +1,5 @@
 ﻿using System;
 using Career.Exceptions;
-using Career.Http;
 using Career.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,11 +10,8 @@ namespace Company.HttpClient
         public static IServiceCollection AddCompanyApiHttpClient(this IServiceCollection services, ApiEndpointOptions options)
         {
             Check.NotNull(options, nameof(options));
+            services.RegisterModule(new CompanyHttpClientModule(options));
             
-            services.AddCareerHttpClient();
-            services.AddSingleton(options);
-            services.RegisterModule(new CompanyHttpClientModule());
-
             return services;
         }
         

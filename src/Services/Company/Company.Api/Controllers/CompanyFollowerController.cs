@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/company-followers")]
+    [Route("api/company-followers")]
     public class CompanyFollowerController: CompanyApiController
     {
         private readonly IMediator _mediator;

@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/education/levels")]
+    
+    [Route("api/education/levels")]
     public class EducationLevelController : DefinitionApiController
     {
         private readonly IEducationLevelService _educationLevelService;

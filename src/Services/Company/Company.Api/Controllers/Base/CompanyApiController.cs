@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers.Base
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     public abstract class CompanyApiController: CareerApiController
     {
         

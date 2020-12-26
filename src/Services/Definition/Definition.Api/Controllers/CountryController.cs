@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/locations/countries")]
+    
+    [Route("api/locations/countries")]
     public class CountryController : DefinitionApiController
     {
         private readonly ICountryService _countryService;

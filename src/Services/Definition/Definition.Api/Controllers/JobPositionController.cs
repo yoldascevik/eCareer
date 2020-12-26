@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/work/positions")]
+    
+    [Route("api/work/positions")]
     public class JobPositionController : DefinitionApiController
     {
         private readonly IJobPositionService _jobPositionService;

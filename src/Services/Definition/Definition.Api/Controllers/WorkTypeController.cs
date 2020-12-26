@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/work/types")]
+    
+    [Route("api/work/types")]
     public class WorkTypeController : DefinitionApiController
     {
         private readonly IWorkTypeService _workTypeService;

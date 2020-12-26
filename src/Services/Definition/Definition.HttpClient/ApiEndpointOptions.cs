@@ -4,7 +4,7 @@
     {
         public ApiEndpointOptions()
         {
-            DefaultVersion = "1";
+            DefaultVersion = "1.0";
         }
         
         public ApiEndpointOptions(string apiUrl, string defaultVersion)

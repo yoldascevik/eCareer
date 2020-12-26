@@ -13,8 +13,7 @@ namespace Definition.HttpClient
                 throw new ArgumentNullException(nameof(options));
             
             services.AddCareerHttpClient();
-            services.AddSingleton(options);
-            services.RegisterModule(new DefinitionHttpClientModule());
+            services.RegisterModule(new DefinitionHttpClientModule(options));
 
             return services;
         }

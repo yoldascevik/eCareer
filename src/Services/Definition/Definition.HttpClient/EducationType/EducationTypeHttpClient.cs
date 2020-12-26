@@ -7,34 +7,23 @@ using Microsoft.AspNetCore.Http;
 
 namespace Definition.HttpClient.EducationType
 {
-    public class EducationTypeHttpClient: CareerHttpClient, IEducationTypeHttpClient
+    public class EducationTypeHttpClient : CareerHttpClient, IEducationTypeHttpClient
     {
-        private readonly ApiEndpointOptions _apiEndpointOptions;
-        
-        public EducationTypeHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext, ApiEndpointOptions apiEndpointOptions) 
+        public EducationTypeHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext)
             : base(httpClient, httpContext)
         {
-            _apiEndpointOptions = apiEndpointOptions;
         }
 
         // api/v{version}/education/types
-        public async Task<ConsistentApiResponse<PagedList<EducationTypeDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
+        public async Task<ConsistentApiResponse<PagedList<EducationTypeDto>>> GetAsync(PaginationFilter paginationFilter)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<EducationTypeDto>>>(CreateUrl(null, version), paginationFilter);
+            return await GetAsync<ConsistentApiResponse<PagedList<EducationTypeDto>>>(string.Empty, paginationFilter);
         }
 
         // api/v{version}/education/types/{id}
-        public async Task<ConsistentApiResponse<EducationTypeDto>> GetByIdAsync(string id, string version = null)
+        public async Task<ConsistentApiResponse<EducationTypeDto>> GetByIdAsync(string id)
         {
-            return await GetAsync<ConsistentApiResponse<EducationTypeDto>>(CreateUrl(null, version), id);
-        }
-        
-        private string CreateUrl(string requestPath, string version)
-        {
-            if (string.IsNullOrEmpty(version))
-                version = _apiEndpointOptions.DefaultVersion;
-
-            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/education/types{requestPath ?? string.Empty}";
+            return await GetAsync<ConsistentApiResponse<EducationTypeDto>>(string.Empty, id);
         }
     }
 }

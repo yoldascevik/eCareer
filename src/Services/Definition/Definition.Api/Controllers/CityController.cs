@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/locations/cities")]
+    [Route("api/locations/cities")]
     public class CityController : DefinitionApiController
     {
         private readonly ICityService _cityService;

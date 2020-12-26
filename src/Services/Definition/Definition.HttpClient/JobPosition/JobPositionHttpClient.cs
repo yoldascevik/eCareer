@@ -7,34 +7,23 @@ using Microsoft.AspNetCore.Http;
 
 namespace Definition.HttpClient.JobPosition
 {
-    public class JobPositionHttpClient: CareerHttpClient, IJobPositionHttpClient
+    public class JobPositionHttpClient : CareerHttpClient, IJobPositionHttpClient
     {
-        private readonly ApiEndpointOptions _apiEndpointOptions;
-        
-        public JobPositionHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext, ApiEndpointOptions apiEndpointOptions) 
+        public JobPositionHttpClient(System.Net.Http.HttpClient httpClient, IHttpContextAccessor httpContext)
             : base(httpClient, httpContext)
         {
-            _apiEndpointOptions = apiEndpointOptions;
         }
 
         // api/v{version}/work/positions
-        public async Task<ConsistentApiResponse<PagedList<JobPositionDto>>> GetAsync(PaginationFilter paginationFilter, string version = null)
+        public async Task<ConsistentApiResponse<PagedList<JobPositionDto>>> GetAsync(PaginationFilter paginationFilter)
         {
-            return await GetAsync<ConsistentApiResponse<PagedList<JobPositionDto>>>(CreateUrl(null, version), paginationFilter);
+            return await GetAsync<ConsistentApiResponse<PagedList<JobPositionDto>>>(string.Empty, paginationFilter);
         }
 
         // api/v{version}/work/positions/{id}
-        public async Task<ConsistentApiResponse<JobPositionDto>> GetByIdAsync(string id, string version = null)
+        public async Task<ConsistentApiResponse<JobPositionDto>> GetByIdAsync(string id)
         {
-            return await GetAsync<ConsistentApiResponse<JobPositionDto>>(CreateUrl(null, version), id);
-        }
-        
-        private string CreateUrl(string requestPath, string version)
-        {
-            if (string.IsNullOrEmpty(version))
-                version = _apiEndpointOptions.DefaultVersion;
-
-            return $"{_apiEndpointOptions.ApiUrl}/api/v{version}/work/positions{requestPath ?? string.Empty}";
+            return await GetAsync<ConsistentApiResponse<JobPositionDto>>(string.Empty, id);
         }
     }
 }

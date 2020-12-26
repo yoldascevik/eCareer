@@ -9,7 +9,7 @@ namespace Career.Http.Extensions
     {
         public static string GetUrlWithQueryObject(string url, object queryParamObj)
         {
-            url ??= string.Empty;
+            url = url == null ? string.Empty : url.TrimEnd('/');
 
             if (queryParamObj == null)
                 throw new ArgumentNullException(nameof(queryParamObj));

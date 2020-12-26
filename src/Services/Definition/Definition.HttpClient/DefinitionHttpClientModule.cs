@@ -1,4 +1,5 @@
 using System;
+using Career.Http;
 using Career.IoC.IoCModule;
 using Definition.HttpClient.City;
 using Definition.HttpClient.Country;
@@ -27,61 +28,61 @@ namespace Definition.HttpClient
         {
             var defaultApiVersion = Version.Parse(_options.DefaultVersion ?? "1.0");
             
-            services.AddHttpClient<ICityHttpClient, CityHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<ICityHttpClient, CityHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/cities/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<ICountryHttpClient, CountryHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<ICountryHttpClient, CountryHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/countries/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IDistrictHttpClient, DistrictHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IDistrictHttpClient, DistrictHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/districts/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IEducationLevelHttpClient, EducationLevelHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IEducationLevelHttpClient, EducationLevelHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/levels/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IEducationTypeHttpClient, EducationTypeHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IEducationTypeHttpClient, EducationTypeHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/types/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IJobPositionHttpClient, JobPositionHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IJobPositionHttpClient, JobPositionHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/positions/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<ILanguageHttpClient, LanguageHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<ILanguageHttpClient, LanguageHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/languages/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IScholarshipTypeHttpClient, ScholarshipTypeHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IScholarshipTypeHttpClient, ScholarshipTypeHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/scholarshiptypes/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<ISectorHttpClient, SectorHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<ISectorHttpClient, SectorHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/sectors/");
                 config.DefaultRequestVersion = defaultApiVersion;
             });
             
-            services.AddHttpClient<IWorkTypeHttpClient, WorkTypeHttpClient>(config =>
+            services.AddHttpClientWithRetryPolicy<IWorkTypeHttpClient, WorkTypeHttpClient>(config =>
             {
                 config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/types/");
                 config.DefaultRequestVersion = defaultApiVersion;

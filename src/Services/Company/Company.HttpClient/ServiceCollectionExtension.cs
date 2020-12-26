@@ -1,11 +1,7 @@
 ﻿using System;
 using Career.Exceptions;
-using Career.Http;
 using Career.IoC;
-using Company.HttpClient.Company;
-using Company.HttpClient.CompanyFollower;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
 
 namespace Company.HttpClient
 {

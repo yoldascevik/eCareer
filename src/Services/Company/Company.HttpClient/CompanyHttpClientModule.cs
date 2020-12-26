@@ -4,7 +4,6 @@ using Career.IoC.IoCModule;
 using Company.HttpClient.Company;
 using Company.HttpClient.CompanyFollower;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
 
 namespace Company.HttpClient
 {

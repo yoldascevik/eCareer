@@ -2,6 +2,6 @@
 {
     public interface IModificationAudited: IHasModificationTime
     {
-        long? LastModifierUserId { get; set; } 
+        long? LastModifiedUserId { get; set; } 
     }
 }

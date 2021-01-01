@@ -7,6 +7,8 @@ namespace Company.Infrastructure.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Company> builder)
         {
+            builder.ToTable("Company");
+            
             builder.HasKey(o => o.Id);
             builder.Property(t => t.SectorId)
                 .HasMaxLength(24)

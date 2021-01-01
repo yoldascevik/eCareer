@@ -40,7 +40,7 @@ namespace Company.Domain.Entities
         public DateTime CreationTime { get; private set; }
         public long? CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
-        public long? LastModifierUserId { get; private set; }
+        public long? LastModifiedUserId { get; private set; }
         public ICollection<CompanyFollower> Followers { get; }
 
         #endregion
@@ -69,7 +69,7 @@ namespace Company.Domain.Entities
                 CreationTime = Clock.Now,
                 CreatorUserId = null, // TODO
                 LastModificationTime = Clock.Now,
-                LastModifierUserId = null // TODO
+                LastModifiedUserId = null // TODO
             };
             
             company.AddDomainEvent(new CompanyCreatedEvent(company));
@@ -99,7 +99,7 @@ namespace Company.Domain.Entities
             
             Name = companyName;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; // TODO
+            LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyNameUpdatedEvent(this, oldCompanyName));
         }
@@ -110,7 +110,7 @@ namespace Company.Domain.Entities
             
             TaxInfo = taxInfo;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; // TODO
+            LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyTaxInfoUpdatedEvent(this));
         }
@@ -121,7 +121,7 @@ namespace Company.Domain.Entities
 
             AddressInfo = address;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; // TODO
+            LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyAddressUpdatedEvent(this));
         }
@@ -133,7 +133,7 @@ namespace Company.Domain.Entities
             string oldEmailAdress = Email;
             Email = email;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; // TODO
+            LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyEmailAddressUpdatedEvent(this, oldEmailAdress));
         }
@@ -152,7 +152,7 @@ namespace Company.Domain.Entities
             EstablishedYear = establishedYear;
             SectorId = sectorId;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; //TODO
+            LastModifiedUserId = null; //TODO
             
             AddDomainEvent(new CompanyDetailInfoUpdatedEvent(this));
         }
@@ -161,7 +161,7 @@ namespace Company.Domain.Entities
         {
             IsDeleted = true;
             LastModificationTime = Clock.Now;
-            LastModifierUserId = null; // TODO
+            LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyDeletedEvent(this));
         }

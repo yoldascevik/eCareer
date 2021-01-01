@@ -87,7 +87,7 @@ namespace Career.EntityFramework
         {
             if (entityEntry.Entity is IModificationAudited modificationAuditedEntity)
             {
-                modificationAuditedEntity.LastModifierUserId = null; // TODO: set current user id
+                modificationAuditedEntity.LastModifiedUserId = null; // TODO: set current user id
                 modificationAuditedEntity.LastModificationTime = Clock.Now;
             }
             else if (entityEntry.Entity is IHasModificationTime hasModificationTimeEntity)

@@ -8,6 +8,8 @@ namespace Company.Infrastructure.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<CompanyFollower> builder)
         {
+            builder.ToTable("CompanyFollower");
+            
             builder.HasKey(o => o.Id);
             builder.Property(t => t.CompanyId).IsRequired();
             builder.Property(t => t.UserId).IsRequired();

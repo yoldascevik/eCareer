@@ -1,12 +1,11 @@
 using System;
 using Career.Configuration;
-using Career.Migration;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Definition.Api
+namespace Job.Api
 {
     public class Program
     {
@@ -14,14 +13,12 @@ namespace Definition.Api
         {
             var configuration = ConfigurationHelper.GetConfiguration();
             Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
-
+            
             try
             {
                 Log.Information("Application starting up...");
 
-                CreateHostBuilder(args).Build()
-                    .MigrateDatabase(typeof(Startup))
-                    .Run();
+                CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
@@ -36,9 +33,6 @@ namespace Definition.Api
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

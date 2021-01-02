@@ -1,5 +1,5 @@
 using Job.Api.Controllers.Base;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Job.Api.Controllers
 {

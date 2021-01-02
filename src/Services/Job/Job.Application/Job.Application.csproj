@@ -12,6 +12,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+      <ProjectReference Include="..\Job.Infrastructure\Job.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

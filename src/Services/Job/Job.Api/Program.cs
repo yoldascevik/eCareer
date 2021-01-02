@@ -1,5 +1,7 @@
 using System;
 using Career.Configuration;
+using Career.EntityFramework;
+using Job.Infrastructure;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -18,7 +20,9 @@ namespace Job.Api
             {
                 Log.Information("Application starting up...");
 
-                CreateHostBuilder(args).Build().Run();
+                CreateHostBuilder(args).Build()
+                    .MigrateEntityFrameworkDatabase<JobDbContext>()
+                    .Run();
             }
             catch (Exception ex)
             {

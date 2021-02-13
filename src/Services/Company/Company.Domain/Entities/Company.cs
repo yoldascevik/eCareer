@@ -11,7 +11,7 @@ using Company.Domain.Values;
 
 namespace Company.Domain.Entities
 {
-    public class Company : DomainEntity<Guid>, IAggregateRoot
+    public class Company : DomainEntity, IAggregateRoot
     {
         #region Ctor
 
@@ -24,7 +24,8 @@ namespace Company.Domain.Entities
         #endregion
         
         #region Properties
-        
+
+        public Guid Id { get; }
         public string Name { get; private set; }
         public TaxInfo TaxInfo { get; private set; }
         public AddressInfo AddressInfo { get; private set; }
@@ -164,6 +165,11 @@ namespace Company.Domain.Entities
             LastModifiedUserId = null; // TODO
             
             AddDomainEvent(new CompanyDeletedEvent(this));
+        }
+        
+        protected override IEnumerable<object> GetIdentityMembers()
+        {
+            yield return Id;
         }
 
         #endregion

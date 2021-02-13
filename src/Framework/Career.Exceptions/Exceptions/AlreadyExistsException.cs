@@ -2,14 +2,11 @@
 
 namespace Career.Exceptions.Exceptions
 {
-    public class AlreadyExistsException: CareerExceptionBase
+    public class AlreadyExistsException : CareerExceptionBase
     {
-        public AlreadyExistsException(string message)
+        public AlreadyExistsException(string message) : base(message)
         {
-            StatusCode = (int)HttpStatusCode.BadRequest;
-            Message = message;
+            StatusCode = (int) HttpStatusCode.BadRequest;
         }
-
-        public override string Message { get; }
     }
 }

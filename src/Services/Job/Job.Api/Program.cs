@@ -1,7 +1,5 @@
 using System;
 using Career.Configuration;
-using Career.EntityFramework;
-using Job.Infrastructure;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -15,14 +13,12 @@ namespace Job.Api
         {
             var configuration = ConfigurationHelper.GetConfiguration();
             Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
-            
+
             try
             {
                 Log.Information("Application starting up...");
 
-                CreateHostBuilder(args).Build()
-                    .MigrateEntityFrameworkDatabase<JobDbContext>()
-                    .Run();
+                CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR ..
 COPY ["src/Services/Job/Job.Api/Job.Api.csproj", "src/Services/Job/Job.Api/"]
 COPY ["src/Services/Job/Job.Application/Job.Application.csproj", "src/Services/Job/Job.Application/"]

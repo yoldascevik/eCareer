@@ -2,13 +2,14 @@ using ARConsistency;
 using Career.Exceptions;
 using Career.IoC;
 using Career.MediatR;
+using Career.Mongo;
 using Career.Mvc.Extensions;
 using Career.Shared.Timing;
 using Career.Swagger;
 using Job.Application;
+using Job.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +39,11 @@ namespace Job.Api
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
+            services.AddMongoContext<JobDbContext>();
+            services.AddMongo();
+            
+            JobDbContext.Configure();
+
             services.RegisterModule<ApplicationModule>();
             services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
             services.AddSwagger();

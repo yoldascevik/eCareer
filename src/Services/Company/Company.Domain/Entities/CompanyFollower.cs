@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
@@ -6,7 +7,7 @@ using Company.Domain.DomainEvents.CompanyFollower;
 
 namespace Company.Domain.Entities
 {
-    public class CompanyFollower: DomainEntity<Guid>
+    public class CompanyFollower: DomainEntity
     {
         public CompanyFollower()
         {
@@ -14,6 +15,7 @@ namespace Company.Domain.Entities
             Id = Guid.NewGuid();
         }
         
+        public Guid Id { get; }
         public Guid CompanyId { get; private set; }
         public Guid UserId { get; private set;}
         public bool IsDeleted { get; private set;}
@@ -44,6 +46,11 @@ namespace Company.Domain.Entities
             LastModificationTime = Clock.Now;
             
             AddDomainEvent(new FollowerDeletedEvent(this));
+        }
+        
+        protected override IEnumerable<object> GetIdentityMembers()
+        {
+            yield return Id;
         }
     }
 }

@@ -1,47 +1,57 @@
 using System.Collections.Generic;
+using System.Linq;
 using Career.Domain.BusinessRule;
 using Career.Domain.DomainEvent;
+using Career.Exceptions;
 
 namespace Career.Domain.Entities
 {
-    public abstract class DomainEntity<TKey> : DomainEntity, IDomainEntity<TKey>
-    {
-        public TKey Id { get; protected set; }
-    }
-    
-    public abstract class DomainEntity: Entity, IDomainEntity
+    public abstract class DomainEntity: Entity
     {
         private List<IDomainEvent> _domainEvents;
 
         public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
-        public void AddDomainEvent(IDomainEvent domainEvent)
+        protected void AddDomainEvent(IDomainEvent domainEvent)
         {
+            Check.NotNull(domainEvent, nameof(domainEvent));
+
             _domainEvents ??= new List<IDomainEvent>();
             _domainEvents.Add(domainEvent);
         }
-        
-        public void RemoveDomainEvent(IDomainEvent eventItem)
+
+        protected void AddOrUpdateDomainEvent(IDomainEvent domainEvent)
         {
-            _domainEvents?.Remove(eventItem);
+            Check.NotNull(domainEvent, nameof(domainEvent));
+            
+            var @event = _domainEvents.FirstOrDefault(e => e.GetType() == domainEvent.GetType());
+            if (@event != null)
+            {
+                RemoveDomainEvent(domainEvent);
+            }
+            
+            AddDomainEvent(domainEvent);
         }
 
-        public void ClearDomainEvents()
+        protected void RemoveDomainEvent(IDomainEvent domainEvent)
+        {
+            Check.NotNull(domainEvent, nameof(domainEvent));
+            _domainEvents?.Remove(domainEvent);
+        }
+
+        protected void ClearDomainEvents()
         {
             _domainEvents?.Clear();
         }
         
         protected static void CheckRule(IBusinessRule rule)
         {
+            Check.NotNull(rule, nameof(rule));
+            
             if (rule.IsBroken())
             {
                 throw new BusinessRuleValidationException(rule);
             }
-        }
-        
-        void IDomainEntity.CheckRule(IBusinessRule rule)
-        {
-            CheckRule(rule);
         }
     }
 }

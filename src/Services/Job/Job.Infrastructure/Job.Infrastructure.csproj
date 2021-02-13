@@ -5,16 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Framework\Career.EntityFramework\Career.EntityFramework.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />
       <ProjectReference Include="..\Job.Domain\Job.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
     </ItemGroup>
 
 </Project>

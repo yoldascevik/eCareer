@@ -113,6 +113,8 @@ namespace Career.EntityFramework
                     {
                         await _mediator.Publish(domainEvent);
                     }
+                    
+                    domainEntity.ClearDomainEvents();
                 }
             }
         }

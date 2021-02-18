@@ -39,7 +39,7 @@ namespace Career.Domain.Entities
             _domainEvents?.Remove(domainEvent);
         }
 
-        protected void ClearDomainEvents()
+        public void ClearDomainEvents()
         {
             _domainEvents?.Clear();
         }

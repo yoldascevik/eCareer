@@ -166,11 +166,6 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new CompanyDeletedEvent(this));
         }
-        
-        protected override IEnumerable<object> GetIdentityMembers()
-        {
-            yield return Id;
-        }
 
         #endregion
     }

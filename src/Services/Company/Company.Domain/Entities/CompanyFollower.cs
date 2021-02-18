@@ -47,10 +47,5 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new FollowerDeletedEvent(this));
         }
-        
-        protected override IEnumerable<object> GetIdentityMembers()
-        {
-            yield return Id;
-        }
     }
 }

@@ -1,6 +1,6 @@
 using Career.Mongo.Mapping;
-using Job.Domain.Constants;
-using Job.Domain.JobAggregate;
+using Job.Domain.JobAdvertAggregate;
+using Job.Domain.JobAdvertAggregate.Constants;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;

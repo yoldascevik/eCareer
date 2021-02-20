@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Career.Mongo.Repository.Contracts;
 using Job.Api.Controllers.Base;

@@ -1,15 +1,14 @@
-using Career.IoC;
+using Career.Domain;
 using Career.IoC.IoCModule;
-using Job.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Job.Application
+namespace Company.Domain
 {
-    public class ApplicationModule : Module
+    public class DomainModule: Module
     {
         protected override void Load(IServiceCollection services)
         {
-            services.RegisterModule<DomainModule>();
+            services.AddDomainEvents(this.GetType());
         }
     }
 }

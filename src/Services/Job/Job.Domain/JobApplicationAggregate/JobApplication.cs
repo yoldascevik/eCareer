@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;

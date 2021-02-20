@@ -9,7 +9,6 @@ using Career.Shared.Timing;
 using Job.Domain.JobAdvertAggregate.Constants;
 using Job.Domain.JobAdvertAggregate.DomainEvents;
 using Job.Domain.JobApplicationAggregate;
-using Job.Domain.JobApplicationAggregate.DomainEvents;
 
 namespace Job.Domain.JobAdvertAggregate
 {
@@ -48,7 +47,7 @@ namespace Job.Domain.JobAdvertAggregate
         #region Properties
 
         public Guid Id { get; }
-        public Guid CompanyId { get; private init; }
+        public Guid CompanyId { get; }
         public string LanguageId { get; private set; }
         public string SectorId { get; private set; }
         public string JobPositionId { get; private set; }
@@ -60,17 +59,17 @@ namespace Job.Domain.JobAdvertAggregate
         public byte? MaxExperienceYear { get; private set; }
         public GenderType Gender { get; private set; }
         public bool IsPublished { get; private set; }
-        public DateTime UnPublishDate { get; private set; }
-        public string UnPublishReason { get; private set; }
+        public DateTime RevokeDate { get; private set; }
+        public string RevokeReason { get; private set; }
         public bool IsDeleted { get; private set; }
         public DateTime? ListingDate { get; private set; }
         public DateTime? FirstListingDate { get; private set; }
         public DateTime ValidityDate { get; private set; }
-        public DateTime CreationTime { get; private init; }
-        public Guid CreatorUserId { get; private init; }
+        public DateTime CreationTime { get; }
+        public Guid CreatorUserId { get; }
         public DateTime? LastModificationTime { get; private set; }
         public Guid? LastModifiedUserId { get; private set; }
-        
+
         private readonly List<Application> _applications;
         public IReadOnlyCollection<Application> Applications => _applications.AsReadOnly();
 
@@ -179,6 +178,11 @@ namespace Job.Domain.JobAdvertAggregate
 
         public JobAdvert SetMinExperienceYear(byte? minExperienceYear)
         {
+            if (minExperienceYear > MaxExperienceYear)
+            {
+                throw new BusinessException("The minimum years of experience cannot greater than the maximum years of experience.");
+            }
+
             MinExperienceYear = minExperienceYear;
             OnUpdated();
 
@@ -187,6 +191,11 @@ namespace Job.Domain.JobAdvertAggregate
 
         public JobAdvert SetMaxExperienceYear(byte? maxExperienceYear)
         {
+            if (maxExperienceYear < MinExperienceYear)
+            {
+                throw new BusinessException("The maximum years of experience cannot less than the minimum years of experience.");
+            }
+            
             MaxExperienceYear = maxExperienceYear;
             OnUpdated();
 
@@ -218,18 +227,18 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
             AddDomainEvent(new JobAdvertPublishedEvent(this));
         }
-
-        public void UnPublish(string unPublishReason)
+        
+        public void Revoke(string reason)
         {
-            if (string.IsNullOrEmpty(unPublishReason))
-                throw new BusinessException("Unpublish reason is required!");
+            if (string.IsNullOrEmpty(reason))
+                throw new BusinessException("Revoke reason is required!");
 
             IsPublished = false;
-            UnPublishDate = Clock.Now;
-            UnPublishReason = unPublishReason;
+            RevokeReason = reason;
+            RevokeDate = Clock.Now;
 
             OnUpdated();
-            AddDomainEvent(new JobAdvertUnPublishedEvent(this));
+            AddDomainEvent(new JobAdvertRevokedEvent(this));
         }
 
         public void Delete()
@@ -237,38 +246,38 @@ namespace Job.Domain.JobAdvertAggregate
             IsDeleted = true;
             IsPublished = false;
             LastModificationTime = Clock.Now;
-            LastModifiedUserId = Guid.Empty; // Todo:
+            LastModifiedUserId = Guid.Empty; // Todo
             AddDomainEvent(new JobAdvertDeletedEvent(this));
         }
 
         public void Apply(JobApplication jobApplication)
         {
             Check.NotNull(jobApplication, nameof(jobApplication));
-        
+
             if (jobApplication.JobAdvertId != Id)
                 throw new BusinessException("The application does not belong to this job advert!");
-            
+
             if (!IsPublished || ValidityDate <= Clock.Now)
                 throw new BusinessException("This job advert is no longer valid.");
-            
+
             if (_applications.Any(x => x.UserId == jobApplication.UserId))
                 throw new BusinessException("You have an application for this job advert!");
-            
+
             _applications.Add(Application.Create(jobApplication));
-            AddDomainEvent(new ApplicationCreatedEvent(this, jobApplication, ApplicationEventSource.JobAdvert));
+            AddDomainEvent(new JobApplicationReceivedEvent(this, jobApplication));
         }
 
-        // public void WithdrawApplication(JobApplication jobApplication)
-        // {
-        //     Check.NotNull(jobApplication, nameof(jobApplication));
-        //
-        //     var application = _applications.FirstOrDefault(x => x.UserId == jobApplication.UserId && jobApplication.IsActive);
-        //     if (application == null)
-        //         throw new NotFoundException("Job application not found!");
-        //
-        //     application.Withdrawn();
-        //     AddDomainEvent(new ApplicationWithdrawnFromJobAdvertEvent(this, jobApplication, ApplicationEventSource.JobAdvert));
-        // }
+        public void WithdrawApplication(JobApplication jobApplication)
+        {
+            Check.NotNull(jobApplication, nameof(jobApplication));
+        
+            Application application = _applications.FirstOrDefault(x => x.UserId == jobApplication.UserId && jobApplication.IsActive);
+            if (application == null)
+                throw new NotFoundException("Job application not found!");
+        
+            application.Withdraw();
+            AddDomainEvent(new JobApplicationWithdrawnEvent(this, jobApplication));
+        }
 
         public void AddLocation(Location location)
         {

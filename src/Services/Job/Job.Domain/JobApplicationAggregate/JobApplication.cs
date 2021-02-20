@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
+using Career.Exceptions.Exceptions;
 using Career.Shared.Timing;
 using Job.Domain.JobAdvertAggregate;
-using Job.Domain.JobApplicationAggregate.DomainEvents;
 
 namespace Job.Domain.JobApplicationAggregate
 {
@@ -45,13 +45,16 @@ namespace Job.Domain.JobApplicationAggregate
                 ApplicationDate = Clock.Now
             };
             
-            application.AddDomainEvent(new ApplicationCreatedEvent(jobAdvert, application, ApplicationEventSource.JobApplication));
-            
             return application;
         }
 
-        public void Withdrawn()
+        internal void Withdrawn()
         {
+            if (!IsActive)
+            {
+                throw new BusinessException("Job application is not active!");
+            }
+            
             IsActive = false;
             WithdrawalDate = Clock.Now;
         }

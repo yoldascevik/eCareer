@@ -3,9 +3,9 @@ using Career.Exceptions;
 
 namespace Job.Domain.JobAdvertAggregate.DomainEvents
 {
-    public class JobAdvertUnPublishedEvent : DomainEvent
+    public class JobAdvertRevokedEvent : DomainEvent
     {
-        public JobAdvertUnPublishedEvent(JobAdvert jobAdvert)
+        public JobAdvertRevokedEvent(JobAdvert jobAdvert)
         {
             Check.NotNull(jobAdvert, nameof(jobAdvert));
             JobAdvert = jobAdvert;

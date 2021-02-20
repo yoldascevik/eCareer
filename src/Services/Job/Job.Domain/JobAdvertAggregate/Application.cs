@@ -23,7 +23,7 @@ namespace Job.Domain.JobAdvertAggregate
             };
         }
         
-        public void Withdraw()
+        internal void Withdraw()
         {
             IsActive = false;
         }

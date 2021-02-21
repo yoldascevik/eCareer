@@ -10,7 +10,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="JobApplicationAggregate\DomainEvents" />
+        <Reference Include="AspectCore, Version=1.1.2.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\..\..\references\AspectCore.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>

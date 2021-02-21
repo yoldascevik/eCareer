@@ -16,12 +16,9 @@ namespace Job.Domain.JobAdvertAggregate
     {
         #region Ctor
 
-        private JobAdvert(Guid companyId)
+        private JobAdvert()
         {
-            Check.NotNull(companyId, nameof(companyId));
-
             Id = Guid.NewGuid();
-            CompanyId = companyId;
             _tags = new List<Tag>();
             _locations = new List<Location>();
             _workTypes = new List<WorkType>();
@@ -35,6 +32,12 @@ namespace Job.Domain.JobAdvertAggregate
             _isCreated = true;
             AddDomainEvent(new JobAdvertCreatedEvent(this));
         }
+        
+        private JobAdvert(Guid companyId): this()
+        {
+            Check.NotNull(companyId, nameof(companyId));
+            CompanyId = companyId;
+        }
 
         #endregion
 
@@ -46,8 +49,8 @@ namespace Job.Domain.JobAdvertAggregate
 
         #region Properties
 
-        public Guid Id { get; }
-        public Guid CompanyId { get; }
+        public Guid Id { get; private set; }
+        public Guid CompanyId { get; private set; }
         public string LanguageId { get; private set; }
         public string SectorId { get; private set; }
         public string JobPositionId { get; private set; }
@@ -65,8 +68,8 @@ namespace Job.Domain.JobAdvertAggregate
         public DateTime? ListingDate { get; private set; }
         public DateTime? FirstListingDate { get; private set; }
         public DateTime ValidityDate { get; private set; }
-        public DateTime CreationTime { get; }
-        public Guid CreatorUserId { get; }
+        public DateTime CreationTime { get; private set; }
+        public Guid CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public Guid? LastModifiedUserId { get; private set; }
 
@@ -257,9 +260,9 @@ namespace Job.Domain.JobAdvertAggregate
             if (jobApplication.JobAdvertId != Id)
                 throw new BusinessException("The application does not belong to this job advert!");
 
-            if (!IsPublished || ValidityDate <= Clock.Now)
-                throw new BusinessException("This job advert is no longer valid.");
-
+             if (!IsPublished || ValidityDate <= Clock.Now)
+                 throw new BusinessException("This job advert is no longer valid.");
+            
             if (_applications.Any(x => x.UserId == jobApplication.UserId))
                 throw new BusinessException("You have an application for this job advert!");
 

@@ -6,12 +6,19 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\Career.Shared\Career.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="AspectCore, Version=1.1.2.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\..\..\references\AspectCore.dll</HintPath>
+        </Reference>
     </ItemGroup>
     
 </Project>

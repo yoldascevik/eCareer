@@ -16,6 +16,7 @@ namespace Job.Infrastructure
 
         public static void Configure()
         {
+            BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             BsonClassMappingConfiguration.ApplyConfigurationsFromAssembly(typeof(JobDbContext));
         }

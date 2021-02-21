@@ -133,8 +133,15 @@ namespace Career.Mongo.Repository
                 await Collection.DeleteOneAsync(condition);
             }
         }
-        
+
         protected FilterDefinition<T> FilterId(object key)
-            => Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
+        {
+            if (key is Guid guidKey)
+            {
+                return Builders<T>.Filter.Eq(new StringFieldDefinition<T, Guid>("_id"), guidKey);
+            }
+            
+            return Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
+        }
     }
 }

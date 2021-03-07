@@ -13,7 +13,7 @@ namespace Definition.Data.DataSeeders.Work
             IMongoRepository<JobPosition> repository, 
             IHostEnvironment environment, 
             IConfiguration configuration, 
-            ILogger<DataSeederBase<JobPosition>> logger) 
+            ILogger<JobPositionDataSeeder> logger) 
             : base(repository, environment, configuration, logger)
         {
         }

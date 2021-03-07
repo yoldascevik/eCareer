@@ -42,7 +42,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo
             company.UpdateTaxInfo(taxInfo, new TaxNumberUniquenessSpecification(_companyRepository, company.Id));
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation("Company tax info updated : {CompanyId} - {TaxInfo}", company.Id, company.TaxInfo);
+            _logger.LogInformation("Company tax info updated : {CompanyId} - {@TaxInfo}", company.Id, company.TaxInfo);
 
             return _mapper.Map<TaxDto>(company.TaxInfo);
         }

@@ -56,7 +56,7 @@ namespace Career.Migration.DataSeeder
             }
             catch (Exception e)
             {
-                _logger.LogError("An error occurred in {Entity} data seeder. Exception Details :{Exception}", typeof(TEntity).Name, e);
+                _logger.LogError(e, "An error occurred in {Entity} data seeder", typeof(TEntity).Name);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Career.Migration.DataSeeder
                     TimeSpan.FromSeconds(8)
                 }, (exception, _ , retryCount, context) =>
                 {
-                    _logger.LogError($"Retry {retryCount} of {context.PolicyKey}. Exception Details: {exception}.");
+                    _logger.LogError(exception, "Retry {RetryCount} of {PolicyKey}", retryCount, context.PolicyKey);
                 })
                 .WithPolicyKey(typeof(TEntity).Name);
         }

@@ -24,7 +24,7 @@ namespace Career.Migration
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while migrating the database.");
+                logger.LogError(ex, "An error occurred while migrating the database");
             }
 
             return host;
@@ -47,7 +47,7 @@ namespace Career.Migration
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred while migrating the database.");
+                logger.LogError(ex, "An error occurred while migrating the database");
             }
 
             return host;

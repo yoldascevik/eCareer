@@ -13,7 +13,7 @@ namespace Definition.Data.DataSeeders
             IMongoRepository<Language> repository, 
             IHostEnvironment environment, 
             IConfiguration configuration, 
-            ILogger<DataSeederBase<Language>> logger) 
+            ILogger<LanguageDataSeeder> logger) 
             : base(repository, environment, configuration, logger)
         {
         }

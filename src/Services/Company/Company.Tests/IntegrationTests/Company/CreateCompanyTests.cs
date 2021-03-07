@@ -53,7 +53,7 @@ namespace Company.Tests.IntegrationTests.Company
             await commandHandler.Handle(command, CancellationToken.None);
             
             // Assert
-            _logger.ReceivedWithAnyArgs().LogInformation(string.Empty);
+            _logger.ReceivedWithAnyArgs().LogInformation("");
         }
         
         [Fact]

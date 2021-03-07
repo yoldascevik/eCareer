@@ -41,7 +41,7 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
             company.Unfollow(companyFollower);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
-            _logger.LogInformation("User {userId} unfollow the company {companyId}", request.UserId, request.CompanyId);
+            _logger.LogInformation("User {UserId} unfollow the company {CompanyId}", request.UserId, request.CompanyId);
             
             return Unit.Value;
         }

@@ -75,7 +75,7 @@ namespace Company.Tests.IntegrationTests.Company
 
             // Assert
             Assert.True(company.IsDeleted);
-            _logger.ReceivedWithAnyArgs().LogInformation(string.Empty);
+            _logger.ReceivedWithAnyArgs().LogInformation("");
         }
     }
 }

@@ -1,4 +1,4 @@
-using Career.Domain;
+using Career.Domain.DomainEvent;
 using Career.IoC.IoCModule;
 using Microsoft.Extensions.DependencyInjection;
 

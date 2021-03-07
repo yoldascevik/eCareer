@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyEmail;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;

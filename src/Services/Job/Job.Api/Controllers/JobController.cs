@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Career.Mongo.Repository.Contracts;
 using Job.Api.Controllers.Base;
 using Job.Domain.JobAdvertAggregate;
 using Job.Domain.JobAdvertAggregate.Repositories;
@@ -50,7 +48,7 @@ namespace Job.Api.Controllers
             );
             
             jobAdvert.Apply(application);
-            await _jobAdvertRepository.UpdateAsync2(jobAdvert.Id, jobAdvert);
+            await _jobAdvertRepository.UpdateAsync(jobAdvert.Id, jobAdvert);
             
             return Ok(application.Id);
         }

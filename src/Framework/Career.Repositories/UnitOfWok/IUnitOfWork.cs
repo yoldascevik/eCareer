@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Career.Repositories
+namespace Career.Repositories.UnitOfWok
 {
     // ReSharper disable once UnusedTypeParameter
     public interface IUnitOfWork<TContext> : IUnitOfWork

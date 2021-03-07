@@ -6,11 +6,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Domain\Career.Domain.csproj" />
-      <ProjectReference Include="..\..\..\Framework\Career.Repositories\Career.Repositories.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="AspectCore, Version=1.1.2.0, Culture=neutral, PublicKeyToken=null">
+        <Reference Include="AspectCore, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
             <HintPath>..\..\..\references\AspectCore.dll</HintPath>
         </Reference>
     </ItemGroup>

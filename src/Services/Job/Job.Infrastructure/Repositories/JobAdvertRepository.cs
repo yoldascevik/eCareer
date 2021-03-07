@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using Career.Domain.DomainEvent.Dispatcher;
 using Career.Mongo.Context;
 using Career.Mongo.Repository;
 using Job.Domain.JobAdvertAggregate;
@@ -8,14 +8,9 @@ namespace Job.Infrastructure.Repositories
 {
     public class JobAdvertRepository: MongoRepository<JobAdvert>, IJobAdvertRepository
     {
-        public JobAdvertRepository(IMongoContext context) : base(context)
+        public JobAdvertRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher) 
+            : base(context, domainEventDispatcher)
         {
-        }
-
-        //TODO : will be remove
-        public async Task<JobAdvert> UpdateAsync2(object key, JobAdvert item)
-        {
-            return await Task.FromResult(item);
         }
     }
 }

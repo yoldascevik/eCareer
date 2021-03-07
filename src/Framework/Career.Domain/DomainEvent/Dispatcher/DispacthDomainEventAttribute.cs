@@ -24,7 +24,7 @@ namespace Career.Domain.DomainEvent.Dispatcher
                 _dispatcher.Dispatch(domainEvents);
                 ClearAllDomainEventsFromArgs(args.Arguments);
                 
-                _logger.LogInformation("Domain events were dispatched and clear.");
+                _logger.LogInformation("Domain events were dispatched and clear");
             }
         }
 
@@ -36,7 +36,7 @@ namespace Career.Domain.DomainEvent.Dispatcher
                 await _dispatcher.Dispatch(domainEvents);
                 ClearAllDomainEventsFromArgs(args.Arguments);
                 
-                _logger.LogInformation("Domain events were dispatched and clear.");
+                _logger.LogInformation("Domain events were dispatched and clear");
             }
         }
 
@@ -53,18 +53,13 @@ namespace Career.Domain.DomainEvent.Dispatcher
 
         private IEnumerable<IDomainEvent> GetDomainEventsFromArgs(object[] args)
         {
-            var domainEventList = new List<IDomainEvent>();
-
-            if (args != null && args.Any())
-            {
-                foreach (object argument in args)
-                {
-                    if (argument is DomainEntity domainEntity)
-                        domainEventList.AddRange(domainEntity.DomainEvents);
-                }
-            }
-
-            return domainEventList;
+            var domainEventList = args?
+                .Where(x => x is DomainEntity)
+                .Cast<DomainEntity>()
+                .SelectMany(e => e.DomainEvents)
+                .ToList();
+            
+            return domainEventList ?? new List<IDomainEvent>();
         }
         
         private void ClearAllDomainEventsFromArgs(object[] args)

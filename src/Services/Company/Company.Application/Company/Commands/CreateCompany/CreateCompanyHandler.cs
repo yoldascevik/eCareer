@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.Values;

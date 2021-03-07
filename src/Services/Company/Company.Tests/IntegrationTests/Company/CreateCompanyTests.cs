@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
 using Career.Domain.BusinessRule;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.CreateCompany;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;

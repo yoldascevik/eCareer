@@ -18,7 +18,6 @@ namespace Career.EntityFramework
         
         protected CareerDbContext()
         {
-            
         }
         
         protected CareerDbContext(DbContextOptions options, IDomainEventDispatcher domainEventDispatcher) : base(options)
@@ -28,6 +27,13 @@ namespace Career.EntityFramework
             
             _domainEventDispatcher = domainEventDispatcher;
         }
+
+        /// <summary>
+        /// Set audit info automatically.
+        /// For create: IHasCreationTime, ICreationAudited
+        /// For update: IHasModificationTime, IModificationAudited
+        /// </summary>
+        public bool SetAuditInfoAutomatically { get; set; } = true;
 
         public override int SaveChanges()
         {
@@ -63,6 +69,9 @@ namespace Career.EntityFramework
 
         private void SetAuditData()
         {
+            if (!SetAuditInfoAutomatically)
+                return;
+
             IEnumerable<EntityEntry> entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
@@ -113,11 +122,7 @@ namespace Career.EntityFramework
             {
                 if (domainEntity.DomainEvents != null && domainEntity.DomainEvents.Any())
                 {
-                    foreach (var domainEvent in domainEntity.DomainEvents)
-                    {
-                        await _domainEventDispatcher.Dispatch(domainEvent);
-                    }
-                    
+                    await _domainEventDispatcher.Dispatch(domainEntity.DomainEvents);
                     domainEntity.ClearDomainEvents();
                 }
             }

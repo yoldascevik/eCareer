@@ -19,7 +19,7 @@ namespace Career.Domain.DomainEvent.Dispatcher
         {
             await _mediator.Publish(@event, cancellationToken);
         }
-
+        
         public async Task Dispatch(IEnumerable<IDomainEvent> events, CancellationToken cancellationToken = default)
         {
             IEnumerable<Task> tasks = events.Select(e => _mediator.Publish(e, cancellationToken));

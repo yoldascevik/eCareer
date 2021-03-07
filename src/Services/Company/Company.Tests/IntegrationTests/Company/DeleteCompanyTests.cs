@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.DeleteCompany;
 using Company.Domain.Repositories;
 using Company.Tests.Helpers;

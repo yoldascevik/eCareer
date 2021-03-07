@@ -28,15 +28,16 @@ namespace Job.Domain.JobAdvertAggregate
 
             CreationTime = Clock.Now;
             CreatorUserId = Guid.Empty; //Todo
-
-            _isCreated = true;
-            AddDomainEvent(new JobAdvertCreatedEvent(this));
         }
         
         private JobAdvert(Guid companyId): this()
         {
             Check.NotNull(companyId, nameof(companyId));
+
+            _isCreated = true;
+            
             CompanyId = companyId;
+            AddDomainEvent(new JobAdvertCreatedEvent(this));
         }
 
         #endregion
@@ -260,8 +261,9 @@ namespace Job.Domain.JobAdvertAggregate
             if (jobApplication.JobAdvertId != Id)
                 throw new BusinessException("The application does not belong to this job advert!");
 
-             if (!IsPublished || ValidityDate <= Clock.Now)
-                 throw new BusinessException("This job advert is no longer valid.");
+            //todo
+            // if (!IsPublished || ValidityDate <= Clock.Now)
+            //     throw new BusinessException("This job advert is no longer valid.");
             
             if (_applications.Any(x => x.UserId == jobApplication.UserId))
                 throw new BusinessException("You have an application for this job advert!");

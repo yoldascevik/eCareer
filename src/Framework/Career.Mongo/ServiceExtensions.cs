@@ -1,4 +1,6 @@
-﻿using Career.Mongo.Context;
+﻿using Career.Domain.DomainEvent;
+using Career.Domain.DomainEvent.Dispatcher;
+using Career.Mongo.Context;
 using Career.Mongo.Document;
 using Career.Mongo.Repository;
 using Career.Mongo.Repository.Contracts;
@@ -42,7 +44,10 @@ namespace Career.Mongo
 
         public static IServiceCollection AddMongoContext<TContext>(this IServiceCollection services)
             where TContext : MongoContext
-            => services.AddScoped<IMongoContext, TContext>();
+        {
+            services.AddDomainEvents(typeof(TContext));
+            return services.AddScoped<IMongoContext, TContext>();
+        }
 
 
         public static IServiceCollection AddMongoRepository<TEntity>(this IServiceCollection services) 
@@ -51,7 +56,8 @@ namespace Career.Mongo
             services.AddScoped<IMongoRepository<TEntity>>( x =>
             {
                 var mongoContext = x.GetService<IMongoContext>();
-                return new MongoRepository<TEntity>(mongoContext);
+                var domainEventDispatcher = x.GetRequiredService<IDomainEventDispatcher>();
+                return new MongoRepository<TEntity>(mongoContext, domainEventDispatcher);
             });
 
             return services;

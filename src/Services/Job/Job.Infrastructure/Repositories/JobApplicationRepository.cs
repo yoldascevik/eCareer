@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Career.Domain.DomainEvent.Dispatcher;
 using Career.Mongo.Context;
 using Career.Mongo.Repository;
 using Job.Domain.JobApplicationAggregate;
@@ -9,7 +10,7 @@ namespace Job.Infrastructure.Repositories
 {
     public class JobApplicationRepository: MongoRepository<JobApplication>, IJobApplicationRepository
     {
-        public JobApplicationRepository(IMongoContext context) : base(context)
+        public JobApplicationRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher) : base(context, domainEventDispatcher)
         {
         }
 

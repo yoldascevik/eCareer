@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Bogus;
 using Career.Exceptions.Exceptions;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyAddress;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;

@@ -5,7 +5,7 @@ using AutoMapper;
 using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyTaxInfo;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;

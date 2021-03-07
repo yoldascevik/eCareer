@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Career.Repositories
+namespace Career.Repositories.UnitOfWok
 {
     public interface IDatabaseTransaction: IDisposable, IAsyncDisposable
     {

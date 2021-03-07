@@ -4,7 +4,7 @@ using AspectCore;
 using AspectCore.Aspects;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Career.Repositories
+namespace Career.Repositories.UnitOfWok
 {
     /// <summary>
     /// Atomic transaction for methods.

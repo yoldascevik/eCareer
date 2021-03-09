@@ -1,21 +1,23 @@
 using System;
 using Career.Domain;
 using Career.Exceptions;
+using Career.Exceptions.Exceptions;
 using Job.Domain.JobApplicationAggregate;
+using Job.Domain.JobApplicationAggregate.Rules;
 
 namespace Job.Domain.JobAdvertAggregate
 {
-    public class Application: ValueObject
+    public class ApplicationRef: ValueObject
     {
         public Guid Id { get; private init; }
         public Guid UserId { get; private init; }
         public bool IsActive { get; private set; }
         
-        public static Application Create(JobApplication jobApplication)
+        public static ApplicationRef Create(JobApplication jobApplication)
         {
             Check.NotNull(jobApplication, nameof(jobApplication));
             
-            return new Application()
+            return new ApplicationRef()
             {
                 Id = jobApplication.Id,
                 UserId = jobApplication.UserId,
@@ -25,6 +27,7 @@ namespace Job.Domain.JobAdvertAggregate
         
         internal void Withdraw()
         {
+            CheckRule(new JobApplicationMustBeActiveRule(IsActive));
             IsActive = false;
         }
     }

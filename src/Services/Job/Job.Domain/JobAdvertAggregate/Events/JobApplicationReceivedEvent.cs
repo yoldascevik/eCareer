@@ -2,11 +2,11 @@ using Career.Domain.DomainEvent;
 using Career.Exceptions;
 using Job.Domain.JobApplicationAggregate;
 
-namespace Job.Domain.JobAdvertAggregate.DomainEvents
+namespace Job.Domain.JobAdvertAggregate.Events
 {
-    public class JobApplicationWithdrawnEvent : DomainEvent
+    public class JobApplicationReceivedEvent : DomainEvent
     {
-        public JobApplicationWithdrawnEvent(JobAdvert jobAdvert, JobApplication jobApplication)
+        public JobApplicationReceivedEvent(JobAdvert jobAdvert, JobApplication jobApplication)
         {
             Check.NotNull(jobAdvert, nameof(jobAdvert));
             Check.NotNull(jobApplication, nameof(jobApplication));

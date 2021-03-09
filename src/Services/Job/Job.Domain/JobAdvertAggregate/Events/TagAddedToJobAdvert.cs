@@ -1,7 +1,7 @@
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
 
-namespace Job.Domain.JobAdvertAggregate.DomainEvents
+namespace Job.Domain.JobAdvertAggregate.Events
 {
     public class TagAddedToJobAdvert : DomainEvent
     {

@@ -10,7 +10,8 @@ namespace Job.Infrastructure.Repositories
 {
     public class JobApplicationRepository: MongoRepository<JobApplication>, IJobApplicationRepository
     {
-        public JobApplicationRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher) : base(context, domainEventDispatcher)
+        public JobApplicationRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher) 
+            : base(context, domainEventDispatcher)
         {
         }
 

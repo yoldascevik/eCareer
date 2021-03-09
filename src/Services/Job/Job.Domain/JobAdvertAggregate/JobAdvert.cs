@@ -7,44 +7,51 @@ using Career.Exceptions;
 using Career.Exceptions.Exceptions;
 using Career.Shared.Timing;
 using Job.Domain.JobAdvertAggregate.Constants;
-using Job.Domain.JobAdvertAggregate.DomainEvents;
+using Job.Domain.JobAdvertAggregate.Events;
 using Job.Domain.JobApplicationAggregate;
 
 namespace Job.Domain.JobAdvertAggregate
 {
     public class JobAdvert : DomainEntity, IAggregateRoot
     {
+        #region Fields
+
+        private List<Tag> _tags;
+        private List<LocationRef> _locations;
+        private List<WorkTypeRef> _workTypes;
+        private List<ApplicationRef> _applications;
+        private List<ViewingHistory> _viewingHistories;
+        private List<EducationLevelRef> _educationLevels;
+
+        private readonly bool _isCreated;
+
+        #endregion
+
         #region Ctor
 
         private JobAdvert()
         {
             Id = Guid.NewGuid();
             _tags = new List<Tag>();
-            _locations = new List<Location>();
-            _workTypes = new List<WorkType>();
-            _applications = new List<Application>();
-            _educationLevels = new List<EducationLevel>();
+            _locations = new List<LocationRef>();
+            _workTypes = new List<WorkTypeRef>();
+            _applications = new List<ApplicationRef>();
+            _educationLevels = new List<EducationLevelRef>();
             _viewingHistories = new List<ViewingHistory>();
 
             CreationTime = Clock.Now;
             CreatorUserId = Guid.Empty; //Todo
         }
-        
-        private JobAdvert(Guid companyId): this()
+
+        private JobAdvert(Guid companyId) : this()
         {
             Check.NotNull(companyId, nameof(companyId));
 
             _isCreated = true;
-            
+
             CompanyId = companyId;
             AddDomainEvent(new JobAdvertCreatedEvent(this));
         }
-
-        #endregion
-
-        #region Private Fields
-
-        private readonly bool _isCreated;
 
         #endregion
 
@@ -61,9 +68,9 @@ namespace Job.Domain.JobAdvertAggregate
         public bool IsCanDisabilities { get; private set; }
         public byte? MinExperienceYear { get; private set; }
         public byte? MaxExperienceYear { get; private set; }
-        public GenderType Gender { get; private set; }
+        public GenderType Gender { get; private set; } = GenderType.Unspecified;
         public bool IsPublished { get; private set; }
-        public DateTime RevokeDate { get; private set; }
+        public DateTime? RevokeDate { get; private set; }
         public string RevokeReason { get; private set; }
         public bool IsDeleted { get; private set; }
         public DateTime? ListingDate { get; private set; }
@@ -74,23 +81,12 @@ namespace Job.Domain.JobAdvertAggregate
         public DateTime? LastModificationTime { get; private set; }
         public Guid? LastModifiedUserId { get; private set; }
 
-        private readonly List<Application> _applications;
-        public IReadOnlyCollection<Application> Applications => _applications.AsReadOnly();
-
-        private readonly List<Location> _locations;
-        public IReadOnlyCollection<Location> Locations => _locations.AsReadOnly();
-
-        private readonly List<WorkType> _workTypes;
-        public IReadOnlyCollection<WorkType> WorkTypes => _workTypes.AsReadOnly();
-
-        private readonly List<EducationLevel> _educationLevels;
-        public IReadOnlyCollection<EducationLevel> EducationLevels => _educationLevels.AsReadOnly();
-
-        private readonly List<ViewingHistory> _viewingHistories;
-        public IReadOnlyCollection<ViewingHistory> ViewingHistories => _viewingHistories.AsReadOnly();
-
-        private readonly List<Tag> _tags;
-        public IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+        public virtual IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+        public virtual IReadOnlyCollection<LocationRef> Locations => _locations.AsReadOnly();
+        public virtual IReadOnlyCollection<WorkTypeRef> WorkTypes => _workTypes.AsReadOnly();
+        public virtual IReadOnlyCollection<ApplicationRef> Applications => _applications.AsReadOnly();
+        public virtual IReadOnlyCollection<ViewingHistory> ViewingHistories => _viewingHistories.AsReadOnly();
+        public virtual IReadOnlyCollection<EducationLevelRef> EducationLevels => _educationLevels.AsReadOnly();
 
         #endregion
 
@@ -199,7 +195,7 @@ namespace Job.Domain.JobAdvertAggregate
             {
                 throw new BusinessException("The maximum years of experience cannot less than the minimum years of experience.");
             }
-            
+
             MaxExperienceYear = maxExperienceYear;
             OnUpdated();
 
@@ -231,7 +227,7 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
             AddDomainEvent(new JobAdvertPublishedEvent(this));
         }
-        
+
         public void Revoke(string reason)
         {
             if (string.IsNullOrEmpty(reason))
@@ -261,37 +257,37 @@ namespace Job.Domain.JobAdvertAggregate
             if (jobApplication.JobAdvertId != Id)
                 throw new BusinessException("The application does not belong to this job advert!");
 
-            //todo
+            //TODO
             // if (!IsPublished || ValidityDate <= Clock.Now)
             //     throw new BusinessException("This job advert is no longer valid.");
-            
+
             if (_applications.Any(x => x.UserId == jobApplication.UserId))
                 throw new BusinessException("You have an application for this job advert!");
 
-            _applications.Add(Application.Create(jobApplication));
+            _applications.Add(ApplicationRef.Create(jobApplication));
             AddDomainEvent(new JobApplicationReceivedEvent(this, jobApplication));
         }
 
         public void WithdrawApplication(JobApplication jobApplication)
         {
             Check.NotNull(jobApplication, nameof(jobApplication));
-        
-            Application application = _applications.FirstOrDefault(x => x.UserId == jobApplication.UserId && jobApplication.IsActive);
+
+            ApplicationRef application = _applications.FirstOrDefault(x => x.UserId == jobApplication.UserId);
             if (application == null)
                 throw new NotFoundException("Job application not found!");
-        
+
             application.Withdraw();
             AddDomainEvent(new JobApplicationWithdrawnEvent(this, jobApplication));
         }
 
-        public void AddLocation(Location location)
+        public void AddLocation(LocationRef location)
         {
             Check.NotNull(location, nameof(location));
             _locations.Add(location);
             OnUpdated();
         }
 
-        public void RemoveLocation(Location location)
+        public void RemoveLocation(LocationRef location)
         {
             Check.NotNull(location, nameof(location));
 
@@ -303,7 +299,7 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
         }
 
-        public void AddWorkType(WorkType workType)
+        public void AddWorkType(WorkTypeRef workType)
         {
             Check.NotNull(workType, nameof(workType));
 
@@ -314,7 +310,7 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
         }
 
-        public void RemoveWorkType(WorkType workType)
+        public void RemoveWorkType(WorkTypeRef workType)
         {
             Check.NotNull(workType, nameof(workType));
 
@@ -326,7 +322,7 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
         }
 
-        public void AddEducationLevel(EducationLevel educationLevel)
+        public void AddEducationLevel(EducationLevelRef educationLevel)
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 
@@ -337,7 +333,7 @@ namespace Job.Domain.JobAdvertAggregate
             OnUpdated();
         }
 
-        public void RemoveEducationLevel(EducationLevel educationLevel)
+        public void RemoveEducationLevel(EducationLevelRef educationLevel)
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 

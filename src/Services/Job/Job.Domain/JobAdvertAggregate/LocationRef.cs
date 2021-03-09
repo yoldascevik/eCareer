@@ -2,7 +2,7 @@ using Career.Domain.Entities;
 
 namespace Job.Domain.JobAdvertAggregate
 {
-    public class Location: DomainEntity
+    public class LocationRef: DomainEntity
     {
         public string Id { get; set; }
         public string CountryId { get; set; }

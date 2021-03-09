@@ -1,11 +1,11 @@
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
 
-namespace Job.Domain.JobAdvertAggregate.DomainEvents
+namespace Job.Domain.JobAdvertAggregate.Events
 {
-    public class JobAdvertUpdatedEvent : DomainEvent
+    public class JobAdvertCreatedEvent: DomainEvent
     {
-        public JobAdvertUpdatedEvent(JobAdvert jobAdvert)
+        public JobAdvertCreatedEvent(JobAdvert jobAdvert)
         {
             Check.NotNull(jobAdvert, nameof(jobAdvert));
             JobAdvert = jobAdvert;

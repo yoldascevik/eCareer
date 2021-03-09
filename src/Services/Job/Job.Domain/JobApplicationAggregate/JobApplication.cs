@@ -2,9 +2,9 @@ using System;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
-using Career.Exceptions.Exceptions;
 using Career.Shared.Timing;
 using Job.Domain.JobAdvertAggregate;
+using Job.Domain.JobApplicationAggregate.Rules;
 
 namespace Job.Domain.JobApplicationAggregate
 {
@@ -16,7 +16,7 @@ namespace Job.Domain.JobApplicationAggregate
             IsActive = true;
         }
 
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
         public Guid JobAdvertId { get; private init; }
         public Guid UserId { get; private init; }
         public Guid CvId { get; private init; }
@@ -49,10 +49,7 @@ namespace Job.Domain.JobApplicationAggregate
 
         internal void Withdrawn()
         {
-            if (!IsActive)
-            {
-                throw new BusinessException("Job application is not active!");
-            }
+            CheckRule(new JobApplicationMustBeActiveRule(IsActive));
             
             IsActive = false;
             WithdrawalDate = Clock.Now;

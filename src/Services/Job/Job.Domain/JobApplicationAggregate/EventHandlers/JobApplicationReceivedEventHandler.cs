@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.DomainEvent;
-using Job.Domain.JobAdvertAggregate.DomainEvents;
+using Job.Domain.JobAdvertAggregate.Events;
 using Job.Domain.JobApplicationAggregate.Repositories;
 
 namespace Job.Domain.JobApplicationAggregate.EventHandlers

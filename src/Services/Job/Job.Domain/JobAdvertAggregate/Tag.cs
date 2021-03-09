@@ -7,10 +7,10 @@ namespace Job.Domain.JobAdvertAggregate
     {
         public Tag()
         {
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid();
         }
 
-        public string Id { get; }
+        public Guid Id { get; }
         public string Name { get; set; }
     }
 }

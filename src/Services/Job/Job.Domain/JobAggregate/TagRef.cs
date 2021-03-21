@@ -8,7 +8,7 @@ namespace Job.Domain.JobAggregate
     {
         private TagRef() { }
         
-        public Guid TagId { get; private set; }
+        public Guid TagId { get; private init; }
         public string Name { get; private set; }
 
         public static TagRef CreateFromTag(Tag tag)
@@ -19,6 +19,14 @@ namespace Job.Domain.JobAggregate
                 TagId = tag.Id,
                 Name = tag.Name
             };
+        }
+
+        public TagRef SetName(string name)
+        {
+            Check.NotNullOrEmpty(name, nameof(name));
+            Name = name;
+
+            return this;
         }
     }
 }

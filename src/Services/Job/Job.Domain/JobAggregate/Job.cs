@@ -275,7 +275,7 @@ namespace Job.Domain.JobAggregate
             AddDomainEvent(new CandidateAddedEvent(this, candidate));
         }
 
-        public void WithdrawApplication(Candidate candidate)
+        public void WithdrawCandidate(Candidate candidate)
         {
             Check.NotNull(candidate, nameof(candidate));
 

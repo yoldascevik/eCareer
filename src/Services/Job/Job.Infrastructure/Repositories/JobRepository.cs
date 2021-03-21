@@ -72,9 +72,12 @@ namespace Job.Infrastructure.Repositories
 
             foreach (Domain.JobAggregate.Job job in jobsOfTag)
             {
-                job.RemoveTag(tag);
-                job.AddTag(tag);
-                await UpdateAsync(job.Id, job);
+                var jobTag = job.Tags.FirstOrDefault(t => t.TagId == tag.Id);
+                if (jobTag != null)
+                {
+                    jobTag.SetName(tag.Name);
+                    await UpdateAsync(job.Id, job);
+                }
             }
         }
     }

@@ -8,7 +8,9 @@ using Career.Exceptions.Exceptions;
 using Career.Shared.Timing;
 using Job.Domain.JobAdvertAggregate.Constants;
 using Job.Domain.JobAdvertAggregate.Events;
+using Job.Domain.JobAdvertAggregate.Rules;
 using Job.Domain.JobApplicationAggregate;
+using Job.Domain.TagAggregate;
 
 namespace Job.Domain.JobAdvertAggregate
 {
@@ -16,7 +18,7 @@ namespace Job.Domain.JobAdvertAggregate
     {
         #region Fields
 
-        private List<Tag> _tags;
+        private List<TagRef> _tags;
         private List<LocationRef> _locations;
         private List<WorkTypeRef> _workTypes;
         private List<ApplicationRef> _applications;
@@ -32,7 +34,7 @@ namespace Job.Domain.JobAdvertAggregate
         private JobAdvert()
         {
             Id = Guid.NewGuid();
-            _tags = new List<Tag>();
+            _tags = new List<TagRef>();
             _locations = new List<LocationRef>();
             _workTypes = new List<WorkTypeRef>();
             _applications = new List<ApplicationRef>();
@@ -81,7 +83,7 @@ namespace Job.Domain.JobAdvertAggregate
         public DateTime? LastModificationTime { get; private set; }
         public Guid? LastModifiedUserId { get; private set; }
 
-        public virtual IReadOnlyCollection<Tag> Tags => _tags.AsReadOnly();
+        public virtual IReadOnlyCollection<TagRef> Tags => _tags.AsReadOnly();
         public virtual IReadOnlyCollection<LocationRef> Locations => _locations.AsReadOnly();
         public virtual IReadOnlyCollection<WorkTypeRef> WorkTypes => _workTypes.AsReadOnly();
         public virtual IReadOnlyCollection<ApplicationRef> Applications => _applications.AsReadOnly();
@@ -210,20 +212,26 @@ namespace Job.Domain.JobAdvertAggregate
 
             return this;
         }
-
-        public void Publish(DateTime validityDate)
+        
+        public JobAdvert SetValidityDate(DateTime validityDate)
         {
-            Check.NotNull(validityDate, nameof(validityDate));
-
             var normalizedValidityDate = Clock.Normalize(validityDate);
-            if (normalizedValidityDate < Clock.Now)
-                throw new BusinessException("Job advert validity date is invalid");
+            CheckRule(new ValidityDateMustBeValid(normalizedValidityDate));
+            
+            ValidityDate = normalizedValidityDate;
+            OnUpdated();
+            
+            return this;
+        }
 
+        public void Publish()
+        {
+            CheckRule(new ValidityDateMustBeValid(ValidityDate));
+            
             IsPublished = true;
             ListingDate = Clock.Now;
             FirstListingDate ??= Clock.Now;
-            ValidityDate = normalizedValidityDate;
-
+            
             OnUpdated();
             AddDomainEvent(new JobAdvertPublishedEvent(this));
         }
@@ -257,9 +265,8 @@ namespace Job.Domain.JobAdvertAggregate
             if (jobApplication.JobAdvertId != Id)
                 throw new BusinessException("The application does not belong to this job advert!");
 
-            //TODO
-            // if (!IsPublished || ValidityDate <= Clock.Now)
-            //     throw new BusinessException("This job advert is no longer valid.");
+            if (!IsPublished || ValidityDate <= Clock.Now)
+                 throw new BusinessException("This job advert is no longer valid.");
 
             if (_applications.Any(x => x.UserId == jobApplication.UserId))
                 throw new BusinessException("You have an application for this job advert!");
@@ -349,25 +356,35 @@ namespace Job.Domain.JobAdvertAggregate
         {
             Check.NotNull(tag, nameof(tag));
 
-            if (_tags.Any(x => x.Id == tag.Id))
+            if (_tags.Any(t=>
+            {
+                if (t == null) throw new ArgumentNullException(nameof(t));
+                return t.TagId == tag.Id;
+            }))
                 throw new BusinessException("Tag already exist for this job advert!");
 
-            _tags.Add(tag);
+            _tags.Add(TagRef.CreateFromTag(tag));
 
             AddDomainEvent(new TagAddedToJobAdvert(this, tag));
             OnUpdated();
         }
 
-        public void RemoveTag(Tag tag)
+        public void RemoveTag(TagRef tag)
         {
             Check.NotNull(tag, nameof(tag));
 
-            var jobTag = _tags.FirstOrDefault(x => x.Id == tag.Id);
-            if (jobTag == null)
+            var tagRef = _tags.FirstOrDefault(t => t.TagId == tag.TagId);
+            if (tagRef is null)
                 throw new NotFoundException("Tag is not found!");
 
-            _tags.Remove(jobTag);
+            _tags.Remove(tagRef);
             OnUpdated();
+        }
+        
+        public void RemoveTag(Tag tag)
+        {
+            Check.NotNull(tag, nameof(tag));
+            RemoveTag(TagRef.CreateFromTag(tag));
         }
 
         private void OnUpdated()

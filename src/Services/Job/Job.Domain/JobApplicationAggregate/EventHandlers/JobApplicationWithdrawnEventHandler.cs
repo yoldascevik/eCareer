@@ -18,7 +18,7 @@ namespace Job.Domain.JobApplicationAggregate.EventHandlers
 
         public async Task Handle(JobApplicationWithdrawnEvent notification, CancellationToken cancellationToken)
         {
-            JobApplication jobApplication = await _jobApplicationRepository.GetByKeyAsync(notification.JobApplication.Id);
+            JobApplication jobApplication = await _jobApplicationRepository.GetByIdAsync(notification.JobApplication.Id);
             if (jobApplication == null)
             {
                 throw new NotFoundException($"JobApplication not found ({notification.JobApplication.Id}).");

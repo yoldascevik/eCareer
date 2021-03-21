@@ -1,7 +1,6 @@
 using System;
 using Career.Domain;
 using Career.Exceptions;
-using Career.Exceptions.Exceptions;
 using Job.Domain.JobApplicationAggregate;
 using Job.Domain.JobApplicationAggregate.Rules;
 
@@ -20,7 +19,7 @@ namespace Job.Domain.JobAdvertAggregate
             return new ApplicationRef()
             {
                 Id = jobApplication.Id,
-                UserId = jobApplication.UserId,
+                UserId =  jobApplication.UserId,
                 IsActive = jobApplication.IsActive
             };
         }

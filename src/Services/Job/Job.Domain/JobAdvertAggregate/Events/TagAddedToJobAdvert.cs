@@ -1,5 +1,6 @@
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
+using Job.Domain.TagAggregate;
 
 namespace Job.Domain.JobAdvertAggregate.Events
 {

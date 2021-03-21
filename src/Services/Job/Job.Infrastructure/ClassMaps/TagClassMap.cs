@@ -1,7 +1,6 @@
 using Career.Mongo.Mapping;
-using Job.Domain.JobAdvertAggregate;
+using Job.Domain.TagAggregate;
 using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Job.Infrastructure.ClassMaps
 {

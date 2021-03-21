@@ -8,15 +8,19 @@ namespace Career.Domain.Entities
 {
     public abstract class DomainEntity: Entity
     {
-        private List<IDomainEvent> _domainEvents;
+        private readonly List<IDomainEvent> _domainEvents;
 
         public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
+        protected DomainEntity()
+        {
+            _domainEvents ??= new List<IDomainEvent>();
+        }
+        
         protected void AddDomainEvent(IDomainEvent domainEvent)
         {
             Check.NotNull(domainEvent, nameof(domainEvent));
 
-            _domainEvents ??= new List<IDomainEvent>();
             _domainEvents.Add(domainEvent);
         }
 

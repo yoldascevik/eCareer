@@ -4,6 +4,11 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
@@ -17,8 +22,8 @@
 
     <ItemGroup>
       <PackageReference Include="ARConsistency" Version="1.2.1" />
-      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
-      <PackageReference Include="Serilog" Version="2.10.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
       <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     </ItemGroup>
 

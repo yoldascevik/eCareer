@@ -1,5 +1,7 @@
+using AutoMapper;
 using Career.IoC;
 using Career.IoC.IoCModule;
+using Job.Application.Job;
 using Job.Domain;
 using Job.Domain.CandidateAggregate.Repositories;
 using Job.Domain.JobAggregate.Repositories;
@@ -14,10 +16,11 @@ namespace Job.Application
         protected override void Load(IServiceCollection services)
         {
             services.AddScoped<IJobRepository, JobRepository>();
-            services.AddScoped<ICandidateRepository, CandidateRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
             
             services.RegisterModule<DomainModule>();
+            services.AddAutoMapper(typeof(JobMappingProfile));
         }
     }
 }

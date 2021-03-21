@@ -249,7 +249,7 @@ namespace Job.Domain.JobAggregate
             AddDomainEvent(new JobRevokedEvent(this));
         }
 
-        public void Delete()
+        public void MarkAsDelete()
         {
             IsDeleted = true;
             IsPublished = false;
@@ -359,7 +359,7 @@ namespace Job.Domain.JobAggregate
             if (_tags.Any(t=>
             {
                 if (t == null) throw new ArgumentNullException(nameof(t));
-                return t.TagId == tag.Id;
+                return t.Id == tag.Id;
             }))
                 throw new BusinessException("Tag already exist for this job!");
 
@@ -373,7 +373,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(tag, nameof(tag));
 
-            var tagRef = _tags.FirstOrDefault(t => t.TagId == tag.TagId);
+            var tagRef = _tags.FirstOrDefault(t => t.Id == tag.Id);
             if (tagRef is null)
                 throw new NotFoundException("Tag is not found!");
 

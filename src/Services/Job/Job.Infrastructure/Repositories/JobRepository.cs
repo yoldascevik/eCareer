@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.Mongo.Context;
 using Career.Mongo.Repository.Contracts;
+using Career.Shared.Timing;
 using Job.Domain.JobAggregate.Repositories;
 using MongoDB.Driver;
 using Tag = Job.Domain.TagAggregate.Tag;
@@ -27,7 +29,7 @@ namespace Job.Infrastructure.Repositories
         
         public async Task<IEnumerable<Domain.JobAggregate.Job>> GetByTagAsync(Tag tag)
         {
-            var filter = Builders<Domain.JobAggregate.Job>.Filter.ElemMatch(x => x.Tags, t=> t.TagId == tag.Id);
+            var filter = Builders<Domain.JobAggregate.Job>.Filter.ElemMatch(x => x.Tags, t=> t.Id == tag.Id);
             return await _collection.Find(filter).ToListAsync();
         }
 
@@ -40,6 +42,12 @@ namespace Job.Infrastructure.Repositories
             return job.Candidates.Any(c => c.UserId == userId);
         }
         
+        public IQueryable<Domain.JobAggregate.Job> Get(Expression<Func<Domain.JobAggregate.Job, bool>> condition)
+            => _repository.Get(condition);
+
+        public IQueryable<Domain.JobAggregate.Job> GetActiveJobs()
+            => _repository.Get(x => x.IsPublished && !x.IsDeleted && x.ValidityDate > Clock.Now);
+
         public async Task<Domain.JobAggregate.Job> GetByIdAsync(Guid jobId)
             => await _repository.GetByKeyAsync(jobId);
 
@@ -72,7 +80,7 @@ namespace Job.Infrastructure.Repositories
 
             foreach (Domain.JobAggregate.Job job in jobsOfTag)
             {
-                var jobTag = job.Tags.FirstOrDefault(t => t.TagId == tag.Id);
+                var jobTag = job.Tags.FirstOrDefault(t => t.Id == tag.Id);
                 if (jobTag != null)
                 {
                     jobTag.SetName(tag.Name);

@@ -1,0 +1,18 @@
+using Job.Domain.JobAggregate.Constants;
+
+namespace Job.Application.Job.Dtos
+{
+    public class JobInputDto
+    {
+        public string LanguageId { get; set; }
+        public string SectorId { get; set; }
+        public string JobPositionId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public short? PersonCount { get; set; }
+        public bool IsCanDisabilities { get; set; }
+        public byte? MinExperienceYear { get; set; }
+        public byte? MaxExperienceYear { get; set; }
+        public GenderType Gender { get; set; } = GenderType.Unspecified;
+    }
+}

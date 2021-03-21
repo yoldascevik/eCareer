@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.DomainEvent;
@@ -22,21 +20,9 @@ namespace Job.Domain.JobAggregate.EventHandlers
 
         public async Task Handle(TagNameChangedEvent notification, CancellationToken cancellationToken)
         {
-            IEnumerable<Job> jobsOfTag = await _jobRepository.GetByTag(notification.Tag);
-            if (!jobsOfTag.Any())
-                return;
+            await _jobRepository.UpdateTagNameFromJobsAsync(notification.Tag);
 
-            foreach (Job job in jobsOfTag)
-            {
-                job.RemoveTag(notification.Tag);
-                job.AddTag(notification.Tag);
-                await _jobRepository.UpdateAsync(job.Id, job);
-
-                _logger.LogInformation("Tag \"{OldTagName}\" replaced to \"{NewTagName}\" for job : \"{JobId}", 
-                    notification.OldTagName, 
-                    notification.Tag.Name, 
-                    job.Id);
-            }
+            _logger.LogInformation("Tag \"{OldTagName}\" replaced to \"{NewTagName}\" in jobs", notification.OldTagName, notification.Tag.Name);
         }
     }
 }

@@ -19,10 +19,7 @@ namespace Job.Infrastructure.Repositories
 
         public async Task<Candidate> GetByIdAsync(Guid candidateId)
             => await _repository.GetByKeyAsync(candidateId);
-        
-        public async Task<bool> IsCandidateExists(Guid userId, Guid jobId)
-            => await _repository.AnyAsync(x => x.JobId == jobId && x.UserId == userId);
-        
+
         public async Task<Candidate> UpdateAsync(Guid candidateId, Candidate candidate)
             => await _repository.UpdateAsync(candidateId, candidate);
 

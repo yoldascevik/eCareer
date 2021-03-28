@@ -24,6 +24,24 @@ namespace Career.Domain
             FieldInfo[] fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
             return fields.Select(f => f.GetValue(null)).Cast<T>();
         }
+        
+        public static bool operator ==(Enumeration obj1, Enumeration obj2)
+        {
+            if (Equals(obj1, null))
+            {
+                if (Equals(obj2, null))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return obj1.Equals(obj2);
+        }
+
+        public static bool operator !=(Enumeration obj1, Enumeration obj2)
+        {
+            return !(obj1 == obj2);
+        }
 
         public override bool Equals(object obj)
         {

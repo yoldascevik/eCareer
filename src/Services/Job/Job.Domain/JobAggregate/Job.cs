@@ -71,7 +71,7 @@ namespace Job.Domain.JobAggregate
         public byte? MinExperienceYear { get; private set; }
         public byte? MaxExperienceYear { get; private set; }
         public GenderType Gender { get; private set; } = GenderType.Unspecified;
-        public bool IsPublished { get; private set; }
+        public JobStatus Status { get; private set; } = JobStatus.Draft;
         public DateTime? RevokeDate { get; private set; }
         public string RevokeReason { get; private set; }
         public bool IsDeleted { get; private set; }
@@ -219,8 +219,10 @@ namespace Job.Domain.JobAggregate
             CheckRule(new ValidityDateMustBeValid(normalizedValidityDate));
             
             ValidityDate = normalizedValidityDate;
-            OnUpdated();
             
+            OnUpdated();
+            AddDomainEvent(new JobValidityDateChangedEvent(this));
+
             return this;
         }
 
@@ -228,7 +230,7 @@ namespace Job.Domain.JobAggregate
         {
             CheckRule(new ValidityDateMustBeValid(ValidityDate));
             
-            IsPublished = true;
+            Status = JobStatus.Published;
             ListingDate = Clock.Now;
             FirstListingDate ??= Clock.Now;
             
@@ -241,7 +243,7 @@ namespace Job.Domain.JobAggregate
             if (string.IsNullOrEmpty(reason))
                 throw new BusinessException("Revoke reason is required!");
 
-            IsPublished = false;
+            Status = JobStatus.Revoked;
             RevokeReason = reason;
             RevokeDate = Clock.Now;
 
@@ -252,7 +254,6 @@ namespace Job.Domain.JobAggregate
         public void MarkAsDelete()
         {
             IsDeleted = true;
-            IsPublished = false;
             LastModificationTime = Clock.Now;
             LastModifiedUserId = Guid.Empty; // Todo
             AddDomainEvent(new JobDeletedEvent(this));
@@ -265,7 +266,7 @@ namespace Job.Domain.JobAggregate
             if (candidate.JobId != Id)
                 throw new BusinessException("Candidate does not belong to this job!");
 
-            if (!IsPublished || ValidityDate <= Clock.Now)
+            if (Status != JobStatus.Published)
                  throw new BusinessException("This job is no longer valid.");
 
             if (_candidates.Any(x => x.UserId == candidate.UserId))

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.Mongo.Context;
 using Career.Mongo.Repository.Contracts;
-using Career.Shared.Timing;
+using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;
 using MongoDB.Driver;
 using Tag = Job.Domain.TagAggregate.Tag;
@@ -46,7 +46,7 @@ namespace Job.Infrastructure.Repositories
             => _repository.Get(condition);
 
         public IQueryable<Domain.JobAggregate.Job> GetActiveJobs()
-            => _repository.Get(x => x.IsPublished && !x.IsDeleted && x.ValidityDate > Clock.Now);
+            => _repository.Get(x => x.Status == JobStatus.Published && !x.IsDeleted);
 
         public async Task<Domain.JobAggregate.Job> GetByIdAsync(Guid jobId)
             => await _repository.GetByKeyAsync(jobId);

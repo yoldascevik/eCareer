@@ -5,7 +5,7 @@ using Job.Domain.JobAggregate.Events;
 using Job.Domain.TagAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace Job.Domain.TagAggregate.EventHandlers
+namespace Job.Domain.TagAggregate.Events.EventHandlers
 {
     public class TagAddedToJobEventHandler: IDomainEventHandler<TagAddedToJobEvent>
     {

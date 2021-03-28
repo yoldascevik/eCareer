@@ -226,9 +226,12 @@ namespace Job.Domain.JobAggregate
             return this;
         }
 
-        public void Publish()
+        public void Publish(DateTime validityDate)
         {
-            CheckRule(new ValidityDateMustBeValid(ValidityDate));
+            if (Status == JobStatus.Published)
+                throw new BusinessException("This job is already published.");
+            
+            SetValidityDate(validityDate);
             
             Status = JobStatus.Published;
             ListingDate = Clock.Now;

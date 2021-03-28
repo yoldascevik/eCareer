@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
 using Job.Application.Job.Commands.CreateJob;
 using Job.Application.Job.Commands.DeleteJob;
+using Job.Application.Job.Commands.PublishJob;
 using Job.Application.Job.Commands.UpdateJob;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Queries.GetJobById;
@@ -47,7 +48,7 @@ namespace Job.Api.Controllers
         public async Task<IActionResult> CreateAsync(Guid companyId, [FromBody] JobInputDto jobInfo)
         {
             Guid jobId = await _mediator.Send(new CreateJobCommand(companyId, jobInfo));
-            
+
             return CreatedAtAction(nameof(Get), new {id = jobId});
         }
 
@@ -57,9 +58,9 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id to be updated</param>
         /// <param name="jobInfo">Job info</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromBody] JobInputDto jobInfo)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] JobInputDto jobInfo)
             => Ok(await _mediator.Send(new UpdateJobCommand(id, jobInfo)));
-        
+
         /// <summary>
         /// Delete existing job
         /// </summary>
@@ -67,5 +68,14 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteAsync(Guid id)
             => Ok(await _mediator.Send(new DeleteJobCommand(id)));
+
+        /// <summary>
+        /// Publish job
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="validityDate">Job validity date</param>
+        [HttpPut("{id}/publish")]
+        public async Task<IActionResult> PublishAsync(Guid id, [FromBody] DateTime validityDate)
+            => Ok(await _mediator.Send(new PublishJobCommand(id, validityDate)));
     }
 }

@@ -10,6 +10,6 @@ namespace Job.Application.Job.Commands.DeleteJob
             JobId = jobId;
         }
         
-        public Guid JobId { get; set; }
+        public Guid JobId { get; }
     }
 }

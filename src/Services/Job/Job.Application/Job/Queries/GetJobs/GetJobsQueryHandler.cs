@@ -27,7 +27,10 @@ namespace Job.Application.Job.Queries.GetJobs
                 ? _jobRepository.GetActiveJobs()
                 : _jobRepository.Get(x => !x.IsDeleted);
 
-            return await jobs.ProjectTo<JobDto>(_mapper.ConfigurationProvider).ToPagedListAsync(request);
+            return await jobs
+                .OrderByDescending(job => job.CreationTime)
+                .ProjectTo<JobDto>(_mapper.ConfigurationProvider)
+                .ToPagedListAsync(request);
         }
     }
 }

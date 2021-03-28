@@ -6,7 +6,7 @@ namespace Job.Application.Job.Dtos
     {
         public Guid Id { get; set; }
         public Guid CompanyId { get; set; }
-        public bool IsPublished { get; set; }
+        public string Status { get; set; }
         public DateTime? RevokeDate { get; set; }
         public string RevokeReason { get; set; }
         public DateTime? ListingDate { get; set; }

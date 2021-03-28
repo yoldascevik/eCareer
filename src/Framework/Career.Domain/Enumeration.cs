@@ -68,7 +68,7 @@ namespace Career.Domain
             return Parse<T, int>(value, "value", item => item.Id == value);
         }
 
-        public static T FromDisplayName<T>(string displayName) where T : Enumeration
+        public static T FromName<T>(string displayName) where T : Enumeration
         {
             return Parse<T, string>(displayName, "display name", item => item.Name == displayName);
         }

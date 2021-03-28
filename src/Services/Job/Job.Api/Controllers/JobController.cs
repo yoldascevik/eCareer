@@ -54,7 +54,7 @@ namespace Job.Api.Controllers
         /// <summary>
         /// Update job info
         /// </summary>
-        /// <param name="id">Job id to be updaed</param>
+        /// <param name="id">Job id to be updated</param>
         /// <param name="jobInfo">Job info</param>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromBody] JobInputDto jobInfo)

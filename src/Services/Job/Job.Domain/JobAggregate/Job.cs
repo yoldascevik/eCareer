@@ -71,7 +71,7 @@ namespace Job.Domain.JobAggregate
         public byte? MinExperienceYear { get; private set; }
         public byte? MaxExperienceYear { get; private set; }
         public GenderType Gender { get; private set; } = GenderType.Unspecified;
-        public JobStatus Status { get; private set; } = JobStatus.Draft;
+        public JobStatus Status { get; private set; } = JobStatus.WaitingForApproval; // TODO:draft
         public DateTime? RevokeDate { get; private set; }
         public string RevokeReason { get; private set; }
         public bool IsDeleted { get; private set; }
@@ -228,8 +228,8 @@ namespace Job.Domain.JobAggregate
 
         public void Publish(DateTime validityDate)
         {
-            if (Status == JobStatus.Published)
-                throw new BusinessException("This job is already published.");
+            if (Status == JobStatus.Draft || Status == JobStatus.Published)
+                throw new BusinessException("The status of the job is not suitable.");
             
             SetValidityDate(validityDate);
             

@@ -71,7 +71,7 @@ namespace Job.Domain.JobAggregate
         public byte? MinExperienceYear { get; private set; }
         public byte? MaxExperienceYear { get; private set; }
         public GenderType Gender { get; private set; } = GenderType.Unspecified;
-        public JobStatus Status { get; private set; } = JobStatus.WaitingForApproval; // TODO:draft
+        public JobStatus Status { get; private set; } = JobStatus.Draft;
         public DateTime? RevokeDate { get; private set; }
         public string RevokeReason { get; private set; }
         public bool IsDeleted { get; private set; }
@@ -226,6 +226,17 @@ namespace Job.Domain.JobAggregate
             return this;
         }
 
+        public void SendForApproval()
+        {
+            if (Status == JobStatus.Published || Status == JobStatus.WaitingForApproval)
+                throw new BusinessException("The status of the job is not suitable.");
+            
+            Status = JobStatus.WaitingForApproval;
+            
+            OnUpdated();
+            AddDomainEvent(new JobSentForApprovalEvent(this));
+        }
+        
         public void Publish(DateTime validityDate)
         {
             if (Status == JobStatus.Draft || Status == JobStatus.Published)
@@ -243,6 +254,9 @@ namespace Job.Domain.JobAggregate
 
         public void Revoke(string reason)
         {
+            if (Status != JobStatus.Published && Status != JobStatus.WaitingForApproval)
+                throw new BusinessException("The status of the job is not suitable.");
+            
             if (string.IsNullOrEmpty(reason))
                 throw new BusinessException("Revoke reason is required!");
 

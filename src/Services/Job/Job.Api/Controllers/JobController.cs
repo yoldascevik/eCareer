@@ -4,6 +4,8 @@ using Job.Api.Controllers.Base;
 using Job.Application.Job.Commands.CreateJob;
 using Job.Application.Job.Commands.DeleteJob;
 using Job.Application.Job.Commands.PublishJob;
+using Job.Application.Job.Commands.RevokeJob;
+using Job.Application.Job.Commands.SendJobForApproval;
 using Job.Application.Job.Commands.UpdateJob;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Queries.GetJobById;
@@ -77,5 +79,22 @@ namespace Job.Api.Controllers
         [HttpPut("{id}/publish")]
         public async Task<IActionResult> PublishAsync(Guid id, [FromBody] DateTime validityDate)
             => Ok(await _mediator.Send(new PublishJobCommand(id, validityDate)));
+        
+        /// <summary>
+        /// Revoke job
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="reason">Reason of job revoke</param>
+        [HttpPut("{id}/revoke")]
+        public async Task<IActionResult> RevokeAsync(Guid id, [FromBody] string reason)
+            => Ok(await _mediator.Send(new RevokeJobCommand(id, reason)));
+        
+        /// <summary>
+        /// Send job for approval before publish
+        /// </summary>
+        /// <param name="id">Job id</param>
+        [HttpPut("{id}/send-for-approval")]
+        public async Task<IActionResult> SendForApprovalAsync(Guid id)
+            => Ok(await _mediator.Send(new SendJobForApprovalCommand(id)));
     }
 }

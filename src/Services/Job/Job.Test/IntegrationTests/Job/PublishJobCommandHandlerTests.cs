@@ -37,7 +37,8 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-
+            job.SendForApproval();
+            
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
 
@@ -56,6 +57,7 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
+            job.SendForApproval();
         
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -76,7 +78,6 @@ namespace Job.Test.IntegrationTests.Job
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
             // Act
-            await commandHandler.Handle(command, CancellationToken.None);
             var actualException = await Assert.ThrowsAsync<BusinessException>(() => commandHandler.Handle(command, CancellationToken.None));
         
             // Assert
@@ -93,7 +94,8 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-
+            job.SendForApproval();
+            
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));
 

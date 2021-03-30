@@ -31,14 +31,13 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RevokeJob_ShouldBeJobStatusEqualsToRevoked_WhenJobRevoked()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var revokeReason = _faker.Lorem.Sentence(4);
             var expectedJobStatus = JobStatus.Revoked; 
             var command = new RevokeJobCommand(job.Id, revokeReason);
             var commandHandler = new RevokeJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
 
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -52,14 +51,13 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RevokeJob_ShouldBeLogInformation_WhenJobRevoked()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var revokeReason = _faker.Lorem.Sentence(4);
             var command = new RevokeJobCommand(job.Id, revokeReason);
             var commandHandler = new RevokeJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
-            
+
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
         
@@ -71,14 +69,13 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RevokeJob_ShouldBeRevokeReasonExpected_WhenJobRevoked()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var revokeReason = _faker.Lorem.Sentence(4);
             var command = new RevokeJobCommand(job.Id, revokeReason);
             var commandHandler = new RevokeJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
-        
+
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
         
@@ -90,13 +87,12 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RevokeJob_ShouldBeRevokeDateExpected_WhenJobRevoked()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var revokeReason = _faker.Lorem.Sentence(4);
             var command = new RevokeJobCommand(job.Id, revokeReason);
             var commandHandler = new RevokeJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
         
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -128,12 +124,11 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RevokeJob_ThrowBusinessException_WhenRevokeReasonIsEmpty()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var command = new RevokeJobCommand(job.Id, string.Empty);
             var commandHandler = new RevokeJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
         
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessException>(() => commandHandler.Handle(command, CancellationToken.None));

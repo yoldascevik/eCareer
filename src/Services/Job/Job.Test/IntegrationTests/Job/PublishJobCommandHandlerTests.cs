@@ -30,14 +30,13 @@ namespace Job.Test.IntegrationTests.Job
         public async Task PublishJob_ShouldBeJobStatusEqualsToPublished_WhenJobPublished()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var validityDate = DateTime.Now.AddDays(10);
             var expectedJobStatus = JobStatus.Published; 
             var command = new PublishJobCommand(job.Id, validityDate);
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
             
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -51,13 +50,12 @@ namespace Job.Test.IntegrationTests.Job
         public async Task PublishJob_ShouldBeLogInformation_WhenJobPublished()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var validityDate = DateTime.Now.AddDays(10);
             var command = new PublishJobCommand(job.Id, validityDate);
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
         
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -88,13 +86,12 @@ namespace Job.Test.IntegrationTests.Job
         public async Task PublishJob_ThrowBusinessRuleValidationException_For_ValidityDateMustBeValidRule_WhenValidityDateNotValid()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var validityDate = DateTime.Now.AddDays(-1);
             var command = new PublishJobCommand(job.Id, validityDate);
             var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
             
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));

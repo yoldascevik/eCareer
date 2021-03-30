@@ -284,7 +284,7 @@ namespace Job.Domain.JobAggregate
                 throw new BusinessException("Candidate does not belong to this job!");
 
             if (Status != JobStatus.Published)
-                 throw new BusinessException("This job is no longer valid.");
+                 throw new BusinessException("The status of the job is not suitable.");
 
             if (_candidates.Any(x => x.UserId == candidate.UserId))
                 throw new BusinessException("You have an application for this job!");

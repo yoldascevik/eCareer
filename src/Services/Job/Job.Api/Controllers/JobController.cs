@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
+using Job.Application.Candidate.Dtos;
+using Job.Application.Job.Commands.Apply;
 using Job.Application.Job.Commands.CreateJob;
 using Job.Application.Job.Commands.DeleteJob;
 using Job.Application.Job.Commands.PublishJob;
@@ -96,5 +98,14 @@ namespace Job.Api.Controllers
         [HttpPut("{id}/send-for-approval")]
         public async Task<IActionResult> SendForApprovalAsync(Guid id)
             => Ok(await _mediator.Send(new SendJobForApprovalCommand(id)));
+
+        /// <summary>
+        /// Apply for a candidate
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="candidate">Candidate info</param>
+        [HttpPost("{id}/apply")]
+        public async Task<IActionResult> Apply(Guid id, [FromBody] CandidateInputDto candidate)
+            => Ok(await _mediator.Send(new ApplyCommand(id, candidate)));
     }
 }

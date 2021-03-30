@@ -63,12 +63,11 @@ namespace Job.Test.IntegrationTests.Job
         public async Task SendJobForApproval_ThrowBusinessException_WhenJobStatusNotSuitable()
         {
             // Arrange
-            var job = JobFaker.CreateFakeJob();
+            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
             var command = new SendJobForApprovalCommand(job.Id);
             var commandHandler = new SendJobForApprovalCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            job.SendForApproval();
             
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessException>(() => commandHandler.Handle(command, CancellationToken.None));

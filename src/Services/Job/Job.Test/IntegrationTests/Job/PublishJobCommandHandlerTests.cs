@@ -1,13 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Bogus.DataSets;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
-using Job.Application.Job.Commands.DeleteJob;
 using Job.Application.Job.Commands.PublishJob;
 using Job.Domain.JobAggregate.Constants;
-using Job.Domain.JobAggregate.Events;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Domain.JobAggregate.Rules;
 using Job.Test.Helpers;

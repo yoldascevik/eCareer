@@ -4,11 +4,11 @@ using Career.Shared.Timing;
 
 namespace Job.Domain.JobAggregate.Rules
 {
-    public class ValidityDateMustBeValid: IBusinessRule
+    public class ValidityDateMustBeValidRule: IBusinessRule
     {
         private readonly DateTime _validityDate;
 
-        public ValidityDateMustBeValid(DateTime validityDate)
+        public ValidityDateMustBeValidRule(DateTime validityDate)
         {
             _validityDate = validityDate;
         }

@@ -216,7 +216,7 @@ namespace Job.Domain.JobAggregate
         public Job SetValidityDate(DateTime validityDate)
         {
             var normalizedValidityDate = Clock.Normalize(validityDate);
-            CheckRule(new ValidityDateMustBeValid(normalizedValidityDate));
+            CheckRule(new ValidityDateMustBeValidRule(normalizedValidityDate));
             
             ValidityDate = normalizedValidityDate;
             

@@ -12,19 +12,19 @@ using Xunit;
 
 namespace Job.Test.IntegrationTests.Job
 {
-    public class CreateJobHandlerTests
+    public class CreateJobCommandHandlerTests
     {
         private readonly IJobRepository _jobRepository;
         private readonly ILogger<CreateJobCommandHandler> _logger;
 
-        public CreateJobHandlerTests()
+        public CreateJobCommandHandlerTests()
         {
             _jobRepository = Substitute.For<IJobRepository>();
             _logger = Substitute.For<ILogger<CreateJobCommandHandler>>();
         }
         
         [Fact]
-        public async Task CreateJobHandler_ShouldReturnCreatedJobId_WhenJobCreated()
+        public async Task CreateJob_ShouldReturnCreatedJobId_WhenJobCreated()
         {
             // Arrange
             var command = GetCommand();
@@ -39,7 +39,7 @@ namespace Job.Test.IntegrationTests.Job
         }
         
         [Fact]
-        public async Task CreateJobHandler_ShouldBeLogInformation_WhenJobCreated()
+        public async Task CreateJob_ShouldBeLogInformation_WhenJobCreated()
         {
             // Arrange
             var command = GetCommand();

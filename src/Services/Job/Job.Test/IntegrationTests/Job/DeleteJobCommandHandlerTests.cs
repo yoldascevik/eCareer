@@ -11,19 +11,19 @@ using Xunit;
 
 namespace Job.Test.IntegrationTests.Job
 {
-    public class DeleteJobHandlerTests
+    public class DeleteJobCommandHandlerTests
     {
         private readonly IJobRepository _jobRepository;
         private readonly ILogger<DeleteJobCommandHandler> _logger;
 
-        public DeleteJobHandlerTests()
+        public DeleteJobCommandHandlerTests()
         {
             _jobRepository = Substitute.For<IJobRepository>();
             _logger = Substitute.For<ILogger<DeleteJobCommandHandler>>();
         }
         
         [Fact]
-        public async Task DeleteJobHandler_ShouldJobIsDeletedIsTrue_WhenJobDeleted()
+        public async Task DeleteJob_ShouldJobIsDeletedIsTrue_WhenJobDeleted()
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
@@ -41,7 +41,7 @@ namespace Job.Test.IntegrationTests.Job
         }
         
         [Fact]
-        public async Task DeleteJobHandler_ShouldBeLogInformation_WhenJobDeleted()
+        public async Task DeleteJob_ShouldBeLogInformation_WhenJobDeleted()
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
@@ -58,7 +58,7 @@ namespace Job.Test.IntegrationTests.Job
         }
         
         [Fact]
-        public async Task DeleteJobHandler_ThrowNotFoundException_WhenJobNotExists()
+        public async Task DeleteJob_ThrowNotFoundException_WhenJobNotExists()
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();

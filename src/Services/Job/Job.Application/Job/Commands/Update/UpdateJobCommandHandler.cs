@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Job.Application.Job.Dtos;
+using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -26,7 +26,7 @@ namespace Job.Application.Job.Commands.Update
         {
             var job = await _jobRepository.GetByIdAsync(request.JobId);
             if (job is null)
-                throw new NotFoundException($"Job is not found by id: {request.JobId}");
+                throw new JobNotFoundException(request.JobId);
 
             job.SetTitle(request.Job.Title)
                 .SetDescription(request.Job.Description)

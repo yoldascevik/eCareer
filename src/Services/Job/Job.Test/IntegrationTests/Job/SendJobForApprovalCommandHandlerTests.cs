@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.SendForApproval;
+using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
@@ -87,10 +88,10 @@ namespace Job.Test.IntegrationTests.Job
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
-        
+            var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+
             // Assert
-            Assert.Equal($"Job is not found by id: {job.Id}", actualException.Message);
+            Assert.IsType<JobNotFoundException>(actualException);
         }
     }
 }

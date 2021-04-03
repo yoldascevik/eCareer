@@ -1,16 +1,16 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Job.Application.Job.Dtos;
+using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Job.Application.Job.Commands.AddEducationLevel
 {
-    public class AddEducationLevelCommandHandler: ICommandHandler<AddEducationLevelCommand, EducationLevelDto>
+    public class AddEducationLevelCommandHandler : ICommandHandler<AddEducationLevelCommand, EducationLevelDto>
     {
         private readonly IMapper _mapper;
         private readonly IJobRepository _jobRepository;
@@ -26,8 +26,8 @@ namespace Job.Application.Job.Commands.AddEducationLevel
         public async Task<EducationLevelDto> Handle(AddEducationLevelCommand request, CancellationToken cancellationToken)
         {
             var job = await _jobRepository.GetByIdAsync(request.JobId);
-            if (job is null)
-                throw new NotFoundException($"Job is not found by id: {request.JobId}");
+            if (job is null) 
+                throw new JobNotFoundException(request.JobId);
 
             var educationLevel = EducationLevelRef.Create(request.EducationLevelId, request.Name);
             job.AddEducationLevel(educationLevel);

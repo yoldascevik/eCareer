@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
+using Job.Application.Job.Exceptions;
 using Job.Domain.CandidateAggregate.Repositories;
 using Job.Domain.JobAggregate.Repositories;
 using MediatR;
@@ -32,7 +33,7 @@ namespace Job.Application.Candidate.Commands.Withdraw
 
             var job = await _jobRepository.GetByIdAsync(candidate.JobId);
             if (job == null)
-                throw new NotFoundException($"Job is not found by id: {candidate.JobId}");
+                throw new JobNotFoundException(candidate.JobId);
 
             job.WithdrawCandidate(candidate);
             await _jobRepository.UpdateAsync(job.Id, job);

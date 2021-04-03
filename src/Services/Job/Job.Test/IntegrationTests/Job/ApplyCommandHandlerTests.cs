@@ -5,6 +5,7 @@ using Bogus;
 using Career.Exceptions.Exceptions;
 using Job.Application.Candidate.Dtos;
 using Job.Application.Job.Commands.Apply;
+using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -48,8 +49,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob(FakeJobStatus.Published);
-            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             var command = GetCommand(job.Id);
+            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             
@@ -65,16 +66,16 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob(FakeJobStatus.Published);
-            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             var command = GetCommand(job.Id);
+            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
-        
+            var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+
             // Assert
-            Assert.Equal($"Job is not found by id: {job.Id}", actualException.Message);
+            Assert.IsType<JobNotFoundException>(actualException);
         }
         
         [Fact]
@@ -82,8 +83,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
-            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             var command = GetCommand(job.Id);
+            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -99,8 +100,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob(FakeJobStatus.Published);
-            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             var command = GetCommand(job.Id);
+            var commandHandler = new ApplyCommandHandler(_jobRepository, _logger);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             await commandHandler.Handle(command, CancellationToken.None);

@@ -18,8 +18,10 @@ namespace Job.Application.Job
             CreateMap<WorkTypeRef, WorkTypeDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.WorkTypeId));
 
+            CreateMap<EducationLevelRef, EducationLevelDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.EducationLevelId));
+
             CreateMap<LocationRef, JobLocationDto>();
-            CreateMap<EducationLevelRef, EducationLevelDto>();
         }
     }
 }

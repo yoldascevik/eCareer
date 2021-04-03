@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
+using Job.Application.Job.Commands.AddEducationLevel;
 using Job.Application.Job.Commands.AddLocation;
 using Job.Application.Job.Commands.AddWorkType;
 using Job.Application.Job.Commands.Apply;
@@ -148,7 +149,17 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="workTypeId">Work type id</param>
         [HttpDelete("{id}/work-types/{workTypeId}")]
-        public async Task<IActionResult> RemoveLocation(Guid id, string workTypeId)
+        public async Task<IActionResult> RemoveWorkType(Guid id, string workTypeId)
             => Ok(await _mediator.Send(new RemoveWorkTypeCommand(id, workTypeId)));
+        
+        /// <summary>
+        /// Add new education level to job
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="educationLevelId">Education level id</param>
+        /// <param name="name">Education level name</param>
+        [HttpPost("{id}/education-levels")]
+        public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] string educationLevelId, [FromBody] string name)
+            => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevelId, name)));
     }
 }

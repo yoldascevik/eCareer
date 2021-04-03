@@ -29,7 +29,7 @@ namespace Job.Infrastructure.Repositories
         
         public async Task<IEnumerable<Domain.JobAggregate.Job>> GetByTagAsync(Tag tag)
         {
-            var filter = Builders<Domain.JobAggregate.Job>.Filter.ElemMatch(x => x.Tags, t=> t.Id == tag.Id);
+            var filter = Builders<Domain.JobAggregate.Job>.Filter.ElemMatch(x => x.Tags, t=> t.TagId == tag.Id);
             return await _collection.Find(filter).ToListAsync();
         }
 
@@ -80,7 +80,7 @@ namespace Job.Infrastructure.Repositories
 
             foreach (Domain.JobAggregate.Job job in jobsOfTag)
             {
-                var jobTag = job.Tags.FirstOrDefault(t => t.Id == tag.Id);
+                var jobTag = job.Tags.FirstOrDefault(t => t.TagId == tag.Id);
                 if (jobTag != null)
                 {
                     jobTag.SetName(tag.Name);

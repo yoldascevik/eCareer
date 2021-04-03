@@ -26,7 +26,7 @@ namespace Job.Domain.CandidateAggregate
         public DateTime? WithdrawalDate { get; private set; }
         public bool IsActive { get; private set; }
 
-        public static Candidate Create(JobAggregate.Job job, Guid userId, Guid cvId, string coverLetter, string channel, string referance)
+        public static Candidate Create(JobAggregate.Job job, Guid userId, Guid cvId, string coverLetter, string channel = null, string referance = null)
         {
             Check.NotNull(job, nameof(job));
             Check.NotEmpty(cvId, nameof(cvId));

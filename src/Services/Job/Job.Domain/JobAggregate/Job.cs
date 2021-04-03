@@ -297,9 +297,9 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(candidate, nameof(candidate));
 
-            CandidateRef candidateRef = _candidates.FirstOrDefault(x => x.UserId == candidate.UserId);
+            CandidateRef candidateRef = _candidates.FirstOrDefault(x => x.CandidateId == candidate.Id);
             if (candidateRef == null)
-                throw new NotFoundException("Candidate not found!");
+                throw new NotFoundException($"Candidate {candidate.Id} not found for job {candidate.JobId}!");
 
             candidateRef.Withdraw();
             AddDomainEvent(new CandidateWithdrewEvent(this, candidate));
@@ -328,7 +328,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(workType, nameof(workType));
 
-            if (_workTypes.Any(x => x.Id == workType.Id))
+            if (_workTypes.Any(x => x.WorkTypeId == workType.WorkTypeId))
                 throw new BusinessException("Work type already exist for this job!");
 
             _workTypes.Add(workType);
@@ -339,7 +339,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(workType, nameof(workType));
 
-            var jobWorkType = _workTypes.FirstOrDefault(x => x.Id == workType.Id);
+            var jobWorkType = _workTypes.FirstOrDefault(x => x.WorkTypeId == workType.WorkTypeId);
             if (jobWorkType == null)
                 throw new NotFoundException("Work type not found!");
 
@@ -351,7 +351,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 
-            if (_educationLevels.Any(x => x.Id == educationLevel.Id))
+            if (_educationLevels.Any(x => x.EducationLevelId == educationLevel.EducationLevelId))
                 throw new BusinessException("Education level already exist for this job!");
 
             _educationLevels.Add(educationLevel);
@@ -362,7 +362,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 
-            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.Id == educationLevel.Id);
+            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.EducationLevelId == educationLevel.EducationLevelId);
             if (jobEducationLevel == null)
                 throw new NotFoundException("Education level is not found!");
 
@@ -377,7 +377,7 @@ namespace Job.Domain.JobAggregate
             if (_tags.Any(t=>
             {
                 if (t == null) throw new ArgumentNullException(nameof(t));
-                return t.Id == tag.Id;
+                return t.TagId == tag.Id;
             }))
                 throw new BusinessException("Tag already exist for this job!");
 
@@ -391,7 +391,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(tag, nameof(tag));
 
-            var tagRef = _tags.FirstOrDefault(t => t.Id == tag.Id);
+            var tagRef = _tags.FirstOrDefault(t => t.TagId == tag.TagId);
             if (tagRef is null)
                 throw new NotFoundException("Tag is not found!");
 

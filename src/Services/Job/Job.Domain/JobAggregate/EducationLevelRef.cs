@@ -5,7 +5,7 @@ namespace Job.Domain.JobAggregate
 {
     public class EducationLevelRef : ValueObject
     {
-        public string Id { get; private init; }
+        public string EducationLevelId { get; private init; }
         public string Name { get; private set; }
 
         public static EducationLevelRef Create(string id, string name)
@@ -13,7 +13,7 @@ namespace Job.Domain.JobAggregate
             Check.NotNullOrEmpty(id, nameof(id));
             Check.NotNullOrEmpty(name, nameof(name));
 
-            return new EducationLevelRef() {Id = id, Name = name};
+            return new EducationLevelRef() {EducationLevelId = id, Name = name};
         }
         
         public EducationLevelRef SetName(string name)

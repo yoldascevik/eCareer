@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
-using Job.Application.Job.Commands.CreateJob;
+using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Dtos;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;

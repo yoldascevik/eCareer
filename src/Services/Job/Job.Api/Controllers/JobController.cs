@@ -9,6 +9,7 @@ using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Commands.Delete;
 using Job.Application.Job.Commands.Publish;
 using Job.Application.Job.Commands.RemoveLocation;
+using Job.Application.Job.Commands.RemoveWorkType;
 using Job.Application.Job.Commands.Revoke;
 using Job.Application.Job.Commands.SendForApproval;
 using Job.Application.Job.Commands.Update;
@@ -127,8 +128,8 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <param name="id">Job id</param>
         /// <param name="locationId">Job location id</param>
-        [HttpDelete("{id}/locations")]
-        public async Task<IActionResult> RemoveLocation(Guid id, [FromBody] Guid locationId)
+        [HttpDelete("{id}/locations/{locationId}")]
+        public async Task<IActionResult> RemoveLocation(Guid id, Guid locationId)
             => Ok(await _mediator.Send(new RemoveLocationCommand(id, locationId)));
         
         /// <summary>
@@ -140,5 +141,14 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/work-types")]
         public async Task<IActionResult> AddWorkType(Guid id, [FromBody] string workTypeId, [FromBody] string name)
             => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workTypeId, name)));
+        
+        /// <summary>
+        /// Remove work type from job
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="workTypeId">Work type id</param>
+        [HttpDelete("{id}/work-types/{workTypeId}")]
+        public async Task<IActionResult> RemoveLocation(Guid id, string workTypeId)
+            => Ok(await _mediator.Send(new RemoveWorkTypeCommand(id, workTypeId)));
     }
 }

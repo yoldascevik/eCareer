@@ -333,13 +333,11 @@ namespace Job.Domain.JobAggregate
             OnUpdated();
         }
 
-        public void RemoveWorkType(WorkTypeRef workType)
+        public void RemoveWorkType(string workTypeId)
         {
-            Check.NotNull(workType, nameof(workType));
-
-            var jobWorkType = _workTypes.FirstOrDefault(x => x.WorkTypeId == workType.WorkTypeId);
+            var jobWorkType = _workTypes.FirstOrDefault(x => x.WorkTypeId == workTypeId);
             if (jobWorkType == null)
-                throw new NotFoundException("Work type not found!");
+                throw new NotFoundException($"Work type not found: {workTypeId}");
 
             _workTypes.Remove(jobWorkType);
             OnUpdated();

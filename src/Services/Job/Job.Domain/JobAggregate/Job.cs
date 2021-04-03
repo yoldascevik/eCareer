@@ -358,7 +358,7 @@ namespace Job.Domain.JobAggregate
         {
             var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.EducationLevelId == educationLevelId);
             if (jobEducationLevel == null)
-                throw new NotFoundException("Education level is not found!");
+                throw new NotFoundException($"Education level {educationLevelId} is not found!");
 
             _educationLevels.Remove(jobEducationLevel);
             OnUpdated();

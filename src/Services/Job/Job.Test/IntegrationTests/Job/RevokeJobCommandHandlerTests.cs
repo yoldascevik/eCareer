@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Bogus;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.Revoke;
-using Job.Application.Job.Commands.RevokeJob;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;

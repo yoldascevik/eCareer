@@ -4,10 +4,9 @@ using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Query;
 using Job.Application.Job.Dtos;
-using Job.Application.Job.Queries.GetById;
 using Job.Domain.JobAggregate.Repositories;
 
-namespace Job.Application.Job.Queries.GetJobById
+namespace Job.Application.Job.Queries.GetById
 {
     public class GetJobByIdQueryHandler: IQueryHandler<GetJobByIdQuery, JobDetailDto>
     {

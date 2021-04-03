@@ -1,7 +1,6 @@
 using FluentValidation;
-using Job.Application.Job.Commands.SendForApproval;
 
-namespace Job.Application.Job.Commands.SendJobForApproval
+namespace Job.Application.Job.Commands.SendForApproval
 {
     public class SendJobForApprovalCommandValidator : AbstractValidator<SendJobForApprovalCommand>
     {

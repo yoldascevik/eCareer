@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.Publish;
-using Job.Application.Job.Commands.PublishJob;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Domain.JobAggregate.Rules;

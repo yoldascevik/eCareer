@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -34,15 +33,14 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
             var command = new AddLocationCommand(job.Id, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
-
+            
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
             // Act
-            var jobLocationDto = await commandHandler.Handle(command, CancellationToken.None);
+            await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.NotEmpty(job.Locations);
-            Assert.Equal(command.CountryId, jobLocationDto.CountryId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         

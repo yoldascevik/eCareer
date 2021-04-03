@@ -3,12 +3,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Job.Application.Job.Commands.Update;
 using Job.Application.Job.Dtos;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace Job.Application.Job.Commands.UpdateJob
+namespace Job.Application.Job.Commands.Update
 {
     public class UpdateJobCommandHandler: ICommandHandler<UpdateJobCommand, JobDetailDto>
     {

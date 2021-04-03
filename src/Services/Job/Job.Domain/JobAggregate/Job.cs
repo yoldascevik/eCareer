@@ -327,7 +327,7 @@ namespace Job.Domain.JobAggregate
             Check.NotNull(workType, nameof(workType));
 
             if (_workTypes.Any(x => x.WorkTypeId == workType.WorkTypeId))
-                throw new BusinessException("Work type already exist for this job!");
+                throw new AlreadyExistsException($"Work type {workType.WorkTypeId} already exist for this job!");
 
             _workTypes.Add(workType);
             OnUpdated();
@@ -350,7 +350,7 @@ namespace Job.Domain.JobAggregate
             Check.NotNull(educationLevel, nameof(educationLevel));
 
             if (_educationLevels.Any(x => x.EducationLevelId == educationLevel.EducationLevelId))
-                throw new BusinessException("Education level already exist for this job!");
+                throw new AlreadyExistsException("Education level already exist for this job!");
 
             _educationLevels.Add(educationLevel);
             OnUpdated();
@@ -377,7 +377,7 @@ namespace Job.Domain.JobAggregate
                 if (t == null) throw new ArgumentNullException(nameof(t));
                 return t.TagId == tag.Id;
             }))
-                throw new BusinessException("Tag already exist for this job!");
+                throw new AlreadyExistsException("Tag already exist for this job!");
 
             _tags.Add(TagRef.CreateFromTag(tag));
 

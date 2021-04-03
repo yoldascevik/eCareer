@@ -6,10 +6,9 @@ using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
 using Career.MediatR.Query;
 using Job.Application.Job.Dtos;
-using Job.Application.Job.Queries.Get;
 using Job.Domain.JobAggregate.Repositories;
 
-namespace Job.Application.Job.Queries.GetJobs
+namespace Job.Application.Job.Queries.Get
 {
     public class GetJobsQueryHandler : IQueryHandler<GetJobsQuery, PagedList<JobDto>>
     {

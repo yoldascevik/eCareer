@@ -2,12 +2,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Job.Application.Job.Commands.SendForApproval;
 using Job.Domain.JobAggregate.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Job.Application.Job.Commands.SendJobForApproval
+namespace Job.Application.Job.Commands.SendForApproval
 {
     public class SendJobForApprovalCommandHandler: ICommandHandler<SendJobForApprovalCommand>
     {

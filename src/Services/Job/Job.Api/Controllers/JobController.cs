@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
 using Job.Application.Job.Commands.AddLocation;
+using Job.Application.Job.Commands.AddWorkType;
 using Job.Application.Job.Commands.Apply;
 using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Commands.Delete;
@@ -129,5 +130,15 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}/locations")]
         public async Task<IActionResult> RemoveLocation(Guid id, [FromBody] Guid locationId)
             => Ok(await _mediator.Send(new RemoveLocationCommand(id, locationId)));
+        
+        /// <summary>
+        /// Add new work type to job
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="workTypeId">Work type id</param>
+        /// <param name="name">Work type name</param>
+        [HttpPost("{id}/work-types")]
+        public async Task<IActionResult> AddWorkType(Guid id, [FromBody] string workTypeId, [FromBody] string name)
+            => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workTypeId, name)));
     }
 }

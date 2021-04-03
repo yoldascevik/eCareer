@@ -2,12 +2,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Job.Application.Job.Commands.Delete;
 using Job.Domain.JobAggregate.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Job.Application.Job.Commands.DeleteJob
+namespace Job.Application.Job.Commands.Delete
 {
     public class DeleteJobCommandHandler: ICommandHandler<DeleteJobCommand>
     {

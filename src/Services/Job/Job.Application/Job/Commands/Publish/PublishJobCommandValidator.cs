@@ -1,8 +1,7 @@
 using Career.Shared.Timing;
 using FluentValidation;
-using Job.Application.Job.Commands.Publish;
 
-namespace Job.Application.Job.Commands.PublishJob
+namespace Job.Application.Job.Commands.Publish
 {
     public class PublishJobCommandValidator: AbstractValidator<PublishJobCommand>
     {

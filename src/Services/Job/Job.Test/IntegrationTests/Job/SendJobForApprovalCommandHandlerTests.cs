@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.SendForApproval;
-using Job.Application.Job.Commands.SendJobForApproval;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;

@@ -13,9 +13,11 @@ namespace Job.Application.Job
                 .IncludeAllDerived();
 
             CreateMap<Domain.JobAggregate.Job, JobDetailDto>();
-
             CreateMap<TagRef, TagDto>();
-            CreateMap<WorkTypeRef, WorkTypeDto>();
+
+            CreateMap<WorkTypeRef, WorkTypeDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.WorkTypeId));
+
             CreateMap<LocationRef, JobLocationDto>();
             CreateMap<EducationLevelRef, EducationLevelDto>();
         }

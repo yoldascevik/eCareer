@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.RemoveLocation;
 using Job.Domain.JobAggregate;

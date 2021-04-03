@@ -1,7 +1,6 @@
 using FluentValidation;
-using Job.Application.Job.Commands.Revoke;
 
-namespace Job.Application.Job.Commands.RevokeJob
+namespace Job.Application.Job.Commands.Revoke
 {
     public class RevokeJobCommandValidator : AbstractValidator<RevokeJobCommand>
     {

@@ -6,7 +6,6 @@ using AutoMapper;
 using Bogus;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.Update;
-using Job.Application.Job.Commands.UpdateJob;
 using Job.Application.Job.Dtos;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Repositories;

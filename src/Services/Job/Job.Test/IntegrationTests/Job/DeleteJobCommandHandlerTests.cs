@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.Delete;
-using Job.Application.Job.Commands.DeleteJob;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;

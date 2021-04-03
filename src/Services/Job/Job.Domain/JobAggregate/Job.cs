@@ -386,7 +386,7 @@ namespace Job.Domain.JobAggregate
             Check.NotNull(tag, nameof(tag));
 
             var tagRef = _tags.FirstOrDefault(t => t.TagId == tag.TagId);
-            if (tagRef is null)
+            if (tagRef is null)        
                 throw new NotFoundException("Tag is not found!");
 
             _tags.Remove(tagRef);

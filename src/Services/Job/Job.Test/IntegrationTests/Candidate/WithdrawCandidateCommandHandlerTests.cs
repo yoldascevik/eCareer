@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
 using Job.Application.Candidate.Commands.Withdraw;
+using Job.Application.Candidate.Exceptions;
 using Job.Application.Job.Exceptions;
 using Job.Domain.CandidateAggregate.Repositories;
 using Job.Domain.CandidateAggregate.Rules;
@@ -83,10 +84,10 @@ namespace Job.Test.IntegrationTests.Candidate
             _candidateRepository.GetByIdAsync(candidate.Id).ReturnsNull();
 
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CandidateNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
 
             // Assert
-            Assert.Equal($"Candidate is not found by id: {candidate.Id}", actualException.Message);
+            Assert.IsType<CandidateNotFoundException>(actualException);
         }
 
         [Fact]

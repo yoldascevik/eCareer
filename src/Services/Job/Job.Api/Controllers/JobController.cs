@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
+using Job.Application.Job.Commands.AddLocation;
 using Job.Application.Job.Commands.Apply;
 using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Commands.Delete;
@@ -107,5 +108,16 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/apply")]
         public async Task<IActionResult> Apply(Guid id, [FromBody] CandidateInputDto candidate)
             => Ok(await _mediator.Send(new ApplyCommand(id, candidate)));
+
+        /// <summary>
+        /// Add new job location
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="countryId">Country id</param>
+        /// <param name="cityId">City id</param>
+        /// <param name="districtId">District id</param>
+        [HttpPost("{id}/locations")]
+        public async Task<IActionResult> AddLocation(Guid id, [FromBody] string countryId, [FromBody] string cityId, [FromBody] string districtId)
+            => Ok(await _mediator.Send(new AddLocationCommand(id, countryId, cityId, districtId)));
     }
 }

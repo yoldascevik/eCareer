@@ -5,13 +5,14 @@ namespace Job.Test.Helpers
 {
     public enum FakeJobStatus
     {
+        Draft,
         WaitingForApproval,
         Published
     }
     
     public class JobFaker
     {
-        public static Domain.JobAggregate.Job CreateFakeJob(FakeJobStatus? status = null)
+        public static Domain.JobAggregate.Job CreateFakeJob(FakeJobStatus? status = FakeJobStatus.Draft)
         {
             var faker = new Faker();
             var job = Domain.JobAggregate.Job.Create(

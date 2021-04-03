@@ -38,10 +38,11 @@ namespace Job.Test.IntegrationTests.Job
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
             // Act
-            await commandHandler.Handle(command, CancellationToken.None);
+            var jobLocationDto = await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.NotEmpty(job.Locations);
+            Assert.Equal(command.CountryId, jobLocationDto.CountryId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         
@@ -70,8 +71,6 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
             var command = new AddLocationCommand(job.Id, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
 
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
-        
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
             // Act

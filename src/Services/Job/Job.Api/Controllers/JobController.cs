@@ -7,6 +7,7 @@ using Job.Application.Job.Commands.Apply;
 using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Commands.Delete;
 using Job.Application.Job.Commands.Publish;
+using Job.Application.Job.Commands.RemoveLocation;
 using Job.Application.Job.Commands.Revoke;
 using Job.Application.Job.Commands.SendForApproval;
 using Job.Application.Job.Commands.Update;
@@ -119,5 +120,14 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/locations")]
         public async Task<IActionResult> AddLocation(Guid id, [FromBody] string countryId, [FromBody] string cityId, [FromBody] string districtId)
             => Ok(await _mediator.Send(new AddLocationCommand(id, countryId, cityId, districtId)));
+        
+        /// <summary>
+        /// Remove job location
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="locationId">Job location id</param>
+        [HttpDelete("{id}/locations")]
+        public async Task<IActionResult> RemoveLocation(Guid id, [FromBody] Guid locationId)
+            => Ok(await _mediator.Send(new RemoveLocationCommand(id, locationId)));
     }
 }

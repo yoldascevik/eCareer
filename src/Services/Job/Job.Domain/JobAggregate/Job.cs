@@ -312,13 +312,11 @@ namespace Job.Domain.JobAggregate
             OnUpdated();
         }
 
-        public void RemoveLocation(LocationRef location)
+        public void RemoveLocation(Guid locationId)
         {
-            Check.NotNull(location, nameof(location));
-
-            var jobLocation = _locations.FirstOrDefault(x => x.Id == location.Id);
+            var jobLocation = _locations.FirstOrDefault(x => x.Id == locationId);
             if (jobLocation == null)
-                throw new NotFoundException("Job location not found!");
+                throw new NotFoundException($"Job location not found: {locationId}");
 
             _locations.Remove(jobLocation);
             OnUpdated();

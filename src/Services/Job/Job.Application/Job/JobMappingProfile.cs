@@ -13,7 +13,8 @@ namespace Job.Application.Job
                 .IncludeAllDerived();
 
             CreateMap<Domain.JobAggregate.Job, JobDetailDto>();
-            
+            CreateMap<CandidateRef, CandidateSummaryDto>();
+
             CreateMap<TagRef, TagDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.TagId));
 

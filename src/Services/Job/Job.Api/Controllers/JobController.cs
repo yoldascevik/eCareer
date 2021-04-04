@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
+using Job.Application.Candidate.Queries.GetByJobId;
 using Job.Application.Job.Commands.AddEducationLevel;
 using Job.Application.Job.Commands.AddLocation;
 using Job.Application.Job.Commands.AddWorkType;
@@ -50,6 +51,13 @@ namespace Job.Api.Controllers
             => Ok(await _mediator.Send(new GetJobByIdQuery(id)));
 
         /// <summary>
+        /// Get applied candidates
+        /// </summary>
+        [HttpGet("{id}/candidates")]
+        public async Task<IActionResult> Get([FromQuery] GetCandidatesByJobIdQuery request)
+            => Ok(await _mediator.Send(request));
+
+        /// <summary>
         /// Create new job
         /// </summary>
         /// <param name="companyId">Company id</param>
@@ -88,7 +96,7 @@ namespace Job.Api.Controllers
         [HttpPut("{id}/publish")]
         public async Task<IActionResult> PublishAsync(Guid id, [FromBody] DateTime validityDate)
             => Ok(await _mediator.Send(new PublishJobCommand(id, validityDate)));
-        
+
         /// <summary>
         /// Revoke job
         /// </summary>
@@ -97,7 +105,7 @@ namespace Job.Api.Controllers
         [HttpPut("{id}/revoke")]
         public async Task<IActionResult> RevokeAsync(Guid id, [FromBody] string reason)
             => Ok(await _mediator.Send(new RevokeJobCommand(id, reason)));
-        
+
         /// <summary>
         /// Send job for approval before publish
         /// </summary>
@@ -125,7 +133,7 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/locations")]
         public async Task<IActionResult> AddLocation(Guid id, [FromBody] string countryId, [FromBody] string cityId, [FromBody] string districtId)
             => Ok(await _mediator.Send(new AddLocationCommand(id, countryId, cityId, districtId)));
-        
+
         /// <summary>
         /// Remove job location
         /// </summary>
@@ -134,7 +142,7 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}/locations/{locationId}")]
         public async Task<IActionResult> RemoveLocation(Guid id, Guid locationId)
             => Ok(await _mediator.Send(new RemoveLocationCommand(id, locationId)));
-        
+
         /// <summary>
         /// Add new work type to job
         /// </summary>
@@ -144,7 +152,7 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/work-types")]
         public async Task<IActionResult> AddWorkType(Guid id, [FromBody] string workTypeId, [FromBody] string name)
             => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workTypeId, name)));
-        
+
         /// <summary>
         /// Remove work type from job
         /// </summary>
@@ -153,7 +161,7 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}/work-types/{workTypeId}")]
         public async Task<IActionResult> RemoveWorkType(Guid id, string workTypeId)
             => Ok(await _mediator.Send(new RemoveWorkTypeCommand(id, workTypeId)));
-        
+
         /// <summary>
         /// Add new education level to job
         /// </summary>
@@ -163,7 +171,7 @@ namespace Job.Api.Controllers
         [HttpPost("{id}/education-levels")]
         public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] string educationLevelId, [FromBody] string name)
             => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevelId, name)));
-        
+
         /// <summary>
         /// Remove education level from job
         /// </summary>
@@ -172,7 +180,7 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}/education-levels/{educationLevelId}")]
         public async Task<IActionResult> RemoveEducationLevel(Guid id, string educationLevelId)
             => Ok(await _mediator.Send(new RemoveEducationLevelCommand(id, educationLevelId)));
-        
+
         /// <summary>
         /// Update job tags
         /// </summary>

@@ -5,6 +5,6 @@ namespace Job.Domain.JobAggregate.Services
 {
     public interface IJobDomainService
     {
-        Task<Job> UpdateTags(Job job, IEnumerable<string> tagNames);
+        Task<Job> UpdateTagsAsync(Job job, IEnumerable<string> tagNames);
     }
 }

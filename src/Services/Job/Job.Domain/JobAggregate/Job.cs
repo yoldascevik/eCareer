@@ -368,11 +368,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(tag, nameof(tag));
 
-            if (_tags.Any(t=>
-            {
-                if (t == null) throw new ArgumentNullException(nameof(t));
-                return t.TagId == tag.Id;
-            }))
+            if (_tags.Any(t=> t.TagId == tag.Id))
                 throw new AlreadyExistsException("Tag already exist for this job!");
 
             _tags.Add(TagRef.CreateFromTag(tag));

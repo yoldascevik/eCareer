@@ -17,7 +17,7 @@ namespace Job.Domain.JobAggregate.Services
             _jobRepository = jobRepository;
         }
         
-        public async Task<Job> UpdateTags(Job job, IEnumerable<string> tagNames)
+        public async Task<Job> UpdateTagsAsync(Job job, IEnumerable<string> tagNames)
         {
             string[] existingJobTags = job.Tags.Select(x=> x.Name).ToArray();
             string[] addedTags = tagNames.Except(existingJobTags).ToArray();

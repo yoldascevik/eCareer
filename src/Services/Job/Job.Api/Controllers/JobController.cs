@@ -15,6 +15,7 @@ using Job.Application.Job.Commands.RemoveWorkType;
 using Job.Application.Job.Commands.Revoke;
 using Job.Application.Job.Commands.SendForApproval;
 using Job.Application.Job.Commands.Update;
+using Job.Application.Job.Commands.UpdateJobTags;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Queries.Get;
 using Job.Application.Job.Queries.GetById;
@@ -171,5 +172,14 @@ namespace Job.Api.Controllers
         [HttpDelete("{id}/education-levels/{educationLevelId}")]
         public async Task<IActionResult> RemoveEducationLevel(Guid id, string educationLevelId)
             => Ok(await _mediator.Send(new RemoveEducationLevelCommand(id, educationLevelId)));
+        
+        /// <summary>
+        /// Update job tags
+        /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="tags">Tag array</param>
+        [HttpPut("{id}/tags")]
+        public async Task<IActionResult> UpdateJobTags(Guid id, [FromBody] string[] tags)
+            => Ok(await _mediator.Send(new UpdateJobTagsCommand(id, tags)));
     }
 }

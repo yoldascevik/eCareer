@@ -6,8 +6,7 @@ using Job.Application.Job.Commands.UpdateJobTags;
 using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Domain.JobAggregate.Services;
-using Job.Domain.TagAggregate;
-using Job.Test.Helpers;
+using Job.Test.Helpers; 
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
@@ -63,7 +62,7 @@ namespace Job.Test.IntegrationTests.Job
 
             foreach (string tagName in existsTag)
             {
-                job.AddTag(Tag.Create(tagName));
+                job.AddTag(Domain.TagAggregate.Tag.Create(tagName));
             }
 
             // Act

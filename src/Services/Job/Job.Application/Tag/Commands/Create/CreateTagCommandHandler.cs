@@ -21,7 +21,7 @@ namespace Job.Application.Tag.Commands.Create
 
         public async Task<Guid> Handle(CreateTagCommand request, CancellationToken cancellationToken)
         {
-            if (await _tagRepository.AnyAsync(x => x.Name.ToLowerInvariant() == request.Name.ToLowerInvariant()))
+            if (await _tagRepository.Exists(request.Name))
                 throw new AlreadyExistsException($"Tag {request.Name} already exists.");
             
             var tag = Domain.TagAggregate.Tag.Create(request.Name);

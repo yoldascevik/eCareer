@@ -25,6 +25,9 @@ namespace Job.Infrastructure.Repositories
         public async Task<Tag> GetByIdAsync(Guid tagId)
             => await _repository.GetByKeyAsync(tagId);
 
+        public Task<bool> Exists(string tagName)
+            => _repository.AnyAsync(x => x.Name.ToLowerInvariant() == tagName.ToLowerInvariant());
+
         public async Task<bool> AnyAsync(Expression<Func<Tag, bool>> condition)
             => await _repository.AnyAsync(condition);
 

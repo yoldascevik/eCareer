@@ -25,7 +25,7 @@ namespace Job.Application.Tag.Queries.Get
         {
             return await _tagRepository
                 .Get()
-                .OrderByDescending(tag => tag.Name)
+                .OrderBy(tag => tag.Name)
                 .ProjectTo<TagDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(request);
         }

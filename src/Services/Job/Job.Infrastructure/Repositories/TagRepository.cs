@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Career.Exceptions;
@@ -17,6 +18,9 @@ namespace Job.Infrastructure.Repositories
             Check.NotNull(repository, nameof(repository));
             _repository = repository;
         }
+
+        public IQueryable<Tag> Get()
+            => _repository.Get();
 
         public async Task<Tag> GetByIdAsync(Guid tagId)
             => await _repository.GetByKeyAsync(tagId);

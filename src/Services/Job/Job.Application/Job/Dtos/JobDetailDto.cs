@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Job.Application.Tag.Dtos;
 
 namespace Job.Application.Job.Dtos
 {

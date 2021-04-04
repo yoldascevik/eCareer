@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Career.MediatR.Command;
-using Job.Application.Job.Dtos;
+using Job.Application.Tag.Dtos;
 
 namespace Job.Application.Job.Commands.UpdateJobTags
 {

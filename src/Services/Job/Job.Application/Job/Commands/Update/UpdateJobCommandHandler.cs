@@ -38,7 +38,8 @@ namespace Job.Application.Job.Commands.Update
                 .SetCanDisabilities(request.Job.IsCanDisabilities)
                 .SetMinExperienceYear(request.Job.MinExperienceYear)
                 .SetMaxExperienceYear(request.Job.MaxExperienceYear);
-            
+
+            await _jobRepository.UpdateAsync(job.Id, job);
             _logger.LogInformation("Job detail info updated : {JobId}", job.Id);
             
             return _mapper.Map<JobDetailDto>(job);

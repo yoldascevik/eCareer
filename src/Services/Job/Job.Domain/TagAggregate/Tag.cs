@@ -12,7 +12,6 @@ namespace Job.Domain.TagAggregate
 
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-
         public bool IsDeleted { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public Guid? LastModifiedUserId { get; private set; }

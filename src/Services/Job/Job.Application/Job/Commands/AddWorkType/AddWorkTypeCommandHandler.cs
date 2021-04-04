@@ -29,7 +29,7 @@ namespace Job.Application.Job.Commands.AddWorkType
             if (job is null)
                 throw new JobNotFoundException(request.JobId);
 
-            var workType = WorkTypeRef.Create(request.WorkTypeId, request.Name);
+            var workType = WorkTypeRef.Create(request.WorkTypeDto.Id, request.WorkTypeDto.Name);
             job.AddWorkType(workType);
 
             await _jobRepository.UpdateAsync(job.Id, job);

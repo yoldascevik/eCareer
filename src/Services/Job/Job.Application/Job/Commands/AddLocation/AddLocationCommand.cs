@@ -6,17 +6,13 @@ namespace Job.Application.Job.Commands.AddLocation
 {
     public class AddLocationCommand: ICommand<JobLocationDto>
     {
-        public AddLocationCommand(Guid jobId, string countryId, string cityId, string districtId)
+        public AddLocationCommand(Guid jobId, JobLocationInputDto locationInputDto)
         {
             JobId = jobId;
-            CountryId = countryId;
-            CityId = cityId;
-            DistrictId = districtId;
+            LocationInputDto = locationInputDto;
         }
 
         public Guid JobId { get; }
-        public string CountryId { get; }
-        public string CityId { get; }
-        public string DistrictId { get; }
+        public JobLocationInputDto LocationInputDto { get; }
     }
 }

@@ -6,8 +6,9 @@ namespace Job.Application.Job.Commands.AddLocation
     {
         public AddLocationCommandValidator()
         {
-            RuleFor(x => x.CountryId).NotNull().NotEmpty();
-            RuleFor(x => x.CityId).NotNull().NotEmpty();
+            RuleFor(x => x.JobId).NotNull().NotEmpty();
+            RuleFor(x => x.LocationInputDto.CountryId).NotNull().NotEmpty();
+            RuleFor(x => x.LocationInputDto.CityId).NotNull().NotEmpty();
         }
     }
 }

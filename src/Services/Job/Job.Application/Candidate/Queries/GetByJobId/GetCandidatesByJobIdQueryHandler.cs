@@ -26,7 +26,7 @@ namespace Job.Application.Candidate.Queries.GetByJobId
             return await _candidateRepository.GetByJobId(request.JobId, request.IncludeDeactivated)
                 .OrderByDescending(x => x.ApplicationDate)
                 .ProjectTo<CandidateDto>(_mapper.ConfigurationProvider)
-                .ToPagedListAsync(request);
+                .ToPagedListAsync(request.PaginationFilter);
         }
     }
 }

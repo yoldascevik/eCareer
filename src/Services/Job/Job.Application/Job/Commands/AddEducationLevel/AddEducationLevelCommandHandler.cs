@@ -29,7 +29,7 @@ namespace Job.Application.Job.Commands.AddEducationLevel
             if (job is null) 
                 throw new JobNotFoundException(request.JobId);
 
-            var educationLevel = EducationLevelRef.Create(request.EducationLevelId, request.Name);
+            var educationLevel = EducationLevelRef.Create(request.EducationLevelDto.Id, request.EducationLevelDto.Name);
             job.AddEducationLevel(educationLevel);
 
             await _jobRepository.UpdateAsync(job.Id, job);

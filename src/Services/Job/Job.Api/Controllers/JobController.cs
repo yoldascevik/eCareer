@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Career.Data.Pagination;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
 using Job.Application.Candidate.Queries.GetByJobId;
@@ -53,10 +54,13 @@ namespace Job.Api.Controllers
         /// <summary>
         /// Get applied candidates
         /// </summary>
+        /// <param name="id">Job id</param>
+        /// <param name="includeDeactivated">Include deactivated candidates</param>
+        /// <param name="paginationFilter">Pagination options</param>
         [HttpGet("{id}/candidates")]
-        public async Task<IActionResult> Get([FromQuery] GetCandidatesByJobIdQuery request)
-            => Ok(await _mediator.Send(request));
-
+        public async Task<IActionResult> GetCandidates(Guid id, bool includeDeactivated, [FromQuery] PaginationFilter paginationFilter)
+            => Ok(await _mediator.Send(new GetCandidatesByJobIdQuery(id, includeDeactivated, paginationFilter)));
+        
         /// <summary>
         /// Create new job
         /// </summary>
@@ -127,12 +131,10 @@ namespace Job.Api.Controllers
         /// Add new job location
         /// </summary>
         /// <param name="id">Job id</param>
-        /// <param name="countryId">Country id</param>
-        /// <param name="cityId">City id</param>
-        /// <param name="districtId">District id</param>
+        /// <param name="location">Location info</param>
         [HttpPost("{id}/locations")]
-        public async Task<IActionResult> AddLocation(Guid id, [FromBody] string countryId, [FromBody] string cityId, [FromBody] string districtId)
-            => Ok(await _mediator.Send(new AddLocationCommand(id, countryId, cityId, districtId)));
+        public async Task<IActionResult> AddLocation(Guid id, [FromBody] JobLocationInputDto location)
+            => Ok(await _mediator.Send(new AddLocationCommand(id, location)));
 
         /// <summary>
         /// Remove job location
@@ -147,11 +149,10 @@ namespace Job.Api.Controllers
         /// Add new work type to job
         /// </summary>
         /// <param name="id">Job id</param>
-        /// <param name="workTypeId">Work type id</param>
-        /// <param name="name">Work type name</param>
+        /// <param name="workType">Work type info</param>
         [HttpPost("{id}/work-types")]
-        public async Task<IActionResult> AddWorkType(Guid id, [FromBody] string workTypeId, [FromBody] string name)
-            => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workTypeId, name)));
+        public async Task<IActionResult> AddWorkType(Guid id, [FromBody] WorkTypeDto workType)
+            => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workType)));
 
         /// <summary>
         /// Remove work type from job
@@ -166,11 +167,10 @@ namespace Job.Api.Controllers
         /// Add new education level to job
         /// </summary>
         /// <param name="id">Job id</param>
-        /// <param name="educationLevelId">Education level id</param>
-        /// <param name="name">Education level name</param>
+        /// <param name="educationLevel">Education level info</param>
         [HttpPost("{id}/education-levels")]
-        public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] string educationLevelId, [FromBody] string name)
-            => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevelId, name)));
+        public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] EducationLevelDto educationLevel)
+            => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevel)));
 
         /// <summary>
         /// Remove education level from job

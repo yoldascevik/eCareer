@@ -6,15 +6,13 @@ namespace Job.Application.Job.Commands.AddWorkType
 {
     public class AddWorkTypeCommand: ICommand<WorkTypeDto>
     {
-        public AddWorkTypeCommand(Guid jobId, string workTypeId, string name)
+        public AddWorkTypeCommand(Guid jobId, WorkTypeDto workTypeDto)
         {
             JobId = jobId;
-            WorkTypeId = workTypeId;
-            Name = name;
+            WorkTypeDto = workTypeDto;
         }
 
         public Guid JobId { get; }
-        public string WorkTypeId { get;}
-        public string Name { get;}
+        public WorkTypeDto WorkTypeDto { get; }
     }
 }

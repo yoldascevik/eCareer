@@ -29,7 +29,7 @@ namespace Job.Application.Job.Commands.AddLocation
             if (job is null)
                 throw new JobNotFoundException(request.JobId);
 
-            var location = LocationRef.Create(request.CountryId, request.CityId, request.DistrictId);
+            var location = LocationRef.Create(request.LocationInputDto.CountryId, request.LocationInputDto.CityId, request.LocationInputDto.DistrictId);
             job.AddLocation(location);
 
             await _jobRepository.UpdateAsync(job.Id, job);

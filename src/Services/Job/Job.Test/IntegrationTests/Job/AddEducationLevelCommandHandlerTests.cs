@@ -34,9 +34,9 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
+            var expectedDto = command.EducationLevelDto;
             var commandHandler = new AddEducationLevelCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddEducationLevelCommand(job.Id, Guid.NewGuid().ToString(), "Test education level");
-            var expectedDto = new EducationLevelDto() { Id = command.EducationLevelId, Name = command.Name };
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             _mapper.Map<EducationLevelDto>(Arg.Any<EducationLevelRef>()).Returns(expectedDto);
@@ -46,7 +46,7 @@ namespace Job.Test.IntegrationTests.Job
 
             // Assert
             Assert.NotEmpty(job.EducationLevels);
-            Assert.Equal(command.EducationLevelId, workTypeDto.Id);
+            Assert.Equal(command.EducationLevelDto.Id, workTypeDto.Id);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         
@@ -55,8 +55,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddEducationLevelCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddEducationLevelCommand(job.Id, Guid.NewGuid().ToString(), "Test education level");
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -72,8 +72,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddEducationLevelCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddEducationLevelCommand(job.Id, Guid.NewGuid().ToString(), "Test education level");
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
@@ -89,8 +89,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddEducationLevelCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddEducationLevelCommand(job.Id, Guid.NewGuid().ToString(), "Test education level");
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             await commandHandler.Handle(command, CancellationToken.None);
@@ -100,6 +100,15 @@ namespace Job.Test.IntegrationTests.Job
         
             // Assert
             Assert.IsType<AlreadyExistsException>(actualException);
+        }
+
+        private AddEducationLevelCommand GetCommand(Guid jobId)
+        {
+            return new AddEducationLevelCommand(jobId, new EducationLevelDto()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Test education level"
+            });
         }
     }
 }

@@ -6,15 +6,13 @@ namespace Job.Application.Job.Commands.AddEducationLevel
 {
     public class AddEducationLevelCommand: ICommand<EducationLevelDto>
     {
-        public AddEducationLevelCommand(Guid jobId, string educationLevelId, string name)
+        public AddEducationLevelCommand(Guid jobId, EducationLevelDto educationLevelDto)
         {
             JobId = jobId;
-            EducationLevelId = educationLevelId;
-            Name = name;
+            EducationLevelDto = educationLevelDto;
         }
 
         public Guid JobId { get; }
-        public string EducationLevelId { get;}
-        public string Name { get;}
+        public EducationLevelDto EducationLevelDto { get; }
     }
 }

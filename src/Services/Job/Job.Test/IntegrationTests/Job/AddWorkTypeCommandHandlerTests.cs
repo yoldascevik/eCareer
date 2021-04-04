@@ -34,9 +34,9 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
+            var expectedDto = command.WorkTypeDto;
             var commandHandler = new AddWorkTypeCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddWorkTypeCommand(job.Id, Guid.NewGuid().ToString(), "Test work type");
-            var expectedDto = new WorkTypeDto() { Id = command.WorkTypeId, Name = command.Name };
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             _mapper.Map<WorkTypeDto>(Arg.Any<WorkTypeRef>()).Returns(expectedDto);
@@ -46,7 +46,7 @@ namespace Job.Test.IntegrationTests.Job
 
             // Assert
             Assert.NotEmpty(job.WorkTypes);
-            Assert.Equal(command.WorkTypeId, workTypeDto.Id);
+            Assert.Equal(command.WorkTypeDto.Id, workTypeDto.Id);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         
@@ -55,8 +55,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddWorkTypeCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddWorkTypeCommand(job.Id, Guid.NewGuid().ToString(), "Test work type");
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -72,8 +72,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddWorkTypeCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddWorkTypeCommand(job.Id, Guid.NewGuid().ToString(), "Test work type");
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
@@ -89,8 +89,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddWorkTypeCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddWorkTypeCommand(job.Id, Guid.NewGuid().ToString(), "Test work type");
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             await commandHandler.Handle(command, CancellationToken.None);
@@ -100,6 +100,14 @@ namespace Job.Test.IntegrationTests.Job
         
             // Assert
             Assert.IsType<AlreadyExistsException>(actualException);
+        }
+
+        private AddWorkTypeCommand GetCommand(Guid jobId)
+        {
+            return new AddWorkTypeCommand(jobId, new WorkTypeDto() {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Test work type"
+            });
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Job.Application.Job.Commands.AddLocation;
+using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
@@ -31,8 +32,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddLocationCommand(job.Id, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
             
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -49,8 +50,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddLocationCommand(job.Id, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -66,8 +67,8 @@ namespace Job.Test.IntegrationTests.Job
         {
             // Arrange
             var job = JobFaker.CreateFakeJob();
+            var command = GetCommand(job.Id);
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
-            var command = new AddLocationCommand(job.Id, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
@@ -76,6 +77,16 @@ namespace Job.Test.IntegrationTests.Job
 
             // Assert
             Assert.IsType<JobNotFoundException>(actualException);
+        }
+
+        private AddLocationCommand GetCommand(Guid jobId)
+        {
+            return new AddLocationCommand(jobId, new JobLocationInputDto()
+            {
+                CountryId = Guid.NewGuid().ToString(),
+                CityId = Guid.NewGuid().ToString(),
+                DistrictId = Guid.NewGuid().ToString()
+            });
         }
     }
 }

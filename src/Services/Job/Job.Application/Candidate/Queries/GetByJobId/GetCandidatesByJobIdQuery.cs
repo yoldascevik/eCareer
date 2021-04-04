@@ -5,9 +5,17 @@ using Job.Application.Candidate.Dtos;
 
 namespace Job.Application.Candidate.Queries.GetByJobId
 {
-    public class GetCandidatesByJobIdQuery: PaginationFilter, IQuery<PagedList<CandidateDto>>
+    public class GetCandidatesByJobIdQuery: IQuery<PagedList<CandidateDto>>
     {
-        public Guid JobId { get; set; }
-        public bool IncludeDeactivated{ get; set; }
+        public GetCandidatesByJobIdQuery(Guid jobId, bool includeDeactivated, PaginationFilter paginationFilter)
+        {
+            JobId = jobId;
+            IncludeDeactivated = includeDeactivated;
+            PaginationFilter = paginationFilter;
+        }
+        
+        public Guid JobId { get; }
+        public bool IncludeDeactivated{ get; }
+        public PaginationFilter PaginationFilter { get; }
     }
 }

@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Query;
 using Job.Application.Job.Dtos;
+using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate.Repositories;
 
 namespace Job.Application.Job.Queries.GetById
@@ -23,7 +23,7 @@ namespace Job.Application.Job.Queries.GetById
         {
             var job = await _jobRepository.GetByIdAsync(request.JobId);
             if (job == null)
-                throw new ItemNotFoundException(request.JobId);
+                throw new JobNotFoundException(request.JobId);
             
             return _mapper.Map<JobDetailDto>(job);
         }

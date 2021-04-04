@@ -9,6 +9,7 @@ namespace Job.Domain.JobAggregate.Repositories
 {
     public interface IJobRepository
     {
+        IQueryable<Job> Get();
         IQueryable<Job> Get(Expression<Func<Job, bool>> condition);
         IQueryable<Job> GetActiveJobs();
         Task<Job> GetByIdAsync(Guid jobId);

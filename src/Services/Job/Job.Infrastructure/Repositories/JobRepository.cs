@@ -41,7 +41,10 @@ namespace Job.Infrastructure.Repositories
 
             return job.Candidates.Any(c => c.UserId == userId);
         }
-        
+
+        public IQueryable<Domain.JobAggregate.Job> Get()
+            => _repository.Get();
+
         public IQueryable<Domain.JobAggregate.Job> Get(Expression<Func<Domain.JobAggregate.Job, bool>> condition)
             => _repository.Get(condition);
 

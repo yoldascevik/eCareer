@@ -23,9 +23,9 @@ namespace Job.Application.Job.Queries.Get
 
         public async Task<PagedList<JobDto>> Handle(GetJobsQuery request, CancellationToken cancellationToken)
         {
-            IQueryable<Domain.JobAggregate.Job> jobs = request.IsOnlyActive
-                ? _jobRepository.GetActiveJobs()
-                : _jobRepository.Get(x => !x.IsDeleted);
+            IQueryable<Domain.JobAggregate.Job> jobs = request.IncludeDeactivated
+                ? _jobRepository.Get()
+                : _jobRepository.GetActiveJobs();
 
             return await jobs
                 .OrderByDescending(job => job.CreationTime)

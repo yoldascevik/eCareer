@@ -18,6 +18,9 @@ namespace Job.Infrastructure.Repositories
             _repository = repository;
         }
 
+        public IQueryable<Candidate> Get(bool includeDeactivated)
+            => _repository.Get(x => !includeDeactivated || x.IsActive);
+        
         public async Task<Candidate> GetByIdAsync(Guid candidateId)
             => await _repository.GetByKeyAsync(candidateId);
 

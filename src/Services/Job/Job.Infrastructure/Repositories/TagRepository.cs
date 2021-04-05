@@ -20,7 +20,7 @@ namespace Job.Infrastructure.Repositories
         }
 
         public IQueryable<Tag> Get()
-            => _repository.Get();
+            => _repository.Get(x=> !x.IsDeleted);
 
         public async Task<Tag> GetByIdAsync(Guid tagId)
             => await _repository.GetByKeyAsync(tagId);

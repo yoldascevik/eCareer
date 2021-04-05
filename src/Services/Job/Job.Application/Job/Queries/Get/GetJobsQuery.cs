@@ -6,6 +6,6 @@ namespace Job.Application.Job.Queries.Get
 {
     public class GetJobsQuery:  PaginationFilter, IQuery<PagedList<JobDto>>
     {
-        public bool IncludeDeactivated { get; set; }
+        public bool OnlyPublished { get; set; }
     }
 }

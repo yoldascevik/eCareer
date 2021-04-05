@@ -19,13 +19,13 @@ namespace Job.Infrastructure.Repositories
         }
 
         public IQueryable<Candidate> Get(bool includeDeactivated)
-            => _repository.Get(x => !includeDeactivated || x.IsActive);
+            => _repository.Get(x => includeDeactivated || x.IsActive);
         
         public async Task<Candidate> GetByIdAsync(Guid candidateId)
             => await _repository.GetByKeyAsync(candidateId);
 
         public IQueryable<Candidate> GetByJobId(Guid jobId, bool includeDeactivated)
-            => _repository.Get(x => x.JobId == jobId && (!includeDeactivated || x.IsActive));
+            => _repository.Get(x => x.JobId == jobId && (includeDeactivated || x.IsActive));
         
         public async Task<Candidate> UpdateAsync(Guid candidateId, Candidate candidate)
             => await _repository.UpdateAsync(candidateId, candidate);

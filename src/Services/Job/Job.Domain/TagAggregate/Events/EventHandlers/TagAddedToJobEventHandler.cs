@@ -20,7 +20,7 @@ namespace Job.Domain.TagAggregate.Events.EventHandlers
 
         public async Task Handle(TagAddedToJobEvent notification, CancellationToken cancellationToken)
         {
-            if (await _tagRepository.AnyAsync(t => t.Id == notification.Tag.Id))
+            if (await _tagRepository.Exists(notification.Tag.Name))
                 return;
 
             await _tagRepository.AddAsync(notification.Tag);

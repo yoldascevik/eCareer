@@ -19,14 +19,12 @@ namespace Job.Test.IntegrationTests.Job
         private readonly IMapper _mapper;
         private readonly IJobRepository _jobRepository;
         private readonly IJobDomainService _jobDomainService;
-        private readonly ILogger<UpdateJobTagsCommandHandler> _logger;
 
         public UpdateJobTagsCommandHandlerTests()
         {
             _mapper = Substitute.For<IMapper>();
             _jobRepository = Substitute.For<IJobRepository>();
-            _jobDomainService = new JobDomainService(_jobRepository);
-            _logger = Substitute.For<ILogger<UpdateJobTagsCommandHandler>>();
+            _jobDomainService = new JobDomainService(_jobRepository, Substitute.For<ILogger<JobDomainService>>());
         }
 
         [Fact]
@@ -36,7 +34,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var newTags = new[] {"software", "devops", "freelance"};
             var command = new UpdateJobTagsCommand(job.Id, newTags);
-            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService, _logger);
+            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -56,7 +54,7 @@ namespace Job.Test.IntegrationTests.Job
             var newTags = new[] {"software", "freelance"};
             var existsTag = new[] {"software", "devops", "freelance"};
             var command = new UpdateJobTagsCommand(job.Id, newTags);
-            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService, _logger);
+            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
@@ -71,25 +69,7 @@ namespace Job.Test.IntegrationTests.Job
             // Assert
             Assert.True(job.Tags.Select(x=> x.Name).SequenceEqual(newTags));
         }
-        
-        [Fact]
-        public async Task UpdateJobTags_ShouldBeLogInformation_WhenSuccess()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob();
-            var newTags = new[] {"software", "devops", "freelance"};
-            var command = new UpdateJobTagsCommand(job.Id, newTags);
-            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService, _logger);
 
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
-
-            // Act
-            await commandHandler.Handle(command, CancellationToken.None);
-
-            // Assert
-            _logger.ReceivedWithAnyArgs().LogInformation("");
-        }
-        
         [Fact]
         public async Task UpdateJobTags_ThrowNotFoundException_WhenJobNotExists()
         {
@@ -97,7 +77,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var newTags = new[] {"software", "devops", "freelance"};
             var command = new UpdateJobTagsCommand(job.Id, newTags);
-            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService, _logger);
+            var commandHandler = new UpdateJobTagsCommandHandler(_mapper, _jobRepository, _jobDomainService);
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         

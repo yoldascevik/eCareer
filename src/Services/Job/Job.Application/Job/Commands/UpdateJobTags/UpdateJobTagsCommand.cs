@@ -5,7 +5,7 @@ using Job.Application.Tag.Dtos;
 
 namespace Job.Application.Job.Commands.UpdateJobTags
 {
-    public class UpdateJobTagsCommand: ICommand<TagDto>
+    public class UpdateJobTagsCommand: ICommand<List<TagDto>>
     {
         public UpdateJobTagsCommand(Guid jobId, IEnumerable<string> tags)
         {

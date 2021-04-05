@@ -1,28 +1,23 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.DomainEvent;
-using Job.Domain.JobAggregate.Repositories;
+using Job.Domain.JobAggregate.Services;
 using Job.Domain.TagAggregate.Events;
-using Microsoft.Extensions.Logging;
 
 namespace Job.Domain.JobAggregate.Events.EventHandlers
 {
     public class TagDeletedEventHandler : IDomainEventHandler<TagDeletedEvent>
     {
-        private readonly ILogger<TagDeletedEventHandler> _logger;
-        private readonly IJobRepository _jobRepository;
+        private readonly IJobDomainService _jobDomainService;
 
-        public TagDeletedEventHandler(IJobRepository jobRepository, ILogger<TagDeletedEventHandler> logger)
+        public TagDeletedEventHandler(IJobDomainService jobDomainService)
         {
-            _jobRepository = jobRepository;
-            _logger = logger;
+            _jobDomainService = jobDomainService;
         }
 
         public async Task Handle(TagDeletedEvent notification, CancellationToken cancellationToken)
         {
-            await _jobRepository.RemoveTagsFromJobsAsync(notification.Tag);
-            
-            _logger.LogInformation("Tag \"{TagName}\" removed from jobs, after tag deleted", notification.Tag.Name);
+            await _jobDomainService.RemoveTagsFromJobsAsync(notification.Tag);
         }
     }
 }

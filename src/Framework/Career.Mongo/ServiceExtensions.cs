@@ -45,7 +45,7 @@ namespace Career.Mongo
         public static IServiceCollection AddMongoContext<TContext>(this IServiceCollection services)
             where TContext : MongoContext
         {
-            services.AddDomainEvents(typeof(TContext));
+            services.UseDomainEventDispatcherAttribute(typeof(TContext));
             return services.AddScoped<IMongoContext, TContext>();
         }
 

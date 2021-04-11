@@ -1,12 +1,13 @@
-using System.Threading;
 using System.Threading.Tasks;
+using Career.CAP.DomainEvent;
 using Career.Domain.DomainEvent;
+using DotNetCore.CAP;
 using Job.Domain.JobAggregate.Services;
 using Job.Domain.TagAggregate.Events;
 
 namespace Job.Domain.JobAggregate.Events.EventHandlers
 {
-    public class TagNameChangedEventHandler: IDomainEventHandler<TagNameChangedEvent>
+    public class TagNameChangedEventHandler: CAPDomainEventHandler<TagNameChangedEvent>
     {
         private readonly IJobDomainService _jobDomainService;
 
@@ -15,9 +16,10 @@ namespace Job.Domain.JobAggregate.Events.EventHandlers
             _jobDomainService = jobDomainService;
         }
 
-        public async Task Handle(TagNameChangedEvent notification, CancellationToken cancellationToken)
+        [CapSubscribe(nameof(TagNameChangedEvent))]
+        public override async Task Handle(TagNameChangedEvent domainEvent)
         {
-            await _jobDomainService.UpdateTagNameFromJobsAsync(notification.Tag);
+            await _jobDomainService.UpdateTagNameFromJobsAsync(domainEvent.Tag);
         }
     }
 }

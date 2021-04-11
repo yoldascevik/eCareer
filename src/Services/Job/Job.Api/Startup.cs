@@ -1,4 +1,5 @@
 using ARConsistency;
+using Career.CAP;
 using Career.Exceptions;
 using Career.IoC;
 using Career.MediatR;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Savorboard.CAP.InMemoryMessageQueue;
 
 namespace Job.Api
 {
@@ -43,10 +45,25 @@ namespace Job.Api
             services.AddMongo();
             
             JobDbContext.Configure();
-
+            
             services.RegisterModule<ApplicationModule>();
             services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
             services.AddSwagger();
+            
+            services.AddCareerCAP(capOptions =>
+            {
+                capOptions.UseInMemoryMessageQueue(); // Transport
+                capOptions.UseMongoDB(opt => // Persistence
+                {
+                    opt.DatabaseConnection = Configuration["mongo:connectionString"];
+                    opt.DatabaseName = Configuration["mongo:database"] +  "EventHistories";
+                    opt.PublishedCollection = "publishedEvents";
+                    opt.ReceivedCollection = "receivedEvents";
+                });
+                capOptions.UseDashboard();
+                capOptions.FailedRetryCount = 3;
+                capOptions.FailedRetryInterval = 60;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

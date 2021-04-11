@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using Career.Domain.BusinessRule;
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
@@ -10,6 +11,7 @@ namespace Career.Domain.Entities
     {
         private readonly List<IDomainEvent> _domainEvents;
 
+        [IgnoreDataMember]
         public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
 
         protected DomainEntity()

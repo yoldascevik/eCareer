@@ -1,13 +1,14 @@
-using System.Threading;
 using System.Threading.Tasks;
+using Career.CAP.DomainEvent;
 using Career.Domain.DomainEvent;
+using DotNetCore.CAP;
 using Job.Domain.JobAggregate.Events;
 using Job.Domain.TagAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Job.Domain.TagAggregate.Events.EventHandlers
 {
-    public class TagAddedToJobEventHandler: IDomainEventHandler<TagAddedToJobEvent>
+    public class TagAddedToJobEventHandler: CAPDomainEventHandler<TagAddedToJobEvent>
     {
         private readonly ITagRepository _tagRepository;
         private readonly ILogger<TagAddedToJobEventHandler> _logger;
@@ -18,14 +19,15 @@ namespace Job.Domain.TagAggregate.Events.EventHandlers
             _logger = logger;
         }
 
-        public async Task Handle(TagAddedToJobEvent notification, CancellationToken cancellationToken)
+        [CapSubscribe(nameof(TagAddedToJobEvent))]
+        public override async Task Handle(TagAddedToJobEvent domainEvent)
         {
-            if (await _tagRepository.Exists(notification.Tag.Name))
+            if (await _tagRepository.Exists(domainEvent.Tag.Name))
                 return;
 
-            await _tagRepository.AddAsync(notification.Tag);
+            await _tagRepository.AddAsync(domainEvent.Tag);
             
-            _logger.LogInformation("New tag added: {TagName}", notification.Tag.Name);
+            _logger.LogInformation("New tag added: {TagName}", domainEvent.Tag.Name);
         }
     }
 }

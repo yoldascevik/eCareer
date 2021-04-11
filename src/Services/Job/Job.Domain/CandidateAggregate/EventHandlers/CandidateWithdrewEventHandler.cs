@@ -1,13 +1,14 @@
-using System.Threading;
 using System.Threading.Tasks;
+using Career.CAP.DomainEvent;
 using Career.Domain.DomainEvent;
 using Career.Exceptions.Exceptions;
+using DotNetCore.CAP;
 using Job.Domain.CandidateAggregate.Repositories;
 using Job.Domain.JobAggregate.Events;
 
 namespace Job.Domain.CandidateAggregate.EventHandlers
 {
-    public class CandidateWithdrewEventHandler : IDomainEventHandler<CandidateWithdrewEvent>
+    public class CandidateWithdrewEventHandler : CAPDomainEventHandler<CandidateWithdrewEvent>
     {
         private readonly ICandidateRepository _candidateRepository;
 
@@ -16,12 +17,13 @@ namespace Job.Domain.CandidateAggregate.EventHandlers
             _candidateRepository = candidateRepository;
         }
 
-        public async Task Handle(CandidateWithdrewEvent notification, CancellationToken cancellationToken)
+        [CapSubscribe(nameof(CandidateWithdrewEvent))]
+        public override async Task Handle(CandidateWithdrewEvent domainEvent)
         {
-            Candidate candidate = await _candidateRepository.GetByIdAsync(notification.Candidate.Id);
+            Candidate candidate = await _candidateRepository.GetByIdAsync(domainEvent.Candidate.Id);
             if (candidate == null)
             {
-                throw new NotFoundException($"Candidate not found ({notification.Candidate.Id}).");
+                throw new NotFoundException($"Candidate not found ({domainEvent.Candidate.Id}).");
             }
 
             candidate.Withdrawn();

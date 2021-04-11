@@ -1,12 +1,12 @@
-using System.Threading;
 using System.Threading.Tasks;
-using Career.Domain.DomainEvent;
+using Career.CAP.DomainEvent;
 using Company.Domain.DomainEvents.Company;
+using DotNetCore.CAP;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.DomainEvents
 {
-    public class CompanyCreatedEventHandler : IDomainEventHandler<CompanyCreatedEvent>
+    public class CompanyCreatedEventHandler : CAPDomainEventHandler<CompanyCreatedEvent>
     {
         private readonly ILogger<CompanyCreatedEventHandler> _logger;
 
@@ -15,10 +15,11 @@ namespace Company.Application.Company.DomainEvents
             _logger = logger;
         }
 
-        public async Task Handle(CompanyCreatedEvent notification, CancellationToken cancellationToken)
+        [CapSubscribe(nameof(CompanyCreatedEvent))]
+        public override async Task Handle(CompanyCreatedEvent domainEvent)
         {
             _logger.LogDebug("{Event} is handled! {CompanyId} / {CompanyName} / {Email}",
-                notification.GetType().Name, notification.CompanyId, notification.CompanyName, notification.Email);
+                domainEvent.GetType().Name, domainEvent.CompanyId, domainEvent.CompanyName, domainEvent.Email);
 
             await Task.CompletedTask;
         }

@@ -6,6 +6,8 @@ namespace Company.Domain.DomainEvents.CompanyFollower
 {
     public class FollowerDeletedEvent : DomainEvent
     {
+        private FollowerDeletedEvent(){} // for serialization
+
         public FollowerDeletedEvent(Entities.CompanyFollower follower)
         {
             Check.NotNull(follower, nameof(follower));
@@ -16,9 +18,9 @@ namespace Company.Domain.DomainEvents.CompanyFollower
             CompanyEmailAddress = follower.Company.Email;
         }
 
-        public Guid UserId { get; }
-        public Guid CompanyId { get; }
-        public string CompanyName { get; }
-        public string CompanyEmailAddress { get; }
+        public Guid UserId { get; private set; }
+        public Guid CompanyId { get; private set; }
+        public string CompanyName { get; private set; }
+        public string CompanyEmailAddress { get; private set; }
     }
 }

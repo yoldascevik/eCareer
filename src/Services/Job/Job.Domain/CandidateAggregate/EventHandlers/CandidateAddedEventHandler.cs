@@ -1,12 +1,12 @@
-using System.Threading;
 using System.Threading.Tasks;
-using Career.Domain.DomainEvent;
+using Career.CAP.DomainEvent;
+using DotNetCore.CAP;
 using Job.Domain.CandidateAggregate.Repositories;
 using Job.Domain.JobAggregate.Events;
 
 namespace Job.Domain.CandidateAggregate.EventHandlers
 {
-    public class CandidateAddedEventHandler : IDomainEventHandler<CandidateAddedEvent>
+    public class CandidateAddedEventHandler : CAPDomainEventHandler<CandidateAddedEvent>
     {
         private readonly ICandidateRepository _candidateRepository;
 
@@ -15,9 +15,10 @@ namespace Job.Domain.CandidateAggregate.EventHandlers
             _candidateRepository = candidateRepository;
         }
 
-        public async Task Handle(CandidateAddedEvent notification, CancellationToken cancellationToken)
+        [CapSubscribe(nameof(CandidateAddedEvent))]
+        public override async Task Handle(CandidateAddedEvent domainEvent)
         {
-            await _candidateRepository.AddAsync(notification.Candidate);
+            await _candidateRepository.AddAsync(domainEvent.Candidate);
         }
     }
 }

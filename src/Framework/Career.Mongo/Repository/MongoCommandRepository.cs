@@ -22,7 +22,6 @@ namespace Career.Mongo.Repository
         public MongoCommandRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher)
         {
             Check.NotNull(context, nameof(context));
-            Check.NotNull(domainEventDispatcher, nameof(domainEventDispatcher));
 
             _domainEventDispatcher = domainEventDispatcher;
             Collection = context.Database.GetCollection<T>(typeof(T).Name);
@@ -170,7 +169,8 @@ namespace Career.Mongo.Repository
 
         private async Task DispatchDomainEvents(T entity)
         {
-            if (entity == null) return;
+            if (_domainEventDispatcher == null || entity == null) 
+                return;
             
             if (entity is DomainEntity domainEntity 
                 && domainEntity.DomainEvents != null 
@@ -183,7 +183,8 @@ namespace Career.Mongo.Repository
         
         private async Task DispatchDomainEvents(IEnumerable<T> entities)
         {
-            if (entities == null) return;
+            if (_domainEventDispatcher == null || entities == null) 
+                return;
             
             IEnumerable<DomainEntity> domainEntities = entities
                 .Where(e => e is DomainEntity)

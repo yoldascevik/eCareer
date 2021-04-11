@@ -45,10 +45,12 @@ namespace Career.Mongo
         public static IServiceCollection AddMongoContext<TContext>(this IServiceCollection services)
             where TContext : MongoContext
         {
+            services.AddSingleton<IDomainEventDispatcher>(provider => null);
             services.UseDomainEventDispatcherAttribute(typeof(TContext));
-            return services.AddScoped<IMongoContext, TContext>();
-        }
+            services.AddScoped<IMongoContext, TContext>();
 
+            return services;
+        }
 
         public static IServiceCollection AddMongoRepository<TEntity>(this IServiceCollection services) 
             where TEntity: class, IDocument

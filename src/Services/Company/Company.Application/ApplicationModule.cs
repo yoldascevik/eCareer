@@ -1,4 +1,5 @@
 using AutoMapper;
+using Career.CAP;
 using Career.Configuration;
 using Career.EntityFramework;
 using Career.IoC;
@@ -22,11 +23,13 @@ namespace Company.Application
 
             services.AddDbContext<CompanyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("CompanyDatabase")));
             services.AddUnitOfWork<CompanyDbContext>();
-            
+
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
+            services.AddCAPEventHandlers(this.GetType());
             services.RegisterModule<DomainModule>();
+            
             services.AddAutoMapper(typeof(CompanyMappinProfile));
         }
     }

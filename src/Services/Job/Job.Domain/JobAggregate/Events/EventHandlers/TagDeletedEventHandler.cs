@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Career.CAP.DomainEvent;
-using Career.Domain.DomainEvent;
 using DotNetCore.CAP;
 using Job.Domain.JobAggregate.Services;
 using Job.Domain.TagAggregate.Events;

@@ -10,7 +10,7 @@ namespace Job.Domain
         protected override void Load(IServiceCollection services)
         {
             services.AddScoped<IJobDomainService, JobDomainService>();
-            services.AddDomainEvents(this.GetType());
+            services.AddCAPDomainEvents(this.GetType());
         }
     }
 }

@@ -5,6 +5,7 @@ using Career.CAP.DomainEvent;
 using Career.CAP.Serializer;
 using Career.Domain.DomainEvent;
 using Career.Domain.DomainEvent.Dispatcher;
+using Career.Exceptions;
 using DotNetCore.CAP;
 using DotNetCore.CAP.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,19 +22,29 @@ namespace Career.CAP
             return services;
         }
 
-        public static IServiceCollection AddDomainEvents(this IServiceCollection services, Type assemblyPointerType)
+        public static IServiceCollection AddCAPDomainEvents(this IServiceCollection services, params Type[] assemblyPointerTypes)
         {
+            Check.NotNull(assemblyPointerTypes, nameof(assemblyPointerTypes));
+
             services.AddTransient<IDomainEventDispatcher, CAPDomainEventDispatcher>();
-            services.UseDomainEventDispatcherAttribute(assemblyPointerType);
+            services.UseDomainEventDispatcherAttribute(assemblyPointerTypes);
+            services.AddCAPEventHandlers(assemblyPointerTypes);
 
-            List<Type> domainEventHandlers = assemblyPointerType.Assembly.GetTypes()
-                .Where(t => t.IsClass
-                            && !t.IsAbstract
-                            && typeof(IDomainEventHandler).IsAssignableFrom(t)
-                            && typeof(ICapSubscribe).IsAssignableFrom(t))
-                .ToList();
+            return services;
+        }
 
-            domainEventHandlers.ForEach(eventHandler => services.AddTransient(eventHandler));
+        public static IServiceCollection AddCAPEventHandlers(this IServiceCollection services, params Type[] assemblyPointerTypes)
+        {
+            Check.NotNull(assemblyPointerTypes, nameof(assemblyPointerTypes));
+
+            foreach (Type assemblyPointerType in assemblyPointerTypes)
+            {
+                List<Type> domainEventHandlers = assemblyPointerType.Assembly.GetTypes()
+                    .Where(t => t.IsClass && !t.IsAbstract && typeof(ICapSubscribe).IsAssignableFrom(t))
+                    .ToList();
+
+                domainEventHandlers.ForEach(eventHandler => services.AddTransient(eventHandler));
+            }
 
             return services;
         }

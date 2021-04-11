@@ -23,7 +23,6 @@ namespace Career.EntityFramework
         protected CareerDbContext(DbContextOptions options, IDomainEventDispatcher domainEventDispatcher) : base(options)
         {
             Check.NotNull(options, nameof(options));
-            Check.NotNull(domainEventDispatcher, nameof(domainEventDispatcher));
             
             _domainEventDispatcher = domainEventDispatcher;
         }
@@ -113,6 +112,9 @@ namespace Career.EntityFramework
 
         private async Task DispatchDomainEventsAsync()
         {
+            if (_domainEventDispatcher == null)
+                return;
+            
             IEnumerable<DomainEntity> domainEntities = ChangeTracker.Entries()
                 .Where(e => e.Entity is DomainEntity)
                 .Select(e=> e.Entity)

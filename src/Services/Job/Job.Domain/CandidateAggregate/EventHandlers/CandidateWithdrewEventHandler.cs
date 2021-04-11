@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Career.CAP.DomainEvent;
-using Career.Domain.DomainEvent;
 using Career.Exceptions.Exceptions;
 using DotNetCore.CAP;
 using Job.Domain.CandidateAggregate.Repositories;

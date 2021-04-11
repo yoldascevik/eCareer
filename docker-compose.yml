@@ -30,6 +30,7 @@ services:
       dockerfile: src/Services/Company/Company.Api/Dockerfile
     depends_on:
       - postgres
+      - nosqldata
       - seq
         
   job.api:
@@ -38,5 +39,5 @@ services:
       context: .
       dockerfile: src/Services/Job/Job.Api/Dockerfile
     depends_on:
-      - postgres
+      - nosqldata
       - seq

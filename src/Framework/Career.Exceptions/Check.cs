@@ -7,9 +7,17 @@ namespace Career.Exceptions
     {
         public static void NotNull(object value, [NotNull] string paramName)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new ArgumentNullException(paramName);
+            }
+        }
+        
+        public static void NotEmpty(Guid value, [NotNull] string paramName)
+        {
+            if (value == Guid.Empty)
+            {
+                throw new ArgumentException(paramName);
             }
         }
         

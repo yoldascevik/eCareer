@@ -1,8 +1,10 @@
 using AutoMapper;
 using Career.Configuration;
 using Career.EntityFramework;
+using Career.IoC;
 using Career.IoC.IoCModule;
 using Company.Application.Company;
+using Company.Domain;
 using Company.Domain.Repositories;
 using Company.Infrastructure;
 using Company.Infrastructure.Repositories;
@@ -24,6 +26,7 @@ namespace Company.Application
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
+            services.RegisterModule<DomainModule>();
             services.AddAutoMapper(typeof(CompanyMappinProfile));
         }
     }

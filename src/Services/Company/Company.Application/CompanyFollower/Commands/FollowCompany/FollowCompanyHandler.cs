@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
 using MediatR;
@@ -38,7 +38,7 @@ namespace Company.Application.CompanyFollower.Commands.FollowCompany
             company.Follow(request.UserId, new CompanyFollowerUniquenessSpecification(_companyFollowerRepository));
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             
-            _logger.LogInformation("User {userId} followed company {companyId})", request.UserId, request.CompanyId);
+            _logger.LogInformation("User {UserId} followed company {CompanyId})", request.UserId, request.CompanyId);
             
             return Unit.Value;
         }

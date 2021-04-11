@@ -3,9 +3,13 @@ using Career.Mongo.Repository.Contracts;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Career.Domain;
+using Career.Domain.DomainEvent.Dispatcher;
+using Career.Domain.Entities;
+using Career.Exceptions;
 using MongoDB.Bson;
 
 namespace Career.Mongo.Repository
@@ -13,36 +17,48 @@ namespace Career.Mongo.Repository
     public class MongoCommandRepository<T> : IMongoCommandRepository<T> where T : class
     {
         private IMongoCollection<T> Collection { get; }
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-        public MongoCommandRepository(IMongoContext context)
+        public MongoCommandRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher)
         {
-            if (context == default)
-                throw new ArgumentNullException(nameof(context));
+            Check.NotNull(context, nameof(context));
+            Check.NotNull(domainEventDispatcher, nameof(domainEventDispatcher));
 
+            _domainEventDispatcher = domainEventDispatcher;
             Collection = context.Database.GetCollection<T>(typeof(T).Name);
         }
 
         public virtual T Add(T item)
         {
             Collection.InsertOne(item);
+            DispatchDomainEvents(item).Wait();
+            
             return item;
         }
 
         public virtual async Task<T> AddAsync(T item)
         { 
             await Collection.InsertOneAsync(item);
+            await DispatchDomainEvents(item);
+            
             return await Task.FromResult(item);
         }
 
         public virtual void AddRange(IEnumerable<T> items)
-            => Collection.InsertMany(items);
+        {
+            Collection.InsertMany(items);
+            DispatchDomainEvents(items).Wait();
+        }
 
-        public virtual Task AddRangeAsync(IEnumerable<T> items)
-            => Collection.InsertManyAsync(items);
+        public virtual async Task AddRangeAsync(IEnumerable<T> items)
+        {
+            await Collection.InsertManyAsync(items);
+            await DispatchDomainEvents(items);
+        }
 
         public virtual T Update(object key, T item) 
         {
-            return Collection.FindOneAndReplace(
+            var result = Collection.FindOneAndReplace(
                 FilterId(key),
                 item,
                 new FindOneAndReplaceOptions<T>
@@ -50,11 +66,14 @@ namespace Career.Mongo.Repository
                     IsUpsert = false,
                     ReturnDocument = ReturnDocument.After
                 });
+            
+            DispatchDomainEvents(item).Wait();
+            return result;
         }
 
-        public virtual Task<T> UpdateAsync(object key, T item)
+        public virtual async Task<T> UpdateAsync(object key, T item)
         {
-            return Collection.FindOneAndReplaceAsync(
+            var result = await Collection.FindOneAndReplaceAsync(
                 FilterId(key),
                 item,
                 new FindOneAndReplaceOptions<T>
@@ -62,6 +81,9 @@ namespace Career.Mongo.Repository
                     IsUpsert = false,
                     ReturnDocument = ReturnDocument.After
                 });
+            
+            DispatchDomainEvents(item).Wait();
+            return result;
         }
 
         public virtual void Delete(object key)
@@ -133,8 +155,50 @@ namespace Career.Mongo.Repository
                 await Collection.DeleteOneAsync(condition);
             }
         }
-        
+
         protected FilterDefinition<T> FilterId(object key)
-            => Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
+        {
+            if (key is Guid guidKey)
+            {
+                return Builders<T>.Filter.Eq(new StringFieldDefinition<T, Guid>("_id"), guidKey);
+            }
+            
+            return Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
+        }
+        
+        #region Private Helpers Of DomainEvent
+
+        private async Task DispatchDomainEvents(T entity)
+        {
+            if (entity == null) return;
+            
+            if (entity is DomainEntity domainEntity 
+                && domainEntity.DomainEvents != null 
+                && domainEntity.DomainEvents.Any())
+            {
+                await _domainEventDispatcher.Dispatch(domainEntity.DomainEvents);
+                domainEntity.ClearDomainEvents();
+            }
+        }
+        
+        private async Task DispatchDomainEvents(IEnumerable<T> entities)
+        {
+            if (entities == null) return;
+            
+            IEnumerable<DomainEntity> domainEntities = entities
+                .Where(e => e is DomainEntity)
+                .Cast<DomainEntity>();
+            
+            foreach (DomainEntity domainEntity in domainEntities)
+            {
+                if (domainEntity.DomainEvents != null && domainEntity.DomainEvents.Any())
+                {
+                    await _domainEventDispatcher.Dispatch(domainEntity.DomainEvents);
+                    domainEntity.ClearDomainEvents();
+                }
+            }
+        }
+
+        #endregion
     }
 }

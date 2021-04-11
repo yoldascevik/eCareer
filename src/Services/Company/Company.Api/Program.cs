@@ -1,10 +1,9 @@
 using System;
-using System.IO;
+using Career.Configuration;
 using Career.EntityFramework;
 using Company.Infrastructure;
 using Logging;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
@@ -14,7 +13,7 @@ namespace Company.Api
     {
         public static void Main(string[] args)
         {
-            var configuration = GetConfiguration();
+            var configuration = ConfigurationHelper.GetConfiguration();
             Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
 
             try
@@ -27,7 +26,7 @@ namespace Company.Api
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "The application failed to start correctly.");
+                Log.Fatal(ex, "The application failed to start correctly");
             }
             finally
             {
@@ -42,18 +41,5 @@ namespace Company.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-        
-        private static IConfiguration GetConfiguration()
-        {
-            string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            return builder.Build();
-        }
     }
 }

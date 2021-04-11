@@ -13,7 +13,7 @@ namespace Definition.Data.DataSeeders.Education
             IMongoRepository<EducationType> repository, 
             IHostEnvironment environment, 
             IConfiguration configuration, 
-            ILogger<DataSeederBase<EducationType>> logger) 
+            ILogger<EducationTypeDataSeeder> logger) 
             : base(repository, environment, configuration, logger)
         {
         }

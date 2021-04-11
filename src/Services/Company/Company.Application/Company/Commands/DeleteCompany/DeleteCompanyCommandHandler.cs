@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;

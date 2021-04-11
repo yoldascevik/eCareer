@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.IoC\Career.IoC.csproj" />
     </ItemGroup>
 

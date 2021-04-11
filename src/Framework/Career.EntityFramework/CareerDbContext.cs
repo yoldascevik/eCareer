@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.Audit;
+using Career.Domain.DomainEvent.Dispatcher;
 using Career.Domain.Entities;
+using Career.Exceptions;
 using Career.Shared.Timing;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -13,17 +14,26 @@ namespace Career.EntityFramework
 {
     public class CareerDbContext: DbContext
     {
-        private readonly IMediator _mediator;
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
         
         protected CareerDbContext()
         {
-            
         }
         
-        protected CareerDbContext(DbContextOptions options, IMediator mediator) : base(options)
+        protected CareerDbContext(DbContextOptions options, IDomainEventDispatcher domainEventDispatcher) : base(options)
         {
-            _mediator = mediator;
+            Check.NotNull(options, nameof(options));
+            Check.NotNull(domainEventDispatcher, nameof(domainEventDispatcher));
+            
+            _domainEventDispatcher = domainEventDispatcher;
         }
+
+        /// <summary>
+        /// Set audit info automatically.
+        /// For create: IHasCreationTime, ICreationAudited
+        /// For update: IHasModificationTime, IModificationAudited
+        /// </summary>
+        public bool SetAuditInfoAutomatically { get; set; } = true;
 
         public override int SaveChanges()
         {
@@ -59,6 +69,9 @@ namespace Career.EntityFramework
 
         private void SetAuditData()
         {
+            if (!SetAuditInfoAutomatically)
+                return;
+
             IEnumerable<EntityEntry> entries = ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
@@ -109,10 +122,8 @@ namespace Career.EntityFramework
             {
                 if (domainEntity.DomainEvents != null && domainEntity.DomainEvents.Any())
                 {
-                    foreach (var domainEvent in domainEntity.DomainEvents)
-                    {
-                        await _mediator.Publish(domainEvent);
-                    }
+                    await _domainEventDispatcher.Dispatch(domainEntity.DomainEvents);
+                    domainEntity.ClearDomainEvents();
                 }
             }
         }

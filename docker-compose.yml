@@ -31,3 +31,12 @@ services:
     depends_on:
       - postgres
       - seq
+        
+  job.api:
+    image: ${DOCKER_REGISTRY-}job.api
+    build:
+      context: .
+      dockerfile: src/Services/Job/Job.Api/Dockerfile
+    depends_on:
+      - postgres
+      - seq

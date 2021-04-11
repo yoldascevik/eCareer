@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
@@ -42,7 +42,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo
             company.UpdateTaxInfo(taxInfo, new TaxNumberUniquenessSpecification(_companyRepository, company.Id));
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation("Company tax info updated : {CompanyId} - {TaxInfo}", company.Id, company.TaxInfo);
+            _logger.LogInformation("Company tax info updated : {CompanyId} - {@TaxInfo}", company.Id, company.TaxInfo);
 
             return _mapper.Map<TaxDto>(company.TaxInfo);
         }

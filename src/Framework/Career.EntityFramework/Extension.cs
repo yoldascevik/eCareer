@@ -1,6 +1,6 @@
 using System;
 using Career.EntityFramework.UnitOfWork;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,11 +40,11 @@ namespace Career.EntityFramework
                 var context = services.GetRequiredService<TContext>();
                 context.Database.Migrate();
 
-                logger.LogInformation("Database migration completed.");
+                logger.LogInformation("Database migration completed");
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error occurred migrate the DB.");
+                logger.LogError(ex, "An error occurred migrate the DB");
             }
 
             return host;

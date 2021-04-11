@@ -13,7 +13,7 @@ namespace Definition.Data.DataSeeders.Location
             IMongoRepository<City> repository, 
             IHostEnvironment environment, 
             IConfiguration configuration, 
-            ILogger<DataSeederBase<City>> logger) 
+            ILogger<CityDataSeeder> logger) 
             : base(repository, environment, configuration, logger)
         {
         }

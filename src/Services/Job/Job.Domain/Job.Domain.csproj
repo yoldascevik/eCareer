@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.CAP\Career.CAP.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Domain\Career.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="AspectCore, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\..\..\references\AspectCore.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>

@@ -7,6 +7,8 @@ namespace Company.Domain.DomainEvents.Company
 {
     public class CompanyTaxInfoUpdatedEvent : DomainEvent
     {
+        private CompanyTaxInfoUpdatedEvent(){} // for serialization
+
         public CompanyTaxInfoUpdatedEvent(Entities.Company company)
         {
             Check.NotNull(company, nameof(company));
@@ -15,7 +17,7 @@ namespace Company.Domain.DomainEvents.Company
             TaxInfo = company.TaxInfo;
         }
 
-        public Guid CompanyId { get; }
-        public TaxInfo TaxInfo { get; }
+        public Guid CompanyId { get; private set; }
+        public TaxInfo TaxInfo { get; private set; }
     }
 }

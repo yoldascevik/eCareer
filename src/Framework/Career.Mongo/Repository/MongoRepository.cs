@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Career.Domain.DomainEvent.Dispatcher;
+using Career.Exceptions;
 using Career.Mongo.Context;
 
 namespace Career.Mongo.Repository
@@ -13,11 +15,13 @@ namespace Career.Mongo.Repository
     {
         private readonly IMongoQueryRepository<T> _mongoQueryRepository;
         private readonly IMongoCommandRepository<T> _mongoCommandRepository;
-
-        public MongoRepository(IMongoContext context)
+        
+        public MongoRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher)
         {
+            Check.NotNull(context, nameof(context));
+            
             _mongoQueryRepository = new MongoQueryRepository<T>(context);
-            _mongoCommandRepository = new MongoCommandRepository<T>(context);
+            _mongoCommandRepository = new MongoCommandRepository<T>(context, domainEventDispatcher);
         }
 
         public virtual IQueryable<T> Get()

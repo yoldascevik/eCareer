@@ -6,7 +6,7 @@ using Company.Domain.DomainEvents.CompanyFollower;
 
 namespace Company.Domain.Entities
 {
-    public class CompanyFollower: DomainEntity<Guid>
+    public class CompanyFollower: DomainEntity
     {
         public CompanyFollower()
         {
@@ -14,6 +14,7 @@ namespace Company.Domain.Entities
             Id = Guid.NewGuid();
         }
         
+        public Guid Id { get; }
         public Guid CompanyId { get; private set; }
         public Guid UserId { get; private set;}
         public bool IsDeleted { get; private set;}

@@ -9,7 +9,7 @@ namespace Career.Domain
     {
         public string Name { get; private set; }
 
-        public int Id { get; }
+        public int Id { get; private set; }
 
         protected Enumeration(int id, string name)
         {
@@ -23,6 +23,24 @@ namespace Career.Domain
         {
             FieldInfo[] fields = typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
             return fields.Select(f => f.GetValue(null)).Cast<T>();
+        }
+        
+        public static bool operator ==(Enumeration obj1, Enumeration obj2)
+        {
+            if (Equals(obj1, null))
+            {
+                if (Equals(obj2, null))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return obj1.Equals(obj2);
+        }
+
+        public static bool operator !=(Enumeration obj1, Enumeration obj2)
+        {
+            return !(obj1 == obj2);
         }
 
         public override bool Equals(object obj)
@@ -50,7 +68,7 @@ namespace Career.Domain
             return Parse<T, int>(value, "value", item => item.Id == value);
         }
 
-        public static T FromDisplayName<T>(string displayName) where T : Enumeration
+        public static T FromName<T>(string displayName) where T : Enumeration
         {
             return Parse<T, string>(displayName, "display name", item => item.Name == displayName);
         }

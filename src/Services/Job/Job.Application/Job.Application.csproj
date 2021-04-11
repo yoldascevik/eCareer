@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+      <PackageReference Include="FluentValidation" Version="9.5.3" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.5.3" />
+      <PackageReference Include="MediatR" Version="9.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />
+      <ProjectReference Include="..\Job.Infrastructure\Job.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

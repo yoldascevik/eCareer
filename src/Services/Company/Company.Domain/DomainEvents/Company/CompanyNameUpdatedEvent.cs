@@ -6,6 +6,8 @@ namespace Company.Domain.DomainEvents.Company
 {
     public class CompanyNameUpdatedEvent : DomainEvent
     {
+        private CompanyNameUpdatedEvent(){} // for serialization
+
         public CompanyNameUpdatedEvent(Entities.Company company, string oldCompanyName)
         {
             Check.NotNull(company, nameof(company));
@@ -16,8 +18,8 @@ namespace Company.Domain.DomainEvents.Company
             OldCompanyName = oldCompanyName;
         }
 
-        public Guid CompanyId { get; }
-        public string CompanyName { get;}
-        public string OldCompanyName { get;}
+        public Guid CompanyId { get; private set; }
+        public string CompanyName { get; private set; }
+        public string OldCompanyName { get; private set; }
     }
 }

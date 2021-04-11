@@ -1,9 +1,8 @@
 using System;
-using MediatR;
 
 namespace Career.Domain.DomainEvent
 {
-    public interface IDomainEvent: INotification
+    public interface IDomainEvent
     {
         Guid EventId { get; }
         DateTime OccurredOn { get; }

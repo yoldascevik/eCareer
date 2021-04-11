@@ -82,8 +82,8 @@ namespace Career.Cache.Redis
             
             _distributedCache.Set(cacheKey, cacheData, new DistributedCacheEntryOptions()
             {
-                SlidingExpiration = slidingExpiration ? duration : (TimeSpan?)null,
-                AbsoluteExpiration = !slidingExpiration ? DateTimeOffset.Now + duration : (DateTimeOffset?)null
+                SlidingExpiration = slidingExpiration ? duration : null,
+                AbsoluteExpiration = !slidingExpiration ? DateTimeOffset.Now + duration : null
             });
         }
 
@@ -99,8 +99,8 @@ namespace Career.Cache.Redis
             
             await _distributedCache.SetAsync(cacheKey, cacheData, new DistributedCacheEntryOptions()
             {
-                SlidingExpiration = slidingExpiration ? duration : (TimeSpan?)null,
-                AbsoluteExpiration = !slidingExpiration ? DateTimeOffset.Now + duration : (DateTimeOffset?)null
+                SlidingExpiration = slidingExpiration ? duration : null,
+                AbsoluteExpiration = !slidingExpiration ? DateTimeOffset.Now + duration : null
             });
         }
 

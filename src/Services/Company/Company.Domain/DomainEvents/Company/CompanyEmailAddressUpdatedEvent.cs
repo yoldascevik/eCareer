@@ -6,6 +6,8 @@ namespace Company.Domain.DomainEvents.Company
 {
     public class CompanyEmailAddressUpdatedEvent : DomainEvent
     {
+        private CompanyEmailAddressUpdatedEvent(){} // for serialization
+        
         public CompanyEmailAddressUpdatedEvent(Entities.Company company, string oldEmailAdress)
         {
             Check.NotNull(company, nameof(company));
@@ -16,8 +18,8 @@ namespace Company.Domain.DomainEvents.Company
             OldEmailAddress = oldEmailAdress;
         }
 
-        public Guid CompanyId { get; }
-        public string EmailAddress { get; }
-        public string OldEmailAddress { get; }
+        public Guid CompanyId { get; private set; }
+        public string EmailAddress { get; private set; }
+        public string OldEmailAddress { get; private set; }
     }
 }

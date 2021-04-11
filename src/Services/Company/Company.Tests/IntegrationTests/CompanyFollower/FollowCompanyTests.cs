@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
-using Career.Repositories;
+using Career.Repositories.UnitOfWok;
 using Company.Application.CompanyFollower.Commands.FollowCompany;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.CompanyFollower;

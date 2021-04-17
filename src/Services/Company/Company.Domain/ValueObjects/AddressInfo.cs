@@ -1,7 +1,7 @@
 using Career.Domain;
 using Company.Domain.Rules.CompanyAddress;
 
-namespace Company.Domain.Values
+namespace Company.Domain.ValueObjects
 {
     public class AddressInfo : ValueObject
     {

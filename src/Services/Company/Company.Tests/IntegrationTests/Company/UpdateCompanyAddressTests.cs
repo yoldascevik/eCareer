@@ -8,7 +8,7 @@ using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyAddress;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
-using Company.Domain.Values;
+using Company.Domain.ValueObjects;
 using Company.Tests.Helpers;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

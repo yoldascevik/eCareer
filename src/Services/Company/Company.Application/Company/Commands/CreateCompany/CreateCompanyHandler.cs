@@ -6,7 +6,6 @@ using Career.Repositories.UnitOfWok;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.ValueObjects;
-using Company.Domain.Values;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.CreateCompany

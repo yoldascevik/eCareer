@@ -7,7 +7,7 @@ using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
-using Company.Domain.Values;
+using Company.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo

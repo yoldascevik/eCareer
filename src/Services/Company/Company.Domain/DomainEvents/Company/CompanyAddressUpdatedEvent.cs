@@ -1,7 +1,7 @@
 using System;
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
-using Company.Domain.Values;
+using Company.Domain.ValueObjects;
 
 namespace Company.Domain.DomainEvents.Company
 {

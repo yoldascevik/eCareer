@@ -1,7 +1,6 @@
 using AutoMapper;
 using Company.Application.Company.Dtos;
 using Company.Domain.ValueObjects;
-using Company.Domain.Values;
 
 namespace Company.Application.Company
 {

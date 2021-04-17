@@ -8,7 +8,6 @@ using Company.Domain.DomainEvents.Company;
 using Company.Domain.Rules.Company;
 using Company.Domain.Rules.CompanyFollower;
 using Company.Domain.ValueObjects;
-using Company.Domain.Values;
 
 namespace Company.Domain.Entities
 {

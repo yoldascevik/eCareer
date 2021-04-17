@@ -13,7 +13,6 @@ using Company.Application.Company.Dtos;
 using Company.Application.Company.Queries.GetCompanies;
 using Company.Application.Company.Queries.GetCompanyAddress;
 using Company.Application.Company.Queries.GetCompanyById;
-using Company.Application.Company.Queries.GetCompanyDetails;
 using Company.Application.Company.Queries.GetCompanyFollowers;
 using Company.Application.Company.Queries.GetCompanyTaxInfo;
 using MediatR;
@@ -55,15 +54,6 @@ namespace Company.Api.Controllers
         public async Task<IActionResult> GetCompanyAddress(Guid id)
             => Ok(await _mediator.Send(new GetCompanyAddressQuery(id)));
         
-        /// <summary>
-        /// Get company details
-        /// </summary>
-        /// <param name="id">Company id</param>
-        /// <returns>Company details info</returns>
-        [HttpGet("{id}/detail")]
-        public async Task<IActionResult> GetCompanyDetails(Guid id)
-            => Ok(await _mediator.Send(new GetCompanyDetailsQuery(id)));
-
         /// <summary>
         /// Get company tax info
         /// </summary>

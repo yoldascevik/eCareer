@@ -5,8 +5,10 @@ using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.CreateCompany;
+using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
+using Company.Domain.ValueObjects;
 using Company.Tests.Helpers;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -95,13 +97,17 @@ namespace Company.Tests.IntegrationTests.Company
                 {
                     command.CountryId = faker.Random.Guid().ToString();
                     command.CityId = faker.Random.Guid().ToString();
-                    command.SectorId = faker.Random.Guid().ToString();
                     command.Name = faker.Company.CompanyName();
                     command.Address = faker.Address.FullAddress();
                     command.Email = faker.Internet.Email();
                     command.Phone = faker.Phone.PhoneNumber();
                     command.TaxNumber = faker.Company.TaxNumber();
                     command.TaxOffice = faker.Address.City();
+                    command.Sector = new IdNameLookupDto()
+                    {
+                        Id = faker.Random.Guid().ToString(),
+                        Name = faker.Random.Word()
+                    };
                 });
 
             return commandFaker.Generate();

@@ -1,5 +1,6 @@
 using System;
 using Career.MediatR.Command;
+using Company.Application.Company.Dtos;
 
 namespace Company.Application.Company.Commands.CreateCompany
 {
@@ -14,6 +15,6 @@ namespace Company.Application.Company.Commands.CreateCompany
         public string CountryId { get; set; }
         public string CityId { get; set; }
         public string DistrictId { get; set; }
-        public string SectorId { get; set; }
+        public IdNameLookupDto Sector { get; set; }
     }
 }

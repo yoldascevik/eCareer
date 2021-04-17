@@ -5,6 +5,7 @@ using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
+using Company.Domain.ValueObjects;
 using Company.Domain.Values;
 using Microsoft.Extensions.Logging;
 
@@ -33,8 +34,9 @@ namespace Company.Application.Company.Commands.CreateCompany
 
             var taxInfo = TaxInfo.Create(request.TaxNumber, request.TaxOffice, request.CountryId);
             var address = AddressInfo.Create(request.CountryId, request.CityId, request.DistrictId, request.Address);
+            var sector = IdNameLookup.Create(request.Sector.Id, request.Sector.Name);
             var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, 
-                address, request.Phone, request.SectorId, taxNumberUniquenessSpec, emailUniquenessSpec);
+                address, request.Phone, sector, taxNumberUniquenessSpec, emailUniquenessSpec);
 
             await _companyRepository.AddAsync(company);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

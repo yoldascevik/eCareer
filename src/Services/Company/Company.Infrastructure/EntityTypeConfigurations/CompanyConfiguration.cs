@@ -10,10 +10,7 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             builder.ToTable("Company");
             
             builder.HasKey(o => o.Id);
-            builder.Property(t => t.SectorId)
-                .HasMaxLength(24)
-                .IsRequired();
-            
+
             builder.Property(t => t.Name)
                 .HasMaxLength(100)
                 .IsRequired();
@@ -59,7 +56,21 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                     .HasMaxLength(24)
                     .IsRequired();
             });
-            
+
+            // value object mapping
+            builder.OwnsOne(m => m.Sector, s =>
+            {
+                s.Property(t=> t.Id)
+                    .HasColumnName("SectorId")
+                    .HasMaxLength(24)
+                    .IsRequired();
+
+                s.Property(t=> t.Name)
+                    .HasColumnName("SectorName")
+                    .HasMaxLength(50)
+                    .IsRequired();
+            });
+              
             builder.Property(t => t.Website)
                 .HasMaxLength(50);
             

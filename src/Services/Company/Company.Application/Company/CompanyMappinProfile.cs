@@ -1,5 +1,6 @@
 using AutoMapper;
 using Company.Application.Company.Dtos;
+using Company.Domain.ValueObjects;
 using Company.Domain.Values;
 
 namespace Company.Application.Company
@@ -9,7 +10,9 @@ namespace Company.Application.Company
         public CompanyMappinProfile()
         {
             // CompanyDto
-            CreateMap<Domain.Entities.Company, CompanyDto>().IncludeMembers(x => x.AddressInfo, x => x.TaxInfo);
+            CreateMap<Domain.Entities.Company, CompanyDto>()
+                .IncludeMembers(x => x.AddressInfo, x => x.TaxInfo);
+            
             CreateMap<AddressInfo, CompanyDto>();
             CreateMap<TaxInfo, CompanyDto>();
 
@@ -18,6 +21,9 @@ namespace Company.Application.Company
 
             // TaxDto
             CreateMap<TaxInfo, TaxDto>();
+            
+            // IdNameLookupDto
+            CreateMap<IdNameLookup, IdNameLookupDto>();
             
             // CompanyDetailDto
             CreateMap<Domain.Entities.Company, CompanyDetailDto>();

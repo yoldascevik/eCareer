@@ -6,6 +6,7 @@ using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
+using Company.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.UpdateCompanyDetails
@@ -34,6 +35,8 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
                 throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
+
+            var sector = IdNameLookup.Create(request.Company.Sector.Id, request.Company.Sector.Name);
             
             company.UpdateDetails(
                 request.Company.Phone, 
@@ -42,7 +45,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
                 request.Company.Website, 
                 request.Company.EmployeesCount, 
                 request.Company.EstablishedYear, 
-                request.Company.SectorId);
+                sector);
             
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             

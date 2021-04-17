@@ -48,7 +48,7 @@ namespace Company.Tests.IntegrationTests.Company
             // Assert
             await _unitOfWork.Received().SaveChangesAsync();
             Assert.Equal(updateCompanyCommand.Company, result);
-            Assert.Equal(updateCompanyCommand.Company.SectorId, company.SectorId);
+            Assert.Equal(updateCompanyCommand.Company.Sector.Id, company.Sector.Id);
             Assert.Equal(updateCompanyCommand.Company.EmployeesCount, company.EmployeesCount);
         }
         
@@ -80,7 +80,11 @@ namespace Company.Tests.IntegrationTests.Company
                 EstablishedYear = faker.Random.Short(1980, (short)DateTime.Now.Year),
                 FaxNumber = faker.Phone.PhoneNumber(),
                 MobilePhone = faker.Phone.PhoneNumber(),
-                SectorId = faker.Random.Guid().ToString()
+                Sector = new IdNameLookupDto()
+                {
+                    Id = faker.Random.Guid().ToString(),
+                    Name = faker.Random.Word()
+                }
             };
 
             return new UpdateCompanyDetailsCommand(companyId, companyDetailDto);

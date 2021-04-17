@@ -8,6 +8,6 @@ namespace Company.Application.Company.Dtos
         public string FaxNumber { get; set; }
         public int EmployeesCount { get; set; }
         public short EstablishedYear { get; set; }
-        public IdNameLookupDto Sector { get; set; }
+        public IdNameRefDto Sector { get; set; }
     }
 }

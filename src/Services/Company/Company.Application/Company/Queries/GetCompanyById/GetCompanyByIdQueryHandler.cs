@@ -8,12 +8,12 @@ using Company.Domain.Repositories;
 
 namespace Company.Application.Company.Queries.GetCompanyById
 {
-    public class GetCompanyByIdHandler: IQueryHandler<GetCompanyByIdQuery, CompanyDto>
+    public class GetCompanyByIdQueryHandler: IQueryHandler<GetCompanyByIdQuery, CompanyDto>
     {
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;
 
-        public GetCompanyByIdHandler(ICompanyRepository companyRepository, IMapper mapper)
+        public GetCompanyByIdQueryHandler(ICompanyRepository companyRepository, IMapper mapper)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;

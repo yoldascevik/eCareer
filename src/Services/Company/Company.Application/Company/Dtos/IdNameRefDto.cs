@@ -1,8 +1,8 @@
 namespace Company.Application.Company.Dtos
 {
-    public class IdNameLookupDto
+    public class IdNameRefDto
     {
-        public string Id { get; set; }
+        public string RefId { get; set; }
         public string Name { get; set; }
     }
 }

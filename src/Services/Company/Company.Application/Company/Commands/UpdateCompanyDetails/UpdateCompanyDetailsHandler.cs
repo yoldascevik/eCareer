@@ -5,8 +5,8 @@ using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
+using Company.Domain.Refs;
 using Company.Domain.Repositories;
-using Company.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.UpdateCompanyDetails
@@ -36,7 +36,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
             if (company == null)
                 throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
 
-            var sector = IdNameLookup.Create(request.Company.Sector.Id, request.Company.Sector.Name);
+            var sector = SectorRef.Create(request.Company.Sector.RefId, request.Company.Sector.Name);
             
             company.UpdateDetails(
                 request.Company.Phone, 

@@ -5,6 +5,7 @@ using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
 using Company.Domain.DomainEvents.Company;
+using Company.Domain.Refs;
 using Company.Domain.Rules.Company;
 using Company.Domain.Rules.CompanyFollower;
 using Company.Domain.ValueObjects;
@@ -37,18 +38,18 @@ namespace Company.Domain.Entities
         public int EmployeesCount { get; private set; }
         public short EstablishedYear { get; private set; }
         public bool IsDeleted { get; private set; }
-        public IdNameLookup Sector { get; private set; }
         public DateTime CreationTime { get; private set; }
         public long? CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public long? LastModifiedUserId { get; private set; }
+        public SectorRef Sector { get; private set; }
         public ICollection<CompanyFollower> Followers { get; }
 
         #endregion
 
         #region Methods
 
-        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string phone, IdNameLookup sectorInfo, 
+        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string phone, SectorRef sectorRef, 
             ITaxNumberUniquenessSpecification taxNumberUniquenessSpec, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             Check.NotNullOrEmpty(name, nameof(name));
@@ -56,7 +57,7 @@ namespace Company.Domain.Entities
 
             CheckRule(new TaxNumberMustBeUniqueRule(taxInfo, taxNumberUniquenessSpec));
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
-            CheckRule(new SectorInfoRequiredRule(sectorInfo));
+            CheckRule(new SectorInfoRequiredRule(sectorRef));
             CheckRule(new PhoneRequiredRule(phone));
 
             var company = new Company
@@ -66,7 +67,7 @@ namespace Company.Domain.Entities
                 TaxInfo = taxInfo,
                 AddressInfo = addressInfo,
                 Phone = phone,
-                Sector = sectorInfo,
+                Sector = sectorRef,
                 CreationTime = Clock.Now,
                 CreatorUserId = null, // TODO
                 LastModificationTime = Clock.Now,
@@ -140,9 +141,9 @@ namespace Company.Domain.Entities
         }
         
         public void UpdateDetails(string phone, string mobilePhone, string faxNumber, 
-            string website, int employeesCount, short establishedYear, IdNameLookup sectorInfo)
+            string website, int employeesCount, short establishedYear, SectorRef sectorRef)
         {
-            CheckRule(new SectorInfoRequiredRule(sectorInfo));
+            CheckRule(new SectorInfoRequiredRule(sectorRef));
             CheckRule(new PhoneRequiredRule(phone));
             
             Phone = phone;
@@ -151,7 +152,7 @@ namespace Company.Domain.Entities
             Website = website;
             EmployeesCount = employeesCount;
             EstablishedYear = establishedYear;
-            Sector = sectorInfo;
+            Sector = sectorRef;
             LastModificationTime = Clock.Now;
             LastModifiedUserId = null; //TODO
             

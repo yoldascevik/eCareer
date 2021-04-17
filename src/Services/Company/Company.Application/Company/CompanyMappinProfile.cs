@@ -1,5 +1,6 @@
 using AutoMapper;
 using Company.Application.Company.Dtos;
+using Company.Domain.Refs;
 using Company.Domain.ValueObjects;
 
 namespace Company.Application.Company
@@ -21,8 +22,8 @@ namespace Company.Application.Company
             // TaxDto
             CreateMap<TaxInfo, TaxDto>();
             
-            // IdNameLookupDto
-            CreateMap<IdNameLookup, IdNameLookupDto>();
+            // IdNameRefDto
+            CreateMap<IdNameRef, IdNameRefDto>();
             
             // CompanyDetailDto
             CreateMap<Domain.Entities.Company, CompanyDetailDto>();

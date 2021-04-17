@@ -10,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Company.Application.Company.Queries.GetCompanies
 {
-    public class GetCompaniesHandler : IQueryHandler<GetCompaniesQuery, PagedList<CompanyDto>>
+    public class GetCompaniesQueryHandler : IQueryHandler<GetCompaniesQuery, PagedList<CompanyDto>>
     {
         private readonly IMapper _mapper;
         private readonly ICompanyRepository _companyRepository;
 
-        public GetCompaniesHandler(ICompanyRepository companyRepository, IMapper mapper)
+        public GetCompaniesQueryHandler(ICompanyRepository companyRepository, IMapper mapper)
         {
             _companyRepository = companyRepository;
             _mapper = mapper;
@@ -24,6 +24,7 @@ namespace Company.Application.Company.Queries.GetCompanies
         public async Task<PagedList<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
         {
             return await _companyRepository.Get(company => !company.IsDeleted)
+                .Include(p=> p.Sector)
                 .AsNoTracking()
                 .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(request);

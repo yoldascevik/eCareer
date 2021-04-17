@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Career.EntityFramework.Repositories;
 using Company.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Company.Infrastructure.Repositories
 {
@@ -27,7 +28,9 @@ namespace Company.Infrastructure.Repositories
 
         public async Task<Domain.Entities.Company> GetCompanyByIdAsync(Guid companyId)
         {
-            return await FirstOrDefaultAsync(c => c.Id == companyId && !c.IsDeleted);
+            return await Get(c => c.Id == companyId && !c.IsDeleted)
+                .Include(p=> p.Sector)
+                .FirstOrDefaultAsync();
         }
     }
 }

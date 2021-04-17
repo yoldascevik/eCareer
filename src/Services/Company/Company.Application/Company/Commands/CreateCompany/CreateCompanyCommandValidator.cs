@@ -8,7 +8,7 @@ namespace Company.Application.Company.Commands.CreateCompany
         {
             RuleFor(x => x.CountryId).NotEmpty();
             RuleFor(x => x.CityId).NotEmpty();
-            RuleFor(x => x.Sector.Id).NotEmpty();
+            RuleFor(x => x.Sector.RefId).NotEmpty();
             RuleFor(x => x.Sector).NotNull();
             RuleFor(x => x.Sector.Name).NotNull().NotEmpty();
             RuleFor(x => x.Name).NotEmpty().MaximumLength(100);

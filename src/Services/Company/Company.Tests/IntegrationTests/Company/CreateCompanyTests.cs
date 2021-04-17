@@ -8,7 +8,6 @@ using Company.Application.Company.Commands.CreateCompany;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
-using Company.Domain.ValueObjects;
 using Company.Tests.Helpers;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -20,13 +19,13 @@ namespace Company.Tests.IntegrationTests.Company
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;
-        private readonly ILogger<CreateCompanyHandler> _logger;
+        private readonly ILogger<CreateCompanyCommandHandler> _logger;
 
         public CreateCompanyTests()
         {
             _unitOfWork = Substitute.For<IUnitOfWork>();
             _companyRepository = Substitute.For<ICompanyRepository>();
-            _logger = Substitute.For<ILogger<CreateCompanyHandler>>();
+            _logger = Substitute.For<ILogger<CreateCompanyCommandHandler>>();
         }
 
         [Fact]
@@ -34,7 +33,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
 
             // Act
             Guid companyId = await commandHandler.Handle(command, CancellationToken.None);
@@ -49,7 +48,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
 
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -63,7 +62,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
             
             _companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId).Returns(true);
 
@@ -79,7 +78,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
             
             _companyRepository.IsCompanyEmailExists(command.Email).Returns(true);
 
@@ -103,9 +102,9 @@ namespace Company.Tests.IntegrationTests.Company
                     command.Phone = faker.Phone.PhoneNumber();
                     command.TaxNumber = faker.Company.TaxNumber();
                     command.TaxOffice = faker.Address.City();
-                    command.Sector = new IdNameLookupDto()
+                    command.Sector = new IdNameRefDto()
                     {
-                        Id = faker.Random.Guid().ToString(),
+                        RefId = faker.Random.Guid().ToString(),
                         Name = faker.Random.Word()
                     };
                 });

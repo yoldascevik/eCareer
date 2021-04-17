@@ -19,6 +19,6 @@ namespace Company.Application.Company.Dtos
         public string CountryId { get; set; }
         public string CityId { get; set; }
         public string DistrictId { get; set; }
-        public IdNameLookupDto Sector { get; set; }
+        public IdNameRefDto Sector { get; set; }
     }
 }

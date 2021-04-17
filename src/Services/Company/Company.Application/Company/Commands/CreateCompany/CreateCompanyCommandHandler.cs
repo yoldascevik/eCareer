@@ -4,22 +4,23 @@ using System.Threading.Tasks;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Specifications;
+using Company.Domain.Refs;
 using Company.Domain.Repositories;
 using Company.Domain.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Application.Company.Commands.CreateCompany
 {
-    public class CreateCompanyHandler : ICommandHandler<CreateCompanyCommand, Guid>
+    public class CreateCompanyCommandHandler : ICommandHandler<CreateCompanyCommand, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<CreateCompanyHandler> _logger;
+        private readonly ILogger<CreateCompanyCommandHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
 
-        public CreateCompanyHandler(
+        public CreateCompanyCommandHandler(
             IUnitOfWork unitOfWork,
             ICompanyRepository companyRepository,
-            ILogger<CreateCompanyHandler> logger)
+            ILogger<CreateCompanyCommandHandler> logger)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -33,7 +34,7 @@ namespace Company.Application.Company.Commands.CreateCompany
 
             var taxInfo = TaxInfo.Create(request.TaxNumber, request.TaxOffice, request.CountryId);
             var address = AddressInfo.Create(request.CountryId, request.CityId, request.DistrictId, request.Address);
-            var sector = IdNameLookup.Create(request.Sector.Id, request.Sector.Name);
+            var sector = SectorRef.Create(request.Sector.RefId, request.Sector.Name);
             var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, 
                 address, request.Phone, sector, taxNumberUniquenessSpec, emailUniquenessSpec);
 

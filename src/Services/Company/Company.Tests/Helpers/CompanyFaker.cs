@@ -1,5 +1,6 @@
 using Bogus;
 using Company.Application.Specifications;
+using Company.Domain.Refs;
 using Company.Domain.Repositories;
 using Company.Domain.ValueObjects;
 using NSubstitute;
@@ -16,7 +17,7 @@ namespace Company.Tests.Helpers
             var companyRepository = Substitute.For<ICompanyRepository>();
 
             var taxInfo = TaxInfo.Create(faker.Company.TaxNumber(), faker.Address.City(), countryId);
-            var sector = IdNameLookup.Create(faker.Random.Guid().ToString(), faker.Random.Word());
+            var sector = SectorRef.Create(faker.Random.Guid().ToString(), faker.Random.Word());
             var address = AddressInfo.Create(countryId, faker.Random.Guid().ToString(), faker.Random.Guid().ToString(), faker.Address.FullAddress());
 
             companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.CountryId).Returns(!isTaxNumberUnique);

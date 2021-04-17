@@ -1,13 +1,13 @@
 using Career.Domain.BusinessRule;
-using Company.Domain.ValueObjects;
+using Company.Domain.Refs;
 
 namespace Company.Domain.Rules.Company
 {
     public class SectorInfoRequiredRule: IBusinessRule
     {
-        private readonly IdNameLookup _sectorInfo;
+        private readonly IdNameRef _sectorInfo;
 
-        public SectorInfoRequiredRule(IdNameLookup sectorInfo)
+        public SectorInfoRequiredRule(IdNameRef sectorInfo)
         {
             _sectorInfo = sectorInfo;
         }

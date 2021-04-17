@@ -56,21 +56,11 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                     .HasMaxLength(24)
                     .IsRequired();
             });
+            
+            builder.HasOne(t => t.Sector)
+                .WithMany()
+                .IsRequired();
 
-            // value object mapping
-            builder.OwnsOne(m => m.Sector, s =>
-            {
-                s.Property(t=> t.Id)
-                    .HasColumnName("SectorId")
-                    .HasMaxLength(24)
-                    .IsRequired();
-
-                s.Property(t=> t.Name)
-                    .HasColumnName("SectorName")
-                    .HasMaxLength(50)
-                    .IsRequired();
-            });
-              
             builder.Property(t => t.Website)
                 .HasMaxLength(50);
             

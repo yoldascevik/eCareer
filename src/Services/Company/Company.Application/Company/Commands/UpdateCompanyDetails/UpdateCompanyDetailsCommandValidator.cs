@@ -7,7 +7,7 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
     {
         public UpdateCompanyDetailsCommandValidator()
         {
-            RuleFor(x => x.Company.Sector.Id).NotEmpty();
+            RuleFor(x => x.Company.Sector.RefId).NotEmpty();
             RuleFor(x => x.Company.Sector.Name).NotNull().NotEmpty();
             RuleFor(x => x.Company.Phone).NotEmpty().MaximumLength(50);
             RuleFor(x => x.Company.MobilePhone).MaximumLength(50);

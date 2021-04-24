@@ -28,8 +28,6 @@ namespace Company.Domain.Entities
 
         public Guid Id { get; }
         public string Name { get; private set; }
-        public TaxInfo TaxInfo { get; private set; }
-        public AddressInfo AddressInfo { get; private set; }
         public string Website { get; private set; }
         public string Email { get; private set; }
         public string Phone { get; private set; }
@@ -37,12 +35,14 @@ namespace Company.Domain.Entities
         public string FaxNumber { get; private set; }
         public int EmployeesCount { get; private set; }
         public short EstablishedYear { get; private set; }
+        public TaxInfo TaxInfo { get; private set; }
+        public AddressInfo AddressInfo { get; private set; }
+        public SectorRef Sector { get; private set; }
         public bool IsDeleted { get; private set; }
         public DateTime CreationTime { get; private set; }
         public long? CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public long? LastModifiedUserId { get; private set; }
-        public SectorRef Sector { get; private set; }
         public ICollection<CompanyFollower> Followers { get; }
 
         #endregion
@@ -153,6 +153,7 @@ namespace Company.Domain.Entities
             EmployeesCount = employeesCount;
             EstablishedYear = establishedYear;
             Sector = sectorRef;
+
             LastModificationTime = Clock.Now;
             LastModifiedUserId = null; //TODO
             

@@ -25,6 +25,7 @@ namespace Company.Application
             services.AddUnitOfWork<CompanyDbContext>();
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ISectorRefRepository, SectorRefRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
             services.AddCAPEventHandlers(this.GetType());

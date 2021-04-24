@@ -21,6 +21,7 @@ namespace Company.Tests.IntegrationTests.Company
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;
+        private readonly ISectorRefRepository _sectorRefRepository;
         private readonly ILogger<UpdateCompanyDetailsHandler> _logger;
 
         public UpdateCompanyDetailsTests()
@@ -28,6 +29,7 @@ namespace Company.Tests.IntegrationTests.Company
             _mapper = Substitute.For<IMapper>();
             _unitOfWork = Substitute.For<IUnitOfWork>();
             _companyRepository = Substitute.For<ICompanyRepository>();
+            _sectorRefRepository = Substitute.For<ISectorRefRepository>();
             _logger = Substitute.For<ILogger<UpdateCompanyDetailsHandler>>();
         }
 
@@ -37,7 +39,7 @@ namespace Company.Tests.IntegrationTests.Company
             // Arrange
             var company = CompanyFaker.CreateFakeCompany();
             var updateCompanyCommand = GetCommand(company.Id);
-            var commandHandler = new UpdateCompanyDetailsHandler(_mapper, _unitOfWork, _companyRepository, _logger);
+            var commandHandler = new UpdateCompanyDetailsHandler(_mapper, _unitOfWork, _companyRepository, _sectorRefRepository, _logger);
 
             _companyRepository.GetCompanyByIdAsync(updateCompanyCommand.CompanyId).Returns(company);
             _mapper.Map<CompanyDetailDto>(company).Returns(updateCompanyCommand.Company);
@@ -51,20 +53,20 @@ namespace Company.Tests.IntegrationTests.Company
             Assert.Equal(updateCompanyCommand.Company.Sector.RefId, company.Sector.RefId);
             Assert.Equal(updateCompanyCommand.Company.EmployeesCount, company.EmployeesCount);
         }
-        
+
         [Fact]
         public async Task UpdateCompanyDetailsHandler_ThrowNotFoundException_WhenCompanyNotExists()
         {
             // Arrange
             var company = CompanyFaker.CreateFakeCompany();
             var updateCompanyCommand = GetCommand(company.Id);
-            var commandHandler = new UpdateCompanyDetailsHandler(_mapper, _unitOfWork, _companyRepository, _logger);
-            
+            var commandHandler = new UpdateCompanyDetailsHandler(_mapper, _unitOfWork, _companyRepository, _sectorRefRepository, _logger);
+
             _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
-        
+
             // Act
             var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(updateCompanyCommand, CancellationToken.None));
-        
+
             // Assert
             Assert.Equal($"Company is not found by id: {company.Id}", actualException.Message);
         }
@@ -77,7 +79,7 @@ namespace Company.Tests.IntegrationTests.Company
                 Phone = faker.Phone.PhoneNumber(),
                 Website = faker.Internet.Url(),
                 EmployeesCount = faker.Random.Int(20, 1000),
-                EstablishedYear = faker.Random.Short(1980, (short)DateTime.Now.Year),
+                EstablishedYear = faker.Random.Short(1980, (short) DateTime.Now.Year),
                 FaxNumber = faker.Phone.PhoneNumber(),
                 MobilePhone = faker.Phone.PhoneNumber(),
                 Sector = new IdNameRefDto()

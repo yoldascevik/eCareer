@@ -23,8 +23,8 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
             IMapper mapper,
             IUnitOfWork unitOfWork,
             ICompanyRepository companyRepository,
-            ILogger<UpdateCompanyDetailsHandler> logger,
-            ISectorRefRepository sectorRefRepository)
+            ISectorRefRepository sectorRefRepository,
+            ILogger<UpdateCompanyDetailsHandler> logger)
         {
             _logger = logger;
             _mapper = mapper;

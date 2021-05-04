@@ -1,0 +1,3 @@
+[submodule "src/Framework/Submodules/AspectCore"]
+	path = src/Framework/Submodules/AspectCore
+	url = https://github.com/yoldascevik/AspectCore.git

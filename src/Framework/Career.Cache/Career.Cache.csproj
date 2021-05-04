@@ -11,9 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="AspectCore, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\..\..\references\AspectCore.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\Submodules\AspectCore\AspectCore\AspectCore.csproj" />
     </ItemGroup>
 
 </Project>

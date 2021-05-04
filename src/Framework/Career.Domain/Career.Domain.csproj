@@ -14,12 +14,7 @@
       <ProjectReference Include="..\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\Career.Repositories\Career.Repositories.csproj" />
       <ProjectReference Include="..\Career.Shared\Career.Shared.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="AspectCore, Version=1.2.0.0, Culture=neutral, PublicKeyToken=null">
-            <HintPath>..\..\..\references\AspectCore.dll</HintPath>
-        </Reference>
+      <ProjectReference Include="..\Submodules\AspectCore\AspectCore\AspectCore.csproj" />
     </ItemGroup>
     
 </Project>

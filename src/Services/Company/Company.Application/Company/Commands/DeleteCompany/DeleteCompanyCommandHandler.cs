@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -29,7 +29,7 @@ namespace Company.Application.Company.Commands.DeleteCompany
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
+                throw new CompanyNotFoundException(request.CompanyId);
 
             company.MarkDeleted();
             await _unitOfWork.SaveChangesAsync(cancellationToken);

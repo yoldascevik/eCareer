@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Bogus;
 using Career.Domain.BusinessRule;
-using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyTaxInfo;
 using Company.Application.Company.Dtos;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
 using Company.Domain.ValueObjects;
@@ -51,7 +51,7 @@ namespace Company.Tests.IntegrationTests.Company
             // Assert
             await _unitOfWork.Received().SaveChangesAsync();
             Assert.Equal(command.TaxInfo, result);
-            Assert.Equal(command.TaxInfo.CountryId, company.TaxInfo.CountryId);
+            Assert.Equal(command.TaxInfo.TaxCountryId, company.TaxInfo.TaxCountryId);
             Assert.Equal(command.TaxInfo.TaxNumber, company.TaxInfo.TaxNumber);
             Assert.Equal(command.TaxInfo.TaxOffice, company.TaxInfo.TaxOffice);
         }
@@ -67,10 +67,10 @@ namespace Company.Tests.IntegrationTests.Company
             _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
         
             // Assert
-            Assert.Equal($"Company is not found by id: {company.Id}", actualException.Message);
+            Assert.NotNull(actualException);
         }
         
         [Fact]
@@ -82,7 +82,7 @@ namespace Company.Tests.IntegrationTests.Company
             var commandHandler = new UpdateCompanyTaxInfoHandler(_mapper, _unitOfWork, _companyRepository, _logger);
             
             _companyRepository.GetCompanyByIdAsync(command.CompanyId).Returns(company);
-            _companyRepository.IsTaxNumberExistsAsync(command.TaxInfo.TaxNumber, command.TaxInfo.CountryId, command.CompanyId).Returns(true);
+            _companyRepository.IsTaxNumberExistsAsync(command.TaxInfo.TaxNumber, command.TaxInfo.TaxCountryId, command.CompanyId).Returns(true);
 
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));
@@ -96,7 +96,7 @@ namespace Company.Tests.IntegrationTests.Company
             var faker = new Faker();
             var taxDto = new TaxDto
             {
-                CountryId = faker.Random.Guid().ToString(),
+                TaxCountryId = faker.Random.Guid().ToString(),
                 TaxNumber = faker.Company.TaxNumber(),
                 TaxOffice = faker.Address.City()
             };

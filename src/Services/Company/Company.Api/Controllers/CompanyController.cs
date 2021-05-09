@@ -2,16 +2,19 @@ using System;
 using System.Threading.Tasks;
 using Career.Data.Pagination;
 using Company.Api.Controllers.Base;
+using Company.Application.Company.Commands.AddNewAddress;
 using Company.Application.Company.Commands.CreateCompany;
+using Company.Application.Company.Commands.DeleteAddress;
 using Company.Application.Company.Commands.DeleteCompany;
-using Company.Application.Company.Commands.UpdateCompanyAddress;
+using Company.Application.Company.Commands.UpdateAddress;
 using Company.Application.Company.Commands.UpdateCompanyDetails;
 using Company.Application.Company.Commands.UpdateCompanyEmail;
 using Company.Application.Company.Commands.UpdateCompanyName;
 using Company.Application.Company.Commands.UpdateCompanyTaxInfo;
 using Company.Application.Company.Dtos;
 using Company.Application.Company.Queries.GetCompanies;
-using Company.Application.Company.Queries.GetCompanyAddress;
+using Company.Application.Company.Queries.GetCompanyAddressById;
+using Company.Application.Company.Queries.GetCompanyAddresses;
 using Company.Application.Company.Queries.GetCompanyById;
 using Company.Application.Company.Queries.GetCompanyFollowers;
 using Company.Application.Company.Queries.GetCompanyTaxInfo;
@@ -44,16 +47,7 @@ namespace Company.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
             => Ok(await _mediator.Send(new GetCompanyByIdQuery(id)));
-        
-        /// <summary>
-        /// Get company address
-        /// </summary>
-        /// <param name="id">Company id</param>
-        /// <returns>Company address info</returns>
-        [HttpGet("{id}/address")]
-        public async Task<IActionResult> GetCompanyAddress(Guid id)
-            => Ok(await _mediator.Send(new GetCompanyAddressQuery(id)));
-        
+
         /// <summary>
         /// Get company tax info
         /// </summary>
@@ -62,6 +56,16 @@ namespace Company.Api.Controllers
         [HttpGet("{id}/tax")]
         public async Task<IActionResult> GetCompanyTaxInfo(Guid id)
             => Ok(await _mediator.Send(new GetCompanyTaxInfoQuery(id)));
+        
+        /// <summary>
+        /// Update company tax info
+        /// </summary>
+        /// <param name="id">Company id to be updaed</param>
+        /// <param name="taxInfo">Tax info</param>
+        /// <returns>Updated company tax info</returns>
+        [HttpPut("{id}/tax")]
+        public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
+            => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
         
         /// <summary>
         /// Create new company
@@ -74,27 +78,6 @@ namespace Company.Api.Controllers
             Guid companyId = await _mediator.Send(request);
             return CreatedAtAction(nameof(Get), new {id = companyId});
         }
-        
-        /// <summary>
-        /// Update company tax info
-        /// </summary>
-        /// <param name="id">Company id to be updaed</param>
-        /// <param name="taxInfo">Tax info</param>
-        /// <returns>Updated company tax info</returns>
-        [HttpPut("{id}/tax")]
-        public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
-            => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
-
-
-        /// <summary>
-        /// Update company address
-        /// </summary>
-        /// <param name="id">Company id to be updaed</param>
-        /// <param name="address">Address info</param>
-        /// <returns>Updated address info</returns>
-        [HttpPut("{id}/address")]
-        public async Task<IActionResult> UpdateAddressAsync(Guid id, [FromBody] AddressDto address)
-            => Ok(await _mediator.Send(new UpdateCompanyAddressCommand(id, address)));
 
         /// <summary>
         /// Update company details
@@ -141,5 +124,56 @@ namespace Company.Api.Controllers
         [HttpGet("{id}/followers")]
         public async Task<IActionResult> GetCompanyFollowers(Guid id, [FromQuery] PaginationFilter paginationFilter)
             => Ok(await _mediator.Send(new GetCompanyFollowersQuery(id, paginationFilter)));
+
+        /// <summary>
+        /// Get company addresses
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="paginationFilter">Paging configuration</param>
+        /// <returns>Company address info</returns>
+        [HttpGet("{id}/addresses")]
+        public async Task<IActionResult> GetAddresses(Guid id, PaginationFilter paginationFilter)
+            => Ok(await _mediator.Send(new GetCompanyAddressesQuery(id, paginationFilter)));
+        
+        /// <summary>
+        /// Get company address by id
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="addressId">Address id</param>
+        /// <returns>Company address info</returns>
+        [HttpGet("{id}/addresses/{addressId}")]
+        public async Task<IActionResult> GetAddressById(Guid id, Guid addressId)
+            => Ok(await _mediator.Send(new GetCompanyAddressesByIdQuery(id, addressId)));
+
+        /// <summary>
+        /// Add new company address
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="address">Address info</param>
+        /// <returns>Company address info</returns>
+        [HttpPost("{id}/addresses")]
+        public async Task<IActionResult> AddAddress(Guid id, AddressInputDto address)
+            => Ok(await _mediator.Send(new AddNewAddressCommand(id, address)));
+
+        /// <summary>
+        /// Update company address
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="addressId">Address id</param>
+        /// <param name="address">Address info</param>
+        /// <returns>Company address info</returns>
+        [HttpPut("{id}/addresses/{addressId}")]
+        public async Task<IActionResult> UpdateAddress(Guid id, Guid addressId, AddressInputDto address)
+            => Ok(await _mediator.Send(new UpdateAddressCommand(id, addressId, address)));
+        
+        /// <summary>
+        /// Delete company address
+        /// </summary>
+        /// <param name="id">Company id</param>
+        /// <param name="addressId">Address id</param>
+        /// <param name="address">Address info</param>
+        [HttpDelete("{id}/addresses/{addressId}")]
+        public async Task<IActionResult> DeleteAddress(Guid id, Guid addressId, AddressInputDto address)
+            => Ok(await _mediator.Send(new DeleteAddressCommand(id, addressId)));
     }
 }

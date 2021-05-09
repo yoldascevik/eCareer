@@ -32,11 +32,10 @@ namespace Company.Application.Company.Commands.CreateCompany
             var taxNumberUniquenessSpec = new TaxNumberUniquenessSpecification(_companyRepository);
             var emailUniquenessSpec = new EmailAddressUniquenessSpecification(_companyRepository);
 
-            var taxInfo = TaxInfo.Create(request.TaxNumber, request.TaxOffice, request.CountryId);
-            var address = AddressInfo.Create(request.CountryId, request.CityId, request.DistrictId, request.Address);
+            var taxInfo = TaxInfo.Create(request.TaxInfo.TaxNumber, request.TaxInfo.TaxOffice, request.TaxInfo.TaxCountryId);
             var sector = SectorRef.Create(request.Sector.RefId, request.Sector.Name);
             var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, 
-                address, request.Phone, sector, taxNumberUniquenessSpec, emailUniquenessSpec);
+                request.Phone, sector, taxNumberUniquenessSpec, emailUniquenessSpec);
 
             await _companyRepository.AddAsync(company);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

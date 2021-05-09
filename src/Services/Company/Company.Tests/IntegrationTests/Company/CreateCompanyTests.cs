@@ -64,7 +64,7 @@ namespace Company.Tests.IntegrationTests.Company
             var command = GetCommand();
             var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
             
-            _companyRepository.IsTaxNumberExistsAsync(command.TaxNumber, command.CountryId).Returns(true);
+            _companyRepository.IsTaxNumberExistsAsync(command.TaxInfo.TaxNumber, command.TaxInfo.TaxCountryId).Returns(true);
 
             // Act
             var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));
@@ -94,14 +94,12 @@ namespace Company.Tests.IntegrationTests.Company
             var commandFaker = new Faker<CreateCompanyCommand>()
                 .Rules((faker,command) =>
                 {
-                    command.CountryId = faker.Random.Guid().ToString();
-                    command.CityId = faker.Random.Guid().ToString();
                     command.Name = faker.Company.CompanyName();
-                    command.Address = faker.Address.FullAddress();
                     command.Email = faker.Internet.Email();
                     command.Phone = faker.Phone.PhoneNumber();
-                    command.TaxNumber = faker.Company.TaxNumber();
-                    command.TaxOffice = faker.Address.City();
+                    command.TaxInfo.TaxNumber = faker.Company.TaxNumber();
+                    command.TaxInfo.TaxOffice = faker.Address.City();
+                    command.TaxInfo.TaxCountryId = faker.Random.Guid().ToString();
                     command.Sector = new IdNameRefDto()
                     {
                         RefId = faker.Random.Guid().ToString(),

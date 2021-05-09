@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Refs;
 using Company.Domain.Repositories;
 using Microsoft.Extensions.Logging;
@@ -37,8 +37,8 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
-
+                throw new CompanyNotFoundException(request.CompanyId);
+            
             var sector = await _sectorRefRepository.GetByKeyAsync(request.Company.Sector.RefId) 
                          ?? SectorRef.Create(request.Company.Sector.RefId, request.Company.Sector.Name);
 

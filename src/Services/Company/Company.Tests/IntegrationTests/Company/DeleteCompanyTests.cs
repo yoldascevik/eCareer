@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.DeleteCompany;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;
 using Company.Tests.Helpers;
 using Microsoft.Extensions.Logging;
@@ -54,10 +54,10 @@ namespace Company.Tests.IntegrationTests.Company
             _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
 
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
 
             // Assert
-            Assert.Equal($"Company is not found by id: {company.Id}", actualException.Message);
+            Assert.NotNull(actualException);
         }
 
         [Fact]

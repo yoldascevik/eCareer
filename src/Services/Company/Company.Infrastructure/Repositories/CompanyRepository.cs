@@ -17,7 +17,7 @@ namespace Company.Infrastructure.Repositories
             return await AnyAsync(company =>
                 company.TaxInfo.TaxNumber == taxNumber
                 && company.IsDeleted == false
-                && company.AddressInfo.CountryId == countryId
+                && company.TaxInfo.TaxCountryId == countryId
                 && company.Id != companyId);
         }
 
@@ -30,6 +30,7 @@ namespace Company.Infrastructure.Repositories
         {
             return await Get(c => c.Id == companyId && !c.IsDeleted)
                 .Include(p=> p.Sector)
+                .Include(p=> p.Addresses)
                 .FirstOrDefaultAsync();
         }
     }

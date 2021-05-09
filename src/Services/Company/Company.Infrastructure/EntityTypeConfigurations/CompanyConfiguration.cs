@@ -16,29 +16,6 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                 .IsRequired();
 
             // value object mapping
-            builder.OwnsOne(m => m.AddressInfo, a =>
-            {
-                a.Property(t => t.CountryId)
-                    .HasColumnName("CountryId")
-                    .HasMaxLength(24)
-                    .IsRequired();
-            
-                a.Property(t => t.CityId)
-                    .HasColumnName("CityId")
-                    .HasMaxLength(24)
-                    .IsRequired();
-
-                a.Property(t => t.DistrictId)
-                    .HasColumnName("DistrictId")
-                    .HasMaxLength(24);
-                
-                a.Property(t => t.Address)
-                    .HasColumnName("Address")
-                    .HasMaxLength(500)
-                    .IsRequired();
-            });
-
-            // value object mapping
             builder.OwnsOne(m => m.TaxInfo, a =>
             {
                 a.Property(t => t.TaxNumber)
@@ -51,11 +28,16 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                     .HasMaxLength(50)
                     .IsRequired();
                 
-                a.Property(t => t.CountryId)
-                    .HasColumnName("CountryId")
+                a.Property(t => t.TaxCountryId)
+                    .HasColumnName("TaxCountryId")
                     .HasMaxLength(24)
                     .IsRequired();
             });
+            
+            builder.HasMany(t => t.Addresses)
+                .WithOne()
+                .HasForeignKey(x=> x.CompanyId)
+                .IsRequired();
             
             builder.HasOne(t => t.Sector)
                 .WithMany()

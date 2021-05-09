@@ -17,6 +17,9 @@ namespace Career.Data.Pagination
         public static PagedList<T> ToPagedList<T>(this IQueryable<T> query, int pageNumber, int pageSize)
             => ToPagedList(query, new PaginationFilter(pageNumber, pageSize));
 
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> collection, PaginationFilter paginationFilter)
+            => ToPagedList(collection.AsQueryable(), paginationFilter);
+        
         public static PagedList<T> ToPagedList<T>(this IQueryable<T> query, PaginationFilter paginationFilter)
         {
             if (query == null)

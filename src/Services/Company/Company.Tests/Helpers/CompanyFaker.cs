@@ -18,16 +18,15 @@ namespace Company.Tests.Helpers
 
             var taxInfo = TaxInfo.Create(faker.Company.TaxNumber(), faker.Address.City(), countryId);
             var sector = SectorRef.Create(faker.Random.Guid().ToString(), faker.Random.Word());
-            var address = AddressInfo.Create(countryId, faker.Random.Guid().ToString(), faker.Random.Guid().ToString(), faker.Address.FullAddress());
 
-            companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.CountryId).Returns(!isTaxNumberUnique);
+            companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.TaxCountryId).Returns(!isTaxNumberUnique);
             companyRepository.IsCompanyEmailExists(companyEmail).Returns(!isEmailUnique);
             
             var taxNumberUniquenessSpec = new TaxNumberUniquenessSpecification(companyRepository);
             var emailUniquenessSpec = new EmailAddressUniquenessSpecification(companyRepository);
             
             var company = Domain.Entities.Company.Create( faker.Company.CompanyName(), companyEmail, taxInfo,
-                address, faker.Phone.PhoneNumber(), sector, taxNumberUniquenessSpec, emailUniquenessSpec);
+                faker.Phone.PhoneNumber(), sector, taxNumberUniquenessSpec, emailUniquenessSpec);
 
             return company;
         }

@@ -20,7 +20,7 @@ namespace Company.Application.Specifications
 
         public override Expression<Func<TaxInfo, bool>> ToExpression()
         { 
-            return taxInfo => !_companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.CountryId, _companyId).Result;
+            return taxInfo => !_companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.TaxCountryId, _companyId).Result;
         }
     }
 }

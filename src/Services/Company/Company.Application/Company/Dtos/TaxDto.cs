@@ -4,6 +4,6 @@ namespace Company.Application.Company.Dtos
     {
         public string TaxNumber { get; set; }
         public string TaxOffice { get; set; }
-        public string CountryId { get; set; }
+        public string TaxCountryId { get; set; }
     }
 }

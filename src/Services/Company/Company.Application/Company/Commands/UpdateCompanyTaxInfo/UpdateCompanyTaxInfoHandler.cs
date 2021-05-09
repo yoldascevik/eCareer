@@ -1,10 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Dtos;
+using Company.Application.Company.Exceptions;
 using Company.Application.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.ValueObjects;
@@ -35,9 +35,9 @@ namespace Company.Application.Company.Commands.UpdateCompanyTaxInfo
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
-
-            var taxInfo = TaxInfo.Create(request.TaxInfo.TaxNumber, request.TaxInfo.TaxOffice, request.TaxInfo.CountryId);
+                throw new CompanyNotFoundException(request.CompanyId);
+            
+            var taxInfo = TaxInfo.Create(request.TaxInfo.TaxNumber, request.TaxInfo.TaxOffice, request.TaxInfo.TaxCountryId);
 
             company.UpdateTaxInfo(taxInfo, new TaxNumberUniquenessSpecification(_companyRepository, company.Id));
             await _unitOfWork.SaveChangesAsync(cancellationToken);

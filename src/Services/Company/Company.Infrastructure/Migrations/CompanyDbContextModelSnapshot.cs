@@ -19,6 +19,68 @@ namespace Company.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("Company.Domain.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CityRefRefId")
+                        .IsRequired()
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CountryRefRefId")
+                        .IsRequired()
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<string>("DistrictRefRefId")
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPrimary")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime>("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("LastModifiedUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityRefRefId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CountryRefRefId");
+
+                    b.HasIndex("DistrictRefRefId");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("Company.Domain.Entities.Company", b =>
                 {
                     b.Property<Guid>("Id")
@@ -116,6 +178,54 @@ namespace Company.Infrastructure.Migrations
                     b.ToTable("CompanyFollower");
                 });
 
+            modelBuilder.Entity("Company.Domain.Refs.CityRef", b =>
+                {
+                    b.Property<string>("RefId")
+                        .HasMaxLength(24)
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("RefId");
+
+                    b.ToTable("CityRef", "LK");
+                });
+
+            modelBuilder.Entity("Company.Domain.Refs.CountryRef", b =>
+                {
+                    b.Property<string>("RefId")
+                        .HasMaxLength(24)
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("RefId");
+
+                    b.ToTable("CountryRef", "LK");
+                });
+
+            modelBuilder.Entity("Company.Domain.Refs.DistrictRef", b =>
+                {
+                    b.Property<string>("RefId")
+                        .HasMaxLength(24)
+                        .HasColumnType("character varying(24)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("RefId");
+
+                    b.ToTable("DistrictRef", "LK");
+                });
+
             modelBuilder.Entity("Company.Domain.Refs.SectorRef", b =>
                 {
                     b.Property<string>("RefId")
@@ -132,6 +242,37 @@ namespace Company.Infrastructure.Migrations
                     b.ToTable("SectorRef", "LK");
                 });
 
+            modelBuilder.Entity("Company.Domain.Entities.Address", b =>
+                {
+                    b.HasOne("Company.Domain.Refs.CityRef", "CityRef")
+                        .WithMany()
+                        .HasForeignKey("CityRefRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.Entities.Company", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.Refs.CountryRef", "CountryRef")
+                        .WithMany()
+                        .HasForeignKey("CountryRefRefId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Domain.Refs.DistrictRef", "DistrictRef")
+                        .WithMany()
+                        .HasForeignKey("DistrictRefRefId");
+
+                    b.Navigation("CityRef");
+
+                    b.Navigation("CountryRef");
+
+                    b.Navigation("DistrictRef");
+                });
+
             modelBuilder.Entity("Company.Domain.Entities.Company", b =>
                 {
                     b.HasOne("Company.Domain.Refs.SectorRef", "Sector")
@@ -140,54 +281,16 @@ namespace Company.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Company.Domain.ValueObjects.AddressInfo", "AddressInfo", b1 =>
-                        {
-                            b1.Property<Guid>("CompanyId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("Address")
-                                .IsRequired()
-                                .HasMaxLength(500)
-                                .HasColumnType("character varying(500)")
-                                .HasColumnName("Address");
-
-                            b1.Property<string>("CityId")
-                                .IsRequired()
-                                .HasMaxLength(24)
-                                .HasColumnType("character varying(24)")
-                                .HasColumnName("CityId");
-
-                            b1.Property<string>("CountryId")
-                                .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
-                                .HasMaxLength(24)
-                                .HasColumnType("character varying(24)")
-                                .HasColumnName("CountryId");
-
-                            b1.Property<string>("DistrictId")
-                                .HasMaxLength(24)
-                                .HasColumnType("character varying(24)")
-                                .HasColumnName("DistrictId");
-
-                            b1.HasKey("CompanyId");
-
-                            b1.ToTable("Company");
-
-                            b1.WithOwner()
-                                .HasForeignKey("CompanyId");
-                        });
-
                     b.OwnsOne("Company.Domain.ValueObjects.TaxInfo", "TaxInfo", b1 =>
                         {
                             b1.Property<Guid>("CompanyId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("CountryId")
+                            b1.Property<string>("TaxCountryId")
                                 .IsRequired()
-                                .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(24)
                                 .HasColumnType("character varying(24)")
-                                .HasColumnName("CountryId");
+                                .HasColumnName("TaxCountryId");
 
                             b1.Property<string>("TaxNumber")
                                 .IsRequired()
@@ -209,8 +312,6 @@ namespace Company.Infrastructure.Migrations
                                 .HasForeignKey("CompanyId");
                         });
 
-                    b.Navigation("AddressInfo");
-
                     b.Navigation("Sector");
 
                     b.Navigation("TaxInfo");
@@ -229,6 +330,8 @@ namespace Company.Infrastructure.Migrations
 
             modelBuilder.Entity("Company.Domain.Entities.Company", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Followers");
                 });
 #pragma warning restore 612, 618

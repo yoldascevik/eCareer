@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
@@ -14,12 +15,20 @@ namespace Company.Domain.Entities
 {
     public class Company : DomainEntity, IAggregateRoot
     {
+        #region Fields
+
+        private List<Address> _addresses;
+        private List<CompanyFollower> _followers;
+
+        #endregion
+        
         #region Ctor
 
         private Company()
         {
             Id = Guid.NewGuid();
-            Followers = new List<CompanyFollower>();
+            _addresses = new List<Address>();
+            _followers = new List<CompanyFollower>();
         }
 
         #endregion
@@ -36,24 +45,23 @@ namespace Company.Domain.Entities
         public int EmployeesCount { get; private set; }
         public short EstablishedYear { get; private set; }
         public TaxInfo TaxInfo { get; private set; }
-        public AddressInfo AddressInfo { get; private set; }
         public SectorRef Sector { get; private set; }
         public bool IsDeleted { get; private set; }
         public DateTime CreationTime { get; private set; }
         public long? CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public long? LastModifiedUserId { get; private set; }
-        public ICollection<CompanyFollower> Followers { get; }
+        public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
+        public ICollection<CompanyFollower> Followers => _followers.AsReadOnly();
 
         #endregion
 
         #region Methods
 
-        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string phone, SectorRef sectorRef, 
+        public static Company Create(string name, string email, TaxInfo taxInfo, string phone, SectorRef sectorRef, 
             ITaxNumberUniquenessSpecification taxNumberUniquenessSpec, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             Check.NotNullOrEmpty(name, nameof(name));
-            Check.NotNull(addressInfo, nameof(addressInfo));
 
             CheckRule(new TaxNumberMustBeUniqueRule(taxInfo, taxNumberUniquenessSpec));
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
@@ -65,7 +73,6 @@ namespace Company.Domain.Entities
                 Name = name,
                 Email = email,
                 TaxInfo = taxInfo,
-                AddressInfo = addressInfo,
                 Phone = phone,
                 Sector = sectorRef,
                 CreationTime = Clock.Now,
@@ -116,18 +123,7 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new CompanyTaxInfoUpdatedEvent(this));
         }
-
-        public void UpdateAddress(AddressInfo address)
-        {
-            Check.NotNull(address, nameof(address));
-
-            AddressInfo = address;
-            LastModificationTime = Clock.Now;
-            LastModifiedUserId = null; // TODO
-            
-            AddDomainEvent(new CompanyAddressUpdatedEvent(this));
-        }
-
+        
         public void UpdateEmailAddress(string email, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
@@ -160,6 +156,23 @@ namespace Company.Domain.Entities
             AddDomainEvent(new CompanyDetailInfoUpdatedEvent(this));
         }
 
+        public void AddAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+            _addresses.Add(address);
+        }
+
+        public void RemoveAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+
+            var companyAddress = _addresses.FirstOrDefault(x => x.Id == address.Id);
+            if (companyAddress != null)
+            {
+                companyAddress.MarkAsDeleted();
+            }
+        }
+        
         public void MarkDeleted()
         {
             IsDeleted = true;
@@ -168,7 +181,7 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new CompanyDeletedEvent(this));
         }
-
+        
         #endregion
     }
 }

@@ -7,22 +7,22 @@ namespace Company.Domain.ValueObjects
     {
         public string TaxNumber { get; }
         public string TaxOffice { get; }
-        public string CountryId { get; }
+        public string TaxCountryId { get; }
         
-        public static TaxInfo Create(string taxNumber, string taxOffice, string countryId)
+        public static TaxInfo Create(string taxNumber, string taxOffice, string taxCountryId)
         {
-            return new TaxInfo(taxNumber, taxOffice, countryId);
+            return new TaxInfo(taxNumber, taxOffice, taxCountryId);
         }
         
-        private TaxInfo(string taxNumber, string taxOffice, string countryId)
+        private TaxInfo(string taxNumber, string taxOffice, string taxCountryId)
         {
             CheckRule(new TaxNumberRequiredRule(taxNumber));
             CheckRule(new TaxOfficeRequiredRule(taxOffice));
-            CheckRule(new TaxInfoMustHaveCountryIdRule(countryId));
+            CheckRule(new TaxInfoMustHaveCountryIdRule(taxCountryId));
             
             TaxNumber = taxNumber;
             TaxOffice = taxOffice;
-            CountryId = countryId;
+            TaxCountryId = taxCountryId;
         }
     }
 }

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Company.Application.Company.Dtos;
+using Company.Domain.Entities;
 using Company.Domain.Refs;
 using Company.Domain.ValueObjects;
 
@@ -11,13 +12,12 @@ namespace Company.Application.Company
         {
             // CompanyDto
             CreateMap<Domain.Entities.Company, CompanyDto>()
-                .IncludeMembers(x => x.AddressInfo, x => x.TaxInfo);
+                .IncludeMembers(x => x.TaxInfo);
             
-            CreateMap<AddressInfo, CompanyDto>();
             CreateMap<TaxInfo, CompanyDto>();
 
             // AddressDto
-            CreateMap<AddressInfo, AddressDto>();
+            CreateMap<Address, AddressDto>();
 
             // TaxDto
             CreateMap<TaxInfo, TaxDto>();

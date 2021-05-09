@@ -1,6 +1,4 @@
-﻿using Career.Exceptions;
-
-namespace Company.Domain.Refs
+﻿namespace Company.Domain.Refs
 {
     public class SectorRef: IdNameRef
     {

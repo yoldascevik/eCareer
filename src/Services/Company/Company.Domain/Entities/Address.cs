@@ -108,7 +108,7 @@ namespace Company.Domain.Entities
             return this;
         }
 
-        public Address SetPrimary(bool primary)
+        internal Address SetPrimary(bool primary)
         {
             IsPrimary = primary;
             OnUpdated();

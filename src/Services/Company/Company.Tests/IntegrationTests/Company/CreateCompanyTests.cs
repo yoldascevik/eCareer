@@ -97,9 +97,12 @@ namespace Company.Tests.IntegrationTests.Company
                     command.Name = faker.Company.CompanyName();
                     command.Email = faker.Internet.Email();
                     command.Phone = faker.Phone.PhoneNumber();
-                    command.TaxInfo.TaxNumber = faker.Company.TaxNumber();
-                    command.TaxInfo.TaxOffice = faker.Address.City();
-                    command.TaxInfo.TaxCountryId = faker.Random.Guid().ToString();
+                    command.TaxInfo = new TaxDto()
+                    {
+                        TaxNumber = faker.Company.TaxNumber(),
+                        TaxOffice = faker.Address.City(),
+                        TaxCountryId = faker.Random.Guid().ToString()
+                    };
                     command.Sector = new IdNameRefDto()
                     {
                         RefId = faker.Random.Guid().ToString(),

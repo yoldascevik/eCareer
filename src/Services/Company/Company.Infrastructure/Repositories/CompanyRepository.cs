@@ -31,6 +31,11 @@ namespace Company.Infrastructure.Repositories
             return await Get(c => c.Id == companyId && !c.IsDeleted)
                 .Include(p=> p.Sector)
                 .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.CountryRef)
+                .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.CityRef)
+                .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.DistrictRef)
                 .FirstOrDefaultAsync();
         }
     }

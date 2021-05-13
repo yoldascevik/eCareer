@@ -11,6 +11,9 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             builder.ToTable(nameof(Address));
             builder.HasKey(o => o.Id);
 
+            builder.Property(t => t.Id)
+                .ValueGeneratedNever();
+
             builder.Property(t => t.Title)
                 .HasMaxLength(50)
                 .IsRequired();
@@ -30,7 +33,7 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             builder.HasOne(t => t.CountryRef)
                 .WithMany()
                 .IsRequired();
-
+            
             builder.HasOne(t => t.CityRef)
                 .WithMany()
                 .IsRequired();

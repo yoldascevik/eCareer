@@ -8,7 +8,6 @@ namespace Company.Infrastructure.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Domain.Entities.Company> builder)
         {
             builder.ToTable("Company");
-            
             builder.HasKey(o => o.Id);
 
             builder.Property(t => t.Name)
@@ -33,11 +32,6 @@ namespace Company.Infrastructure.EntityTypeConfigurations
                     .HasMaxLength(24)
                     .IsRequired();
             });
-            
-            builder.HasMany(t => t.Addresses)
-                .WithOne()
-                .HasForeignKey(x=> x.CompanyId)
-                .IsRequired();
             
             builder.HasOne(t => t.Sector)
                 .WithMany()
@@ -74,6 +68,10 @@ namespace Company.Infrastructure.EntityTypeConfigurations
             
             builder.HasMany(c => c.Followers)
                 .WithOne(e => e.Company);
+
+            builder.HasMany(t => t.Addresses)
+                .WithOne()
+                .HasForeignKey(x => x.CompanyId);
         }
     }
 }

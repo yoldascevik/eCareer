@@ -8,6 +8,7 @@ using Career.Shared.Timing;
 using Company.Domain.DomainEvents.Company;
 using Company.Domain.Refs;
 using Company.Domain.Rules.Company;
+using Company.Domain.Rules.CompanyAddress;
 using Company.Domain.Rules.CompanyFollower;
 using Company.Domain.ValueObjects;
 
@@ -91,7 +92,7 @@ namespace Company.Domain.Entities
 
             CheckRule(new CompanyFollowerMustBeUniqueRule(companyFollower, uniquenessSpecification));
 
-            Followers.Add(companyFollower);
+            _followers.Add(companyFollower);
             return this;
         }
         
@@ -159,18 +160,39 @@ namespace Company.Domain.Entities
         public void AddAddress(Address address)
         {
             Check.NotNull(address, nameof(address));
+
+            Address primaryAddress = Addresses.SingleOrDefault(x => x.IsPrimary);
+            if (primaryAddress == null)
+            {
+                address.SetPrimary(true);
+            }
+            else if(address.IsPrimary)
+            {
+                primaryAddress.SetPrimary(false);
+            }
+            
             _addresses.Add(address);
         }
 
+        public void SetPrimaryAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+
+            Address primaryAddress = Addresses.SingleOrDefault(x => x.IsPrimary);
+            if (primaryAddress != null && primaryAddress.Id != address.Id)
+            {
+                primaryAddress.SetPrimary(false);
+            }
+
+            address.SetPrimary(true);
+        }
+        
         public void RemoveAddress(Address address)
         {
             Check.NotNull(address, nameof(address));
 
-            var companyAddress = _addresses.FirstOrDefault(x => x.Id == address.Id);
-            if (companyAddress != null)
-            {
-                companyAddress.MarkAsDeleted();
-            }
+            CheckRule(new PrimaryAddressCannotBeDeleteRule(address));
+            address.MarkAsDeleted();
         }
         
         public void MarkDeleted()

@@ -56,7 +56,7 @@ namespace Company.Api.Controllers
         [HttpGet("{id}/tax")]
         public async Task<IActionResult> GetCompanyTaxInfo(Guid id)
             => Ok(await _mediator.Send(new GetCompanyTaxInfoQuery(id)));
-        
+
         /// <summary>
         /// Update company tax info
         /// </summary>
@@ -66,7 +66,7 @@ namespace Company.Api.Controllers
         [HttpPut("{id}/tax")]
         public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
             => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
-        
+
         /// <summary>
         /// Create new company
         /// </summary>
@@ -95,7 +95,7 @@ namespace Company.Api.Controllers
         /// <param name="id">Company id to be updaed</param>
         /// <param name="emailAddress">New email address</param>
         [HttpPut("{id}/email/{emailAddress}")]
-        public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromBody] string emailAddress)
+        public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromRoute] string emailAddress)
             => Ok(await _mediator.Send(new UpdateCompanyEmailCommand(id, emailAddress)));
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Company.Api.Controllers
         /// <param name="id">Company id to be updaed</param>
         /// <param name="companyName">New company name</param>
         [HttpPut("{id}/name/{companyName}")]
-        public async Task<IActionResult> UpdateCompanyNameAsync(Guid id, [FromBody] string companyName)
+        public async Task<IActionResult> UpdateCompanyNameAsync(Guid id, [FromRoute] string companyName)
             => Ok(await _mediator.Send(new UpdateCompanyNameCommand(id, companyName)));
-        
+
         /// <summary>
         /// Delete existing company
         /// </summary>
@@ -132,9 +132,9 @@ namespace Company.Api.Controllers
         /// <param name="paginationFilter">Paging configuration</param>
         /// <returns>Company address info</returns>
         [HttpGet("{id}/addresses")]
-        public async Task<IActionResult> GetAddresses(Guid id, PaginationFilter paginationFilter)
+        public async Task<IActionResult> GetAddresses(Guid id, [FromQuery] PaginationFilter paginationFilter)
             => Ok(await _mediator.Send(new GetCompanyAddressesQuery(id, paginationFilter)));
-        
+
         /// <summary>
         /// Get company address by id
         /// </summary>
@@ -152,7 +152,7 @@ namespace Company.Api.Controllers
         /// <param name="address">Address info</param>
         /// <returns>Company address info</returns>
         [HttpPost("{id}/addresses")]
-        public async Task<IActionResult> AddAddress(Guid id, AddressInputDto address)
+        public async Task<IActionResult> AddAddress(Guid id, [FromBody] AddressInputDto address)
             => Ok(await _mediator.Send(new AddNewAddressCommand(id, address)));
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Company.Api.Controllers
         /// <param name="address">Address info</param>
         /// <returns>Company address info</returns>
         [HttpPut("{id}/addresses/{addressId}")]
-        public async Task<IActionResult> UpdateAddress(Guid id, Guid addressId, AddressInputDto address)
+        public async Task<IActionResult> UpdateAddress(Guid id, Guid addressId, [FromBody] AddressInputDto address)
             => Ok(await _mediator.Send(new UpdateAddressCommand(id, addressId, address)));
         
         /// <summary>
@@ -171,9 +171,8 @@ namespace Company.Api.Controllers
         /// </summary>
         /// <param name="id">Company id</param>
         /// <param name="addressId">Address id</param>
-        /// <param name="address">Address info</param>
         [HttpDelete("{id}/addresses/{addressId}")]
-        public async Task<IActionResult> DeleteAddress(Guid id, Guid addressId, AddressInputDto address)
+        public async Task<IActionResult> DeleteAddress(Guid id, Guid addressId)
             => Ok(await _mediator.Send(new DeleteAddressCommand(id, addressId)));
     }
 }

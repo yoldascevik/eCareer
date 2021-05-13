@@ -26,6 +26,9 @@ namespace Company.Application
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<ISectorRefRepository, SectorRefRepository>();
+            services.AddScoped<ICountryRefRepository, CountryRefRepository>();
+            services.AddScoped<ICityRefRepository, CityRefRepository>();
+            services.AddScoped<IDistrictRefRepository, DistrictRefRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
             services.AddCAPEventHandlers(this.GetType());

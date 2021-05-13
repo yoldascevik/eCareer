@@ -1,8 +1,9 @@
+using Career.Domain;
 using Career.Exceptions;
 
 namespace Company.Domain.Refs
 {
-    public abstract class IdNameRef
+    public abstract class IdNameRef : ValueObject
     {
         public string RefId { get; protected set; }
         public string Name { get; protected set; }

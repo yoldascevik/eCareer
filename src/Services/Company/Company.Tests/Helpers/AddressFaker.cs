@@ -29,9 +29,9 @@ namespace Company.Tests.Helpers
             {
                 Title = faker.Lorem.Word(),
                 Details = faker.Address.FullAddress(),
-                Country = CountryRef.Create(Guid.NewGuid().ToString(), faker.Address.Country()),
-                City = CityRef.Create(Guid.NewGuid().ToString(), faker.Address.City()),
-                District = DistrictRef.Create(Guid.NewGuid().ToString(), faker.Address.State()),
+                Country = new IdNameRefDto(Guid.NewGuid().ToString(), faker.Address.Country()),
+                City = new IdNameRefDto(Guid.NewGuid().ToString(), faker.Address.City()),
+                District = new IdNameRefDto(Guid.NewGuid().ToString(), faker.Address.State()),
                 ZipCode = faker.Address.ZipCode(),
                 IsPrimary = isPrimary
             };

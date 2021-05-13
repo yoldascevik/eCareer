@@ -20,7 +20,7 @@ namespace Job.Application.Job
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.TagId));
 
             CreateMap<WorkTypeRef, WorkTypeDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.WorkTypeId));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RefId));
 
             CreateMap<EducationLevelRef, EducationLevelDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RefId));

@@ -3,17 +3,12 @@ using Career.Exceptions;
 
 namespace Job.Domain.JobAggregate
 {
-    public class WorkTypeRef : DomainEntity
+    public class WorkTypeRef : IdNameRef
     {
-        public string WorkTypeId { get; private init; }
-        public string Name { get; private init; }
-
-        public static WorkTypeRef Create(string id, string name)
+        private WorkTypeRef(string refId, string name) : base(refId, name)
         {
-            Check.NotNullOrEmpty(id, nameof(id));
-            Check.NotNullOrEmpty(name, nameof(name));
-            
-            return new WorkTypeRef() {WorkTypeId = id, Name = name};
         }
+
+        public static WorkTypeRef Create(string id, string name) => new WorkTypeRef(id, name);
     }
 }

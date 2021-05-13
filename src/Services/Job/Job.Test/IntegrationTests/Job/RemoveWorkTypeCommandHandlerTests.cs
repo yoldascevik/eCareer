@@ -32,7 +32,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveWorkTypeCommandHandler(_jobRepository, _logger);
             var workType = WorkTypeRef.Create(Guid.NewGuid().ToString(), "Test work type");
-            var command = new RemoveWorkTypeCommand(job.Id, workType.WorkTypeId);
+            var command = new RemoveWorkTypeCommand(job.Id, workType.RefId);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             job.AddWorkType(workType);
@@ -41,7 +41,7 @@ namespace Job.Test.IntegrationTests.Job
             await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.DoesNotContain(job.WorkTypes, x => x.WorkTypeId == workType.WorkTypeId);
+            Assert.DoesNotContain(job.WorkTypes, x => x.RefId == workType.RefId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
 
@@ -52,7 +52,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveWorkTypeCommandHandler(_jobRepository, _logger);
             var workType = WorkTypeRef.Create(Guid.NewGuid().ToString(), "Test work type");
-            var command = new RemoveWorkTypeCommand(job.Id, workType.WorkTypeId);
+            var command = new RemoveWorkTypeCommand(job.Id, workType.RefId);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             job.AddWorkType(workType);

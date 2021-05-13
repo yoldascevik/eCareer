@@ -326,8 +326,8 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(workType, nameof(workType));
 
-            if (_workTypes.Any(x => x.WorkTypeId == workType.WorkTypeId))
-                throw new AlreadyExistsException($"Work type {workType.WorkTypeId} already exist for this job!");
+            if (_workTypes.Any(x => x.RefId == workType.RefId))
+                throw new AlreadyExistsException($"Work type {workType.RefId} already exist for this job!");
 
             _workTypes.Add(workType);
             OnUpdated();
@@ -335,7 +335,7 @@ namespace Job.Domain.JobAggregate
 
         public void RemoveWorkType(string workTypeId)
         {
-            var jobWorkType = _workTypes.FirstOrDefault(x => x.WorkTypeId == workTypeId);
+            var jobWorkType = _workTypes.FirstOrDefault(x => x.RefId == workTypeId);
             if (jobWorkType == null)
                 throw new NotFoundException($"Work type not found: {workTypeId}");
 

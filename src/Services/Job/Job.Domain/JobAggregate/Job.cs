@@ -347,8 +347,8 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 
-            if (_educationLevels.Any(x => x.EducationLevelId == educationLevel.EducationLevelId))
-                throw new AlreadyExistsException($"Education level {educationLevel.EducationLevelId} already exist for this job!");
+            if (_educationLevels.Any(x => x.RefId == educationLevel.RefId))
+                throw new AlreadyExistsException($"Education level {educationLevel.RefId} already exist for this job!");
 
             _educationLevels.Add(educationLevel);
             OnUpdated();
@@ -356,7 +356,7 @@ namespace Job.Domain.JobAggregate
 
         public void RemoveEducationLevel(string educationLevelId)
         {
-            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.EducationLevelId == educationLevelId);
+            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.RefId == educationLevelId);
             if (jobEducationLevel == null)
                 throw new NotFoundException($"Education level {educationLevelId} is not found!");
 

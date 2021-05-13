@@ -3,25 +3,12 @@ using Career.Exceptions;
 
 namespace Job.Domain.JobAggregate
 {
-    public class EducationLevelRef : ValueObject
+    public class EducationLevelRef : IdNameRef
     {
-        public string EducationLevelId { get; private init; }
-        public string Name { get; private set; }
-
-        public static EducationLevelRef Create(string id, string name)
+        private EducationLevelRef(string refId, string name) : base(refId, name)
         {
-            Check.NotNullOrEmpty(id, nameof(id));
-            Check.NotNullOrEmpty(name, nameof(name));
-
-            return new EducationLevelRef() {EducationLevelId = id, Name = name};
         }
-        
-        public EducationLevelRef SetName(string name)
-        {
-            Check.NotNullOrEmpty(name, nameof(name));
-            Name = name;
 
-            return this;
-        }
+        public static EducationLevelRef Create(string id, string name) => new EducationLevelRef(id, name);
     }
 }

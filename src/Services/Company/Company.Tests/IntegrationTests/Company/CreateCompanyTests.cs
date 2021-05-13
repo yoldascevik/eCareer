@@ -19,12 +19,14 @@ namespace Company.Tests.IntegrationTests.Company
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICompanyRepository _companyRepository;
+        private readonly ISectorRefRepository _sectorRefRepository;
         private readonly ILogger<CreateCompanyCommandHandler> _logger;
 
         public CreateCompanyTests()
         {
             _unitOfWork = Substitute.For<IUnitOfWork>();
             _companyRepository = Substitute.For<ICompanyRepository>();
+            _sectorRefRepository = Substitute.For<ISectorRefRepository>();
             _logger = Substitute.For<ILogger<CreateCompanyCommandHandler>>();
         }
 
@@ -33,7 +35,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _sectorRefRepository, _logger);
 
             // Act
             Guid companyId = await commandHandler.Handle(command, CancellationToken.None);
@@ -48,7 +50,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _sectorRefRepository, _logger);
 
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
@@ -62,7 +64,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _sectorRefRepository, _logger);
             
             _companyRepository.IsTaxNumberExistsAsync(command.TaxInfo.TaxNumber, command.TaxInfo.TaxCountryId).Returns(true);
 
@@ -78,7 +80,7 @@ namespace Company.Tests.IntegrationTests.Company
         {
             // Arrange
             var command = GetCommand();
-            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _logger);
+            var commandHandler = new CreateCompanyCommandHandler(_unitOfWork, _companyRepository, _sectorRefRepository, _logger);
             
             _companyRepository.IsCompanyEmailExists(command.Email).Returns(true);
 

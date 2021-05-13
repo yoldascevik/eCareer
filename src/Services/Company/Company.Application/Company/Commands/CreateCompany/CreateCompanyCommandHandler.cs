@@ -14,17 +14,20 @@ namespace Company.Application.Company.Commands.CreateCompany
     public class CreateCompanyCommandHandler : ICommandHandler<CreateCompanyCommand, Guid>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<CreateCompanyCommandHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
+        private readonly ISectorRefRepository _sectorRefRepository;
+        private readonly ILogger<CreateCompanyCommandHandler> _logger;
 
         public CreateCompanyCommandHandler(
             IUnitOfWork unitOfWork,
             ICompanyRepository companyRepository,
+            ISectorRefRepository sectorRefRepository,
             ILogger<CreateCompanyCommandHandler> logger)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _companyRepository = companyRepository;
+            _sectorRefRepository = sectorRefRepository;
         }
 
         public async Task<Guid> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
@@ -33,7 +36,8 @@ namespace Company.Application.Company.Commands.CreateCompany
             var emailUniquenessSpec = new EmailAddressUniquenessSpecification(_companyRepository);
 
             var taxInfo = TaxInfo.Create(request.TaxInfo.TaxNumber, request.TaxInfo.TaxOffice, request.TaxInfo.TaxCountryId);
-            var sector = SectorRef.Create(request.Sector.RefId, request.Sector.Name);
+            var sector = await _sectorRefRepository.GetByKeyAsync(request.Sector.RefId) 
+                          ?? SectorRef.Create(request.Sector.RefId, request.Sector.Name); 
             var company = Domain.Entities.Company.Create(request.Name, request.Email, taxInfo, 
                 request.Phone, sector, taxNumberUniquenessSpec, emailUniquenessSpec);
 

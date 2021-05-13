@@ -15,9 +15,9 @@ namespace Company.Application.Company.Commands.UpdateCompanyDetails
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<UpdateCompanyDetailsHandler> _logger;
         private readonly ICompanyRepository _companyRepository;
         private readonly ISectorRefRepository _sectorRefRepository;
+        private readonly ILogger<UpdateCompanyDetailsHandler> _logger;
 
         public UpdateCompanyDetailsHandler(
             IMapper mapper,

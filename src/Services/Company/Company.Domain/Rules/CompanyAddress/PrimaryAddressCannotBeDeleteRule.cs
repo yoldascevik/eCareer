@@ -1,6 +1,5 @@
 using Career.Domain.BusinessRule;
 using Company.Domain.Entities;
-using Company.Domain.Refs;
 
 namespace Company.Domain.Rules.CompanyAddress
 {

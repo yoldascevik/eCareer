@@ -1,7 +1,6 @@
 using System;
 using Career.MediatR.Command;
 using Company.Application.Company.Dtos;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Company.Application.Company.Commands.CreateCompany
 {

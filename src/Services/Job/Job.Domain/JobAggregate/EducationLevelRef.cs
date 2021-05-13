@@ -1,6 +1,3 @@
-using Career.Domain;
-using Career.Exceptions;
-
 namespace Job.Domain.JobAggregate
 {
     public class EducationLevelRef : IdNameRef
@@ -9,6 +6,6 @@ namespace Job.Domain.JobAggregate
         {
         }
 
-        public static EducationLevelRef Create(string id, string name) => new EducationLevelRef(id, name);
+        public new static EducationLevelRef Create(string id, string name) => new(id, name);
     }
 }

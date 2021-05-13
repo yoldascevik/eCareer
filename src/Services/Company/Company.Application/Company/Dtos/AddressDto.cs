@@ -1,5 +1,4 @@
 using System;
-using Company.Domain.Refs;
 
 namespace Company.Application.Company.Dtos
 {

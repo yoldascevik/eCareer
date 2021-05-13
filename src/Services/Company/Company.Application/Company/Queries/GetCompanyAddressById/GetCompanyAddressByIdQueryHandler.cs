@@ -30,8 +30,6 @@ namespace Company.Application.Company.Queries.GetCompanyAddressById
             var address = company.Addresses.FirstOrDefault(x => x.Id == request.AddressId);
             if (address == null)
                 throw new AddressNotFoundException(request.AddressId);
-
-            var country = _mapper.Map<IdNameRefDto>(address.CountryRef);
             
             return _mapper.Map<AddressDto>(address);
         }

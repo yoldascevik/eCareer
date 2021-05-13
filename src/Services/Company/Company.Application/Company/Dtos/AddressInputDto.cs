@@ -1,5 +1,3 @@
-using Company.Domain.Refs;
-
 namespace Company.Application.Company.Dtos
 {
     public class AddressInputDto

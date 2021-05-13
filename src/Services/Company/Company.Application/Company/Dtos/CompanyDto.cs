@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Company.Application.Company.Dtos
 {
@@ -15,7 +14,6 @@ namespace Company.Application.Company.Dtos
         public int EmployeesCount { get; set; }
         public short EstablishedYear { get; set; }
         public TaxDto TaxInfo { get; set; }
-        public List<AddressDto> Addresses { get; set; }
         public IdNameRefDto Sector { get; set; }
     }
 }

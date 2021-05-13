@@ -1,6 +1,3 @@
-using Career.Domain.Entities;
-using Career.Exceptions;
-
 namespace Job.Domain.JobAggregate
 {
     public class WorkTypeRef : IdNameRef
@@ -9,6 +6,6 @@ namespace Job.Domain.JobAggregate
         {
         }
 
-        public static WorkTypeRef Create(string id, string name) => new WorkTypeRef(id, name);
+        public new static WorkTypeRef Create(string id, string name) => new(id, name);
     }
 }

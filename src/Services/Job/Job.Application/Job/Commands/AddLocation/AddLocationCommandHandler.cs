@@ -4,6 +4,7 @@ using AutoMapper;
 using Career.MediatR.Command;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
+using Job.Domain;
 using Job.Domain.JobAggregate;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
@@ -29,7 +30,10 @@ namespace Job.Application.Job.Commands.AddLocation
             if (job is null)
                 throw new JobNotFoundException(request.JobId);
 
-            var location = LocationRef.Create(request.LocationInputDto.CountryId, request.LocationInputDto.CityId, request.LocationInputDto.DistrictId);
+            var countryRef = IdNameRef.Create(request.LocationInputDto.CountryRef.RefId, request.LocationInputDto.CountryRef.Name);
+            var cityRef = IdNameRef.Create(request.LocationInputDto.CityRef.RefId, request.LocationInputDto.CityRef.Name);
+            
+            var location = JobLocation.Create(countryRef, cityRef);
             job.AddLocation(location);
 
             await _jobRepository.UpdateAsync(job.Id, job);

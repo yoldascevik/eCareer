@@ -1,6 +1,7 @@
 using AutoMapper;
 using Job.Application.Job.Dtos;
 using Job.Application.Tag.Dtos;
+using Job.Domain;
 using Job.Domain.JobAggregate;
 
 namespace Job.Application.Job
@@ -25,7 +26,9 @@ namespace Job.Application.Job
             CreateMap<EducationLevelRef, EducationLevelDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RefId));
 
-            CreateMap<LocationRef, JobLocationDto>();
+            CreateMap<JobLocation, JobLocationDto>();
+            
+            CreateMap<IdNameRef, IdNameRefDto>();
         }
     }
 }

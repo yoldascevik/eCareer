@@ -3,7 +3,7 @@ using Career.Exceptions;
 
 namespace Job.Domain
 {
-    public abstract class IdNameRef : ValueObject
+    public class IdNameRef : ValueObject
     {
         public string RefId { get; protected set; }
         public string Name { get; protected set; }
@@ -16,5 +16,7 @@ namespace Job.Domain
             RefId = refId;
             Name = name;
         }
+
+        public static IdNameRef Create(string refId, string name) => new IdNameRef(refId, name);
     }
 }

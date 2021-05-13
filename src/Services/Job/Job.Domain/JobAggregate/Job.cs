@@ -19,7 +19,7 @@ namespace Job.Domain.JobAggregate
         #region Fields
 
         private List<TagRef> _tags;
-        private List<LocationRef> _locations;
+        private List<JobLocation> _locations;
         private List<WorkTypeRef> _workTypes;
         private List<CandidateRef> _candidates;
         private List<ViewingHistory> _viewingHistories;
@@ -35,7 +35,7 @@ namespace Job.Domain.JobAggregate
         {
             Id = Guid.NewGuid();
             _tags = new List<TagRef>();
-            _locations = new List<LocationRef>();
+            _locations = new List<JobLocation>();
             _workTypes = new List<WorkTypeRef>();
             _candidates = new List<CandidateRef>();
             _educationLevels = new List<EducationLevelRef>();
@@ -84,7 +84,7 @@ namespace Job.Domain.JobAggregate
         public Guid? LastModifiedUserId { get; private set; }
 
         public virtual IReadOnlyCollection<TagRef> Tags => _tags.AsReadOnly();
-        public virtual IReadOnlyCollection<LocationRef> Locations => _locations.AsReadOnly();
+        public virtual IReadOnlyCollection<JobLocation> Locations => _locations.AsReadOnly();
         public virtual IReadOnlyCollection<WorkTypeRef> WorkTypes => _workTypes.AsReadOnly();
         public virtual IReadOnlyCollection<CandidateRef> Candidates => _candidates.AsReadOnly();
         public virtual IReadOnlyCollection<ViewingHistory> ViewingHistories => _viewingHistories.AsReadOnly();
@@ -305,10 +305,14 @@ namespace Job.Domain.JobAggregate
             AddDomainEvent(new CandidateWithdrewEvent(this, candidate));
         }
 
-        public void AddLocation(LocationRef location)
+        public void AddLocation(JobLocation jobLocation)
         {
-            Check.NotNull(location, nameof(location));
-            _locations.Add(location);
+            Check.NotNull(jobLocation, nameof(jobLocation));
+
+            if (_locations.Any(x=> x.CountryRef.RefId == jobLocation.CountryRef.RefId && x.CityRef.RefId == jobLocation.CityRef.RefId))
+                throw new AlreadyExistsException("Location already exists in job.");
+            
+            _locations.Add(jobLocation);
             OnUpdated();
         }
 

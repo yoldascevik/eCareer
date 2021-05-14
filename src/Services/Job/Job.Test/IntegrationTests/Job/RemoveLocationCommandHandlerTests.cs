@@ -7,6 +7,7 @@ using Job.Application.Job.Commands.RemoveLocation;
 using Job.Application.Job.Exceptions;
 using Job.Domain;
 using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -35,8 +36,8 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveLocationCommandHandler(_jobRepository, _logger);
             var location = JobLocation.Create(
-                countryRef: IdNameRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
-                cityRef: IdNameRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
+                country: CountryRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
+                city: CityRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
             );
             var command = new RemoveLocationCommand(job.Id, location.Id);
 
@@ -59,8 +60,8 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveLocationCommandHandler(_jobRepository, _logger);
             var location = JobLocation.Create(
-                countryRef: IdNameRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
-                cityRef: IdNameRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
+                country: CountryRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
+                city: CityRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
             );
             var command = new RemoveLocationCommand(job.Id, location.Id);
 

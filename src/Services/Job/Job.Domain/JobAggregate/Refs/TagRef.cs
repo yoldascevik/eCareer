@@ -2,7 +2,7 @@ using System;
 using Career.Exceptions;
 using Job.Domain.TagAggregate;
 
-namespace Job.Domain.JobAggregate
+namespace Job.Domain.JobAggregate.Refs
 {
     public class TagRef
     {

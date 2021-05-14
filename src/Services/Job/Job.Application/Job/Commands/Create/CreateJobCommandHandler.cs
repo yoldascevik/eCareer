@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -24,9 +25,9 @@ namespace Job.Application.Job.Commands.Create
                     request.CompanyId,
                     request.Job.Title,
                     request.Job.Description,
-                    request.Job.SectorId,
-                    request.Job.JobPositionId,
-                    request.Job.LanguageId)
+                    SectorRef.Create(request.Job.Sector.RefId, request.Job.Sector.Name), 
+                    JobPositionRef.Create(request.Job.JobPosition.RefId, request.Job.JobPosition.Name), 
+                    LanguageRef.Create(request.Job.Language.RefId, request.Job.Language.Name))
                 .SetMinExperienceYear(request.Job.MinExperienceYear)
                 .SetMaxExperienceYear(request.Job.MaxExperienceYear)
                 .SetCanDisabilities(request.Job.IsCanDisabilities)

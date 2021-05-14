@@ -6,7 +6,7 @@ using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.AddWorkType;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
-using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -39,14 +39,14 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new AddWorkTypeCommandHandler(_jobRepository, _mapper, _logger);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            _mapper.Map<WorkTypeDto>(Arg.Any<WorkTypeRef>()).Returns(expectedDto);
+            _mapper.Map<IdNameRefDto>(Arg.Any<WorkTypeRef>()).Returns(expectedDto);
 
             // Act
             var workTypeDto = await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.NotEmpty(job.WorkTypes);
-            Assert.Equal(command.WorkTypeDto.Id, workTypeDto.Id);
+            Assert.Equal(command.WorkTypeDto.RefId, workTypeDto.RefId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         
@@ -104,8 +104,8 @@ namespace Job.Test.IntegrationTests.Job
 
         private AddWorkTypeCommand GetCommand(Guid jobId)
         {
-            return new AddWorkTypeCommand(jobId, new WorkTypeDto() {
-                Id = Guid.NewGuid().ToString(),
+            return new AddWorkTypeCommand(jobId, new IdNameRefDto() {
+                RefId = Guid.NewGuid().ToString(),
                 Name = "Test work type"
             });
         }

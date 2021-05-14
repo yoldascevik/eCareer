@@ -1,4 +1,5 @@
 using FluentValidation;
+using Job.Application.Job.Validators;
 
 namespace Job.Application.Job.Commands.AddWorkType
 {
@@ -7,8 +8,7 @@ namespace Job.Application.Job.Commands.AddWorkType
         public AddWorkTypeCommandValidator()
         {
             RuleFor(x => x.JobId).NotNull().NotEmpty();
-            RuleFor(x => x.WorkTypeDto.Id).NotNull().NotEmpty();
-            RuleFor(x => x.WorkTypeDto.Name).NotNull().NotEmpty();
+            RuleFor(x => x.WorkTypeDto).SetValidator(new IdNameRefDtoValidator());
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.RemoveWorkType;
 using Job.Application.Job.Exceptions;
-using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;

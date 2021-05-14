@@ -3,6 +3,7 @@ using Job.Application.Job.Dtos;
 using Job.Application.Tag.Dtos;
 using Job.Domain;
 using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 
 namespace Job.Application.Job
 {
@@ -19,12 +20,6 @@ namespace Job.Application.Job
 
             CreateMap<TagRef, TagDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.TagId));
-
-            CreateMap<WorkTypeRef, WorkTypeDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RefId));
-
-            CreateMap<EducationLevelRef, EducationLevelDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.RefId));
 
             CreateMap<JobLocation, JobLocationDto>();
             

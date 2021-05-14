@@ -1,4 +1,5 @@
 using FluentValidation;
+using Job.Application.Job.Validators;
 
 namespace Job.Application.Job.Commands.Create
 {
@@ -6,10 +7,12 @@ namespace Job.Application.Job.Commands.Create
     {
         public CreateJobCommandValidator()
         {
+            var idNameRefDtoValidator = new IdNameRefDtoValidator();
+            
             RuleFor(x => x.CompanyId).NotNull();
-            RuleFor(x => x.Job.LanguageId).NotNull().NotEmpty();
-            RuleFor(x => x.Job.SectorId).NotNull().NotEmpty();
-            RuleFor(x => x.Job.JobPositionId).NotNull().NotEmpty();
+            RuleFor(x => x.Job.Language).SetValidator(idNameRefDtoValidator);
+            RuleFor(x => x.Job.Sector).SetValidator(idNameRefDtoValidator);
+            RuleFor(x => x.Job.JobPosition).SetValidator(idNameRefDtoValidator);
             RuleFor(x => x.Job.Title).NotNull().NotEmpty().MaximumLength(50);
             RuleFor(x => x.Job.Description).NotNull().NotEmpty();
             RuleFor(x => x.Job.PersonCount).GreaterThan((short) 0);

@@ -4,15 +4,15 @@ using Job.Application.Job.Dtos;
 
 namespace Job.Application.Job.Commands.AddEducationLevel
 {
-    public class AddEducationLevelCommand: ICommand<EducationLevelDto>
+    public class AddEducationLevelCommand: ICommand<IdNameRefDto>
     {
-        public AddEducationLevelCommand(Guid jobId, EducationLevelDto educationLevelDto)
+        public AddEducationLevelCommand(Guid jobId, IdNameRefDto educationLevelDto)
         {
             JobId = jobId;
             EducationLevelDto = educationLevelDto;
         }
 
         public Guid JobId { get; }
-        public EducationLevelDto EducationLevelDto { get; }
+        public IdNameRefDto EducationLevelDto { get; }
     }
 }

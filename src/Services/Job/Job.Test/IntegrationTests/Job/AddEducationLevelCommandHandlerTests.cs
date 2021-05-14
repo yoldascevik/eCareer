@@ -6,7 +6,7 @@ using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.AddEducationLevel;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
-using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -39,14 +39,14 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new AddEducationLevelCommandHandler(_jobRepository, _mapper, _logger);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            _mapper.Map<EducationLevelDto>(Arg.Any<EducationLevelRef>()).Returns(expectedDto);
+            _mapper.Map<IdNameRefDto>(Arg.Any<EducationLevelRef>()).Returns(expectedDto);
 
             // Act
-            var workTypeDto = await commandHandler.Handle(command, CancellationToken.None);
+            var educationLevelDto = await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
             Assert.NotEmpty(job.EducationLevels);
-            Assert.Equal(command.EducationLevelDto.Id, workTypeDto.Id);
+            Assert.Equal(command.EducationLevelDto.RefId, educationLevelDto.RefId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
         
@@ -104,9 +104,9 @@ namespace Job.Test.IntegrationTests.Job
 
         private AddEducationLevelCommand GetCommand(Guid jobId)
         {
-            return new AddEducationLevelCommand(jobId, new EducationLevelDto()
+            return new AddEducationLevelCommand(jobId, new IdNameRefDto()
             {
-                Id = Guid.NewGuid().ToString(),
+                RefId = Guid.NewGuid().ToString(),
                 Name = "Test education level"
             });
         }

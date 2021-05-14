@@ -5,6 +5,7 @@ using Bogus;
 using Job.Application.Job.Commands.Create;
 using Job.Application.Job.Dtos;
 using Job.Domain.JobAggregate.Constants;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -60,13 +61,13 @@ namespace Job.Test.IntegrationTests.Job
                     job.Title = faker.Lorem.Sentence(3);
                     job.Description = faker.Lorem.Paragraph();
                     job.Gender = faker.PickRandom<GenderType>();
-                    job.LanguageId = faker.Random.Guid().ToString();
                     job.PersonCount = faker.Random.Short(0, 50);
-                    job.SectorId = faker.Random.Guid().ToString();
                     job.IsCanDisabilities = faker.Random.Bool();
-                    job.JobPositionId = faker.Random.Guid().ToString();
                     job.MinExperienceYear = faker.Random.Byte(0, 20);
                     job.MaxExperienceYear = faker.Random.Byte(job.MinExperienceYear.Value, 20);
+                    job.Sector = new IdNameRefDto{ RefId = faker.Random.Guid().ToString(), Name = faker.Lorem.Word()};
+                    job.JobPosition =  new IdNameRefDto{ RefId = faker.Random.Guid().ToString(), Name = faker.Lorem.Word()};
+                    job.Language =  new IdNameRefDto{ RefId = faker.Random.Guid().ToString(), Name = faker.Random.RandomLocale()};
                 }).Generate();
 
             return new CreateJobCommand(Guid.NewGuid(), jobDto);

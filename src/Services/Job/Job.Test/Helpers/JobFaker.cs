@@ -1,5 +1,7 @@
 using System;
 using Bogus;
+using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 
 namespace Job.Test.Helpers
 {
@@ -19,9 +21,10 @@ namespace Job.Test.Helpers
                 faker.Random.Guid(),
                 faker.Lorem.Sentence(3),
                 faker.Lorem.Paragraph(),
-                faker.Random.Guid().ToString(),
-                faker.Random.Guid().ToString(),
-                faker.Random.Guid().ToString());
+                SectorRef.Create(faker.Random.Guid().ToString(), faker.Lorem.Word()),
+                JobPositionRef.Create(faker.Random.Guid().ToString(), faker.Lorem.Word()),
+                LanguageRef.Create(faker.Random.Guid().ToString(), faker.Random.RandomLocale())
+            ); 
 
             if (status == FakeJobStatus.WaitingForApproval)
             {

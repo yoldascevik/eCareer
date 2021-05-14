@@ -4,7 +4,7 @@ using Career.Exceptions;
 using Job.Domain.CandidateAggregate;
 using Job.Domain.CandidateAggregate.Rules;
 
-namespace Job.Domain.JobAggregate
+namespace Job.Domain.JobAggregate.Refs
 {
     public class CandidateRef: DomainEntity
     {

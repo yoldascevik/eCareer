@@ -4,6 +4,7 @@ using AutoMapper;
 using Career.MediatR.Command;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -28,13 +29,17 @@ namespace Job.Application.Job.Commands.Update
             if (job is null)
                 throw new JobNotFoundException(request.JobId);
 
+            var sector = SectorRef.Create(request.Job.Sector.RefId, request.Job.Sector.Name);
+            var language = LanguageRef.Create(request.Job.Language.RefId, request.Job.Language.Name);
+            var jobPosition = JobPositionRef.Create(request.Job.JobPosition.RefId, request.Job.JobPosition.Name);
+            
             job.SetTitle(request.Job.Title)
-                .SetDescription(request.Job.Description)
-                .SetLanguage(request.Job.LanguageId)
+                .SetSector(sector)
+                .SetLanguage(language)
+                .SetJobPosition(jobPosition)
                 .SetGender(request.Job.Gender)
-                .SetSector(request.Job.SectorId)
+                .SetDescription(request.Job.Description)
                 .SetPersonCount(request.Job.PersonCount)
-                .SetJobPosition(request.Job.JobPositionId)
                 .SetCanDisabilities(request.Job.IsCanDisabilities)
                 .SetMinExperienceYear(request.Job.MinExperienceYear)
                 .SetMaxExperienceYear(request.Job.MaxExperienceYear);

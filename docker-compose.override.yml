@@ -65,3 +65,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5003:80"
+        
+  cv.api:
+    container_name: cv.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENV}
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5004:80"

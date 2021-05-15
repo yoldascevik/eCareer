@@ -1,24 +1,16 @@
 using ARConsistency;
-using AutoMapper;
-using Career.Cache.Redis;
 using Career.Exceptions;
-using Career.IoC;
-using Career.Migration.DataSeeder;
-using Career.Mvc.Extensions;
-using Career.Mongo;
 using Career.Swagger;
-using Definition.Application;
-using Definition.Application.Location.City;
+using Career.Mvc.Extensions;
+using Career.Shared.Timing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Definition.Data;
-using Definition.Data.DataSeeders.Location;
 
-namespace Definition.Api
+namespace CV.Api
 {
     public class Startup
     {
@@ -31,25 +23,25 @@ namespace Definition.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            Clock.Provider = ClockProviders.Utc;
+
             services.AddApiVersion();
             services.AddControllers()
                 .AddApiResponseConsistency(options =>
                 {
                     Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
-                    options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
+                    options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            services.AddAutoMapper(typeof(CityMappingProfile));
-            services.AddMongoContext<DefinitionContext>();
-            services.AddMongo();
             
+            // services.AddMongoContext<JobDbContext>();
+            // services.AddMongo();
+            //
+            // JobDbContext.Configure();
+            
+            // services.RegisterModule<ApplicationModule>();
+            // services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
             services.AddSwagger();
-            
-            services.RegisterModule<DefinitionModule>();
-            services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
-            
-            services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,7 +50,7 @@ namespace Definition.Api
                 app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
-            
+
             app.UseRouting();
             app.UseApiResponseConsistency();
             app.UseEndpoints(builder => builder.MapControllers());

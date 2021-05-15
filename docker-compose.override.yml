@@ -37,7 +37,7 @@ services:
       - ${HOST_VOLUMES_PATH}/seq:/data
         
   rabbitmq:
-    container_name: event-hub
+    container_name: event-bus
     ports:
       - "5672:5672"
       - "15672:15672"

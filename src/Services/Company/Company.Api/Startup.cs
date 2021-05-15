@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Savorboard.CAP.InMemoryMessageQueue;
 
 namespace Company.Api
 {
@@ -45,7 +44,13 @@ namespace Company.Api
             
             services.AddCareerCAP(capOptions =>
             {
-                capOptions.UseInMemoryMessageQueue(); // Transport
+                capOptions.UseRabbitMQ(opt => // Transport
+                {
+                    opt.Password = Configuration["rabbitMQSettings:password"];
+                    opt.UserName = Configuration["rabbitMQSettings:username"];
+                    opt.HostName = Configuration["rabbitMQSettings:host"];
+                    opt.Port = int.Parse(Configuration["rabbitMQSettings:port"]);
+                });
                 capOptions.UseMongoDB(opt => // Persistence
                 {
                     opt.DatabaseConnection = Configuration["EventBusStorage:connectionString"];

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -21,12 +22,12 @@ namespace Job.Application.Job.Commands.Create
         public async Task<Guid> Handle(CreateJobCommand request, CancellationToken cancellationToken)
         {
             var job = Domain.JobAggregate.Job.Create(
-                    request.CompanyId,
+                    CompanyRef.Create(request.Company.RefId, request.Company.Name), 
                     request.Job.Title,
                     request.Job.Description,
-                    request.Job.SectorId,
-                    request.Job.JobPositionId,
-                    request.Job.LanguageId)
+                    SectorRef.Create(request.Job.Sector.RefId, request.Job.Sector.Name), 
+                    JobPositionRef.Create(request.Job.JobPosition.RefId, request.Job.JobPosition.Name), 
+                    LanguageRef.Create(request.Job.Language.RefId, request.Job.Language.Name))
                 .SetMinExperienceYear(request.Job.MinExperienceYear)
                 .SetMaxExperienceYear(request.Job.MaxExperienceYear)
                 .SetCanDisabilities(request.Job.IsCanDisabilities)
@@ -34,7 +35,7 @@ namespace Job.Application.Job.Commands.Create
                 .SetGender(request.Job.Gender);
 
             await _jobRepository.AddAsync(job);
-            _logger.LogInformation("Created new job : \"{JobTitle}\" - \"{JobId}\" by company \"{CompanyId}\"", job.Title, job.Id, job.CompanyId);
+            _logger.LogInformation("Created new job : \"{JobTitle}\" - \"{JobId}\" by company \"{@Company}\"", job.Title, job.Id, job.Company);
             
             return job.Id;
         }

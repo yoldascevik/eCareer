@@ -1,6 +1,7 @@
 using System;
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
+using Job.Domain.JobAggregate.Refs;
 
 namespace Job.Domain.JobAggregate.Events
 {
@@ -14,11 +15,11 @@ namespace Job.Domain.JobAggregate.Events
 
             JobId = job.Id;
             Title = job.Title;
-            CompanyId = job.CompanyId;
+            Company = job.Company;
         }
 
         public Guid JobId { get; private set; }
-        public Guid CompanyId { get; private set; }
+        public CompanyRef Company { get; private set; }
         public string Title { get; private set; }
     }
 }

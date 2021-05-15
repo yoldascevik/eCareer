@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -32,8 +33,8 @@ namespace Company.Application.CompanyFollower.Commands.UnfollowCompany
         {
             var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
             if (company == null)
-                throw new NotFoundException($"Company is not found by id: {request.CompanyId}");
-
+                throw new CompanyNotFoundException(request.CompanyId);
+            
             var companyFollower = await _companyFollowerRepository.GetCompanyFollower(request.CompanyId, request.UserId);
             if (companyFollower == null)
                 throw new NotFoundException($"Company follower is not found: CompanyId: {request.CompanyId} UserId: {request.UserId}");

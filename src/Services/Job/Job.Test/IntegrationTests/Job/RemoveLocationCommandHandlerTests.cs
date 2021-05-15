@@ -1,10 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Bogus;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.RemoveLocation;
 using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -29,9 +31,13 @@ namespace Job.Test.IntegrationTests.Job
         public async Task RemoveLocation_ShouldLocationRemovedFromJob_WhenLocationRemoved()
         {
             // Arrange
+            var faker = new Faker();
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveLocationCommandHandler(_jobRepository, _logger);
-            var location = LocationRef.Create(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
+            var location = JobLocation.Create(
+                country: CountryRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
+                city: CityRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
+            );
             var command = new RemoveLocationCommand(job.Id, location.Id);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
@@ -41,17 +47,21 @@ namespace Job.Test.IntegrationTests.Job
             await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.DoesNotContain(job.Locations, x=> x.Id == location.Id);
+            Assert.DoesNotContain(job.Locations, x => x.Id == location.Id);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
-        
+
         [Fact]
         public async Task RemoveLocation_ShouldBeLogInformation_WhenLocationRemoved()
         {
             // Arrange
+            var faker = new Faker();
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveLocationCommandHandler(_jobRepository, _logger);
-            var location = LocationRef.Create(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), null);
+            var location = JobLocation.Create(
+                country: CountryRef.Create(faker.Random.Guid().ToString(), faker.Address.Country()),
+                city: CityRef.Create(faker.Random.Guid().ToString(), faker.Address.City())
+            );
             var command = new RemoveLocationCommand(job.Id, location.Id);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
@@ -63,7 +73,7 @@ namespace Job.Test.IntegrationTests.Job
             // Assert
             _logger.ReceivedWithAnyArgs().LogInformation("");
         }
-        
+
         [Fact]
         public async Task RemoveLocation_ThrowNotFoundException_WhenJobNotExists()
         {
@@ -73,14 +83,14 @@ namespace Job.Test.IntegrationTests.Job
             var command = new RemoveLocationCommand(job.Id, Guid.NewGuid());
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
-        
+
             // Act
             var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
 
             // Assert
             Assert.IsType<JobNotFoundException>(actualException);
         }
-        
+
         [Fact]
         public async Task RemoveLocation_ThrowNotFoundException_WhenLocationNotExistsInJob()
         {
@@ -90,10 +100,10 @@ namespace Job.Test.IntegrationTests.Job
             var command = new RemoveLocationCommand(job.Id, Guid.NewGuid());
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
-        
+
             // Act
             var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
-        
+
             // Assert
             Assert.Equal($"Job location not found: {command.LocationId}", actualException.Message);
         }

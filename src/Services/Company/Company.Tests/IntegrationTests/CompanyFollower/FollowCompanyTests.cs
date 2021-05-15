@@ -2,8 +2,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.BusinessRule;
-using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
+using Company.Application.Company.Exceptions;
 using Company.Application.CompanyFollower.Commands.FollowCompany;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.CompanyFollower;
@@ -58,10 +58,10 @@ namespace Company.Tests.IntegrationTests.CompanyFollower
             _companyRepository.GetCompanyByIdAsync(command.CompanyId).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
         
             // Assert
-            Assert.Equal($"Company is not found by id: {command.CompanyId}", actualException.Message);
+            Assert.NotNull(actualException);
         }
         
         [Fact]

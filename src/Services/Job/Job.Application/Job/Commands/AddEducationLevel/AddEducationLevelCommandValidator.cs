@@ -1,4 +1,5 @@
 using FluentValidation;
+using Job.Application.Job.Validators;
 
 namespace Job.Application.Job.Commands.AddEducationLevel
 {
@@ -7,8 +8,7 @@ namespace Job.Application.Job.Commands.AddEducationLevel
         public AddEducationLevelCommandValidator()
         {
             RuleFor(x => x.JobId).NotNull().NotEmpty();
-            RuleFor(x => x.EducationLevelDto.Id).NotNull().NotEmpty();
-            RuleFor(x => x.EducationLevelDto.Name).NotNull().NotEmpty();
+            RuleFor(x => x.EducationLevelDto).SetValidator(new IdNameRefDtoValidator());
         }
     }
 }

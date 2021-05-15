@@ -1,7 +1,9 @@
 using AutoMapper;
 using Job.Application.Job.Dtos;
 using Job.Application.Tag.Dtos;
+using Job.Domain;
 using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 
 namespace Job.Application.Job
 {
@@ -14,18 +16,15 @@ namespace Job.Application.Job
                 .IncludeAllDerived();
 
             CreateMap<Domain.JobAggregate.Job, JobDetailDto>();
+
+            CreateMap<IdNameRef, IdNameRefDto>();
+            CreateMap<CompanyRef, CompanyRefDto>();
             CreateMap<CandidateRef, CandidateSummaryDto>();
 
             CreateMap<TagRef, TagDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.TagId));
 
-            CreateMap<WorkTypeRef, WorkTypeDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.WorkTypeId));
-
-            CreateMap<EducationLevelRef, EducationLevelDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.EducationLevelId));
-
-            CreateMap<LocationRef, JobLocationDto>();
+            CreateMap<JobLocation, JobLocationDto>();
         }
     }
 }

@@ -97,6 +97,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspectCore", "src\Framework\Submodules\AspectCore\AspectCore\AspectCore.csproj", "{1F78DDBA-8150-434B-B1C0-29690ED7FED7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Career.EventHub", "src\Framework\Career.EventHub\Career.EventHub.csproj", "{64D5480B-5093-46D3-8A15-965DB8ACC8C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,6 +253,10 @@ Global
 		{1F78DDBA-8150-434B-B1C0-29690ED7FED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F78DDBA-8150-434B-B1C0-29690ED7FED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F78DDBA-8150-434B-B1C0-29690ED7FED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D5480B-5093-46D3-8A15-965DB8ACC8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D5480B-5093-46D3-8A15-965DB8ACC8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D5480B-5093-46D3-8A15-965DB8ACC8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D5480B-5093-46D3-8A15-965DB8ACC8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -298,6 +304,7 @@ Global
 		{80CD7A34-3190-4CE1-A7F7-8E713BD9778B} = {C0C71468-06F7-4931-A80B-D4663438FD28}
 		{7C22B5A7-40AB-4622-AF71-E70431220D17} = {C0C71468-06F7-4931-A80B-D4663438FD28}
 		{1F78DDBA-8150-434B-B1C0-29690ED7FED7} = {7C22B5A7-40AB-4622-AF71-E70431220D17}
+		{64D5480B-5093-46D3-8A15-965DB8ACC8C8} = {C0C71468-06F7-4931-A80B-D4663438FD28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58173793-6745-46F3-8B1D-71D07E329A7F}

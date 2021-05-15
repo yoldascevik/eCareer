@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Career.Domain.Audit;
-using Career.Domain.DomainEvent.Dispatcher;
 using Career.Domain.Entities;
+using Career.EventHub;
 using Career.Exceptions;
 using Career.Shared.Timing;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +14,13 @@ namespace Career.EntityFramework
 {
     public class CareerDbContext: DbContext
     {
-        private readonly IDomainEventDispatcher _domainEventDispatcher;
+        private readonly IEventDispatcher _domainEventDispatcher;
         
         protected CareerDbContext()
         {
         }
         
-        protected CareerDbContext(DbContextOptions options, IDomainEventDispatcher domainEventDispatcher) : base(options)
+        protected CareerDbContext(DbContextOptions options, IEventDispatcher domainEventDispatcher) : base(options)
         {
             Check.NotNull(options, nameof(options));
             

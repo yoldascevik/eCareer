@@ -1,8 +1,6 @@
-version: '3.4'
-
 services:
   nosqldata:
-    container_name: "mongo"
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
@@ -21,7 +19,7 @@ services:
     restart: unless-stopped
     
   cache:
-    container_name: "cache"
+    container_name: cache
     command: redis-server --requirepass 123456
     ports:
       - "6379:6379"
@@ -30,16 +28,22 @@ services:
       - ${HOST_VOLUMES_PATH}/redis/redis.conf:/usr/local/etc/redis/redis.conf
 
   seq:
-    container_name: "seq"
+    container_name: seq
     environment:
       - ACCEPT_EULA=Y
     ports:
       - "5341:80"
     volumes:
       - ${HOST_VOLUMES_PATH}/seq:/data
+        
+  rabbitmq:
+    container_name: event-hub
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   definition.api:
-    container_name: "definition.api"
+    container_name: definition.api
     environment:
       - ASPNETCORE_ENVIRONMENT=${ENV}
       - ASPNETCORE_URLS=http://+:80
@@ -47,7 +51,7 @@ services:
       - "5001:80"
 
   company.api:
-    container_name: "company.api"
+    container_name: company.api
     environment:
       - ASPNETCORE_ENVIRONMENT=${ENV}
       - ASPNETCORE_URLS=http://+:80
@@ -55,7 +59,7 @@ services:
       - "5002:80"
 
   job.api:
-    container_name: "job.api"
+    container_name: job.api
     environment:
       - ASPNETCORE_ENVIRONMENT=${ENV}
       - ASPNETCORE_URLS=http://+:80

@@ -5,6 +5,7 @@ using Career.MediatR.Command;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
 using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +30,10 @@ namespace Job.Application.Job.Commands.AddLocation
             if (job is null)
                 throw new JobNotFoundException(request.JobId);
 
-            var location = LocationRef.Create(request.LocationInputDto.CountryId, request.LocationInputDto.CityId, request.LocationInputDto.DistrictId);
+            var country = CountryRef.Create(request.LocationInputDto.CountryRef.RefId, request.LocationInputDto.CountryRef.Name);
+            var city = CityRef.Create(request.LocationInputDto.CityRef.RefId, request.LocationInputDto.CityRef.Name);
+            
+            var location = JobLocation.Create(country, city);
             job.AddLocation(location);
 
             await _jobRepository.UpdateAsync(job.Id, job);

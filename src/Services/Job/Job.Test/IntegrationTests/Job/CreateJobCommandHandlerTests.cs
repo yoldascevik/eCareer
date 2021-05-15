@@ -22,7 +22,7 @@ namespace Job.Test.IntegrationTests.Job
             _jobRepository = Substitute.For<IJobRepository>();
             _logger = Substitute.For<ILogger<CreateJobCommandHandler>>();
         }
-        
+
         [Fact]
         public async Task CreateJob_ShouldReturnCreatedJobId_WhenJobCreated()
         {
@@ -32,12 +32,12 @@ namespace Job.Test.IntegrationTests.Job
 
             // Act
             Guid jobId = await commandHandler.Handle(command, CancellationToken.None);
-            
+
             // Assert
             Assert.NotEqual(Guid.Empty, jobId);
             await _jobRepository.Received().AddAsync(Arg.Any<Domain.JobAggregate.Job>());
         }
-        
+
         [Fact]
         public async Task CreateJob_ShouldBeLogInformation_WhenJobCreated()
         {
@@ -47,7 +47,7 @@ namespace Job.Test.IntegrationTests.Job
 
             // Act
             await commandHandler.Handle(command, CancellationToken.None);
-            
+
             // Assert
             _logger.ReceivedWithAnyArgs().LogInformation("");
         }
@@ -55,21 +55,29 @@ namespace Job.Test.IntegrationTests.Job
         private CreateJobCommand GetCommand()
         {
             var jobDto = new Faker<JobInputDto>()
-                .Rules((faker,job) =>
+                .Rules((faker, job) =>
                 {
                     job.Title = faker.Lorem.Sentence(3);
                     job.Description = faker.Lorem.Paragraph();
                     job.Gender = faker.PickRandom<GenderType>();
-                    job.LanguageId = faker.Random.Guid().ToString();
                     job.PersonCount = faker.Random.Short(0, 50);
-                    job.SectorId = faker.Random.Guid().ToString();
                     job.IsCanDisabilities = faker.Random.Bool();
-                    job.JobPositionId = faker.Random.Guid().ToString();
                     job.MinExperienceYear = faker.Random.Byte(0, 20);
                     job.MaxExperienceYear = faker.Random.Byte(job.MinExperienceYear.Value, 20);
+                    job.Sector = new IdNameRefDto {RefId = faker.Random.Guid().ToString(), Name = faker.Lorem.Word()};
+                    job.JobPosition = new IdNameRefDto {RefId = faker.Random.Guid().ToString(), Name = faker.Lorem.Word()};
+                    job.Language = new IdNameRefDto {RefId = faker.Random.Guid().ToString(), Name = faker.Random.RandomLocale()};
                 }).Generate();
 
-            return new CreateJobCommand(Guid.NewGuid(), jobDto);
+            return new CreateJobCommand()
+            {
+                Company = new CompanyRefDto()
+                {
+                    RefId = Guid.NewGuid(), 
+                    Name = new Faker().Company.CompanyName()
+                },
+                Job = jobDto
+            };
         }
     }
 }

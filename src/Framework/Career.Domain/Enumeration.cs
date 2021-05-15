@@ -9,7 +9,7 @@ namespace Career.Domain
     {
         public string Name { get; private set; }
 
-        public int Id { get; private set; }
+        public int Id { get; }
 
         protected Enumeration(int id, string name)
         {

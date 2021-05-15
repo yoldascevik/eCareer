@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.RemoveEducationLevel;
 using Job.Application.Job.Exceptions;
-using Job.Domain.JobAggregate;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;
 using Job.Test.Helpers;
 using Microsoft.Extensions.Logging;
@@ -32,7 +32,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveEducationLevelCommandHandler(_jobRepository, _logger);
             var educationLevel = EducationLevelRef.Create(Guid.NewGuid().ToString(), "Test education level");
-            var command = new RemoveEducationLevelCommand(job.Id, educationLevel.EducationLevelId);
+            var command = new RemoveEducationLevelCommand(job.Id, educationLevel.RefId);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             job.AddEducationLevel(educationLevel);
@@ -41,7 +41,7 @@ namespace Job.Test.IntegrationTests.Job
             await commandHandler.Handle(command, CancellationToken.None);
 
             // Assert
-            Assert.DoesNotContain(job.EducationLevels, x => x.EducationLevelId == educationLevel.EducationLevelId);
+            Assert.DoesNotContain(job.EducationLevels, x => x.RefId == educationLevel.RefId);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
 
@@ -52,7 +52,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var commandHandler = new RemoveEducationLevelCommandHandler(_jobRepository, _logger);
             var educationLevel = EducationLevelRef.Create(Guid.NewGuid().ToString(), "Test education level");
-            var command = new RemoveEducationLevelCommand(job.Id, educationLevel.EducationLevelId);
+            var command = new RemoveEducationLevelCommand(job.Id, educationLevel.RefId);
 
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
             job.AddEducationLevel(educationLevel);

@@ -5,11 +5,11 @@ namespace Company.Domain.Rules.Company
 {
     public class TaxNumberMustBeUniqueRule : IBusinessRule
     {
-        private readonly Values.TaxInfo _taxInfo;
+        private readonly ValueObjects.TaxInfo _taxInfo;
         private readonly ITaxNumberUniquenessSpecification _taxNumberUniquenessSpecification;
 
         public TaxNumberMustBeUniqueRule(
-            Values.TaxInfo taxInfo,
+            ValueObjects.TaxInfo taxInfo,
             ITaxNumberUniquenessSpecification taxNumberUniquenessSpecification)
         {
             Check.NotNull(taxInfo, nameof(taxInfo));

@@ -9,6 +9,7 @@ using Career.Shared.Timing;
 using Job.Domain.CandidateAggregate;
 using Job.Domain.JobAggregate.Constants;
 using Job.Domain.JobAggregate.Events;
+using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Rules;
 using Job.Domain.TagAggregate;
 
@@ -19,7 +20,7 @@ namespace Job.Domain.JobAggregate
         #region Fields
 
         private List<TagRef> _tags;
-        private List<LocationRef> _locations;
+        private List<JobLocation> _locations;
         private List<WorkTypeRef> _workTypes;
         private List<CandidateRef> _candidates;
         private List<ViewingHistory> _viewingHistories;
@@ -35,7 +36,7 @@ namespace Job.Domain.JobAggregate
         {
             Id = Guid.NewGuid();
             _tags = new List<TagRef>();
-            _locations = new List<LocationRef>();
+            _locations = new List<JobLocation>();
             _workTypes = new List<WorkTypeRef>();
             _candidates = new List<CandidateRef>();
             _educationLevels = new List<EducationLevelRef>();
@@ -45,13 +46,13 @@ namespace Job.Domain.JobAggregate
             CreatorUserId = Guid.Empty; //Todo
         }
 
-        private Job(Guid companyId) : this()
+        private Job(CompanyRef company) : this()
         {
-            Check.NotNull(companyId, nameof(companyId));
+            Check.NotNull(company, nameof(company));
 
             _isCreated = true;
 
-            CompanyId = companyId;
+            Company = company;
             AddDomainEvent(new JobCreatedEvent(this));
         }
 
@@ -60,10 +61,10 @@ namespace Job.Domain.JobAggregate
         #region Properties
 
         public Guid Id { get; private set; }
-        public Guid CompanyId { get; private set; }
-        public string LanguageId { get; private set; }
-        public string SectorId { get; private set; }
-        public string JobPositionId { get; private set; }
+        public CompanyRef Company { get;  private set; }
+        public LanguageRef Language { get; private set; }
+        public SectorRef Sector { get; private set; }
+        public JobPositionRef JobPosition { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
         public short? PersonCount { get; private set; }
@@ -84,7 +85,7 @@ namespace Job.Domain.JobAggregate
         public Guid? LastModifiedUserId { get; private set; }
 
         public virtual IReadOnlyCollection<TagRef> Tags => _tags.AsReadOnly();
-        public virtual IReadOnlyCollection<LocationRef> Locations => _locations.AsReadOnly();
+        public virtual IReadOnlyCollection<JobLocation> Locations => _locations.AsReadOnly();
         public virtual IReadOnlyCollection<WorkTypeRef> WorkTypes => _workTypes.AsReadOnly();
         public virtual IReadOnlyCollection<CandidateRef> Candidates => _candidates.AsReadOnly();
         public virtual IReadOnlyCollection<ViewingHistory> ViewingHistories => _viewingHistories.AsReadOnly();
@@ -94,14 +95,14 @@ namespace Job.Domain.JobAggregate
 
         #region Methods
 
-        public static Job Create(Guid companyId, string title, string description, string sectorId, string jobPositionId, string languageId)
+        public static Job Create(CompanyRef company, string title, string description, SectorRef sector, JobPositionRef jobPosition, LanguageRef language)
         {
-            return new Job(companyId)
+            return new Job(company)
                 .SetTitle(title)
                 .SetDescription(description)
-                .SetSector(sectorId)
-                .SetJobPosition(jobPositionId)
-                .SetLanguage(languageId);
+                .SetSector(sector)
+                .SetJobPosition(jobPosition)
+                .SetLanguage(language);
         }
 
         public Job SetTitle(string title)
@@ -126,34 +127,34 @@ namespace Job.Domain.JobAggregate
             return this;
         }
 
-        public Job SetSector(string sectorId)
+        public Job SetSector(SectorRef sector)
         {
-            if (string.IsNullOrEmpty(sectorId))
+            if (sector == null)
                 throw new BusinessException("Sector is required, cannot be empty!");
 
-            SectorId = sectorId;
+            Sector = sector;
             OnUpdated();
 
             return this;
         }
 
-        public Job SetJobPosition(string jobPositionId)
+        public Job SetJobPosition(JobPositionRef jobPosition)
         {
-            if (string.IsNullOrEmpty(jobPositionId))
+            if (jobPosition == null)
                 throw new BusinessException("Job position is required, cannot be empty!");
 
-            JobPositionId = jobPositionId;
+            JobPosition = jobPosition;
             OnUpdated();
 
             return this;
         }
 
-        public Job SetLanguage(string languageId)
+        public Job SetLanguage(LanguageRef language)
         {
-            if (string.IsNullOrEmpty(languageId))
+            if (language == null)
                 throw new BusinessException("Language is required, cannot be empty!");
 
-            LanguageId = languageId;
+            Language = language;
             OnUpdated();
 
             return this;
@@ -212,14 +213,14 @@ namespace Job.Domain.JobAggregate
 
             return this;
         }
-        
+
         public Job SetValidityDate(DateTime validityDate)
         {
             var normalizedValidityDate = Clock.Normalize(validityDate);
             CheckRule(new ValidityDateMustBeValidRule(normalizedValidityDate));
-            
+
             ValidityDate = normalizedValidityDate;
-            
+
             OnUpdated();
             AddDomainEvent(new JobValidityDateChangedEvent(this));
 
@@ -230,24 +231,24 @@ namespace Job.Domain.JobAggregate
         {
             if (Status == JobStatus.Published || Status == JobStatus.WaitingForApproval)
                 throw new BusinessException("The status of the job is not suitable.");
-            
+
             Status = JobStatus.WaitingForApproval;
-            
+
             OnUpdated();
             AddDomainEvent(new JobSentForApprovalEvent(this));
         }
-        
+
         public void Publish(DateTime validityDate)
         {
             if (Status == JobStatus.Draft || Status == JobStatus.Published)
                 throw new BusinessException("The status of the job is not suitable.");
-            
+
             SetValidityDate(validityDate);
-            
+
             Status = JobStatus.Published;
             ListingDate = Clock.Now;
             FirstListingDate ??= Clock.Now;
-            
+
             OnUpdated();
             AddDomainEvent(new JobPublishedEvent(this));
         }
@@ -256,7 +257,7 @@ namespace Job.Domain.JobAggregate
         {
             if (Status != JobStatus.Published && Status != JobStatus.WaitingForApproval)
                 throw new BusinessException("The status of the job is not suitable.");
-            
+
             if (string.IsNullOrEmpty(reason))
                 throw new BusinessException("Revoke reason is required!");
 
@@ -284,7 +285,7 @@ namespace Job.Domain.JobAggregate
                 throw new BusinessException("Candidate does not belong to this job!");
 
             if (Status != JobStatus.Published)
-                 throw new BusinessException("The status of the job is not suitable.");
+                throw new BusinessException("The status of the job is not suitable.");
 
             if (_candidates.Any(x => x.UserId == candidate.UserId))
                 throw new BusinessException("You have an application for this job!");
@@ -305,10 +306,14 @@ namespace Job.Domain.JobAggregate
             AddDomainEvent(new CandidateWithdrewEvent(this, candidate));
         }
 
-        public void AddLocation(LocationRef location)
+        public void AddLocation(JobLocation jobLocation)
         {
-            Check.NotNull(location, nameof(location));
-            _locations.Add(location);
+            Check.NotNull(jobLocation, nameof(jobLocation));
+
+            if (_locations.Any(x => x.Country.RefId == jobLocation.Country.RefId && x.City.RefId == jobLocation.City.RefId))
+                throw new AlreadyExistsException("Location already exists in job.");
+
+            _locations.Add(jobLocation);
             OnUpdated();
         }
 
@@ -326,8 +331,8 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(workType, nameof(workType));
 
-            if (_workTypes.Any(x => x.WorkTypeId == workType.WorkTypeId))
-                throw new AlreadyExistsException($"Work type {workType.WorkTypeId} already exist for this job!");
+            if (_workTypes.Any(x => x.RefId == workType.RefId))
+                throw new AlreadyExistsException($"Work type {workType.RefId} already exist for this job!");
 
             _workTypes.Add(workType);
             OnUpdated();
@@ -335,7 +340,7 @@ namespace Job.Domain.JobAggregate
 
         public void RemoveWorkType(string workTypeId)
         {
-            var jobWorkType = _workTypes.FirstOrDefault(x => x.WorkTypeId == workTypeId);
+            var jobWorkType = _workTypes.FirstOrDefault(x => x.RefId == workTypeId);
             if (jobWorkType == null)
                 throw new NotFoundException($"Work type not found: {workTypeId}");
 
@@ -347,8 +352,8 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(educationLevel, nameof(educationLevel));
 
-            if (_educationLevels.Any(x => x.EducationLevelId == educationLevel.EducationLevelId))
-                throw new AlreadyExistsException($"Education level {educationLevel.EducationLevelId} already exist for this job!");
+            if (_educationLevels.Any(x => x.RefId == educationLevel.RefId))
+                throw new AlreadyExistsException($"Education level {educationLevel.RefId} already exist for this job!");
 
             _educationLevels.Add(educationLevel);
             OnUpdated();
@@ -356,7 +361,7 @@ namespace Job.Domain.JobAggregate
 
         public void RemoveEducationLevel(string educationLevelId)
         {
-            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.EducationLevelId == educationLevelId);
+            var jobEducationLevel = _educationLevels.FirstOrDefault(x => x.RefId == educationLevelId);
             if (jobEducationLevel == null)
                 throw new NotFoundException($"Education level {educationLevelId} is not found!");
 
@@ -368,7 +373,7 @@ namespace Job.Domain.JobAggregate
         {
             Check.NotNull(tag, nameof(tag));
 
-            if (_tags.Any(t=> t.TagId == tag.Id))
+            if (_tags.Any(t => t.TagId == tag.Id))
                 throw new AlreadyExistsException("Tag already exist for this job!");
 
             _tags.Add(TagRef.CreateFromTag(tag));
@@ -382,13 +387,13 @@ namespace Job.Domain.JobAggregate
             Check.NotNull(tag, nameof(tag));
 
             var tagRef = _tags.FirstOrDefault(t => t.TagId == tag.TagId);
-            if (tagRef is null)        
+            if (tagRef is null)
                 throw new NotFoundException("Tag is not found!");
 
             _tags.Remove(tagRef);
             OnUpdated();
         }
-        
+
         public void RemoveTag(Tag tag)
         {
             Check.NotNull(tag, nameof(tag));

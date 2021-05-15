@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AspectCore;
 using AspectCore.Aspects;
 using Career.Domain.Entities;
+using Career.EventHub;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +14,7 @@ namespace Career.Domain.DomainEvent.Dispatcher
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
     public class DispacthDomainEventAttribute : AspectAttribute
     {
-        private IDomainEventDispatcher _dispatcher;
+        private IEventDispatcher _dispatcher;
         private ILogger<DispacthDomainEventAttribute> _logger;
 
         public override void OnSuccess(MethodExecutionArgs args)
@@ -42,11 +43,11 @@ namespace Career.Domain.DomainEvent.Dispatcher
 
         public override AspectAttribute LoadDependencies(IServiceProvider serviceProvider)
         {
-            _dispatcher ??= serviceProvider.GetRequiredService<IDomainEventDispatcher>();
+            _dispatcher ??= serviceProvider.GetRequiredService<IEventDispatcher>();
             _logger ??= serviceProvider.GetRequiredService<ILogger<DispacthDomainEventAttribute>>();
 
             if (_dispatcher == null)
-                throw new ArgumentException("IDomainEventDispatcher is not registered on DI.");
+                throw new ArgumentException("IEventDispatcher is not registered on DI.");
 
             return base.LoadDependencies(serviceProvider);
         }

@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Career.EventHub\Career.EventHub.csproj" />
       <ProjectReference Include="..\Career.Exceptions\Career.Exceptions.csproj" />
       <ProjectReference Include="..\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\Career.Repositories\Career.Repositories.csproj" />

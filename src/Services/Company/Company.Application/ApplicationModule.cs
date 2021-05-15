@@ -25,9 +25,13 @@ namespace Company.Application
             services.AddUnitOfWork<CompanyDbContext>();
 
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<ISectorRefRepository, SectorRefRepository>();
+            services.AddScoped<ICountryRefRepository, CountryRefRepository>();
+            services.AddScoped<ICityRefRepository, CityRefRepository>();
+            services.AddScoped<IDistrictRefRepository, DistrictRefRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
-            services.AddCAPEventHandlers(this.GetType());
+            services.RegisterCAPEventHandlers(this.GetType());
             services.RegisterModule<DomainModule>();
             
             services.AddAutoMapper(typeof(CompanyMappinProfile));

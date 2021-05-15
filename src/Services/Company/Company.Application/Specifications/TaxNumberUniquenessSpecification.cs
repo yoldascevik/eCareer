@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using Career.Domain.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
-using Company.Domain.Values;
+using Company.Domain.ValueObjects;
 
 namespace Company.Application.Specifications
 {
@@ -20,7 +20,7 @@ namespace Company.Application.Specifications
 
         public override Expression<Func<TaxInfo, bool>> ToExpression()
         { 
-            return taxInfo => !_companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.CountryId, _companyId).Result;
+            return taxInfo => !_companyRepository.IsTaxNumberExistsAsync(taxInfo.TaxNumber, taxInfo.TaxCountryId, _companyId).Result;
         }
     }
 }

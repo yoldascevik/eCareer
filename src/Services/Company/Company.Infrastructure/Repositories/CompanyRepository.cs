@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Career.EntityFramework.Repositories;
 using Company.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Company.Infrastructure.Repositories
 {
@@ -16,7 +17,7 @@ namespace Company.Infrastructure.Repositories
             return await AnyAsync(company =>
                 company.TaxInfo.TaxNumber == taxNumber
                 && company.IsDeleted == false
-                && company.AddressInfo.CountryId == countryId
+                && company.TaxInfo.TaxCountryId == countryId
                 && company.Id != companyId);
         }
 
@@ -27,7 +28,15 @@ namespace Company.Infrastructure.Repositories
 
         public async Task<Domain.Entities.Company> GetCompanyByIdAsync(Guid companyId)
         {
-            return await FirstOrDefaultAsync(c => c.Id == companyId && !c.IsDeleted);
+            return await Get(c => c.Id == companyId && !c.IsDeleted)
+                .Include(p=> p.Sector)
+                .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.CountryRef)
+                .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.CityRef)
+                .Include(p=> p.Addresses)
+                    .ThenInclude(address => address.DistrictRef)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -1,24 +1,35 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
 using Company.Domain.DomainEvents.Company;
+using Company.Domain.Refs;
 using Company.Domain.Rules.Company;
+using Company.Domain.Rules.CompanyAddress;
 using Company.Domain.Rules.CompanyFollower;
-using Company.Domain.Values;
+using Company.Domain.ValueObjects;
 
 namespace Company.Domain.Entities
 {
     public class Company : DomainEntity, IAggregateRoot
     {
+        #region Fields
+
+        private List<Address> _addresses;
+        private List<CompanyFollower> _followers;
+
+        #endregion
+        
         #region Ctor
 
         private Company()
         {
             Id = Guid.NewGuid();
-            Followers = new List<CompanyFollower>();
+            _addresses = new List<Address>();
+            _followers = new List<CompanyFollower>();
         }
 
         #endregion
@@ -27,8 +38,6 @@ namespace Company.Domain.Entities
 
         public Guid Id { get; }
         public string Name { get; private set; }
-        public TaxInfo TaxInfo { get; private set; }
-        public AddressInfo AddressInfo { get; private set; }
         public string Website { get; private set; }
         public string Email { get; private set; }
         public string Phone { get; private set; }
@@ -36,27 +45,28 @@ namespace Company.Domain.Entities
         public string FaxNumber { get; private set; }
         public int EmployeesCount { get; private set; }
         public short EstablishedYear { get; private set; }
+        public TaxInfo TaxInfo { get; private set; }
+        public SectorRef Sector { get; private set; }
         public bool IsDeleted { get; private set; }
-        public string SectorId { get; private set; }
         public DateTime CreationTime { get; private set; }
         public long? CreatorUserId { get; private set; }
         public DateTime? LastModificationTime { get; private set; }
         public long? LastModifiedUserId { get; private set; }
-        public ICollection<CompanyFollower> Followers { get; }
+        public IReadOnlyCollection<Address> Addresses => _addresses.AsReadOnly();
+        public ICollection<CompanyFollower> Followers => _followers.AsReadOnly();
 
         #endregion
 
         #region Methods
 
-        public static Company Create(string name, string email, TaxInfo taxInfo, AddressInfo addressInfo, string phone, string sectorId, 
+        public static Company Create(string name, string email, TaxInfo taxInfo, string phone, SectorRef sectorRef, 
             ITaxNumberUniquenessSpecification taxNumberUniquenessSpec, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             Check.NotNullOrEmpty(name, nameof(name));
-            Check.NotNull(addressInfo, nameof(addressInfo));
 
             CheckRule(new TaxNumberMustBeUniqueRule(taxInfo, taxNumberUniquenessSpec));
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
-            CheckRule(new SectorIdRequiredRule(sectorId));
+            CheckRule(new SectorInfoRequiredRule(sectorRef));
             CheckRule(new PhoneRequiredRule(phone));
 
             var company = new Company
@@ -64,9 +74,8 @@ namespace Company.Domain.Entities
                 Name = name,
                 Email = email,
                 TaxInfo = taxInfo,
-                AddressInfo = addressInfo,
                 Phone = phone,
-                SectorId = sectorId,
+                Sector = sectorRef,
                 CreationTime = Clock.Now,
                 CreatorUserId = null, // TODO
                 LastModificationTime = Clock.Now,
@@ -83,7 +92,7 @@ namespace Company.Domain.Entities
 
             CheckRule(new CompanyFollowerMustBeUniqueRule(companyFollower, uniquenessSpecification));
 
-            Followers.Add(companyFollower);
+            _followers.Add(companyFollower);
             return this;
         }
         
@@ -115,18 +124,7 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new CompanyTaxInfoUpdatedEvent(this));
         }
-
-        public void UpdateAddress(AddressInfo address)
-        {
-            Check.NotNull(address, nameof(address));
-
-            AddressInfo = address;
-            LastModificationTime = Clock.Now;
-            LastModifiedUserId = null; // TODO
-            
-            AddDomainEvent(new CompanyAddressUpdatedEvent(this));
-        }
-
+        
         public void UpdateEmailAddress(string email, IEmailAddressUniquenessSpecification emailAddressUniquenessSpec)
         {
             CheckRule(new EmailAddressMustBeUniqueRule(email, emailAddressUniquenessSpec));
@@ -140,9 +138,9 @@ namespace Company.Domain.Entities
         }
         
         public void UpdateDetails(string phone, string mobilePhone, string faxNumber, 
-            string website, int employeesCount, short establishedYear, string sectorId)
+            string website, int employeesCount, short establishedYear, SectorRef sectorRef)
         {
-            CheckRule(new SectorIdRequiredRule(sectorId));
+            CheckRule(new SectorInfoRequiredRule(sectorRef));
             CheckRule(new PhoneRequiredRule(phone));
             
             Phone = phone;
@@ -151,13 +149,52 @@ namespace Company.Domain.Entities
             Website = website;
             EmployeesCount = employeesCount;
             EstablishedYear = establishedYear;
-            SectorId = sectorId;
+            Sector = sectorRef;
+
             LastModificationTime = Clock.Now;
             LastModifiedUserId = null; //TODO
             
             AddDomainEvent(new CompanyDetailInfoUpdatedEvent(this));
         }
 
+        public void AddAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+
+            Address primaryAddress = Addresses.SingleOrDefault(x => x.IsPrimary);
+            if (primaryAddress == null)
+            {
+                address.SetPrimary(true);
+            }
+            else if(address.IsPrimary)
+            {
+                primaryAddress.SetPrimary(false);
+            }
+            
+            _addresses.Add(address);
+        }
+
+        public void SetPrimaryAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+
+            Address primaryAddress = Addresses.SingleOrDefault(x => x.IsPrimary);
+            if (primaryAddress != null && primaryAddress.Id != address.Id)
+            {
+                primaryAddress.SetPrimary(false);
+            }
+
+            address.SetPrimary(true);
+        }
+        
+        public void RemoveAddress(Address address)
+        {
+            Check.NotNull(address, nameof(address));
+
+            CheckRule(new PrimaryAddressCannotBeDeleteRule(address));
+            address.MarkAsDeleted();
+        }
+        
         public void MarkDeleted()
         {
             IsDeleted = true;
@@ -166,7 +203,7 @@ namespace Company.Domain.Entities
             
             AddDomainEvent(new CompanyDeletedEvent(this));
         }
-
+        
         #endregion
     }
 }

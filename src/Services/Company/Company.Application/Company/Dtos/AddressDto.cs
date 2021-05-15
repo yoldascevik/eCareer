@@ -1,10 +1,16 @@
+using System;
+
 namespace Company.Application.Company.Dtos
 {
     public class AddressDto
     {
-        public string CountryId { get; set; }
-        public string CityId { get; set; }
-        public string DistrictId { get; set; }
-        public string Address { get; set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public IdNameRefDto Country { get; set; }
+        public IdNameRefDto City { get; set; }
+        public IdNameRefDto District { get; set; }
+        public string Details { get; set; }
+        public string ZipCode { get; set; }
+        public bool IsPrimary { get; set; }
     }
 }

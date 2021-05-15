@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
+using Company.Application.Company.Exceptions;
 using Company.Application.CompanyFollower.Commands.UnfollowCompany;
 using Company.Domain.Repositories;
 using Company.Tests.Helpers;
@@ -55,15 +56,14 @@ namespace Company.Tests.IntegrationTests.CompanyFollower
             // Arrange
             var command = new UnfollowCompanyCommand(Guid.NewGuid(), Guid.NewGuid());
             var commandHandler = new UnfollowCompanyHandler(_unitOfWork, _logger, _companyRepository, _companyFollowerRepository);
-            var expectedExceptionMessage = $"Company is not found by id: {command.CompanyId}";
             
             _companyRepository.GetCompanyByIdAsync(command.CompanyId).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
         
             // Assert
-            Assert.Equal(expectedExceptionMessage, actualException.Message);
+            Assert.NotNull(actualException);
         }
         
         [Fact]

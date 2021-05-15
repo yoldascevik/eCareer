@@ -64,13 +64,11 @@ namespace Job.Api.Controllers
         /// <summary>
         /// Create new job
         /// </summary>
-        /// <param name="companyId">Company id</param>
-        /// <param name="jobInfo">Job info</param>
         /// <returns>Created job url</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Guid companyId, [FromBody] JobInputDto jobInfo)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateJobCommand request)
         {
-            Guid jobId = await _mediator.Send(new CreateJobCommand(companyId, jobInfo));
+            Guid jobId = await _mediator.Send(request);
 
             return CreatedAtAction(nameof(Get), new {id = jobId});
         }
@@ -151,7 +149,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="workType">Work type info</param>
         [HttpPost("{id}/work-types")]
-        public async Task<IActionResult> AddWorkType(Guid id, [FromBody] WorkTypeDto workType)
+        public async Task<IActionResult> AddWorkType(Guid id, [FromBody] IdNameRefDto workType)
             => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workType)));
 
         /// <summary>
@@ -169,7 +167,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="educationLevel">Education level info</param>
         [HttpPost("{id}/education-levels")]
-        public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] EducationLevelDto educationLevel)
+        public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] IdNameRefDto educationLevel)
             => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevel)));
 
         /// <summary>

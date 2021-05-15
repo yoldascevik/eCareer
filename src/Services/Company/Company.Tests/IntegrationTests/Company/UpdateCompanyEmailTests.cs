@@ -3,9 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Bogus;
 using Career.Domain.BusinessRule;
-using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateCompanyEmail;
+using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.Company;
 using Company.Tests.Helpers;
@@ -58,10 +58,10 @@ namespace Company.Tests.IntegrationTests.Company
             _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
         
             // Act
-            var actualException = await Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(updateEmailCommand, CancellationToken.None));
+            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(updateEmailCommand, CancellationToken.None));
         
             // Assert
-            Assert.Equal($"Company is not found by id: {company.Id}", actualException.Message);
+            Assert.NotNull(actualException);
         }
         
         [Fact]

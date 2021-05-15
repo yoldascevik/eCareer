@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Bogus;
 using Job.Application.Job.Commands.AddLocation;
 using Job.Application.Job.Dtos;
 using Job.Application.Job.Exceptions;
@@ -34,7 +35,7 @@ namespace Job.Test.IntegrationTests.Job
             var job = JobFaker.CreateFakeJob();
             var command = GetCommand(job.Id);
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
-            
+
             _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
             // Act
@@ -44,7 +45,7 @@ namespace Job.Test.IntegrationTests.Job
             Assert.NotEmpty(job.Locations);
             await _jobRepository.Received().UpdateAsync(job.Id, job);
         }
-        
+
         [Fact]
         public async Task AddLocation_ShouldBeLogInformation_WhenLocationAdded()
         {
@@ -61,7 +62,7 @@ namespace Job.Test.IntegrationTests.Job
             // Assert
             _logger.ReceivedWithAnyArgs().LogInformation("");
         }
-        
+
         [Fact]
         public async Task AddLocation_ThrowNotFoundException_WhenJobNotExists()
         {
@@ -71,7 +72,7 @@ namespace Job.Test.IntegrationTests.Job
             var commandHandler = new AddLocationCommandHandler(_jobRepository, _mapper, _logger);
 
             _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
-        
+
             // Act
             var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
 
@@ -81,11 +82,12 @@ namespace Job.Test.IntegrationTests.Job
 
         private AddLocationCommand GetCommand(Guid jobId)
         {
+            var faker = new Faker();
+
             return new AddLocationCommand(jobId, new JobLocationInputDto()
             {
-                CountryId = Guid.NewGuid().ToString(),
-                CityId = Guid.NewGuid().ToString(),
-                DistrictId = Guid.NewGuid().ToString()
+                CountryRef = new IdNameRefDto() {RefId = faker.Random.Guid().ToString(), Name = faker.Address.Country()},
+                CityRef = new IdNameRefDto() {RefId = faker.Random.Guid().ToString(), Name = faker.Address.City()}
             });
         }
     }

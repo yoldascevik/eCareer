@@ -64,13 +64,11 @@ namespace Job.Api.Controllers
         /// <summary>
         /// Create new job
         /// </summary>
-        /// <param name="companyId">Company id</param>
-        /// <param name="jobInfo">Job info</param>
         /// <returns>Created job url</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Guid companyId, [FromBody] JobInputDto jobInfo)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateJobCommand request)
         {
-            Guid jobId = await _mediator.Send(new CreateJobCommand(companyId, jobInfo));
+            Guid jobId = await _mediator.Send(request);
 
             return CreatedAtAction(nameof(Get), new {id = jobId});
         }

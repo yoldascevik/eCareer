@@ -1,10 +1,8 @@
-using System;
+using Career.EventHub;
 
 namespace Career.Domain.DomainEvent
 {
-    public interface IDomainEvent
+    public interface IDomainEvent : IEvent
     {
-        Guid EventId { get; }
-        DateTime OccurredOn { get; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Career.Domain.DomainEvent.Dispatcher;
-using Career.EntityFramework;
+﻿using Career.EntityFramework;
+using Career.EventHub;
 using Company.Domain.Entities;
 using Company.Domain.Refs;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ namespace Company.Infrastructure
         {
         }
 
-        public CompanyDbContext(DbContextOptions options, IDomainEventDispatcher domainEventDispatcher)
+        public CompanyDbContext(DbContextOptions options, IEventDispatcher domainEventDispatcher)
             : base(options, domainEventDispatcher)
         {
         }

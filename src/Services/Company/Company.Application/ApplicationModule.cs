@@ -31,7 +31,7 @@ namespace Company.Application
             services.AddScoped<IDistrictRefRepository, DistrictRefRepository>();
             services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
-            services.AddCAPEventHandlers(this.GetType());
+            services.RegisterCAPEventHandlers(this.GetType());
             services.RegisterModule<DomainModule>();
             
             services.AddAutoMapper(typeof(CompanyMappinProfile));

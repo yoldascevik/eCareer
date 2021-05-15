@@ -8,7 +8,8 @@ namespace Company.Domain
     {
         protected override void Load(IServiceCollection services)
         {
-            services.AddCAPDomainEvents(this.GetType());
+            services.RegisterCAPEvents(this.GetType());
+            services.RegisterCAPEventHandlers(this.GetType());
         }
     }
 }

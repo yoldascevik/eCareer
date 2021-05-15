@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Career.Domain.DomainEvent.Dispatcher;
+using Career.EventHub;
 using Career.Exceptions;
 using Career.Mongo.Context;
 
@@ -16,7 +16,7 @@ namespace Career.Mongo.Repository
         private readonly IMongoQueryRepository<T> _mongoQueryRepository;
         private readonly IMongoCommandRepository<T> _mongoCommandRepository;
         
-        public MongoRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher)
+        public MongoRepository(IMongoContext context, IEventDispatcher domainEventDispatcher)
         {
             Check.NotNull(context, nameof(context));
             

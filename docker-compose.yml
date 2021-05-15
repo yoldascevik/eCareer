@@ -10,7 +10,10 @@ services:
 
   seq:
     image: datalust/seq:latest
-    
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+  
   definition.api:
     image: ${DOCKER_REGISTRY-}definition.api
     build:
@@ -29,6 +32,7 @@ services:
     depends_on:
       - postgres
       - nosqldata
+      - rabbitmq
       - seq
         
   job.api:
@@ -38,4 +42,5 @@ services:
       dockerfile: src/Services/Job/Job.Api/Dockerfile
     depends_on:
       - nosqldata
+      - rabbitmq
       - seq

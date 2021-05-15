@@ -1,17 +1,8 @@
-using System;
-using Career.Shared.Timing;
+using Career.EventHub;
 
 namespace Career.Domain.DomainEvent
 {
-    public abstract class DomainEvent: IDomainEvent
+    public abstract class DomainEvent : Event, IDomainEvent
     {
-        protected DomainEvent()
-        {
-            EventId = Guid.NewGuid();
-            OccurredOn = Clock.Now;
-        }
-        
-        public Guid EventId { get; }
-        public DateTime OccurredOn { get; }
     }
 }

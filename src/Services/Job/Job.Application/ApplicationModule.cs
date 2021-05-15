@@ -1,4 +1,5 @@
 using AutoMapper;
+using Career.CAP;
 using Career.IoC;
 using Career.IoC.IoCModule;
 using Job.Application.Job;
@@ -20,6 +21,7 @@ namespace Job.Application
             services.AddScoped<ICandidateRepository, CandidateRepository>();
             
             services.RegisterModule<DomainModule>();
+            services.RegisterCAPEventHandlers(this.GetType());
             services.AddAutoMapper(typeof(JobMappingProfile));
         }
     }

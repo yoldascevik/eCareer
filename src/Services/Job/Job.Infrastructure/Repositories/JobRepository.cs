@@ -62,5 +62,13 @@ namespace Job.Infrastructure.Repositories
 
         public async Task<Domain.JobAggregate.Job> UpdateAsync(Guid jobId, Domain.JobAggregate.Job job)
             => await _repository.UpdateAsync(jobId, job);
+
+        public async Task UpdateCompanyNamesInJob(Guid companyId, string companyName)
+        {
+            var filter = Builders<Domain.JobAggregate.Job>.Filter.Eq(x=> x.Company.RefId, companyId);
+            var update = Builders<Domain.JobAggregate.Job>.Update.Set(x => x.Company.Name, companyName);
+            
+            await _collection.UpdateManyAsync(filter, update);
+        }
     }
 }

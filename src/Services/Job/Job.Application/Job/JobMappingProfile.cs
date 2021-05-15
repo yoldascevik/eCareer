@@ -16,14 +16,15 @@ namespace Job.Application.Job
                 .IncludeAllDerived();
 
             CreateMap<Domain.JobAggregate.Job, JobDetailDto>();
+
+            CreateMap<IdNameRef, IdNameRefDto>();
+            CreateMap<CompanyRef, CompanyRefDto>();
             CreateMap<CandidateRef, CandidateSummaryDto>();
 
             CreateMap<TagRef, TagDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.TagId));
 
             CreateMap<JobLocation, JobLocationDto>();
-            
-            CreateMap<IdNameRef, IdNameRefDto>();
         }
     }
 }

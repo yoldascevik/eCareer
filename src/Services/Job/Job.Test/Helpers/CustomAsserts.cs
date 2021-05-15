@@ -24,7 +24,7 @@ namespace Job.Test.Helpers
                     if (expectedValue != null && actualValue != null)
                     {
                         Type expectedType = expectedValue.GetType();
-                        Type actualType = actualValue?.GetType();
+                        Type actualType = actualValue.GetType();
 
                         if ((expectedType.IsValueType || expectedType == typeof(string)) && (actualType.IsValueType || actualType == typeof(string)))
                         {

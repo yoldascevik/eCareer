@@ -17,5 +17,6 @@ namespace Job.Domain.JobAggregate.Repositories
         Task<bool> IsCandidateExistsAsync(Guid jobId, Guid userId);
         Task<Job> AddAsync(Job job);
         Task<Job> UpdateAsync(Guid jobId, Job job);
+        Task UpdateCompanyNamesInJob(Guid companyId, string companyName);
     }
 }

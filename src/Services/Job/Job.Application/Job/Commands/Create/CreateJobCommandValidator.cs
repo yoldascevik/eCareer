@@ -9,7 +9,9 @@ namespace Job.Application.Job.Commands.Create
         {
             var idNameRefDtoValidator = new IdNameRefDtoValidator();
             
-            RuleFor(x => x.CompanyId).NotNull();
+            RuleFor(x => x.Company).NotNull();
+            RuleFor(x => x.Company.RefId).NotNull().NotEmpty();
+            RuleFor(x => x.Company.Name).NotNull().NotEmpty();
             RuleFor(x => x.Job.Language).SetValidator(idNameRefDtoValidator);
             RuleFor(x => x.Job.Sector).SetValidator(idNameRefDtoValidator);
             RuleFor(x => x.Job.JobPosition).SetValidator(idNameRefDtoValidator);

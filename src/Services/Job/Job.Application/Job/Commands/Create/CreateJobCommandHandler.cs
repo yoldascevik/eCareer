@@ -22,7 +22,7 @@ namespace Job.Application.Job.Commands.Create
         public async Task<Guid> Handle(CreateJobCommand request, CancellationToken cancellationToken)
         {
             var job = Domain.JobAggregate.Job.Create(
-                    request.CompanyId,
+                    CompanyRef.Create(request.Company.RefId, request.Company.Name), 
                     request.Job.Title,
                     request.Job.Description,
                     SectorRef.Create(request.Job.Sector.RefId, request.Job.Sector.Name), 
@@ -35,7 +35,7 @@ namespace Job.Application.Job.Commands.Create
                 .SetGender(request.Job.Gender);
 
             await _jobRepository.AddAsync(job);
-            _logger.LogInformation("Created new job : \"{JobTitle}\" - \"{JobId}\" by company \"{CompanyId}\"", job.Title, job.Id, job.CompanyId);
+            _logger.LogInformation("Created new job : \"{JobTitle}\" - \"{JobId}\" by company \"{@Company}\"", job.Title, job.Id, job.Company);
             
             return job.Id;
         }

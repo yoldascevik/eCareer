@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Career.CAP.DomainEvent;
 using Career.CAP.Serializer;
-using Career.Domain.DomainEvent;
-using Career.Domain.DomainEvent.Dispatcher;
+using Career.EventHub;
 using Career.Exceptions;
 using DotNetCore.CAP;
 using DotNetCore.CAP.Serialization;
@@ -22,28 +20,26 @@ namespace Career.CAP
             return services;
         }
 
-        public static IServiceCollection AddCAPDomainEvents(this IServiceCollection services, params Type[] assemblyPointerTypes)
+        public static IServiceCollection RegisterCAPEvents(this IServiceCollection services, params Type[] assemblyPointerTypes)
         {
             Check.NotNull(assemblyPointerTypes, nameof(assemblyPointerTypes));
 
-            services.AddTransient<IDomainEventDispatcher, CAPDomainEventDispatcher>();
-            services.UseDomainEventDispatcherAttribute(assemblyPointerTypes);
-            services.AddCAPEventHandlers(assemblyPointerTypes);
+            services.AddTransient<IEventDispatcher, CAPEventDispatcher>();
 
             return services;
         }
 
-        public static IServiceCollection AddCAPEventHandlers(this IServiceCollection services, params Type[] assemblyPointerTypes)
+        public static IServiceCollection RegisterCAPEventHandlers(this IServiceCollection services, params Type[] assemblyPointerTypes)
         {
             Check.NotNull(assemblyPointerTypes, nameof(assemblyPointerTypes));
 
             foreach (Type assemblyPointerType in assemblyPointerTypes)
             {
-                List<Type> domainEventHandlers = assemblyPointerType.Assembly.GetTypes()
+                List<Type> eventHandlers = assemblyPointerType.Assembly.GetTypes()
                     .Where(t => t.IsClass && !t.IsAbstract && typeof(ICapSubscribe).IsAssignableFrom(t))
                     .ToList();
 
-                domainEventHandlers.ForEach(eventHandler => services.AddTransient(eventHandler));
+                eventHandlers.ForEach(eventHandler => services.AddTransient(eventHandler));
             }
 
             return services;

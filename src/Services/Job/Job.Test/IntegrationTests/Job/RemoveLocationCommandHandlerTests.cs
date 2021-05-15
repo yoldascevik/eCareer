@@ -5,7 +5,6 @@ using Bogus;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.RemoveLocation;
 using Job.Application.Job.Exceptions;
-using Job.Domain;
 using Job.Domain.JobAggregate;
 using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;

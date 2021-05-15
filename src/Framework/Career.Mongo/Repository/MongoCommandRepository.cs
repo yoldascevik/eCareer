@@ -7,8 +7,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Career.Domain;
-using Career.Domain.DomainEvent.Dispatcher;
 using Career.Domain.Entities;
+using Career.EventHub;
 using Career.Exceptions;
 using MongoDB.Bson;
 
@@ -17,9 +17,9 @@ namespace Career.Mongo.Repository
     public class MongoCommandRepository<T> : IMongoCommandRepository<T> where T : class
     {
         private IMongoCollection<T> Collection { get; }
-        private readonly IDomainEventDispatcher _domainEventDispatcher;
+        private readonly IEventDispatcher _domainEventDispatcher;
 
-        public MongoCommandRepository(IMongoContext context, IDomainEventDispatcher domainEventDispatcher)
+        public MongoCommandRepository(IMongoContext context, IEventDispatcher domainEventDispatcher)
         {
             Check.NotNull(context, nameof(context));
 

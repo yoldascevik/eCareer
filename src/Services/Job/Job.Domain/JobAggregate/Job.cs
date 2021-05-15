@@ -46,13 +46,13 @@ namespace Job.Domain.JobAggregate
             CreatorUserId = Guid.Empty; //Todo
         }
 
-        private Job(Guid companyId) : this()
+        private Job(CompanyRef company) : this()
         {
-            Check.NotNull(companyId, nameof(companyId));
+            Check.NotNull(company, nameof(company));
 
             _isCreated = true;
 
-            CompanyId = companyId;
+            Company = company;
             AddDomainEvent(new JobCreatedEvent(this));
         }
 
@@ -61,7 +61,7 @@ namespace Job.Domain.JobAggregate
         #region Properties
 
         public Guid Id { get; private set; }
-        public Guid CompanyId { get; private set; }
+        public CompanyRef Company { get;  private set; }
         public LanguageRef Language { get; private set; }
         public SectorRef Sector { get; private set; }
         public JobPositionRef JobPosition { get; private set; }
@@ -95,9 +95,9 @@ namespace Job.Domain.JobAggregate
 
         #region Methods
 
-        public static Job Create(Guid companyId, string title, string description, SectorRef sector, JobPositionRef jobPosition, LanguageRef language)
+        public static Job Create(CompanyRef company, string title, string description, SectorRef sector, JobPositionRef jobPosition, LanguageRef language)
         {
-            return new Job(companyId)
+            return new Job(company)
                 .SetTitle(title)
                 .SetDescription(description)
                 .SetSector(sector)

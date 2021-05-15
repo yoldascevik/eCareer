@@ -1,6 +1,5 @@
 using System;
 using Bogus;
-using Job.Domain.JobAggregate;
 using Job.Domain.JobAggregate.Refs;
 
 namespace Job.Test.Helpers
@@ -18,7 +17,7 @@ namespace Job.Test.Helpers
         {
             var faker = new Faker();
             var job = Domain.JobAggregate.Job.Create(
-                faker.Random.Guid(),
+                CompanyRef.Create(faker.Random.Guid(), faker.Company.CompanyName()),
                 faker.Lorem.Sentence(3),
                 faker.Lorem.Paragraph(),
                 SectorRef.Create(faker.Random.Guid().ToString(), faker.Lorem.Word()),

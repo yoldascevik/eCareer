@@ -3,7 +3,6 @@ using Career.Mongo.Context;
 using Career.Mongo.Repository;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Repositories;
-using CurriculumVitae.Data.Entities;
 
 namespace CurriculumVitae.Infrastructure.Repositories
 {

@@ -20,7 +20,6 @@ namespace CurriculumVitae.Application.Cv.Mapping
             // SocialProfileDto
             CreateMap<SocialProfile, SocialProfileDto>();
             
-            CreateMap<PersonalInfo, PersonalInfoDto>().ReverseMap();
             CreateMap<DrivingLicence, DrivingLicenceDto>();
             CreateMap<Education, EducationDto>();
             CreateMap<WorkExperience, WorkExperienceDto>();

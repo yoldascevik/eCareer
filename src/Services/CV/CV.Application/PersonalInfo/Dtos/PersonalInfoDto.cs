@@ -1,7 +1,7 @@
 using System;
 using CurriculumVitae.Core.Constants;
 
-namespace CurriculumVitae.Application.Cv.Dtos
+namespace CurriculumVitae.Application.PersonalInfo.Dtos
 {
     public class PersonalInfoDto
     {

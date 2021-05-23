@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Core.Entities;
-using CurriculumVitae.Data.Entities;
 
 namespace CurriculumVitae.Application.Cv.Dtos
 {

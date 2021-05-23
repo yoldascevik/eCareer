@@ -1,6 +1,5 @@
 using Career.Mongo.Mapping;
 using CurriculumVitae.Core.Entities;
-using CurriculumVitae.Data.Entities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;

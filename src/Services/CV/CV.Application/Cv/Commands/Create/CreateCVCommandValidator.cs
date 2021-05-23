@@ -1,4 +1,4 @@
-using CurriculumVitae.Application.Cv.Validators;
+using CurriculumVitae.Application.PersonalInfo.Validators;
 using FluentValidation;
 
 namespace CurriculumVitae.Application.Cv.Commands.Create

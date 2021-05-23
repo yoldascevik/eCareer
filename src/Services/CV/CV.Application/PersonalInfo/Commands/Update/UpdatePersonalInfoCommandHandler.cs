@@ -7,7 +7,7 @@ using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.Cv.Commands.UpdatePersonalInfo
+namespace CurriculumVitae.Application.PersonalInfo.Commands.Update
 {
     public class UpdatePersonalInfoCommandHandler: ICommandHandler<UpdatePersonalInfoCommand>
     {

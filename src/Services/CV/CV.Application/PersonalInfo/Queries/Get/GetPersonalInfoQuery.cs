@@ -1,8 +1,8 @@
 using Career.Exceptions;
 using Career.MediatR.Query;
-using CurriculumVitae.Application.Cv.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 
-namespace CurriculumVitae.Application.Cv.Queries.GetPersonalInfo
+namespace CurriculumVitae.Application.PersonalInfo.Queries.Get
 {
     public class GetPersonalInfoQuery: IQuery<PersonalInfoDto>
     {

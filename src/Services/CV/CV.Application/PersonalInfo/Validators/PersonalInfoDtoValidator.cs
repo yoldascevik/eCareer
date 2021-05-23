@@ -1,7 +1,7 @@
-using CurriculumVitae.Application.Cv.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Cv.Validators
+namespace CurriculumVitae.Application.PersonalInfo.Validators
 {
     public class PersonalInfoDtoValidator : AbstractValidator<PersonalInfoDto>
     {

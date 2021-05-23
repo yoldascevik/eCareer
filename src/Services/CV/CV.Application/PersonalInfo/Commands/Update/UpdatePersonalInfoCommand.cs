@@ -1,7 +1,7 @@
 using Career.MediatR.Command;
-using CurriculumVitae.Application.Cv.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 
-namespace CurriculumVitae.Application.Cv.Commands.UpdatePersonalInfo
+namespace CurriculumVitae.Application.PersonalInfo.Commands.Update
 {
     public class UpdatePersonalInfoCommand : ICommand
     {

@@ -2,11 +2,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Query;
-using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Application.Cv.Exceptions;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.Cv.Queries.GetPersonalInfo
+namespace CurriculumVitae.Application.PersonalInfo.Queries.Get
 {
     public class GetPersonalInfoQueryHandler : IQueryHandler<GetPersonalInfoQuery, PersonalInfoDto>
     {

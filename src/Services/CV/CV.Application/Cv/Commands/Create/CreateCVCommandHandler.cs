@@ -5,7 +5,6 @@ using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Repositories;
-using CurriculumVitae.Data.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace CurriculumVitae.Application.Cv.Commands.Create
@@ -31,7 +30,7 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
             var cv = new CV()
             {
                 UserId = request.UserId,
-                PersonalInfo = _mapper.Map<PersonalInfo>(request.PersonalInfo)
+                PersonalInfo = _mapper.Map<Core.Entities.PersonalInfo>(request.PersonalInfo)
             };
 
             await _cvRepository.AddAsync(cv);

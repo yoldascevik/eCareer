@@ -17,4 +17,9 @@
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="PersonalInfo\Commands" />
+      <Folder Include="PersonalInfo\Queries" />
+    </ItemGroup>
+
 </Project>

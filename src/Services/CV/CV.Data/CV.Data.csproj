@@ -5,4 +5,9 @@
         <RootNamespace>CurriculumVitae.Data</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Domain\Career.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -44,7 +44,7 @@ namespace Job.Api.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateTagCommand tagCommand)
         {
             Guid tagId = await _mediator.Send(tagCommand);
-            return CreatedAtAction(nameof(Get), new {id = tagId});
+            return CreatedAtAction(nameof(Get), new {id = tagId}, null);
         }
 
         /// <summary>

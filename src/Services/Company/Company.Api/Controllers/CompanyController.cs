@@ -76,7 +76,7 @@ namespace Company.Api.Controllers
         public async Task<IActionResult> CreateAsync([FromBody] CreateCompanyCommand request)
         {
             Guid companyId = await _mediator.Send(request);
-            return CreatedAtAction(nameof(Get), new {id = companyId});
+            return CreatedAtAction(nameof(Get), new {id = companyId}, null);
         }
 
         /// <summary>

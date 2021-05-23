@@ -1,8 +1,12 @@
 using ARConsistency;
 using Career.Exceptions;
+using Career.IoC;
+using Career.Mongo;
 using Career.Mvc.Extensions;
 using Career.Shared.Timing;
 using Career.Swagger;
+using CurriculumVitae.Application;
+using CurriculumVitae.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -34,13 +38,11 @@ namespace CurriculumVitae.Api
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
-            // services.AddMongoContext<JobDbContext>();
-            // services.AddMongo();
-            //
-            // JobDbContext.Configure();
+            services.AddMongoContext<CvDbContext>();
+            services.AddMongo();
+            CvDbContext.Configure();
             
-            // services.RegisterModule<ApplicationModule>();
-            // services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
+            services.RegisterModule<ApplicationModule>();
             services.AddSwagger();
         }
 

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>CurriculumVitae.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />
+      <ProjectReference Include="..\CV.Core\CV.Core.csproj" />
+      <ProjectReference Include="..\CV.Infrastructure\CV.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    </ItemGroup>
+
+</Project>

@@ -70,7 +70,7 @@ namespace Job.Api.Controllers
         {
             Guid jobId = await _mediator.Send(request);
 
-            return CreatedAtAction(nameof(Get), new {id = jobId});
+            return CreatedAtAction(nameof(Get), new {id = jobId},null);
         }
 
         /// <summary>

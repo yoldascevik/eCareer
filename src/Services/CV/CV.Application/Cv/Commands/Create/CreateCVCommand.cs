@@ -7,6 +7,6 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
     public class CreateCVCommand: ICommand<CVSummaryDto>
     {
         public Guid UserId { get; set; }
-        public PersonalInfoDto PersonalInfoDto { get; set; }
+        public PersonalInfoDto PersonalInfo { get; set; }
     }
 }

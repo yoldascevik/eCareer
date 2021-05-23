@@ -31,7 +31,7 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
             var cv = new CV()
             {
                 UserId = request.UserId,
-                PersonalInfo = _mapper.Map<PersonalInfo>(request.PersonalInfoDto)
+                PersonalInfo = _mapper.Map<PersonalInfo>(request.PersonalInfo)
             };
 
             await _cvRepository.AddAsync(cv);

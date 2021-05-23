@@ -8,7 +8,7 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
         public CreateCVCommandValidator()
         {
             RuleFor(x => x.UserId).NotEmpty();
-            RuleFor(x => x.PersonalInfoDto).SetValidator(new PersonalInfoDtoValidator());
+            RuleFor(x => x.PersonalInfo).SetValidator(new PersonalInfoDtoValidator());
         }
     }
 }

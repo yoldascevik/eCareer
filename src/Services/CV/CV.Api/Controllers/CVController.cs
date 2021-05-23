@@ -51,7 +51,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="id">CV id</param>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Create(string id)
+        public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteCVCommand(id)));
     }
 }

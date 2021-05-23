@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
 {
-    [Route("api/cv")]
+    [Route("api/cv/{cvId}")]
     public class PersonalInfoController : CVApiControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,18 +21,18 @@ namespace CurriculumVitae.Api.Controllers
         /// <summary>
         /// Get personal info from cv
         /// </summary>
-        /// <param name="id">CV id</param>
-        [HttpGet("{id}/personal")]
-        public async Task<IActionResult> GetPersonalInfo(string id)
-            => Ok(await _mediator.Send(new GetPersonalInfoQuery(id)));
+        /// <param name="cvId">CV id</param>
+        [HttpGet("personal")]
+        public async Task<IActionResult> Get(string cvId)
+            => Ok(await _mediator.Send(new GetPersonalInfoQuery(cvId)));
 
         /// <summary>
         /// Update personal info
         /// </summary>
-        /// <param name="id">CV id</param>
+        /// <param name="cvId">CV id</param>
         /// <param name="personalInfo">Personal Info</param>
-        [HttpPut("{id}/personal")]
-        public async Task<IActionResult> UpdatePersonalInfo(string id, [FromBody] PersonalInfoDto personalInfo)
-            => Ok(await _mediator.Send(new UpdatePersonalInfoCommand(id, personalInfo)));
+        [HttpPut("personal")]
+        public async Task<IActionResult> Update(string cvId, [FromBody] PersonalInfoDto personalInfo)
+            => Ok(await _mediator.Send(new UpdatePersonalInfoCommand(cvId, personalInfo)));
     }
 }

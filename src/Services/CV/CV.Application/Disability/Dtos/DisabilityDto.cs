@@ -1,15 +1,14 @@
 using System;
-using Career.Domain;
 
-namespace CurriculumVitae.Core.Entities
+namespace CurriculumVitae.Application.Disability.Dtos
 {
-    public class Disability : EntityBase, ISoftDeletable
+    public class DisabilityDto
     {
-        public string TypeId { get; set; }
+        public string Id { get; set; }
+        public DisabilityTypeDto Type { get; set; }
         public float Rate { get; set; }
         public DateTime? CertificateStartDate { get; set; }
         public DateTime? CertificateExpireDate { get; set; }
         public string Notes { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Entities;
@@ -15,8 +16,9 @@ namespace CurriculumVitae.Application.Cv.Mapping
             CreateMap<CV, CVSummaryDto>()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(s => s.PersonalInfo.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(s => s.PersonalInfo.LastName))
-                .ForMember(dest => dest.Gender, opt => opt.MapFrom(s => s.PersonalInfo.Gender));
-            
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(s => s.PersonalInfo.Gender))
+                .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.PersonalInfo.Disabilities.Any()));
+                
             // SocialProfileDto
             CreateMap<SocialProfile, SocialProfileDto>();
             

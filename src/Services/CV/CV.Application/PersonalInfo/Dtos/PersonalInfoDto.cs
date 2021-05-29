@@ -12,5 +12,6 @@ namespace CurriculumVitae.Application.PersonalInfo.Dtos
         public DateTime DateOfBirth { get; set; }
         public string Phone { get; set; }
         public string Nationality { get; set; }
+        public bool DisabledPerson { get; set; }
     }
 }

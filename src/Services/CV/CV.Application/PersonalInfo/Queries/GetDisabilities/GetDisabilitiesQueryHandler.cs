@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Career.Domain.Extensions;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
@@ -29,7 +29,7 @@ namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities
                 throw new CVNotFoundException(request.CvId);
             }
             
-            return _mapper.Map<List<DisabilityDto>>(cv.PersonalInfo.Disabilities.Where(x=> !x.IsDeleted));
+            return _mapper.Map<List<DisabilityDto>>(cv.PersonalInfo.Disabilities.ExcludeDeletedItems());
         }
     }
 }

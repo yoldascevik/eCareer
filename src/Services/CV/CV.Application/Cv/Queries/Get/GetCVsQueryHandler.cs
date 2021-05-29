@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Career.Data.Pagination;
+using Career.Domain.Extensions;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Repositories;
@@ -23,7 +24,8 @@ namespace CurriculumVitae.Application.Cv.Queries.Get
 
         public async Task<PagedList<CVSummaryDto>> Handle(GetCVsQuery request, CancellationToken cancellationToken)
         {
-            PagedList<CVSummaryDto> cvList = await _cvRepository.Get(x => !x.IsDeleted)
+            PagedList<CVSummaryDto> cvList = await _cvRepository.Get()
+                .ExcludeDeletedItems()
                 .OrderBy(x => x.PersonalInfo.FirstName)
                 .ProjectTo<CVSummaryDto>(_mapper.ConfigurationProvider)
                 .ToPagedListAsync(request);

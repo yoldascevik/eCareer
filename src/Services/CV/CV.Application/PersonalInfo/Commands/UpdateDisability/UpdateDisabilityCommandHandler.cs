@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Career.Domain.Extensions;
 using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Application.DisabilityType.Exceptions;
@@ -39,7 +40,7 @@ namespace CurriculumVitae.Application.PersonalInfo.Commands.UpdateDisability
                 throw new CVNotFoundException(request.CvId);
             }
             
-            var disability = cv.PersonalInfo.Disabilities.FirstOrDefault(x=> x.Id == request.DisabilityId && !x.IsDeleted);
+            var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().FirstOrDefault(x=> x.Id == request.DisabilityId);
             if (disability == null)
             {
                 throw new DisabilityNotFoundException(request.DisabilityId);

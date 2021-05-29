@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Career.Domain.Extensions;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
@@ -29,7 +30,7 @@ namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById
                 throw new CVNotFoundException(request.CvId);
             }
 
-            var disability = cv.PersonalInfo.Disabilities.First(x => x.Id == request.DisabilityId && !x.IsDeleted);
+            var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().First(x => x.Id == request.DisabilityId);
             if (disability == null)
             {
                 throw new DisabilityNotFoundException(request.DisabilityId);

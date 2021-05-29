@@ -1,6 +1,6 @@
 using Career.Exceptions.Exceptions;
 
-namespace CurriculumVitae.Application.PersonalInfo.Exceptions
+namespace CurriculumVitae.Application.PersonalInfo
 {
     public class DisabilityNotFoundException: NotFoundException
     {

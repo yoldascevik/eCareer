@@ -15,6 +15,12 @@ namespace CurriculumVitae.Infrastructure.Repositories
         }
 
         public async Task<bool> ExistsByIdAsync(string id)
-            => await AnyAsync(x => x.Id == id);
+            => await AnyAsync(x => x.Id == id && !x.IsDeleted);
+
+        public async Task<bool> ExistsByNameAsync(string name)
+            => await AnyAsync(x => x.Name.ToLowerInvariant() == name.ToLowerInvariant() && !x.IsDeleted);
+
+        public async Task<DisabilityType> GetByNameAsync(string name)
+            => await FirstOrDefaultAsync(x => x.Name.ToLowerInvariant() == name.ToLowerInvariant() && !x.IsDeleted);
     }
 }

@@ -1,5 +1,5 @@
 using AutoMapper;
-using CurriculumVitae.Application.DisabilityType.Dtos;
+using CurriculumVitae.Application.DisabilityType;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 
 namespace CurriculumVitae.Application.PersonalInfo.Mapping

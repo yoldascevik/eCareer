@@ -1,6 +1,6 @@
 using Career.Exceptions.Exceptions;
 
-namespace CurriculumVitae.Application.Cv.Exceptions
+namespace CurriculumVitae.Application.Cv
 {
     public class CVNotFoundException: NotFoundException
     {

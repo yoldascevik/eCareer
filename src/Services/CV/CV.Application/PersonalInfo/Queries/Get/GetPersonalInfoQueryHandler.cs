@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Query;
-using CurriculumVitae.Application.Cv.Exceptions;
+using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Core.Repositories;
 

@@ -7,5 +7,7 @@ namespace CurriculumVitae.Core.Repositories
     public interface IDisabilityTypeRepository : IRepository<DisabilityType>
     {
         Task<bool> ExistsByIdAsync(string id);
+        Task<bool> ExistsByNameAsync(string name);
+        Task<DisabilityType> GetByNameAsync(string name);
     }
 }

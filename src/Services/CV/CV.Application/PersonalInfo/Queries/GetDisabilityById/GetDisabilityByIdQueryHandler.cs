@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.Domain.Extensions;
 using Career.MediatR.Query;
-using CurriculumVitae.Application.Cv.Exceptions;
+using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
-using CurriculumVitae.Application.PersonalInfo.Exceptions;
 using CurriculumVitae.Core.Repositories;
 
 namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById

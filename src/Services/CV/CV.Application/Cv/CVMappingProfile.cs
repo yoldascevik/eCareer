@@ -4,7 +4,7 @@ using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Data.Entities;
 
-namespace CurriculumVitae.Application.Cv.Mapping
+namespace CurriculumVitae.Application.Cv
 {
     public class CVMappingProfile: Profile
     {

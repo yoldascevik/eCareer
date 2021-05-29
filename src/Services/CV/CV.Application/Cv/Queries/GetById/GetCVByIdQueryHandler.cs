@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Dtos;
-using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Core.Repositories;
 
 namespace CurriculumVitae.Application.Cv.Queries.GetById

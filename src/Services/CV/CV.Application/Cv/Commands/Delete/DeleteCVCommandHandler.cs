@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
-using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;

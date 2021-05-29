@@ -1,4 +1,4 @@
-namespace CurriculumVitae.Application.Disability.Dtos
+namespace CurriculumVitae.Application.DisabilityType.Dtos
 {
     public class DisabilityTypeDto
     {

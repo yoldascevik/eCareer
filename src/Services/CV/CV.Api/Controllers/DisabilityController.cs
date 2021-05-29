@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Disability.Commands.Add;
+using CurriculumVitae.Application.Disability.Commands.Update;
 using CurriculumVitae.Application.Disability.Dtos;
 using CurriculumVitae.Application.Disability.Queries.Get;
 using CurriculumVitae.Application.Disability.Queries.GetById;
@@ -44,5 +45,15 @@ namespace CurriculumVitae.Api.Controllers
             var disability = await _mediator.Send(new AddDisabilityCommand(cvId, disabilityInfo));
             return CreatedAtAction(nameof(Get), new { cvId, disability.Id}, disability);
         }
+
+        /// <summary>
+        /// Update person disability
+        /// </summary>
+        /// <param name="cvId">Cv Id</param>
+        /// <param name="id">Disability Id</param>
+        /// <param name="disabilityInfo">Disability Info</param>
+        [HttpPut("disabilities/{id}")]
+        public async Task<IActionResult> Update(string cvId, string id, [FromBody] DisabilityInputDto disabilityInfo)
+            => Ok(await _mediator.Send(new UpdateDisabilityCommand(cvId, id, disabilityInfo)));
     }
 }

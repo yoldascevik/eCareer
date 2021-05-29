@@ -13,6 +13,8 @@ namespace CurriculumVitae.Application
         public void Configure(IServiceCollection services)
         {
             services.AddScoped<ICVRepository, CVRepository>();
+            services.AddScoped<IDisabilityTypeRepository, DisabilityTypeRepository>();
+            
             services.AddSingleton<IStringIdGenerator, StringObjectIdGenerator>();
 
             services.AddMediatRWithFluentValidation(this.GetType());

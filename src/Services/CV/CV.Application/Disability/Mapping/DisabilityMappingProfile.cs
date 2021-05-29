@@ -1,6 +1,7 @@
 using AutoMapper;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Application.Disability.Dtos;
+using CurriculumVitae.Application.DisabilityType.Dtos;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Data.Entities;
 

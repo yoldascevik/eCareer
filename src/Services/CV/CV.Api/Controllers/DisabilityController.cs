@@ -4,9 +4,6 @@ using CurriculumVitae.Application.Disability.Commands.Add;
 using CurriculumVitae.Application.Disability.Dtos;
 using CurriculumVitae.Application.Disability.Queries.Get;
 using CurriculumVitae.Application.Disability.Queries.GetById;
-using CurriculumVitae.Application.PersonalInfo.Commands.Update;
-using CurriculumVitae.Application.PersonalInfo.Dtos;
-using CurriculumVitae.Application.PersonalInfo.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +44,5 @@ namespace CurriculumVitae.Api.Controllers
             var disability = await _mediator.Send(new AddDisabilityCommand(cvId, disabilityInfo));
             return CreatedAtAction(nameof(Get), new { cvId, disability.Id}, disability);
         }
-
     }
 }

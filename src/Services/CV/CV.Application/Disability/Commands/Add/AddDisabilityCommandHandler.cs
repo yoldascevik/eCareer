@@ -2,11 +2,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Command;
+using Career.Shared.Generators;
 using CurriculumVitae.Application.Cv.Exceptions;
 using CurriculumVitae.Application.Disability.Dtos;
 using CurriculumVitae.Core.Repositories;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 
 namespace CurriculumVitae.Application.Disability.Commands.Add
 {
@@ -14,13 +14,19 @@ namespace CurriculumVitae.Application.Disability.Commands.Add
     {
         private readonly IMapper _mapper;
         private readonly ICVRepository _cvRepository;
+        private readonly IStringIdGenerator _stringIdGenerator;
         private readonly ILogger<AddDisabilityCommandHandler> _logger;
 
-        public AddDisabilityCommandHandler(ICVRepository cvRepository, IMapper mapper, ILogger<AddDisabilityCommandHandler> logger)
+        public AddDisabilityCommandHandler(
+            ICVRepository cvRepository, 
+            IStringIdGenerator stringIdGenerator, 
+            IMapper mapper, 
+            ILogger<AddDisabilityCommandHandler> logger)
         {
-            _cvRepository = cvRepository;
             _mapper = mapper;
             _logger = logger;
+            _cvRepository = cvRepository;
+            _stringIdGenerator = stringIdGenerator;
         }
 
         public async Task<DisabilityDto> Handle(AddDisabilityCommand request, CancellationToken cancellationToken)
@@ -30,8 +36,12 @@ namespace CurriculumVitae.Application.Disability.Commands.Add
             {
                 throw new CVNotFoundException(request.CvId);
             }
-            
+
+            // todo: disability type kontrolü yapılacak. 
+
             var disability = _mapper.Map<Core.Entities.Disability>(request.DisabilityInfo);
+            disability.Id = _stringIdGenerator.Generate();
+
             cv.PersonalInfo.Disabilities.Add(disability);
 
             await _cvRepository.UpdateAsync(cv.Id, cv);

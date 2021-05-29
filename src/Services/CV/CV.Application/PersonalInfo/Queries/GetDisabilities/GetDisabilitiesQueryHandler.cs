@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Exceptions;
-using CurriculumVitae.Application.Disability.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.Disability.Queries.Get
+namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities
 {
     public class GetDisabilitiesQueryHandler : IQueryHandler<GetDisabilitiesQuery, List<DisabilityDto>>
     {

@@ -1,6 +1,6 @@
 using Career.MediatR.Command;
 
-namespace CurriculumVitae.Application.Disability.Commands.Delete
+namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability
 {
     public class DeleteDisabilityCommand : ICommand
     {

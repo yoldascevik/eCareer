@@ -1,7 +1,7 @@
-using CurriculumVitae.Application.Disability.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Disability.Validators
+namespace CurriculumVitae.Application.PersonalInfo.Validators
 {
     public class DisabilityInputDtoValidator : AbstractValidator<DisabilityInputDto>
     {

@@ -1,8 +1,13 @@
 using System.Threading.Tasks;
 using CurriculumVitae.Api.Controllers.Base;
+using CurriculumVitae.Application.PersonalInfo.Commands.AddDisability;
+using CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability;
 using CurriculumVitae.Application.PersonalInfo.Commands.Update;
+using CurriculumVitae.Application.PersonalInfo.Commands.UpdateDisability;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Queries.Get;
+using CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities;
+using CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,5 +39,50 @@ namespace CurriculumVitae.Api.Controllers
         [HttpPut("personal")]
         public async Task<IActionResult> Update(string cvId, [FromBody] PersonalInfoDto personalInfo)
             => Ok(await _mediator.Send(new UpdatePersonalInfoCommand(cvId, personalInfo)));
+
+        /// <summary>
+        /// Get person disability info
+        /// </summary>
+        [HttpGet("personal/disabilities")]
+        public async Task<IActionResult> GetDisability(string cvId)
+            => Ok(await _mediator.Send(new GetDisabilitiesQuery(cvId)));
+
+        /// <summary>
+        /// Get person disability by id
+        /// </summary>
+        [HttpGet("personal/disabilities/{id}")]
+        public async Task<IActionResult> GetDisabilities(string cvId, string id)
+            => Ok(await _mediator.Send(new GetDisabilityByIdQuery(cvId, id)));
+
+        /// <summary>
+        /// Add new disability to personal info
+        /// </summary>
+        /// <param name="cvId">Cv Id</param>
+        /// <param name="disabilityInfo">Disability Info</param>
+        [HttpPost("personal/disabilities")]
+        public async Task<IActionResult> CreateDisability(string cvId, [FromBody] DisabilityInputDto disabilityInfo)
+        {
+            var disability = await _mediator.Send(new AddDisabilityCommand(cvId, disabilityInfo));
+            return CreatedAtAction(nameof(Get), new {cvId, disability.Id}, disability);
+        }
+
+        /// <summary>
+        /// Update person disability
+        /// </summary>
+        /// <param name="cvId">Cv Id</param>
+        /// <param name="id">Disability Id</param>
+        /// <param name="disabilityInfo">Disability Info</param>
+        [HttpPut("personal/disabilities/{id}")]
+        public async Task<IActionResult> UpdateDisability(string cvId, string id, [FromBody] DisabilityInputDto disabilityInfo)
+            => Ok(await _mediator.Send(new UpdateDisabilityCommand(cvId, id, disabilityInfo)));
+
+        /// <summary>
+        /// Delete person disability
+        /// </summary>
+        /// <param name="cvId">Cv Id</param>
+        /// <param name="id">Disability Id</param>
+        [HttpDelete("personal/disabilities/{id}")]
+        public async Task<IActionResult> DeleteDisability(string cvId, string id)
+            => Ok(await _mediator.Send(new DeleteDisabilityCommand(cvId, id)));
     }
 }

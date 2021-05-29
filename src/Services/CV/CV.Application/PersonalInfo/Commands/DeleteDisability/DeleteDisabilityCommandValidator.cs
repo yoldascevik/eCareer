@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Disability.Commands.Delete
+namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability
 {
     public class DeleteDisabilityCommandValidator : AbstractValidator<DeleteDisabilityCommand>
     {

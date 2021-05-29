@@ -1,7 +1,7 @@
 using Career.MediatR.Command;
-using CurriculumVitae.Application.Disability.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 
-namespace CurriculumVitae.Application.Disability.Commands.Add
+namespace CurriculumVitae.Application.PersonalInfo.Commands.AddDisability
 {
     public class AddDisabilityCommand : ICommand<DisabilityDto>
     {

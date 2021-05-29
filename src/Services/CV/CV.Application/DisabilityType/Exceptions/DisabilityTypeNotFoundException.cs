@@ -1,5 +1,3 @@
-using System.Net;
-using Career.Exceptions;
 using Career.Exceptions.Exceptions;
 
 namespace CurriculumVitae.Application.DisabilityType.Exceptions

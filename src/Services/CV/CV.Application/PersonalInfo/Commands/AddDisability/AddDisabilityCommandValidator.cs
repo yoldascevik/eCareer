@@ -1,7 +1,7 @@
-using CurriculumVitae.Application.Disability.Validators;
+using CurriculumVitae.Application.PersonalInfo.Validators;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Disability.Commands.Add
+namespace CurriculumVitae.Application.PersonalInfo.Commands.AddDisability
 {
     public class AddDisabilityCommandValidator : AbstractValidator<AddDisabilityCommand>
     {

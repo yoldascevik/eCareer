@@ -1,6 +1,6 @@
 using System;
 
-namespace CurriculumVitae.Application.Disability.Dtos
+namespace CurriculumVitae.Application.PersonalInfo.Dtos
 {
     public class DisabilityInputDto
     {

@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Exceptions;
-using CurriculumVitae.Application.Disability.Dtos;
-using CurriculumVitae.Application.Disability.Exceptions;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Exceptions;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.Disability.Queries.GetById
+namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById
 {
     public class GetDisabilityByIdQueryHandler : IQueryHandler<GetDisabilityByIdQuery, DisabilityDto>
     {

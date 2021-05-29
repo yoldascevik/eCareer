@@ -3,14 +3,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv.Exceptions;
-using CurriculumVitae.Application.Disability.Commands.Update;
-using CurriculumVitae.Application.Disability.Exceptions;
-using CurriculumVitae.Application.DisabilityType.Exceptions;
+using CurriculumVitae.Application.PersonalInfo.Exceptions;
 using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.Disability.Commands.Delete
+namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability
 {
     public class DeleteDisabilityCommandHandler : ICommandHandler<DeleteDisabilityCommand>
     {

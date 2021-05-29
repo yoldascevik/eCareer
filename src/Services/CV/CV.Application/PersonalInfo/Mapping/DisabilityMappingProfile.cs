@@ -1,11 +1,8 @@
 using AutoMapper;
-using CurriculumVitae.Application.Cv.Dtos;
-using CurriculumVitae.Application.Disability.Dtos;
 using CurriculumVitae.Application.DisabilityType.Dtos;
-using CurriculumVitae.Core.Entities;
-using CurriculumVitae.Data.Entities;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 
-namespace CurriculumVitae.Application.Disability.Mapping
+namespace CurriculumVitae.Application.PersonalInfo.Mapping
 {
     public class DisabilityMappingProfile: Profile
     {

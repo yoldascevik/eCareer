@@ -1,4 +1,3 @@
-using Career.Mongo.Repository.Contracts;
 using Career.Repositories.Repository;
 using CurriculumVitae.Core.Entities;
 

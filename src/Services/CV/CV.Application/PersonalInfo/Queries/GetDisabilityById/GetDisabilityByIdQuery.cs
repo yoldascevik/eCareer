@@ -1,7 +1,7 @@
 using Career.MediatR.Query;
-using CurriculumVitae.Application.Disability.Dtos;
+using CurriculumVitae.Application.PersonalInfo.Dtos;
 
-namespace CurriculumVitae.Application.Disability.Queries.GetById
+namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById
 {
     public class GetDisabilityByIdQuery : IQuery<DisabilityDto>
     {

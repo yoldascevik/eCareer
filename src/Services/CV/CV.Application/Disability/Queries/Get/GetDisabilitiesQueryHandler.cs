@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -27,8 +28,8 @@ namespace CurriculumVitae.Application.Disability.Queries.Get
             {
                 throw new CVNotFoundException(request.CvId);
             }
-
-            return _mapper.Map<List<DisabilityDto>>(cv.PersonalInfo.Disabilities);
+            
+            return _mapper.Map<List<DisabilityDto>>(cv.PersonalInfo.Disabilities.Where(x=> !x.IsDeleted));
         }
     }
 }

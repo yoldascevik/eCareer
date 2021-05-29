@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Disability.Commands.Add;
+using CurriculumVitae.Application.Disability.Commands.Delete;
 using CurriculumVitae.Application.Disability.Commands.Update;
 using CurriculumVitae.Application.Disability.Dtos;
 using CurriculumVitae.Application.Disability.Queries.Get;
@@ -55,5 +56,14 @@ namespace CurriculumVitae.Api.Controllers
         [HttpPut("disabilities/{id}")]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] DisabilityInputDto disabilityInfo)
             => Ok(await _mediator.Send(new UpdateDisabilityCommand(cvId, id, disabilityInfo)));
+        
+        /// <summary>
+        /// Delete person disability
+        /// </summary>
+        /// <param name="cvId">Cv Id</param>
+        /// <param name="id">Disability Id</param>
+        [HttpDelete("disabilities/{id}")]
+        public async Task<IActionResult> Delete(string cvId, string id)
+            => Ok(await _mediator.Send(new DeleteDisabilityCommand(cvId, id)));
     }
 }

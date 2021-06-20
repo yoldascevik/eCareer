@@ -1,6 +1,9 @@
+using Career.CAP;
+using Career.IoC;
 using Career.IoC.IoCModule;
 using Career.MediatR;
 using Career.Shared.Generators;
+using CurriculumVitae.Core;
 using CurriculumVitae.Core.Repositories;
 using CurriculumVitae.Infrastructure.Repositories;
 using CurriculumVitae.Infrastructure.Utilities;
@@ -19,6 +22,9 @@ namespace CurriculumVitae.Application
 
             services.AddMediatRWithFluentValidation(this.GetType());
             services.AddAutoMapper(this.GetType());
+            
+            services.RegisterModule<CoreModule>();
+            services.RegisterCAPEventHandlers(this.GetType());
         }
     }
 }

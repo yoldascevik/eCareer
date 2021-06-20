@@ -1,4 +1,5 @@
 using ARConsistency;
+using Career.CAP;
 using Career.Exceptions;
 using Career.IoC;
 using Career.Mongo;
@@ -44,6 +45,27 @@ namespace CurriculumVitae.Api
             
             services.RegisterModule<ApplicationModule>();
             services.AddSwagger();
+            
+            services.AddCareerCAP(capOptions =>
+            {
+                capOptions.UseRabbitMQ(opt => // Transport
+                {
+                    opt.Password = Configuration["rabbitMQSettings:password"];
+                    opt.UserName = Configuration["rabbitMQSettings:username"];
+                    opt.HostName = Configuration["rabbitMQSettings:host"];
+                    opt.Port = int.Parse(Configuration["rabbitMQSettings:port"]);
+                });
+                capOptions.UseMongoDB(opt => // Persistence
+                {
+                    opt.DatabaseConnection = Configuration["mongo:connectionString"];
+                    opt.DatabaseName = Configuration["mongo:database"] +  "EventHistories";
+                    opt.PublishedCollection = "publishedEvents";
+                    opt.ReceivedCollection = "receivedEvents";
+                });
+                capOptions.UseDashboard();
+                capOptions.FailedRetryCount = 3;
+                capOptions.FailedRetryInterval = 60;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.CAP\Career.CAP.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.IoC\Career.IoC.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />

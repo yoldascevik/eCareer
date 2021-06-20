@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Domain.Extensions;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv;
-using CurriculumVitae.Application.DisabilityType;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
-using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Repositories;
 
 namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities

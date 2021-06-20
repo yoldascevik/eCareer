@@ -5,17 +5,18 @@ using CurriculumVitae.Application.DisabilityType.Commands.Create;
 using CurriculumVitae.Application.DisabilityType.Commands.Delete;
 using CurriculumVitae.Application.DisabilityType.Commands.Update;
 using CurriculumVitae.Application.DisabilityType.Queries.Get;
+using CurriculumVitae.Application.DisabilityType.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
 {
     [Route("api/disability-types")]
-    public class DisabilityType : CVApiControllerBase
+    public class DisabilityTypeController : CVApiControllerBase
     {
         private readonly IMediator _mediator;
 
-        public DisabilityType(IMediator mediator)
+        public DisabilityTypeController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -28,6 +29,14 @@ namespace CurriculumVitae.Api.Controllers
             => Ok(await _mediator.Send(request));
 
 
+        /// <summary>
+        /// Get disability type by id
+        /// </summary>
+        /// <param name="id">Disability type id</param>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
+            => Ok(await _mediator.Send(new GetDisabilityTypeByIdQuery(id)));
+        
         /// <summary>
         /// Create new disability type
         /// </summary>
@@ -45,7 +54,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Disability type id</param>
         /// <param name="name">Disability type name</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Delete(string id, string name)
+        public async Task<IActionResult> Update(string id, string name)
             => Ok(await _mediator.Send(new UpdateDisabilityTypeCommand(id, name)));
 
         /// <summary>

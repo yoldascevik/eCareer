@@ -1,6 +1,5 @@
 using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv.Dtos;
-using CurriculumVitae.Core.Entities;
 
 namespace CurriculumVitae.Application.Cv.Commands.UpdateLocation
 {

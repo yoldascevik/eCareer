@@ -17,6 +17,7 @@ namespace CurriculumVitae.Application
         {
             services.AddScoped<ICVRepository, CVRepository>();
             services.AddScoped<IDisabilityTypeRepository, DisabilityTypeRepository>();
+            services.AddScoped<ISocialProfileTypeRepository, SocialProfileTypeRepository>();
             
             services.AddSingleton<IStringIdGenerator, StringObjectIdGenerator>();
 

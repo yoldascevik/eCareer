@@ -24,8 +24,11 @@ namespace CurriculumVitae.Application.PersonalInfo.Events.EventHandlers
         {
             Check.NotNull(domainEvent, nameof(domainEvent));
 
-            await _cvRepository.UpdateAllDisabilityTypeNamesInCV(domainEvent.DisabilityType);
-            _logger.LogInformation("Disability type name {Name} updated in all cvs", domainEvent.DisabilityType.Name);
+            if (!domainEvent.DisabilityType.IsDeleted)
+            {
+                await _cvRepository.UpdateAllDisabilityTypeNamesInCV(domainEvent.DisabilityType);
+                _logger.LogInformation("Disability type name {Name} updated in all cvs", domainEvent.DisabilityType.Name);
+            }
         }
     }
 }

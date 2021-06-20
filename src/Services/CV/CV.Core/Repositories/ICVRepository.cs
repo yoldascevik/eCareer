@@ -7,5 +7,6 @@ namespace CurriculumVitae.Core.Repositories
     public interface ICVRepository : IRepository<CV>
     {
         Task UpdateAllDisabilityTypeNamesInCV(DisabilityType disabilityType);
+        Task UpdateAllSocialProfileTypesInCV(SocialProfileType socialProfileType);
     }
 }

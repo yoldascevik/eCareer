@@ -10,8 +10,9 @@ namespace CurriculumVitae.Application.PersonalInfo.Mapping
         public PersonalInfoMappingProfile()
         {
             CreateMap<Core.Entities.PersonalInfo, PersonalInfoDto>()
-                .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.Disabilities.ExcludeDeletedItems().Any()))
-                .ReverseMap();
+                .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.Disabilities.ExcludeDeletedItems().Any()));
+
+            CreateMap<PersonalInfoInputDto, Core.Entities.PersonalInfo>();
         }
     }
 }

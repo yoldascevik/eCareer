@@ -8,7 +8,8 @@ namespace CurriculumVitae.Infrastructure.Repositories
 {
     public class CVRepository: MongoRepository<CV>, ICVRepository
     {
-        public CVRepository(IMongoContext context, IEventDispatcher domainEventDispatcher) : base(context, domainEventDispatcher)
+        public CVRepository(IMongoContext context, IEventDispatcher domainEventDispatcher) 
+            : base(context, domainEventDispatcher)
         {
         }
     }

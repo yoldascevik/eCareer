@@ -6,6 +6,7 @@ using Career.Shared.Generators;
 using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.DisabilityType;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
+using CurriculumVitae.Core.Refs;
 using CurriculumVitae.Core.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -41,13 +42,15 @@ namespace CurriculumVitae.Application.PersonalInfo.Commands.AddDisability
                 throw new CVNotFoundException(request.CvId);
             }
 
-            if (!await _disabilityTypeRepository.ExistsByIdAsync(request.DisabilityInfo.TypeId))
+            var disabilityType = await _disabilityTypeRepository.GetByKeyAsync(request.DisabilityInfo.TypeId);
+            if (disabilityType == null)
             {
                 throw new DisabilityTypeNotFoundException(request.DisabilityInfo.TypeId);
             }
   
             var disability = _mapper.Map<Core.Entities.Disability>(request.DisabilityInfo);
             disability.Id = _stringIdGenerator.Generate();
+            disability.Type = _mapper.Map<DisabilityTypeRef>(disabilityType);
 
             cv.PersonalInfo.Disabilities.Add(disability);
 

@@ -12,7 +12,7 @@ namespace Career.Domain.Extensions
         
         public static ICollection<T> ExcludeDeletedItems<T>(this ICollection<T> collection) where T: ISoftDeletable
         {
-            return collection.Where(x => !x.IsDeleted) as ICollection<T>;
+            return collection.AsQueryable().ExcludeDeletedItems().ToList();
         }
     }
 }

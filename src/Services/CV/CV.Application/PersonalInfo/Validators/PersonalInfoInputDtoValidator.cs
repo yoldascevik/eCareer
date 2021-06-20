@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace CurriculumVitae.Application.PersonalInfo.Validators
 {
-    public class PersonalInfoDtoValidator : AbstractValidator<PersonalInfoDto>
+    public class PersonalInfoInputDtoValidator : AbstractValidator<PersonalInfoInputDto>
     {
-        public PersonalInfoDtoValidator()
+        public PersonalInfoInputDtoValidator()
         {
             RuleFor(x => x.FirstName).NotEmpty().MaximumLength(20);
             RuleFor(x => x.MiddleName).MaximumLength(20);

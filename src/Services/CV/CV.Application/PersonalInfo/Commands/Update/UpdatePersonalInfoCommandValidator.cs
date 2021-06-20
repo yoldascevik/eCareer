@@ -8,7 +8,7 @@ namespace CurriculumVitae.Application.PersonalInfo.Commands.Update
         public UpdatePersonalInfoCommandValidator()
         {
             RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.PersonalInfo).SetValidator(new PersonalInfoDtoValidator());
+            RuleFor(x => x.PersonalInfo).SetValidator(new PersonalInfoInputDtoValidator());
         }
     }
 }

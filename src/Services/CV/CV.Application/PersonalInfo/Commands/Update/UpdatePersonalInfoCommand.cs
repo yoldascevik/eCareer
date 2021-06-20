@@ -5,13 +5,13 @@ namespace CurriculumVitae.Application.PersonalInfo.Commands.Update
 {
     public class UpdatePersonalInfoCommand : ICommand
     {
-        public UpdatePersonalInfoCommand(string cvId, PersonalInfoDto personalInfo)
+        public UpdatePersonalInfoCommand(string cvId, PersonalInfoInputDto personalInfo)
         {
             CvId = cvId;
             PersonalInfo = personalInfo;
         }
 
         public string CvId { get; }
-        public PersonalInfoDto PersonalInfo { get; }
+        public PersonalInfoInputDto PersonalInfo { get; }
     }
 }

@@ -1,11 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Career.Domain.Extensions;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv;
+using CurriculumVitae.Application.DisabilityType;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
+using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Repositories;
 
 namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities
@@ -17,8 +22,8 @@ namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities
 
         public GetDisabilitiesQueryHandler(ICVRepository cvRepository, IMapper mapper)
         {
-            _cvRepository = cvRepository;
             _mapper = mapper;
+            _cvRepository = cvRepository;
         }
 
         public async Task<List<DisabilityDto>> Handle(GetDisabilitiesQuery request, CancellationToken cancellationToken)
@@ -28,7 +33,7 @@ namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities
             {
                 throw new CVNotFoundException(request.CvId);
             }
-            
+
             return _mapper.Map<List<DisabilityDto>>(cv.PersonalInfo.Disabilities.ExcludeDeletedItems());
         }
     }

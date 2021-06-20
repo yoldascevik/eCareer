@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Career.Domain.Extensions;
 using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv;
+using CurriculumVitae.Application.PersonalInfo.Exceptions;
 using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;

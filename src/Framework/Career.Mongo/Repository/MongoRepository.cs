@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using Career.EventHub;
 using Career.Exceptions;
 using Career.Mongo.Context;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Career.Mongo.Repository
 {
     public class MongoRepository<T> : IMongoRepository<T> 
         where T : class
     {
+        protected IMongoCollection<T> Collection { get; }
         private readonly IMongoQueryRepository<T> _mongoQueryRepository;
         private readonly IMongoCommandRepository<T> _mongoCommandRepository;
         
@@ -20,6 +23,8 @@ namespace Career.Mongo.Repository
         {
             Check.NotNull(context, nameof(context));
             
+            Collection = context.Database.GetCollection<T>(typeof(T).Name);
+
             _mongoQueryRepository = new MongoQueryRepository<T>(context);
             _mongoCommandRepository = new MongoCommandRepository<T>(context, domainEventDispatcher);
         }
@@ -140,5 +145,15 @@ namespace Career.Mongo.Repository
         
         public virtual Task DeleteAsync(Expression<Func<T, bool>> condition)
             => _mongoCommandRepository.DeleteAsync(condition);
+        
+        protected FilterDefinition<T> FilterId(object key)
+        {
+            if (key is Guid guidKey)
+            {
+                return Builders<T>.Filter.Eq(new StringFieldDefinition<T, Guid>("_id"), guidKey);
+            }
+            
+            return Builders<T>.Filter.Eq("_id", ObjectId.Parse(key.ToString()));
+        }
     }
 }

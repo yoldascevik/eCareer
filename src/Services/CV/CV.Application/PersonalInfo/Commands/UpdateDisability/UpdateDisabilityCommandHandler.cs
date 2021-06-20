@@ -6,6 +6,8 @@ using Career.Domain.Extensions;
 using Career.MediatR.Command;
 using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.DisabilityType;
+using CurriculumVitae.Application.PersonalInfo.Exceptions;
+using CurriculumVitae.Core.Refs;
 using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -45,12 +47,19 @@ namespace CurriculumVitae.Application.PersonalInfo.Commands.UpdateDisability
                 throw new DisabilityNotFoundException(request.DisabilityId);
             }
 
-            if (!await _disabilityTypeRepository.ExistsByIdAsync(request.DisabilityInfo.TypeId))
+            var disabilityType = await _disabilityTypeRepository.GetByKeyAsync(request.DisabilityInfo.TypeId);
+            if (disabilityType == null)
             {
                 throw new DisabilityTypeNotFoundException(request.DisabilityInfo.TypeId);
             }
             
             _mapper.Map(request.DisabilityInfo, disability);
+
+            if (disabilityType.Id != disability.Type.Id)
+            {
+                disability.Type = _mapper.Map<DisabilityTypeRef>(disabilityType);
+            }
+
             await _cvRepository.UpdateAsync(cv.Id, cv);
 
             _logger.LogInformation("Disability ({DisabilityId}) updated in CV ({CvId})", disability.Id, cv.Id);

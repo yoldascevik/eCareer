@@ -37,7 +37,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">CV id</param>
         /// <param name="personalInfo">Personal Info</param>
         [HttpPut("personal")]
-        public async Task<IActionResult> Update(string cvId, [FromBody] PersonalInfoDto personalInfo)
+        public async Task<IActionResult> Update(string cvId, [FromBody] PersonalInfoInputDto personalInfo)
             => Ok(await _mediator.Send(new UpdatePersonalInfoCommand(cvId, personalInfo)));
 
         /// <summary>

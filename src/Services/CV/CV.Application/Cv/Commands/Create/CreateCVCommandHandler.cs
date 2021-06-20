@@ -30,7 +30,8 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
             var cv = new CV()
             {
                 UserId = request.UserId,
-                PersonalInfo = _mapper.Map<Core.Entities.PersonalInfo>(request.PersonalInfo)
+                PersonalInfo = _mapper.Map<Core.Entities.PersonalInfo>(request.PersonalInfo),
+                Location = _mapper.Map<PersonLocation>(request.Location)
             };
 
             await _cvRepository.AddAsync(cv);

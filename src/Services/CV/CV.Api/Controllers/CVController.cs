@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Cv.Commands.Create;
 using CurriculumVitae.Application.Cv.Commands.Delete;
+using CurriculumVitae.Application.Cv.Commands.UpdateLocation;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Application.Cv.Queries.Get;
 using CurriculumVitae.Application.Cv.Queries.GetById;
@@ -53,5 +54,14 @@ namespace CurriculumVitae.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteCVCommand(id)));
+
+        /// <summary>
+        /// Update CV location
+        /// </summary>
+        /// <param name="id">CV id</param>
+        /// <param name="location">Location info</param>
+        [HttpPut("{id}/location")]
+        public async Task UpdateLocation(string id, [FromBody] PersonLocationDto location)
+            => Ok(await _mediator.Send(new UpdateLocationCommand(id, location)));
     }
 }

@@ -1,6 +1,6 @@
-namespace CurriculumVitae.Core.Refs
+namespace CurriculumVitae.Application.Cv.Dtos
 {
-    public class IdNameRef
+    public class IdNameRefDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

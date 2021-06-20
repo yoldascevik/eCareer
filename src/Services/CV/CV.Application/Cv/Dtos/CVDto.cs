@@ -9,7 +9,7 @@ namespace CurriculumVitae.Application.Cv.Dtos
     {
         public Guid UserId { get; set; }
         public PersonalInfoDto PersonalInfo { get; set; }
-        public PersonLocation Location { get; set; }
+        public PersonLocationDto Location { get; set; }
         public ICollection<SocialProfileDto> SocialProfiles { get; set; }
         public ICollection<DrivingLicenceDto> DrivingLicences { get; set; }
         public ICollection<ForeignLanguage> ForeignLanguages { get; set; }

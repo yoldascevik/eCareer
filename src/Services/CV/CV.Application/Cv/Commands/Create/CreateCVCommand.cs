@@ -9,5 +9,6 @@ namespace CurriculumVitae.Application.Cv.Commands.Create
     {
         public Guid UserId { get; set; }
         public PersonalInfoInputDto PersonalInfo { get; set; }
+        public PersonLocationDto Location { get; set; }
     }
 }

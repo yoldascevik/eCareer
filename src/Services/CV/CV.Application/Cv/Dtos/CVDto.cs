@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using CurriculumVitae.Application.DrivingLicence.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
-using CurriculumVitae.Application.SocialProfile;
 using CurriculumVitae.Application.SocialProfile.Dtos;
 using CurriculumVitae.Core.Entities;
 

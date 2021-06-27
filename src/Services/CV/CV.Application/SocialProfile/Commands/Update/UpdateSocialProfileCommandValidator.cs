@@ -1,4 +1,3 @@
-using System.Data;
 using FluentValidation;
 
 namespace CurriculumVitae.Application.SocialProfile.Commands.Update

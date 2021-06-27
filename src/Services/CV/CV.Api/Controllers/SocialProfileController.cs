@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using CurriculumVitae.Api.Controllers.Base;
-using CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById;
 using CurriculumVitae.Application.SocialProfile.Commands.Add;
 using CurriculumVitae.Application.SocialProfile.Commands.Delete;
 using CurriculumVitae.Application.SocialProfile.Commands.Update;

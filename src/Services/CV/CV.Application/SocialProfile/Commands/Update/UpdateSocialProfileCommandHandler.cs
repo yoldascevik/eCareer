@@ -49,7 +49,7 @@ namespace CurriculumVitae.Application.SocialProfile.Commands.Update
 
             _mapper.Map(request.SocialProfile, socialProfile);
             await _cvRepository.UpdateAsync(cv.Id, cv);
-            _logger.LogInformation("Social profile \"{SocialProfileId}\" updated", request.SocialProfileId);
+            _logger.LogInformation("Social profile \"{DrivingLicenceId}\" updated", request.SocialProfileId);
 
             return Unit.Value;
         }

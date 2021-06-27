@@ -51,6 +51,7 @@ namespace CurriculumVitae.Application.SocialProfile.Commands.Add
             }
 
             if (cv.SocialProfiles.Any(x => x.Type.Id == request.SocialProfile.TypeId 
+                                           && !x.IsDeleted
                                            && x.Username.Equals(request.SocialProfile.UserName, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new ItemAlreadyExistsException(request.SocialProfile.UserName);

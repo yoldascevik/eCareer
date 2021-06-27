@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
 {
-    [Route("api/cv/{cvId}/social-profiles")]
+    [Route("api/cv/{cvId}/social")]
     public class SocialProfileController : CVApiControllerBase
     {
         private readonly IMediator _mediator;

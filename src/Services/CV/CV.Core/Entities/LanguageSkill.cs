@@ -3,10 +3,10 @@ using CurriculumVitae.Core.Refs;
 
 namespace CurriculumVitae.Core.Entities
 {
-    public class ForeignLanguage : EntityBase
+    public class LanguageSkill : EntityBase
     {
         public IdNameRef Language { get; set; }
-        public LanguageLevel Level { get; set; }
+        public LanguageSkillLevel SkillLevel { get; set; }
         public bool IsPrimary { get; set; }
     }
 }

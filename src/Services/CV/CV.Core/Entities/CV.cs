@@ -11,7 +11,7 @@ namespace CurriculumVitae.Core.Entities
         {
             SocialProfiles = new List<SocialProfile>();
             DrivingLicences = new List<DrivingLicence>();
-            ForeignLanguages = new List<ForeignLanguage>();
+            LanguageSkills = new List<LanguageSkill>();
             Educations = new List<Education>();
             WorkExperiences = new List<WorkExperience>();
             Certificates = new List<Certificate>();
@@ -24,7 +24,7 @@ namespace CurriculumVitae.Core.Entities
         public PersonLocation Location { get; set; }
         public ICollection<SocialProfile> SocialProfiles { get; set; }
         public ICollection<DrivingLicence> DrivingLicences { get; set; }
-        public ICollection<ForeignLanguage> ForeignLanguages { get; set; }
+        public ICollection<LanguageSkill> LanguageSkills { get; set; }
         public ICollection<Education> Educations { get; set; }
         public ICollection<WorkExperience> WorkExperiences { get; set; }
         public ICollection<Certificate> Certificates { get; set; }

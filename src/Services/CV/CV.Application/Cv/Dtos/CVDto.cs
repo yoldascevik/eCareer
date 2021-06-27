@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using CurriculumVitae.Application.DrivingLicence.Dtos;
+using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Application.SocialProfile.Dtos;
-using CurriculumVitae.Core.Entities;
 
 namespace CurriculumVitae.Application.Cv.Dtos
 {
@@ -14,7 +14,7 @@ namespace CurriculumVitae.Application.Cv.Dtos
         public PersonLocationDto Location { get; set; }
         public ICollection<SocialProfileDto> SocialProfiles { get; set; }
         public ICollection<DrivingLicenceDto> DrivingLicences { get; set; }
-        public ICollection<ForeignLanguage> ForeignLanguages { get; set; }
+        public ICollection<LanguageSkillDto> LanguageSkills { get; set; }
         public ICollection<EducationDto> Educations { get; set; }
         public ICollection<WorkExperienceDto> WorkExperiences { get; set; }
         public ICollection<CertificateDto> Certificates { get; set; }

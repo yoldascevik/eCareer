@@ -51,7 +51,7 @@ namespace CurriculumVitae.Api.Controllers
         /// Get person disability by id
         /// </summary>
         [HttpGet("personal/disabilities/{id}")]
-        public async Task<IActionResult> GetDisabilities(string cvId, string id)
+        public async Task<IActionResult> GetDisabilityById(string cvId, string id)
             => Ok(await _mediator.Send(new GetDisabilityByIdQuery(cvId, id)));
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace CurriculumVitae.Api.Controllers
         public async Task<IActionResult> CreateDisability(string cvId, [FromBody] DisabilityInputDto disabilityInfo)
         {
             var disability = await _mediator.Send(new AddDisabilityCommand(cvId, disabilityInfo));
-            return CreatedAtAction(nameof(Get), new {cvId, disability.Id}, disability);
+            return CreatedAtAction(nameof(GetDisabilityById), new {cvId, disability.Id}, disability);
         }
 
         /// <summary>

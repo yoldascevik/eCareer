@@ -26,7 +26,8 @@ namespace CurriculumVitae.Infrastructure.Repositories
 
         public override SocialProfileType Update(object key, SocialProfileType item)
         {
-            var @event = new SocialProfileTypeUpdatedEvent(item);
+            var oldSocialProfileType = GetByKey(key); 
+            var @event = new SocialProfileTypeUpdatedEvent(oldSocialProfileType);
             
             SocialProfileType socialProfileType = base.Update(key, item);
 
@@ -38,7 +39,8 @@ namespace CurriculumVitae.Infrastructure.Repositories
 
         public override async Task<SocialProfileType> UpdateAsync(object key, SocialProfileType item)
         {
-            var @event = new SocialProfileTypeUpdatedEvent(item);
+            var oldSocialProfileType = await GetByKeyAsync(key); 
+            var @event = new SocialProfileTypeUpdatedEvent(oldSocialProfileType);
             
             SocialProfileType socialProfileType = await base.UpdateAsync(key, item);
 

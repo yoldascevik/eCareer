@@ -1,6 +1,7 @@
 using System.Linq;
 using AutoMapper;
 using CurriculumVitae.Application.Cv.Dtos;
+using CurriculumVitae.Application.SocialProfile;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Refs;
 using CurriculumVitae.Data.Entities;
@@ -19,9 +20,6 @@ namespace CurriculumVitae.Application.Cv
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(s => s.PersonalInfo.LastName))
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(s => s.PersonalInfo.Gender))
                 .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.PersonalInfo.Disabilities.Any(x => !x.IsDeleted)));
-
-            // SocialProfileDto
-            CreateMap<SocialProfile, SocialProfileDto>();
 
             CreateMap<DrivingLicence, DrivingLicenceDto>();
             CreateMap<Education, EducationDto>();

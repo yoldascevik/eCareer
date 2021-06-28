@@ -1,14 +1,10 @@
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Career.Exceptions.Exceptions;
 using Career.MediatR.Command;
 using Career.Shared.Generators;
 using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.Certificate.Dtos;
-using CurriculumVitae.Core.Refs;
 using CurriculumVitae.Core.Repositories;
 using Microsoft.Extensions.Logging;
 

@@ -1,6 +1,5 @@
 using System;
 using CurriculumVitae.Application.Cv.Dtos;
-using CurriculumVitae.Core.Refs;
 
 namespace CurriculumVitae.Application.Education.Dtos
 {

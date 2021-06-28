@@ -1,6 +1,5 @@
 using Career.Shared.Timing;
 using CurriculumVitae.Application.Certificate.Dtos;
-using CurriculumVitae.Application.Cv.Validators;
 using FluentValidation;
 
 namespace CurriculumVitae.Application.Certificate

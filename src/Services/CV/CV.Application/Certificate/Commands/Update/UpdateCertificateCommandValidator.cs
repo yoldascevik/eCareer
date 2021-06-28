@@ -1,4 +1,3 @@
-using CurriculumVitae.Application.Certificate;
 using FluentValidation;
 
 namespace CurriculumVitae.Application.Certificate.Commands.Update

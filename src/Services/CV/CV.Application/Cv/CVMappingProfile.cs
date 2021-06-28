@@ -1,11 +1,8 @@
 using System.Linq;
 using AutoMapper;
-using CurriculumVitae.Application.Certificate.Dtos;
 using CurriculumVitae.Application.Cv.Dtos;
-using CurriculumVitae.Application.WorkExperience.Dtos;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Refs;
-using CurriculumVitae.Data.Entities;
 
 namespace CurriculumVitae.Application.Cv
 {

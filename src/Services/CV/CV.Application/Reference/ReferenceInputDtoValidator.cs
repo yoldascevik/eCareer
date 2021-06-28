@@ -1,4 +1,3 @@
-using CurriculumVitae.Application.Cv.Validators;
 using CurriculumVitae.Application.Reference.Dtos;
 using FluentValidation;
 

@@ -5,6 +5,7 @@ using CurriculumVitae.Application.Education.Dtos;
 using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Application.SocialProfile.Dtos;
+using CurriculumVitae.Application.WorkExperience.Dtos;
 
 namespace CurriculumVitae.Application.Cv.Dtos
 {

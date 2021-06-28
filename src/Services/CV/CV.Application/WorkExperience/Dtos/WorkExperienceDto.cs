@@ -1,7 +1,8 @@
 using System;
+using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Refs;
 
-namespace CurriculumVitae.Application.Cv.Dtos
+namespace CurriculumVitae.Application.WorkExperience.Dtos
 {
     public class WorkExperienceDto
     {
@@ -10,8 +11,8 @@ namespace CurriculumVitae.Application.Cv.Dtos
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string WorkDefinition { get; set; }
-        public IdNameRef Sector { get; set; }
-        public IdNameRef Position { get; set; }
-        public IdNameRef WorkType { get; set; }
+        public IdNameRefDto Sector { get; set; }
+        public IdNameRefDto Position { get; set; }
+        public IdNameRefDto WorkType { get; set; }
     }
 }

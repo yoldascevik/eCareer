@@ -1,7 +1,8 @@
 using System;
+using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Refs;
 
-namespace CurriculumVitae.Application.Cv.Dtos
+namespace CurriculumVitae.Application.Education.Dtos
 {
     public class EducationDto
     {
@@ -12,9 +13,9 @@ namespace CurriculumVitae.Application.Cv.Dtos
         public DateTime? EndDate { get; set; }
         public float Degree { get; set; }
         public bool IsAbondonment { get; set; }
-        public IdNameRef EducationLevel { get; set; }
-        public IdNameRef EducationType { get; set; }
-        public IdNameRef Language { get; set; }
-        public IdNameRef ScholarshipType { get; set; }
+        public IdNameRefDto EducationLevel { get; set; }
+        public IdNameRefDto EducationType { get; set; }
+        public IdNameRefDto Language { get; set; }
+        public IdNameRefDto ScholarshipType { get; set; }
     }
 }

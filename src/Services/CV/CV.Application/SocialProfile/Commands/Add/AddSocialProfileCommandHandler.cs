@@ -64,7 +64,7 @@ namespace CurriculumVitae.Application.SocialProfile.Commands.Add
             cv.SocialProfiles.Add(socialProfile);
 
             await _cvRepository.UpdateAsync(cv.Id, cv);
-            _logger.LogInformation("New social profile ({DrivingLicenceId}) added to CV ({CvId})", socialProfile.Id, cv.Id);
+            _logger.LogInformation("New social profile ({SocialProfileId}) added to CV ({CvId})", socialProfile.Id, cv.Id);
 
             return _mapper.Map<SocialProfileDto>(socialProfile);
         }

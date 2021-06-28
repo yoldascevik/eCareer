@@ -38,7 +38,7 @@ namespace CurriculumVitae.Application.SocialProfile.Commands.Delete
             socialProfile.IsDeleted = true;
             await _cvRepository.UpdateAsync(cv.Id, cv);
             
-            _logger.LogInformation("Social profile \"{DrivingLicenceId}\" is deleted", socialProfile.Id);
+            _logger.LogInformation("Social profile \"{SocialProfileId}\" is deleted", socialProfile.Id);
             
             return Unit.Value;
         }

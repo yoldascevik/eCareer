@@ -1,5 +1,6 @@
 using System.Linq;
 using AutoMapper;
+using CurriculumVitae.Application.Certificate.Dtos;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Application.WorkExperience.Dtos;
 using CurriculumVitae.Core.Entities;
@@ -21,7 +22,6 @@ namespace CurriculumVitae.Application.Cv
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(s => s.PersonalInfo.Gender))
                 .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.PersonalInfo.Disabilities.Any(x => !x.IsDeleted)));
 
-            CreateMap<Certificate, CertificateDto>();
             CreateMap<Reference, ReferenceDto>();
             CreateMap<Attachment, AttachmentDto>();
 

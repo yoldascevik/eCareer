@@ -1,6 +1,6 @@
 using System;
 
-namespace CurriculumVitae.Application.Cv.Dtos
+namespace CurriculumVitae.Application.Certificate.Dtos
 {
     public class CertificateDto
     {

@@ -22,7 +22,6 @@ namespace CurriculumVitae.Application.Cv
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(s => s.PersonalInfo.Gender))
                 .ForMember(dest => dest.DisabledPerson, opt => opt.MapFrom(s => s.PersonalInfo.Disabilities.Any(x => !x.IsDeleted)));
 
-            CreateMap<Reference, ReferenceDto>();
             CreateMap<Attachment, AttachmentDto>();
 
             CreateMap<IdNameRef, IdNameRefDto>().ReverseMap();

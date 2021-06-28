@@ -1,4 +1,4 @@
-namespace CurriculumVitae.Application.Cv.Dtos
+namespace CurriculumVitae.Application.Reference.Dtos
 {
     public class ReferenceDto
     {

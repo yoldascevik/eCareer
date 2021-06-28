@@ -5,6 +5,7 @@ using CurriculumVitae.Application.DrivingLicence.Dtos;
 using CurriculumVitae.Application.Education.Dtos;
 using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
+using CurriculumVitae.Application.Reference.Dtos;
 using CurriculumVitae.Application.SocialProfile.Dtos;
 using CurriculumVitae.Application.WorkExperience.Dtos;
 

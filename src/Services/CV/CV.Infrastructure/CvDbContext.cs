@@ -16,6 +16,9 @@ namespace CurriculumVitae.Infrastructure
         
         public static void Configure()
         {
+#pragma warning disable 618
+            BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
+#pragma warning restore 618
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             BsonClassMappingConfiguration.ApplyConfigurationsFromAssembly(typeof(CvDbContext));
         }

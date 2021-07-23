@@ -16,6 +16,7 @@ namespace CurriculumVitae.Application
         public void Configure(IServiceCollection services)
         {
             services.AddScoped<ICVRepository, CVRepository>();
+            services.AddScoped<ICoverLetterRepository, CoverLetterRepository>();
             services.AddScoped<IDisabilityTypeRepository, DisabilityTypeRepository>();
             services.AddScoped<ISocialProfileTypeRepository, SocialProfileTypeRepository>();
             

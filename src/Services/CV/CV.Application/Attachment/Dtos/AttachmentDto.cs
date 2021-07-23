@@ -1,10 +1,10 @@
 using System;
-using Career.Domain;
 
-namespace CurriculumVitae.Core.Entities
+namespace CurriculumVitae.Application.Attachment.Dtos
 {
-    public class Attachment: EntityBase, ISoftDeletable
+    public class AttachmentDto
     {
+        public string Id { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public string MimeType { get; set; }
@@ -12,6 +12,5 @@ namespace CurriculumVitae.Core.Entities
         public string SourceUrl { get; set; }
         public Guid UploadedUserId { get; set; }
         public DateTime UploadDate { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

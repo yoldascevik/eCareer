@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CurriculumVitae.Application.Attachment.Dtos;
 using CurriculumVitae.Application.Certificate.Dtos;
 using CurriculumVitae.Application.DrivingLicence.Dtos;
 using CurriculumVitae.Application.Education.Dtos;

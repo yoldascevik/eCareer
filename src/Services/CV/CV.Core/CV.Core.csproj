@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>CurriculumVitae.Core</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Framework\Career.CAP\Career.CAP.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Domain\Career.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />
+    </ItemGroup>
+
+</Project>

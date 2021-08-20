@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>CurriculumVitae.Api</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Framework\Career.CAP\Career.CAP.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Mongo\Career.Mongo.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Mvc\Career.Mvc.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Shared\Career.Shared.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Swagger\Career.Swagger.csproj" />
+        <ProjectReference Include="..\CV.Application\CV.Application.csproj" />
+        <ProjectReference Include="..\CV.Core\CV.Core.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="ARConsistency" Version="1.2.4" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="5.0.1" />
+        <PackageReference Include="DotNetCore.CAP.MongoDB" Version="5.0.1" />
+        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.0.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    </ItemGroup>
+
+</Project>

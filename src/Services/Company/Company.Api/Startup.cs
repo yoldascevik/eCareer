@@ -33,7 +33,7 @@ namespace Company.Api
             services.AddControllers()
                 .AddApiResponseConsistency(options =>
                 {
-                    Configuration.GetSection("ApiConsistency").Bind(options.ResponseOptions);
+                    Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
                     options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);

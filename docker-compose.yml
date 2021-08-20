@@ -44,3 +44,13 @@ services:
       - nosqldata
       - rabbitmq
       - seq
+        
+  cv.api:
+    image: ${DOCKER_REGISTRY-}cv.api
+    build:
+      context: .
+      dockerfile: src/Services/CV/CV.Api/Dockerfile
+    depends_on:
+      - nosqldata
+      - rabbitmq
+      - seq

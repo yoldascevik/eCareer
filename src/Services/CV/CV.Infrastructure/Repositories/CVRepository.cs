@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Career.EventHub;
 using Career.Mongo.Context;
 using Career.Mongo.Repository;
+using Career.Shared.Timing;
 using CurriculumVitae.Core.Entities;
 using CurriculumVitae.Core.Repositories;
 using MongoDB.Bson;
@@ -14,6 +15,18 @@ namespace CurriculumVitae.Infrastructure.Repositories
         public CVRepository(IMongoContext context, IEventDispatcher domainEventDispatcher)
             : base(context, domainEventDispatcher)
         {
+        }
+
+        public override CV Update(object key, CV item)
+        {
+            item.LastModificationTime = Clock.Now;
+            return base.Update(key, item);
+        }
+        
+        public override Task<CV> UpdateAsync(object key, CV item)
+        {
+            item.LastModificationTime = Clock.Now;
+            return base.UpdateAsync(key, item);
         }
 
         public async Task UpdateAllDisabilityTypeNamesInCV(DisabilityType disabilityType)

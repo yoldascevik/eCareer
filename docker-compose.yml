@@ -13,6 +13,15 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
+
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identity.api
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Career.Identity/Dockerfile
+    depends_on:
+      - postgres
+      - seq
   
   definition.api:
     image: ${DOCKER_REGISTRY-}definition.api

@@ -109,6 +109,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV.Application", "src\Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV.Infrastructure", "src\Services\CV\CV.Infrastructure\CV.Infrastructure.csproj", "{28949C77-693D-47A8-8027-63E51AEAEDFB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{B707A2CF-AF8F-4D36-8EDF-E39296F49C0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Career.Identity", "src\Services\Identity\Career.Identity\Career.Identity.csproj", "{057AD8AB-EAF1-4212-B8DB-80A80A6183A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -283,6 +287,10 @@ Global
 		{28949C77-693D-47A8-8027-63E51AEAEDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28949C77-693D-47A8-8027-63E51AEAEDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28949C77-693D-47A8-8027-63E51AEAEDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057AD8AB-EAF1-4212-B8DB-80A80A6183A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057AD8AB-EAF1-4212-B8DB-80A80A6183A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057AD8AB-EAF1-4212-B8DB-80A80A6183A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057AD8AB-EAF1-4212-B8DB-80A80A6183A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -336,6 +344,8 @@ Global
 		{978166B2-2672-4FC0-8C07-CFE1F6B6B2A0} = {EB6B585B-7E75-45E7-BEAA-1AC65AA5329B}
 		{90F2F4E9-6A9A-43C2-A58F-7E68ADBC94E2} = {EB6B585B-7E75-45E7-BEAA-1AC65AA5329B}
 		{28949C77-693D-47A8-8027-63E51AEAEDFB} = {EB6B585B-7E75-45E7-BEAA-1AC65AA5329B}
+		{B707A2CF-AF8F-4D36-8EDF-E39296F49C0E} = {E57E3669-8DF0-467B-84FD-3D0ABAAB8B3C}
+		{057AD8AB-EAF1-4212-B8DB-80A80A6183A9} = {B707A2CF-AF8F-4D36-8EDF-E39296F49C0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {58173793-6745-46F3-8B1D-71D07E329A7F}

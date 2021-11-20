@@ -5,11 +5,12 @@ using Definition.Application.Location.City;
 using Definition.Application.Location.Country;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    
+    [Authorize]
     [Route("api/locations/countries")]
     public class CountryController : DefinitionApiController
     {

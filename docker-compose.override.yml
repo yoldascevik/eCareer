@@ -73,3 +73,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5004:80"
+        
+  identity.api:
+    container_name: identity.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ENV}
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5005:80"

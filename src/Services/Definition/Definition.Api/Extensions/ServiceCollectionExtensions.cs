@@ -10,8 +10,6 @@ namespace Definition.Api.Extensions
     {
         public static IServiceCollection AddCareerAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            IdentityModelEventSource.ShowPII = true;
-            
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(opt =>
                 {

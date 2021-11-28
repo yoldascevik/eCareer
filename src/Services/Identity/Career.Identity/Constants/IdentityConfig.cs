@@ -16,8 +16,11 @@ namespace Career.Identity.Constants
         public static IEnumerable<ApiScope> ApiScopes =>
             new[]
             {
-                new ApiScope("definition.read", "Definition api data read"),
-                new ApiScope("definition.write", "Definition api data write"),
+                // shared scope
+                new ApiScope("read", "Can read all your data."),
+                new ApiScope("write", "Can write your data."),
+                new ApiScope("delete", "Can delete your data."),
+                new ApiScope("manage", "Can full access your data.")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -25,7 +28,7 @@ namespace Career.Identity.Constants
             {
                 new("definition", "Definition API")
                 {
-                    Scopes = { "definition.read", "definition.write" },
+                    Scopes = { "read", "write", "delete", "manage" },
                     ApiSecrets = { new Secret("apisecret".Sha256()) }
                 }
             };
@@ -37,14 +40,21 @@ namespace Career.Identity.Constants
                 {
                     ClientId = "career.client",
                     ClientName = "Career Client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    AccessTokenType = AccessTokenType.Jwt,
+                    SlidingRefreshTokenLifetime = 30,
+                    AllowOfflineAccess = true,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    AlwaysSendClientClaims = true,
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "definition.read", 
-                        "definition.write"
+                        IdentityServerConstants.StandardScopes.Email,
+                        "read", "write", "delete", "manage"
                     }
                 }
             };

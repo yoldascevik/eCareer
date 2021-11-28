@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # docker volumes
-data/
+/data/

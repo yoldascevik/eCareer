@@ -49,6 +49,7 @@ namespace Definition.Api
             services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
             services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
             services.AddCareerAuthentication(Configuration);
+            services.AddCareerAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

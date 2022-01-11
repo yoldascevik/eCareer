@@ -1,14 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Language;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    
+    [Authorize]
     [Route("api/languages")]
     public class LanguageController : DefinitionApiController
     {
@@ -48,6 +50,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Language info</param>
         /// <returns>Created language info</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<LanguageDto> CreateAsync([FromBody] LanguageRequestModel request)
             => await _languageService.CreateAsync(request);
         
@@ -58,6 +61,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Language info</param>
         /// <returns>Updated language info</returns>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<LanguageDto> UpdateAsync(string id, [FromBody] LanguageRequestModel request)
             => await _languageService.UpdateAsync(id, request);
         
@@ -66,6 +70,7 @@ namespace Definition.Api.Controllers
         /// </summary>
         /// <param name="id">Language id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task DeleteAsync(string id)
             => await _languageService.DeleteAsync(id);
     }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Location.City;
 using Definition.Application.Location.Country;
@@ -61,6 +62,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Country info</param>
         /// <returns>Created country info</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<CountryDto> CreateAsync([FromBody] CountryRequestModel request)
             => await _countryService.CreateAsync(request);
         
@@ -71,6 +73,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Country info</param>
         /// <returns>Updated country info</returns>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<CountryDto> UpdateAsync(string id, [FromBody] CountryRequestModel request)
             => await _countryService.UpdateAsync(id, request);
         
@@ -79,6 +82,7 @@ namespace Definition.Api.Controllers
         /// </summary>
         /// <param name="id">Country id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task DeleteAsync(string id)
             => await _countryService.DeleteAsync(id);
     }

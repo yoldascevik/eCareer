@@ -1,14 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Work.WorkType;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    
+    [Authorize]
     [Route("api/work/types")]
     public class WorkTypeController : DefinitionApiController
     {
@@ -40,6 +42,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Work type info</param>
         /// <returns>Created work type info</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<WorkTypeDto> CreateAsync([FromBody] WorkTypeRequestModel request)
             => await _workTypeService.CreateAsync(request);
         
@@ -50,6 +53,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Work type info</param>
         /// <returns>Updated work type info</returns>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<WorkTypeDto> UpdateAsync(string id, [FromBody] WorkTypeRequestModel request)
             => await _workTypeService.UpdateAsync(id, request);
         
@@ -58,6 +62,7 @@ namespace Definition.Api.Controllers
         /// </summary>
         /// <param name="id">Work type id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task DeleteAsync(string id)
             => await _workTypeService.DeleteAsync(id);
     }

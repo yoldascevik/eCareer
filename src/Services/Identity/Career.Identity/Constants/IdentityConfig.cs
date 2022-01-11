@@ -10,25 +10,40 @@ namespace Career.Identity.Constants
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new("roles", "Your role(s)", new List<string>() { "role" })
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new[]
             {
-                // shared scope
-                new ApiScope("read", "Can read all your data."),
-                new ApiScope("write", "Can write your data."),
-                new ApiScope("delete", "Can delete your data."),
-                new ApiScope("manage", "Can full access your data.")
+                new ApiScope("cv", "CV management."),
+                new ApiScope("job", "Job management."),
+                new ApiScope("company", "Company management."),
+                new ApiScope("definition", "Definition management.")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
-                new("definition", "Definition API")
+                new("companyapi", "Company API", new[] { "role" })
                 {
-                    Scopes = { "read", "write", "delete", "manage" },
+                    Scopes = { "company" },
+                    ApiSecrets = { new Secret("apisecret".Sha256()) }
+                },
+                new("cvapi", "CV API", new[] { "role" })
+                {
+                    Scopes = { "cv" },
+                    ApiSecrets = { new Secret("apisecret".Sha256()) }
+                },
+                new("definitionapi", "Definition API", new[] { "role" })
+                {
+                    Scopes = { "definition" },
+                    ApiSecrets = { new Secret("apisecret".Sha256()) }
+                },
+                new("jobapi", "Job API", new[] { "role" })
+                {
+                    Scopes = { "job" },
                     ApiSecrets = { new Secret("apisecret".Sha256()) }
                 }
             };
@@ -41,7 +56,7 @@ namespace Career.Identity.Constants
                     ClientId = "career.client",
                     ClientName = "Career Client",
                     AlwaysIncludeUserClaimsInIdToken = true,
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AccessTokenType = AccessTokenType.Jwt,
                     SlidingRefreshTokenLifetime = 30,
                     AllowOfflineAccess = true,
@@ -53,8 +68,11 @@ namespace Career.Identity.Constants
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email,
-                        "read", "write", "delete", "manage"
+                        "roles",
+                        "company",
+                        "cv",
+                        "definition",
+                        "job"
                     }
                 }
             };

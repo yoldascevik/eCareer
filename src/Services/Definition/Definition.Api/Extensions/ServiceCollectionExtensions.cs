@@ -1,8 +1,8 @@
-﻿using IdentityServer4.AccessTokenValidation;
+﻿using Definition.Api.Constants;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Logging;
 
 namespace Definition.Api.Extensions
 {
@@ -11,13 +11,27 @@ namespace Definition.Api.Extensions
         public static IServiceCollection AddCareerAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(opt =>
+                .AddIdentityServerAuthentication(options =>
                 {
-                    opt.Authority = configuration["ServiceUrls:Identity"];
-                    opt.ApiName = "definition";
-                    opt.ApiSecret = "apisecret";
-                    opt.RequireHttpsMetadata = false;
+                    options.Authority = configuration["ServiceUrls:Identity"];
+                    options.ApiName = "definitionapi";
+                    options.ApiSecret = "apisecret";
+                    options.RequireHttpsMetadata = false;
                 });
+
+            return services;
+        }
+        
+        public static IServiceCollection AddCareerAuthorization(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationPolicies.Manage, policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Admin");
+                });   
+            });
 
             return services;
         }

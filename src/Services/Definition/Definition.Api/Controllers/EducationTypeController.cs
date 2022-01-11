@@ -1,14 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Education.EducationType;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    
+    [Authorize]
     [Route("api/education/types")]
     public class EducationTypeController : DefinitionApiController
     {
@@ -40,6 +42,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Education type info</param>
         /// <returns>Created education type info</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<EducationTypeDto> CreateAsync([FromBody] EducationTypeRequestModel request)
             => await _educationTypeService.CreateAsync(request);
         
@@ -50,6 +53,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Education type info</param>
         /// <returns>Updated education type info</returns>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<EducationTypeDto> UpdateAsync(string id, [FromBody] EducationTypeRequestModel request)
             => await _educationTypeService.UpdateAsync(id, request);
         
@@ -58,6 +62,7 @@ namespace Definition.Api.Controllers
         /// </summary>
         /// <param name="id">Education type id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task DeleteAsync(string id)
             => await _educationTypeService.DeleteAsync(id);
     }

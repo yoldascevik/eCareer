@@ -1,15 +1,17 @@
 ﻿using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Work.JobPosition;
 using Definition.Application.Work.Sector;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Definition.Api.Controllers
 {
-    
+    [Authorize]
     [Route("api/work/sectors")]
     public class SectorController : DefinitionApiController
     {
@@ -52,6 +54,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Sector info</param>
         /// <returns>Created sector info</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<SectorDto> CreateAsync([FromBody] SectorRequestModel request)
             => await _sectorService.CreateAsync(request);
         
@@ -62,6 +65,7 @@ namespace Definition.Api.Controllers
         /// <param name="request">Sector info</param>
         /// <returns>Updated sector info</returns>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task<SectorDto> UpdateAsync(string id, [FromBody] SectorRequestModel request)
             => await _sectorService.UpdateAsync(id, request);
         
@@ -70,6 +74,7 @@ namespace Definition.Api.Controllers
         /// </summary>
         /// <param name="id">Sector id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.Manage)]
         public virtual async Task DeleteAsync(string id)
             => await _sectorService.DeleteAsync(id);
     }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.CoverLetter.Commands.Create;
 using CurriculumVitae.Application.CoverLetter.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.CoverLetter.Dtos;
 using CurriculumVitae.Application.CoverLetter.Queries.GetById;
 using CurriculumVitae.Application.CoverLetter.Queries.GetByUserId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -41,6 +43,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="request">Cover letter Info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create([FromBody] CreateCoverLetterCommand request)
         {
             CoverLetterDto coverLetterDto = await _mediator.Send(request);
@@ -53,6 +56,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Cover letter id</param>
         /// <param name="coverLetter">Cover letter info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task Update(string id, [FromBody] CoverLetterInputDto coverLetter)
             => Ok(await _mediator.Send(new UpdateCoverLetterCommand(id, coverLetter)));
 
@@ -61,6 +65,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="id">Cover letter id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteCoverLetterCommand(id)));
     }

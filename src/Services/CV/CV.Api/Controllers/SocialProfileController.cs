@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.SocialProfile.Commands.Add;
 using CurriculumVitae.Application.SocialProfile.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.SocialProfile.Dtos;
 using CurriculumVitae.Application.SocialProfile.Queries.Get;
 using CurriculumVitae.Application.SocialProfile.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -44,6 +46,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="socialProfileInfo">Social profile info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create(string cvId, [FromBody] SocialProfileInputDto socialProfileInfo)
         {
             var socialProfile = await _mediator.Send(new AddSocialProfileCommand(cvId, socialProfileInfo));
@@ -57,6 +60,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Social profile id</param>
         /// <param name="socialProfile">Social profile info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] SocialProfileInputDto socialProfile)
             => Ok(await _mediator.Send(new UpdateSocialProfileCommand(cvId, id, socialProfile)));
         
@@ -66,6 +70,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="id">Social profile id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteSocialProfileCommand(cvId, id)));
     }

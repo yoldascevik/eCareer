@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.PersonalInfo.Commands.AddDisability;
 using CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability;
@@ -9,6 +10,7 @@ using CurriculumVitae.Application.PersonalInfo.Queries.Get;
 using CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilities;
 using CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -37,6 +39,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">CV id</param>
         /// <param name="personalInfo">Personal Info</param>
         [HttpPut("personal")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, [FromBody] PersonalInfoInputDto personalInfo)
             => Ok(await _mediator.Send(new UpdatePersonalInfoCommand(cvId, personalInfo)));
 
@@ -60,6 +63,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv Id</param>
         /// <param name="disabilityInfo">Disability Info</param>
         [HttpPost("personal/disabilities")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> CreateDisability(string cvId, [FromBody] DisabilityInputDto disabilityInfo)
         {
             var disability = await _mediator.Send(new AddDisabilityCommand(cvId, disabilityInfo));
@@ -73,6 +77,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Disability Id</param>
         /// <param name="disabilityInfo">Disability Info</param>
         [HttpPut("personal/disabilities/{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> UpdateDisability(string cvId, string id, [FromBody] DisabilityInputDto disabilityInfo)
             => Ok(await _mediator.Send(new UpdateDisabilityCommand(cvId, id, disabilityInfo)));
 
@@ -82,6 +87,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv Id</param>
         /// <param name="id">Disability Id</param>
         [HttpDelete("personal/disabilities/{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> DeleteDisability(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteDisabilityCommand(cvId, id)));
     }

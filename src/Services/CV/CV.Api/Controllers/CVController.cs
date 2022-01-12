@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Cv.Commands.Create;
 using CurriculumVitae.Application.Cv.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Application.Cv.Queries.Get;
 using CurriculumVitae.Application.Cv.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -41,6 +43,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="request">CV Info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create([FromBody] CreateCVCommand request)
         {
             CVSummaryDto cv = await _mediator.Send(request);
@@ -52,6 +55,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="id">CV id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteCVCommand(id)));
 
@@ -61,6 +65,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">CV id</param>
         /// <param name="location">Location info</param>
         [HttpPut("{id}/location")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task UpdateLocation(string id, [FromBody] PersonLocationDto location)
             => Ok(await _mediator.Send(new UpdateLocationCommand(id, location)));
     }

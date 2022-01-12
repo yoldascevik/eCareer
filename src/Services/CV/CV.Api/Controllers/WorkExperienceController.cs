@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.WorkExperience.Commands.Add;
 using CurriculumVitae.Application.WorkExperience.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.WorkExperience.Dtos;
 using CurriculumVitae.Application.WorkExperience.Queries.Get;
 using CurriculumVitae.Application.WorkExperience.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -44,6 +46,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="workExperienceInfo">Work experience info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create(string cvId, [FromBody] WorkExperienceInputDto workExperienceInfo)
         {
             var workExperience = await _mediator.Send(new AddWorkExperienceCommand(cvId, workExperienceInfo));
@@ -57,6 +60,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Work experience id</param>
         /// <param name="workExperience">Work experience info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] WorkExperienceInputDto workExperience)
             => Ok(await _mediator.Send(new UpdateWorkExperienceCommand(cvId, id, workExperience)));
         
@@ -66,6 +70,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="id">Work experience id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteWorkExperienceCommand(cvId, id)));
     }

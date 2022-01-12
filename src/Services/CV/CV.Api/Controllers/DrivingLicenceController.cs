@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.DrivingLicence.Commands.Add;
 using CurriculumVitae.Application.DrivingLicence.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.DrivingLicence.Dtos;
 using CurriculumVitae.Application.DrivingLicence.Queries.Get;
 using CurriculumVitae.Application.DrivingLicence.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -44,6 +46,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="drivingLicenceInfo">Driving licence info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create(string cvId, [FromBody] DrivingLicenceInputDto drivingLicenceInfo)
         {
             var drivingLicence = await _mediator.Send(new AddDrivingLicenceCommand(cvId, drivingLicenceInfo));
@@ -57,6 +60,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Driving licence id</param>
         /// <param name="drivingLicence">Driving licence info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] DrivingLicenceInputDto drivingLicence)
             => Ok(await _mediator.Send(new UpdateDrivingLicenceCommand(cvId, id, drivingLicence)));
         
@@ -66,6 +70,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="id">Driving licence id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteDrivingLicenceCommand(cvId, id)));
     }

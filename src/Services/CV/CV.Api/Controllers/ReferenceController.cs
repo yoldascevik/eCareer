@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Reference.Commands.Add;
 using CurriculumVitae.Application.Reference.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.Reference.Dtos;
 using CurriculumVitae.Application.Reference.Queries.Get;
 using CurriculumVitae.Application.Reference.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -44,6 +46,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="referenceInfo">Reference info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create(string cvId, [FromBody] ReferenceInputDto referenceInfo)
         {
             var reference = await _mediator.Send(new AddReferenceCommand(cvId, referenceInfo));
@@ -57,6 +60,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Reference id</param>
         /// <param name="reference">Reference info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] ReferenceInputDto reference)
             => Ok(await _mediator.Send(new UpdateReferenceCommand(cvId, id, reference)));
         
@@ -66,6 +70,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="id">Reference id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteReferenceCommand(cvId, id)));
     }

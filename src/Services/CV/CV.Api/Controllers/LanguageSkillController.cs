@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.LanguageSkill.Commands.Add;
 using CurriculumVitae.Application.LanguageSkill.Commands.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Application.LanguageSkill.Queries.Get;
 using CurriculumVitae.Application.LanguageSkill.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -44,6 +46,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="languageSkillInfo">Language skill info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create(string cvId, [FromBody] LanguageSkillInputDto languageSkillInfo)
         {
             var languageSkill = await _mediator.Send(new AddLanguageSkillCommand(cvId, languageSkillInfo));
@@ -57,6 +60,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Language skill id</param>
         /// <param name="languageSkill">Language skill info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string cvId, string id, [FromBody] UpdateLanguageSkillDto languageSkill)
             => Ok(await _mediator.Send(new UpdateLanguageSkillCommand(cvId, id, languageSkill)));
         
@@ -66,6 +70,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="cvId">Cv id</param>
         /// <param name="id">Language skill id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string cvId, string id)
             => Ok(await _mediator.Send(new DeleteLanguageSkillCommand(cvId, id)));
     }

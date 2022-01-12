@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.DisabilityType;
 using CurriculumVitae.Application.DisabilityType.Commands.Create;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.DisabilityType.Commands.Update;
 using CurriculumVitae.Application.DisabilityType.Queries.Get;
 using CurriculumVitae.Application.DisabilityType.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -42,6 +44,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="request">Disability type info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create([FromQuery] CreateDisabilityTypeCommand request)
         {
             DisabilityTypeDto disabilityTypeDto = await _mediator.Send(request);
@@ -54,6 +57,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Disability type id</param>
         /// <param name="name">Disability type name</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string id, string name)
             => Ok(await _mediator.Send(new UpdateDisabilityTypeCommand(id, name)));
 
@@ -62,6 +66,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="id">Disability type id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteDisabilityTypeCommand(id)));
     }

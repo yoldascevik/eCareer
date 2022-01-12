@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.SocialProfileType.Command.Create;
 using CurriculumVitae.Application.SocialProfileType.Command.Delete;
@@ -7,6 +8,7 @@ using CurriculumVitae.Application.SocialProfileType.Dtos;
 using CurriculumVitae.Application.SocialProfileType.Queries.Get;
 using CurriculumVitae.Application.SocialProfileType.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurriculumVitae.Api.Controllers
@@ -41,6 +43,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="request">Type info</param>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Create([FromQuery] CreateSocialProfileTypeCommand request)
         {
             SocialProfileTypeDto socialProfileTypeDto = await _mediator.Send(request);
@@ -53,6 +56,7 @@ namespace CurriculumVitae.Api.Controllers
         /// <param name="id">Social profile type id</param>
         /// <param name="socialProfileType">Social profile type info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Update(string id, [FromBody] SocialProfileTypeInputDto socialProfileType)
             => Ok(await _mediator.Send(new UpdateSocialProfileTypeCommand(id, socialProfileType)));
         
@@ -61,6 +65,7 @@ namespace CurriculumVitae.Api.Controllers
         /// </summary>
         /// <param name="id">Social profile type id</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCv)]
         public async Task<IActionResult> Delete(string id)
             => Ok(await _mediator.Send(new DeleteSocialProfileTypeCommand(id)));
     }

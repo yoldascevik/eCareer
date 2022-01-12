@@ -6,6 +6,7 @@ using Career.Mongo;
 using Career.Mvc.Extensions;
 using Career.Shared.Timing;
 using Career.Swagger;
+using CurriculumVitae.Api.Extensions;
 using CurriculumVitae.Application;
 using CurriculumVitae.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -66,6 +67,8 @@ namespace CurriculumVitae.Api
                 capOptions.FailedRetryCount = 3;
                 capOptions.FailedRetryInterval = 60;
             });
+            services.AddCareerAuthentication(Configuration);
+            services.AddCareerAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -74,8 +77,9 @@ namespace CurriculumVitae.Api
                 app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
-
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseApiResponseConsistency();
             app.UseEndpoints(builder => builder.MapControllers());
         }

@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Consul\Career.Consul.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
         <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />

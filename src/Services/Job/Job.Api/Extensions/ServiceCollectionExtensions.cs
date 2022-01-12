@@ -1,4 +1,5 @@
-﻿using IdentityServer4.AccessTokenValidation;
+﻿using Career.Consul;
+using IdentityServer4.AccessTokenValidation;
 using Job.Api.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,12 @@ namespace Job.Api.Extensions
                 });
             });
 
+            return services;
+        }
+        
+        public static IServiceCollection AddCareerConsul(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddConsulServices(x => configuration.GetSection("ServiceDiscovery").Bind(x));
             return services;
         }
     }

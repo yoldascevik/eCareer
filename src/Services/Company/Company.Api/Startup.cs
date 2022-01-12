@@ -64,6 +64,7 @@ namespace Company.Api
                 capOptions.FailedRetryInterval = 60;
             });
             
+            services.AddCareerConsul(Configuration);
             services.AddCareerAuthentication(Configuration);
             services.AddCareerAuthorization();
         }

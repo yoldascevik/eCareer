@@ -24,6 +24,7 @@ namespace Career.Identity
             services.AddCareerIdentityContext(Configuration);
             services.AddCareerIdentity();
             services.AddCareerIdentityServer(Configuration);
+            services.AddCareerConsul(Configuration);
             services.AddAuthentication();
         }
 

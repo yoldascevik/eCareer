@@ -48,6 +48,7 @@ namespace Definition.Api
             services.RegisterModule<DefinitionModule>();
             services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
             services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
+            services.AddCareerConsul(Configuration);
             services.AddCareerAuthentication(Configuration);
             services.AddCareerAuthorization();
         }

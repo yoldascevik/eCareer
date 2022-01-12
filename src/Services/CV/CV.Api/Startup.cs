@@ -67,6 +67,8 @@ namespace CurriculumVitae.Api
                 capOptions.FailedRetryCount = 3;
                 capOptions.FailedRetryInterval = 60;
             });
+
+            services.AddCareerConsul(Configuration);
             services.AddCareerAuthentication(Configuration);
             services.AddCareerAuthorization();
         }

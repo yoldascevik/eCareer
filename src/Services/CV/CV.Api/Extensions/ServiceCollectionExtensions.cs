@@ -1,4 +1,5 @@
-﻿using CurriculumVitae.Api.Constants;
+﻿using Career.Consul;
+using CurriculumVitae.Api.Constants;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,12 @@ namespace CurriculumVitae.Api.Extensions
                 });  
             });
 
+            return services;
+        }
+        
+        public static IServiceCollection AddCareerConsul(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddConsulServices(x => configuration.GetSection("ServiceDiscovery").Bind(x));
             return services;
         }
     }

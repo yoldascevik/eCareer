@@ -1,7 +1,10 @@
 services:
+  consul:
+    image: consul:latest
+  
   nosqldata:
     image: mongo
-    
+   
   postgres:
     image: postgres
     
@@ -22,6 +25,7 @@ services:
     depends_on:
       - postgres
       - seq
+      - consul
   
   definition.api:
     image: ${DOCKER_REGISTRY-}definition.api
@@ -32,6 +36,7 @@ services:
       - nosqldata
       - cache
       - seq
+      - consul
         
   company.api:
     image: ${DOCKER_REGISTRY-}company.api
@@ -43,6 +48,7 @@ services:
       - nosqldata
       - rabbitmq
       - seq
+      - consul
         
   job.api:
     image: ${DOCKER_REGISTRY-}job.api
@@ -53,6 +59,7 @@ services:
       - nosqldata
       - rabbitmq
       - seq
+      - consul
         
   cv.api:
     image: ${DOCKER_REGISTRY-}cv.api
@@ -63,3 +70,4 @@ services:
       - nosqldata
       - rabbitmq
       - seq
+      - consul

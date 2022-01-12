@@ -6,6 +6,7 @@ using Career.MediatR;
 using Career.Mvc.Extensions;
 using Career.Shared.Timing;
 using Career.Swagger;
+using Company.Api.Extensions;
 using Company.Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,6 +63,9 @@ namespace Company.Api
                 capOptions.FailedRetryCount = 3;
                 capOptions.FailedRetryInterval = 60;
             });
+            
+            services.AddCareerAuthentication(Configuration);
+            services.AddCareerAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -72,6 +76,8 @@ namespace Company.Api
             app.UseSwagger();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseApiResponseConsistency();
             app.UseEndpoints(builder => builder.MapControllers());
         }

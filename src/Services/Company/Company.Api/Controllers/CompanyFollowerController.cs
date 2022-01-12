@@ -1,16 +1,19 @@
 using System;
 using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Company.Api.Constants;
 using Company.Api.Controllers.Base;
 using Company.Application.CompanyFollower.Commands.FollowCompany;
 using Company.Application.CompanyFollower.Commands.UnfollowCompany;
 using Company.Application.CompanyFollower.Queries.GetFollowedCompanies;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers
 {
     [Route("api/company-followers")]
+    [Authorize(Policy = AuthorizationPolicies.FollowCompany)]
     public class CompanyFollowerController: CompanyApiController
     {
         private readonly IMediator _mediator;

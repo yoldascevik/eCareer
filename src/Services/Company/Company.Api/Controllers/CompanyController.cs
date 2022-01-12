@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Company.Api.Constants;
 using Company.Api.Controllers.Base;
 using Company.Application.Company.Commands.AddNewAddress;
 using Company.Application.Company.Commands.CreateCompany;
@@ -19,6 +20,7 @@ using Company.Application.Company.Queries.GetCompanyById;
 using Company.Application.Company.Queries.GetCompanyFollowers;
 using Company.Application.Company.Queries.GetCompanyTaxInfo;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Api.Controllers
@@ -64,6 +66,7 @@ namespace Company.Api.Controllers
         /// <param name="taxInfo">Tax info</param>
         /// <returns>Updated company tax info</returns>
         [HttpPut("{id}/tax")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> UpdateTaxInfoAsync(Guid id, [FromBody] TaxDto taxInfo)
             => Ok(await _mediator.Send(new UpdateCompanyTaxInfoCommand(id, taxInfo)));
 
@@ -73,6 +76,7 @@ namespace Company.Api.Controllers
         /// <param name="request">Company info</param>
         /// <returns>Created company url</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> CreateAsync([FromBody] CreateCompanyCommand request)
         {
             Guid companyId = await _mediator.Send(request);
@@ -86,6 +90,7 @@ namespace Company.Api.Controllers
         /// <param name="detail">Company info</param>
         /// <returns>Updated company detail info</returns>
         [HttpPut("{id}/detail")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> UpdateDetailAsync(Guid id, [FromBody] CompanyDetailDto detail)
             => Ok(await _mediator.Send(new UpdateCompanyDetailsCommand(id, detail)));
 
@@ -95,6 +100,7 @@ namespace Company.Api.Controllers
         /// <param name="id">Company id to be updaed</param>
         /// <param name="emailAddress">New email address</param>
         [HttpPut("{id}/email/{emailAddress}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> UpdateEmailAddressAsync(Guid id, [FromRoute] string emailAddress)
             => Ok(await _mediator.Send(new UpdateCompanyEmailCommand(id, emailAddress)));
 
@@ -104,6 +110,7 @@ namespace Company.Api.Controllers
         /// <param name="id">Company id to be updaed</param>
         /// <param name="companyName">New company name</param>
         [HttpPut("{id}/name/{companyName}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> UpdateCompanyNameAsync(Guid id, [FromRoute] string companyName)
             => Ok(await _mediator.Send(new UpdateCompanyNameCommand(id, companyName)));
 
@@ -112,6 +119,7 @@ namespace Company.Api.Controllers
         /// </summary>
         /// <param name="id">Company id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task DeleteAsync(Guid id)
             => Ok(await _mediator.Send(new DeleteCompanyCommand(id)));
 
@@ -152,6 +160,7 @@ namespace Company.Api.Controllers
         /// <param name="address">Address info</param>
         /// <returns>Company address info</returns>
         [HttpPost("{id}/addresses")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> AddAddress(Guid id, [FromBody] AddressInputDto address)
             => Ok(await _mediator.Send(new AddNewAddressCommand(id, address)));
 
@@ -163,6 +172,7 @@ namespace Company.Api.Controllers
         /// <param name="address">Address info</param>
         /// <returns>Company address info</returns>
         [HttpPut("{id}/addresses/{addressId}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> UpdateAddress(Guid id, Guid addressId, [FromBody] AddressInputDto address)
             => Ok(await _mediator.Send(new UpdateAddressCommand(id, addressId, address)));
         
@@ -172,6 +182,7 @@ namespace Company.Api.Controllers
         /// <param name="id">Company id</param>
         /// <param name="addressId">Address id</param>
         [HttpDelete("{id}/addresses/{addressId}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageCompany)]
         public async Task<IActionResult> DeleteAddress(Guid id, Guid addressId)
             => Ok(await _mediator.Send(new DeleteAddressCommand(id, addressId)));
     }

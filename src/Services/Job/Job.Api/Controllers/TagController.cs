@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Job.Api.Constants;
 using Job.Api.Controllers.Base;
 using Job.Application.Tag.Commands.Create;
 using Job.Application.Tag.Commands.Delete;
@@ -7,6 +8,7 @@ using Job.Application.Tag.Commands.Update;
 using Job.Application.Tag.Queries.Get;
 using Job.Application.Tag.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Job.Api.Controllers
@@ -41,6 +43,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <returns>Created tag url</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> CreateAsync([FromBody] CreateTagCommand tagCommand)
         {
             Guid tagId = await _mediator.Send(tagCommand);
@@ -53,6 +56,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Tag id to be updated</param>
         /// <param name="name">Tag name</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] string name)
             => Ok(await _mediator.Send(new UpdateTagCommand(id, name)));
 
@@ -61,6 +65,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <param name="id">Tag id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task DeleteAsync(Guid id)
             => Ok(await _mediator.Send(new DeleteTagCommand(id)));
     }

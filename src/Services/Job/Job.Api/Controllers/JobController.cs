@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Career.Data.Pagination;
+using Job.Api.Constants;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Dtos;
 using Job.Application.Candidate.Queries.GetByJobId;
@@ -22,6 +23,7 @@ using Job.Application.Job.Dtos;
 using Job.Application.Job.Queries.Get;
 using Job.Application.Job.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Job.Api.Controllers
@@ -66,6 +68,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <returns>Created job url</returns>
         [HttpPost]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> CreateAsync([FromBody] CreateJobCommand request)
         {
             Guid jobId = await _mediator.Send(request);
@@ -79,6 +82,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id to be updated</param>
         /// <param name="jobInfo">Job info</param>
         [HttpPut("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] JobInputDto jobInfo)
             => Ok(await _mediator.Send(new UpdateJobCommand(id, jobInfo)));
 
@@ -87,6 +91,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <param name="id">Job id to be deleted</param>
         [HttpDelete("{id}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task DeleteAsync(Guid id)
             => Ok(await _mediator.Send(new DeleteJobCommand(id)));
 
@@ -96,6 +101,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="validityDate">Job validity date</param>
         [HttpPut("{id}/publish")]
+        [Authorize(Policy = AuthorizationPolicies.PublishJob)]
         public async Task<IActionResult> PublishAsync(Guid id, [FromBody] DateTime validityDate)
             => Ok(await _mediator.Send(new PublishJobCommand(id, validityDate)));
 
@@ -105,6 +111,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="reason">Reason of job revoke</param>
         [HttpPut("{id}/revoke")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> RevokeAsync(Guid id, [FromBody] string reason)
             => Ok(await _mediator.Send(new RevokeJobCommand(id, reason)));
 
@@ -113,6 +120,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <param name="id">Job id</param>
         [HttpPut("{id}/send-for-approval")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> SendForApprovalAsync(Guid id)
             => Ok(await _mediator.Send(new SendJobForApprovalCommand(id)));
 
@@ -122,6 +130,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="candidate">Candidate info</param>
         [HttpPost("{id}/apply")]
+        [Authorize(Policy = AuthorizationPolicies.Candidate)]
         public async Task<IActionResult> Apply(Guid id, [FromBody] CandidateInputDto candidate)
             => Ok(await _mediator.Send(new ApplyCommand(id, candidate)));
 
@@ -131,6 +140,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="location">Location info</param>
         [HttpPost("{id}/locations")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> AddLocation(Guid id, [FromBody] JobLocationInputDto location)
             => Ok(await _mediator.Send(new AddLocationCommand(id, location)));
 
@@ -140,6 +150,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="locationId">Job location id</param>
         [HttpDelete("{id}/locations/{locationId}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> RemoveLocation(Guid id, Guid locationId)
             => Ok(await _mediator.Send(new RemoveLocationCommand(id, locationId)));
 
@@ -149,6 +160,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="workType">Work type info</param>
         [HttpPost("{id}/work-types")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> AddWorkType(Guid id, [FromBody] IdNameRefDto workType)
             => Ok(await _mediator.Send(new AddWorkTypeCommand(id, workType)));
 
@@ -158,6 +170,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="workTypeId">Work type id</param>
         [HttpDelete("{id}/work-types/{workTypeId}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> RemoveWorkType(Guid id, string workTypeId)
             => Ok(await _mediator.Send(new RemoveWorkTypeCommand(id, workTypeId)));
 
@@ -167,6 +180,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="educationLevel">Education level info</param>
         [HttpPost("{id}/education-levels")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> AddEducationLevel(Guid id, [FromBody] IdNameRefDto educationLevel)
             => Ok(await _mediator.Send(new AddEducationLevelCommand(id, educationLevel)));
 
@@ -176,6 +190,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="educationLevelId">Education level id</param>
         [HttpDelete("{id}/education-levels/{educationLevelId}")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> RemoveEducationLevel(Guid id, string educationLevelId)
             => Ok(await _mediator.Send(new RemoveEducationLevelCommand(id, educationLevelId)));
 
@@ -185,6 +200,7 @@ namespace Job.Api.Controllers
         /// <param name="id">Job id</param>
         /// <param name="tags">Tag array</param>
         [HttpPut("{id}/tags")]
+        [Authorize(Policy = AuthorizationPolicies.ManageJob)]
         public async Task<IActionResult> UpdateJobTags(Guid id, [FromBody] string[] tags)
             => Ok(await _mediator.Send(new UpdateJobTagsCommand(id, tags)));
     }

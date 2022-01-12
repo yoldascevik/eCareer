@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using Job.Api.Constants;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Commands.Withdraw;
 using Job.Application.Candidate.Queries.Get;
 using Job.Application.Candidate.Queries.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Job.Api.Controllers
@@ -39,6 +41,7 @@ namespace Job.Api.Controllers
         /// </summary>
         /// <param name="id">Candidate id</param>
         [HttpPut("{id}/withdraw")]
+        [Authorize(Policy = AuthorizationPolicies.Candidate)]
         public async Task<IActionResult> Withdraw(Guid id)
             => Ok(await _mediator.Send(new WithdrawCandidateCommand(id)));
     }

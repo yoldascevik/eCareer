@@ -10,25 +10,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.Mvc\Career.Mvc.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.Shared\Career.Shared.csproj"/>
-        <ProjectReference Include="..\..\..\Framework\Career.Swagger\Career.Swagger.csproj"/>
-        <ProjectReference Include="..\Job.Application\Job.Application.csproj"/>
+        <ProjectReference Include="..\..\..\Framework\Career.Configuration\Career.Configuration.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Exceptions\Career.Exceptions.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Logging\Career.Logging.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.MediatR\Career.MediatR.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Mvc\Career.Mvc.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Shared\Career.Shared.csproj" />
+        <ProjectReference Include="..\..\..\Framework\Career.Swagger\Career.Swagger.csproj" />
+        <ProjectReference Include="..\Job.Application\Job.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ARConsistency" Version="1.2.4"/>
-        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="5.0.1"/>
-        <PackageReference Include="DotNetCore.CAP.MongoDB" Version="5.0.1"/>
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0"/>
-        <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="3.1.1"/>
-        <PackageReference Include="Serilog.AspNetCore" Version="3.4.0"/>
-        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.0.1"/>
+        <PackageReference Include="ARConsistency" Version="1.2.4" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="5.0.1" />
+        <PackageReference Include="DotNetCore.CAP.MongoDB" Version="5.0.1" />
+        <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="3.1.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="5.0.1" />
     </ItemGroup>
 
 </Project>

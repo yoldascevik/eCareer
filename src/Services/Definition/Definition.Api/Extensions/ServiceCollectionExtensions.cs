@@ -1,4 +1,6 @@
-﻿using Career.Consul;
+﻿using ARConsistency;
+using Career.Consul;
+using Career.Exceptions;
 using Definition.Api.Constants;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +42,18 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCareerConsul(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddConsulServices(x => configuration.GetSection("ServiceDiscovery").Bind(x));
+        return services;
+    }
+    
+    public static IServiceCollection AddControllersWithARConsistency(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddControllers()
+            .AddApiResponseConsistency(options =>
+            {
+                configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
+                options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type => type.StatusCode);
+            });
+        
         return services;
     }
 }

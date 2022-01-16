@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.EventHub;
 using DotNetCore.CAP;
 

@@ -1,4 +1,3 @@
-using System;
 using Bogus;
 using Company.Application.Company.Dtos;
 using Company.Domain.Entities;

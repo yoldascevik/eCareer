@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.Mongo.Repository.Contracts;
 using Job.Domain.CandidateAggregate;

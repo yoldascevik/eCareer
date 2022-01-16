@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Job.Application.Tag.Commands.Update;
 using Job.Application.Tag.Exceptions;

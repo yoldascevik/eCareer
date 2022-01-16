@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using CurriculumVitae.Api.Constants;
 using CurriculumVitae.Api.Controllers.Base;
 using CurriculumVitae.Application.Reference.Commands.Add;

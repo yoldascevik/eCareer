@@ -1,5 +1,3 @@
-using System;
-
 namespace CurriculumVitae.Application.DrivingLicence.Dtos;
 
 public class DrivingLicenceInputDto

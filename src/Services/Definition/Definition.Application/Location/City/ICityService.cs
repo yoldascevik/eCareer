@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Career.Cache.Attributes;
+﻿using Career.Cache.Attributes;
 using Career.Cache.Helpers;
 using Career.Data.Pagination;
 using Definition.Contract.Dto;

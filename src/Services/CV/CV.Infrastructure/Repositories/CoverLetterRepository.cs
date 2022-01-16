@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Career.Domain.Extensions;
 using Career.EventHub;
 using Career.Mongo.Context;

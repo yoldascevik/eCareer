@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Career.Data.Pagination;
 using Company.Api.Constants;
 using Company.Api.Controllers.Base;

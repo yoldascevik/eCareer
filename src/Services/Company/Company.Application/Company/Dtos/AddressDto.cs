@@ -1,5 +1,3 @@
-using System;
-
 namespace Company.Application.Company.Dtos;
 
 public class AddressDto

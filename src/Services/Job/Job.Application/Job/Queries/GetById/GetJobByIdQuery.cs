@@ -1,4 +1,3 @@
-using System;
 using Career.MediatR.Query;
 using Job.Application.Job.Dtos;
 

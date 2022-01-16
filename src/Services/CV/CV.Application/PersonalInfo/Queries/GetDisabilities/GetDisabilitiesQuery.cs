@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.PersonalInfo.Dtos;
 

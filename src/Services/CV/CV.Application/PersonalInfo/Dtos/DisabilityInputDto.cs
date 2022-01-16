@@ -1,5 +1,3 @@
-using System;
-
 namespace CurriculumVitae.Application.PersonalInfo.Dtos;
 
 public class DisabilityInputDto

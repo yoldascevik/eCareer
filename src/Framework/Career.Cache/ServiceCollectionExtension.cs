@@ -1,5 +1,4 @@
-﻿using System;
-using AspectCore;
+﻿using AspectCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Career.Cache;

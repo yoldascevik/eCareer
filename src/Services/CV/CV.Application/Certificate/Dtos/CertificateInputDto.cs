@@ -1,5 +1,3 @@
-using System;
-
 namespace CurriculumVitae.Application.Certificate.Dtos;
 
 public class CertificateInputDto

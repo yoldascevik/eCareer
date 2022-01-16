@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Career.Repositories.Repository;
 using CurriculumVitae.Core.Entities;
 

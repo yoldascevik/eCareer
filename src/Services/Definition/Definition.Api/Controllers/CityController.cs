@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Career.Data.Pagination;
+﻿using Career.Data.Pagination;
 using Definition.Api.Constants;
 using Definition.Api.Controllers.Base;
 using Definition.Application.Location.City;

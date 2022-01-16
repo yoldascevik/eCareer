@@ -1,4 +1,3 @@
-using System;
 using CurriculumVitae.Application.Cv.Dtos;
 
 namespace CurriculumVitae.Application.Education.Dtos;

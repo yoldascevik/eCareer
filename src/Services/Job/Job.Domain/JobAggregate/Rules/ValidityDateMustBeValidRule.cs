@@ -1,4 +1,3 @@
-using System;
 using Career.Domain.BusinessRule;
 using Career.Shared.Timing;
 

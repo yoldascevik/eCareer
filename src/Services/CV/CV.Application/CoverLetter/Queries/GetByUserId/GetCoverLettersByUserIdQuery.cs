@@ -1,4 +1,3 @@
-using System;
 using Career.Data.Pagination;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.CoverLetter.Dtos;

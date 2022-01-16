@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Bogus;
 using Career.Domain.BusinessRule;
 using Career.Repositories.UnitOfWok;

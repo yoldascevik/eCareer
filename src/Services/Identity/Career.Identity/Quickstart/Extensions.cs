@@ -1,4 +1,3 @@
-using System;
 using Career.Identity.Quickstart.Account;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Mvc;

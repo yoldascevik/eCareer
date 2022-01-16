@@ -1,4 +1,3 @@
-using System;
 using Career.EventHub;
 
 namespace Job.Application.Job.IntegrationEvents;

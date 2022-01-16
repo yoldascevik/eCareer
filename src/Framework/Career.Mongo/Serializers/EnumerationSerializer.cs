@@ -1,4 +1,3 @@
-using System;
 using Career.Domain;
 using MongoDB.Bson.Serialization;
 

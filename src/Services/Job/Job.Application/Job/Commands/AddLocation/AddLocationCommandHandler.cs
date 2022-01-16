@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Career.MediatR.Command;
 using Job.Application.Job.Dtos;

@@ -1,4 +1,3 @@
-using System;
 using Bogus;
 using Job.Domain.CandidateAggregate;
 

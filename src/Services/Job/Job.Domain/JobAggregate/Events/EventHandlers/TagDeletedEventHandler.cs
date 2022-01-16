@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.CAP.DomainEvent;
 using DotNetCore.CAP;
 using Job.Domain.JobAggregate.Services;

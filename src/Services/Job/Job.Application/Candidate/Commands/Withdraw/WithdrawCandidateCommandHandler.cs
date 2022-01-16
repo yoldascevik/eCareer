@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Career.MediatR.Command;
 using Job.Application.Candidate.Exceptions;
 using Job.Application.Job.Exceptions;

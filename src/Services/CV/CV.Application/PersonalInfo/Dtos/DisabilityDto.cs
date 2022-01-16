@@ -1,4 +1,3 @@
-using System;
 using CurriculumVitae.Application.DisabilityType;
 
 namespace CurriculumVitae.Application.PersonalInfo.Dtos;

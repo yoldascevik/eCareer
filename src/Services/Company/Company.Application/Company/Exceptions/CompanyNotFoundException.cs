@@ -1,4 +1,3 @@
-using System;
 using Career.Exceptions.Exceptions;
 
 namespace Company.Application.Company.Exceptions;

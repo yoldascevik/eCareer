@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Career.Data.Pagination;
+﻿namespace Career.Data.Pagination;
 
 [Serializable]
 public class PagedList<T>

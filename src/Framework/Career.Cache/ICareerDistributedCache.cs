@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Career.Cache;
+﻿namespace Career.Cache;
 
 public interface ICareerDistributedCache
 {

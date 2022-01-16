@@ -1,5 +1,3 @@
-using System;
-
 namespace CurriculumVitae.Application.CoverLetter.Dtos;
 
 public class CoverLetterDto

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.IoC;
 using MediatR;

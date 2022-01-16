@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.IoC;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

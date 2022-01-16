@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using Career.Domain.Extensions;
 using CurriculumVitae.Application.PersonalInfo.Dtos;

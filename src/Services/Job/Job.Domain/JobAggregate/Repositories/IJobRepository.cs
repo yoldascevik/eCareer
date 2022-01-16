@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Job.Domain.TagAggregate;
 
 namespace Job.Domain.JobAggregate.Repositories;

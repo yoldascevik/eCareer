@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.CAP.DomainEvent;
 using Company.Domain.DomainEvents.Company;
 using DotNetCore.CAP;

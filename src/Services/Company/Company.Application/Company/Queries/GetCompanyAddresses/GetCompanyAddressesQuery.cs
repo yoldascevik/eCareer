@@ -1,4 +1,3 @@
-using System;
 using Career.Data.Pagination;
 using Career.Exceptions;
 using Career.MediatR.Query;

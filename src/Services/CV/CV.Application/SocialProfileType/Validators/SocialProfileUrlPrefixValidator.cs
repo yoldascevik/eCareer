@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace CurriculumVitae.Application.SocialProfileType.Validators;

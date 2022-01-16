@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using Career.Domain.BusinessRule;
 using Career.Domain.DomainEvent;

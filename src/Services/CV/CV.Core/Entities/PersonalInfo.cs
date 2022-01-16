@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using CurriculumVitae.Core.Constants;
 
 namespace CurriculumVitae.Core.Entities;

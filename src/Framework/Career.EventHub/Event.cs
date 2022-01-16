@@ -1,4 +1,3 @@
-using System;
 using Career.Shared.Timing;
 
 namespace Career.EventHub;

@@ -1,5 +1,4 @@
-﻿using System;
-using Career.Consul.Options;
+﻿using Career.Consul.Options;
 using Consul;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +20,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton(options);
         services.AddSingleton<IHostedService, ConsulHostedService>();
-        services.AddSingleton<IConsulClient, ConsulClient>(p => consulClient);
+        services.AddSingleton<IConsulClient, ConsulClient>(_ => consulClient);
     }
 
     private static ConsulClient CreateConsulClient(ServiceDiscoveryOption serviceConfig)

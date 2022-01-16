@@ -1,5 +1,3 @@
-using System;
-
 namespace Career.Domain.BusinessRule;
 
 public class BusinessRuleValidationException : Exception

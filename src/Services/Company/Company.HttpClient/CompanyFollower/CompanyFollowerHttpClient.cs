@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using ARConsistency.Abstractions;
+﻿using ARConsistency.Abstractions;
 using Career.Data.Pagination;
 using Career.Http.HttpClient;
 using Microsoft.AspNetCore.Http;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Career.Exceptions;
 
 namespace Career.Domain.Specifications.Logical;

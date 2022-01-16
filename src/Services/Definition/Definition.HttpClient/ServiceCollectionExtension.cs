@@ -1,5 +1,4 @@
-﻿using System;
-using Career.Http;
+﻿using Career.Http;
 using Career.IoC;
 using Microsoft.Extensions.DependencyInjection;
 

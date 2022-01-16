@@ -1,4 +1,3 @@
-using System;
 using Career.Http;
 using Career.IoC.IoCModule;
 using Company.HttpClient.Company;

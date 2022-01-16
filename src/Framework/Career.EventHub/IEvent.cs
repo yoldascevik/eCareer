@@ -1,5 +1,3 @@
-using System;
-
 namespace Career.EventHub;
 
 public interface IEvent

@@ -1,5 +1,4 @@
-﻿using System;
-using Career.Exceptions;
+﻿using Career.Exceptions;
 using Career.IoC;
 using Microsoft.Extensions.DependencyInjection;
 

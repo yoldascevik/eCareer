@@ -1,4 +1,3 @@
-using System;
 using Career.Exceptions;
 using Career.MediatR.Query;
 using Company.Application.Company.Dtos;

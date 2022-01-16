@@ -1,5 +1,4 @@
-﻿using System;
-using Career.MediatR.Command;
+﻿using Career.MediatR.Command;
 
 namespace Company.Application.CompanyFollower.Commands.UnfollowCompany;
 

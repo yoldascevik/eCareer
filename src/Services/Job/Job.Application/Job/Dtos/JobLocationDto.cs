@@ -1,5 +1,3 @@
-using System;
-
 namespace Job.Application.Job.Dtos;
 
 public class JobLocationDto

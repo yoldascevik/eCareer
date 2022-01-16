@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Career.Domain.BusinessRule;
 using Career.Exceptions.Exceptions;
 using Job.Application.Job.Commands.Publish;

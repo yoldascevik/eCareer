@@ -1,4 +1,3 @@
-using System;
 using Career.MediatR.Command;
 using Company.Application.Company.Dtos;
 

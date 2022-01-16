@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Career.Domain.Extensions;
 using Career.Exceptions.Exceptions;

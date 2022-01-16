@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Definition.Contract.Dto;
+﻿namespace Definition.Contract.Dto;
 
 [Serializable]
 public class CountryDto

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Job.Application.Candidate.Dtos;
+﻿namespace Job.Application.Candidate.Dtos;
 
 public class CandidateDto
 {

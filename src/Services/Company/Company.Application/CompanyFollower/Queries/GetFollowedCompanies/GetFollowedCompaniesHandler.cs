@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Career.Data.Pagination;
+﻿using Career.Data.Pagination;
 using Career.MediatR.Query;
 using Company.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;

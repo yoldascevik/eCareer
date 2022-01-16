@@ -1,4 +1,3 @@
-using System;
 using Career.MediatR.Command;
 
 namespace Job.Application.Job.Commands.RemoveLocation;

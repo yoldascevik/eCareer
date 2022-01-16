@@ -1,5 +1,3 @@
-using System;
-
 namespace Career.Shared.Timing;
 
 public class UnspecifiedClockProvider : IClockProvider

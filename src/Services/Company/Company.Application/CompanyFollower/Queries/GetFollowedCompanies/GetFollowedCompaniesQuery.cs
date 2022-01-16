@@ -1,5 +1,4 @@
-﻿using System;
-using Career.Data.Pagination;
+﻿using Career.Data.Pagination;
 using Career.MediatR.Query;
 
 namespace Company.Application.CompanyFollower.Queries.GetFollowedCompanies;

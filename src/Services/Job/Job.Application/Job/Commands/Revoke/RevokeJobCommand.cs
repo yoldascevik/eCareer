@@ -1,4 +1,3 @@
-using System;
 using ICommand = Career.MediatR.Command.ICommand;
 
 namespace Job.Application.Job.Commands.Revoke;

@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Company.Application.Company.Commands.UpdateCompanyDetails;

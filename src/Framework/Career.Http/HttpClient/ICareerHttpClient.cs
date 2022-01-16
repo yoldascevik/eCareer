@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Career.Http.HttpClient;
+﻿namespace Career.Http.HttpClient;
 
 public interface ICareerHttpClient
 {

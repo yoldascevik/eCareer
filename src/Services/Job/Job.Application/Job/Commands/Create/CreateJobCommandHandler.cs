@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Career.MediatR.Command;
 using Job.Domain.JobAggregate.Refs;
 using Job.Domain.JobAggregate.Repositories;

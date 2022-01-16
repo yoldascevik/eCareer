@@ -1,5 +1,3 @@
-using System;
-
 namespace Job.Application.Tag.Dtos;
 
 public class TagDto

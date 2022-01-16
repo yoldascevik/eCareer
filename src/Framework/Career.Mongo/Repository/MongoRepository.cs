@@ -1,9 +1,5 @@
 ﻿using Career.Mongo.Repository.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Career.EventHub;
 using Career.Exceptions;
 using Career.Mongo.Context;

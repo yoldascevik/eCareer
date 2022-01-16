@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Job.Application.Tag.Commands.Delete;
 using Job.Application.Tag.Exceptions;
 using Job.Domain.TagAggregate.Repositories;

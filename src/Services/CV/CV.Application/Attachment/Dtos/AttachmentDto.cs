@@ -1,5 +1,3 @@
-using System;
-
 namespace CurriculumVitae.Application.Attachment.Dtos;
 
 public class AttachmentDto

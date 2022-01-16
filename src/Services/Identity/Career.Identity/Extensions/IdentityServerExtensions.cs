@@ -2,8 +2,6 @@
 using Career.Identity.Models;
 using Career.Identity.Quickstart;
 using Career.Identity.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Career.Identity.Extensions;
 

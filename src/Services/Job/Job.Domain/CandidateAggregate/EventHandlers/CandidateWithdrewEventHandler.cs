@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.CAP.DomainEvent;
 using Career.Exceptions.Exceptions;
 using DotNetCore.CAP;

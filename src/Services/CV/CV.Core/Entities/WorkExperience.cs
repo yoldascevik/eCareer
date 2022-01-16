@@ -1,4 +1,3 @@
-using System;
 using Career.Domain;
 using CurriculumVitae.Core.Refs;
 

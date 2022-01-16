@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Career.Repositories.Repository;
 
 namespace Company.Domain.Repositories;

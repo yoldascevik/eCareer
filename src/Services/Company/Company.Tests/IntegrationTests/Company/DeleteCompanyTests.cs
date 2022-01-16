@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.DeleteCompany;
 using Company.Application.Company.Exceptions;

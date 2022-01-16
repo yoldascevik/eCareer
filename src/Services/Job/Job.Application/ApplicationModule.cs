@@ -1,4 +1,3 @@
-using AutoMapper;
 using Career.CAP;
 using Career.IoC;
 using Career.IoC.IoCModule;

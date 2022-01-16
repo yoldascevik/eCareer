@@ -3,9 +3,6 @@ using Career.Consul;
 using Career.Exceptions;
 using Definition.Api.Constants;
 using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Definition.Api.Extensions;
 

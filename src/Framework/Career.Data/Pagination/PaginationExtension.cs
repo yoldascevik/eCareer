@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Career.Data.Pagination.Helpers;
+﻿using Career.Data.Pagination.Helpers;
 
 namespace Career.Data.Pagination;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Career.Shared.Timing;
+﻿namespace Career.Shared.Timing;
 
 public interface IClockProvider
 {

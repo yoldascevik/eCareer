@@ -1,4 +1,3 @@
-using System.Linq;
 using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Core.Constants;
 using FluentValidation;

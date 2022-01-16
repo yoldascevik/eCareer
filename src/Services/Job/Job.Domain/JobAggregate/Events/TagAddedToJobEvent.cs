@@ -1,4 +1,3 @@
-using System;
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
 using Job.Domain.TagAggregate;

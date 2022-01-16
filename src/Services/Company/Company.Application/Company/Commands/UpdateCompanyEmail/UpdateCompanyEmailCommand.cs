@@ -1,4 +1,3 @@
-using System;
 using Career.MediatR.Command;
 
 namespace Company.Application.Company.Commands.UpdateCompanyEmail;

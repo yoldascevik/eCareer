@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.Mongo.Repository.Contracts;
 using Job.Domain.TagAggregate;

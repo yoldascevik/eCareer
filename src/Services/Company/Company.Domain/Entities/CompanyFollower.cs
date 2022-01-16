@@ -1,5 +1,4 @@
-﻿using System;
-using Career.Domain.Entities;
+﻿using Career.Domain.Entities;
 using Career.Exceptions;
 using Career.Shared.Timing;
 using Company.Domain.DomainEvents.CompanyFollower;

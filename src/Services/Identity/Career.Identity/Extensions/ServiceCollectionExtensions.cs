@@ -1,6 +1,4 @@
 ﻿using Career.Consul;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Career.Identity.Extensions;
 

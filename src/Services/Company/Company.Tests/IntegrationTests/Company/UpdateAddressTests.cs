@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.UpdateAddress;

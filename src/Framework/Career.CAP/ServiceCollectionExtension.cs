@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Career.CAP.Serializer;
 using Career.EventHub;
 using Career.Exceptions;

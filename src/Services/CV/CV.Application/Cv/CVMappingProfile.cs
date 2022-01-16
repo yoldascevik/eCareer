@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Entities;

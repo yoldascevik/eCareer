@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Career.Repositories.Repository;
+﻿using Career.Repositories.Repository;
 using Company.Domain.Entities;
 
 namespace Company.Domain.Repositories;

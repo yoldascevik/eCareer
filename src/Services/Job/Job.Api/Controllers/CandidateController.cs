@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Job.Api.Constants;
 using Job.Api.Controllers.Base;
 using Job.Application.Candidate.Commands.Withdraw;

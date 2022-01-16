@@ -1,4 +1,3 @@
-using System;
 using Career.EntityFramework.UnitOfWork;
 using Career.Repositories.UnitOfWok;
 using Microsoft.EntityFrameworkCore;

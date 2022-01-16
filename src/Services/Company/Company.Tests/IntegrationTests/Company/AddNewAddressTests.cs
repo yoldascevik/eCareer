@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Commands.AddNewAddress;
 using Company.Application.Company.Exceptions;

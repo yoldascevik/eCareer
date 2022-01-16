@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Career.EntityFramework.Repositories;
 using Company.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;

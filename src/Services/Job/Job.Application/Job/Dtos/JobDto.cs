@@ -1,4 +1,3 @@
-using System;
 using Job.Domain.JobAggregate.Constants;
 
 namespace Job.Application.Job.Dtos;

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Career.Migration.DataSeeder;
+﻿namespace Career.Migration.DataSeeder;
 
 public interface IDataSeeder
 {

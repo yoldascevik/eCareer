@@ -1,11 +1,7 @@
 ﻿using Career.Mongo.Context;
 using Career.Mongo.Repository.Contracts;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Career.Domain;
 using Career.Domain.Entities;
 using Career.EventHub;

@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Career.MediatR.Command;
+﻿using Career.MediatR.Command;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Exceptions;
 using Company.Domain.Repositories;

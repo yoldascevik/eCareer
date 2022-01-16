@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Job.Application.Tag.Dtos;
 using Job.Domain.JobAggregate.Constants;

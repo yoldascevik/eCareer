@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AspectCore;
 using AspectCore.Aspects;
 using Career.Domain.Entities;
@@ -14,18 +10,18 @@ namespace Career.Domain.DomainEvent.Dispatcher;
 [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Method)]
 public class DispacthDomainEventAttribute : AspectAttribute
 {
-    private IEventDispatcher _dispatcher;
-    private ILogger<DispacthDomainEventAttribute> _logger;
+    private IEventDispatcher? _dispatcher;
+    private ILogger<DispacthDomainEventAttribute>? _logger;
 
     public override void OnSuccess(MethodExecutionArgs args)
     {
         IEnumerable<IDomainEvent> domainEvents = GetDomainEventsFromArgs(args.Arguments);
         if (domainEvents.Any())
         {
-            _dispatcher.Dispatch(domainEvents);
+            _dispatcher?.Dispatch(domainEvents);
             ClearAllDomainEventsFromArgs(args.Arguments);
                 
-            _logger.LogInformation("Domain events were dispatched and clear");
+            _logger?.LogInformation("Domain events were dispatched and clear");
         }
     }
 
@@ -34,10 +30,10 @@ public class DispacthDomainEventAttribute : AspectAttribute
         IEnumerable<IDomainEvent> domainEvents = GetDomainEventsFromArgs(args.Arguments);
         if (domainEvents.Any())
         {
-            await _dispatcher.Dispatch(domainEvents);
+            await _dispatcher?.Dispatch(domainEvents);
             ClearAllDomainEventsFromArgs(args.Arguments);
                 
-            _logger.LogInformation("Domain events were dispatched and clear");
+            _logger?.LogInformation("Domain events were dispatched and clear");
         }
     }
 
@@ -52,7 +48,7 @@ public class DispacthDomainEventAttribute : AspectAttribute
         return base.LoadDependencies(serviceProvider);
     }
 
-    private IEnumerable<IDomainEvent> GetDomainEventsFromArgs(object[] args)
+    private IEnumerable<IDomainEvent> GetDomainEventsFromArgs(object[]? args)
     {
         var domainEventList = args?
             .Where(x => x is DomainEntity)
@@ -63,7 +59,7 @@ public class DispacthDomainEventAttribute : AspectAttribute
         return domainEventList ?? new List<IDomainEvent>();
     }
         
-    private void ClearAllDomainEventsFromArgs(object[] args)
+    private void ClearAllDomainEventsFromArgs(object[]? args)
     {
         if (args != null && args.Any())
         {

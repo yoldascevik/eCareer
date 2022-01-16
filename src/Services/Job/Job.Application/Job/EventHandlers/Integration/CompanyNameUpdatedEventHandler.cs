@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.CAP.IntegrationEvent;
 using DotNetCore.CAP;
 using Job.Application.Job.IntegrationEvents;

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Career.Repositories.Repository;
 using CurriculumVitae.Core.Entities;
 

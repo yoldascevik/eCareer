@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Career.Consul.Options;
+﻿using Career.Consul.Options;
 using Consul;
 using Microsoft.Extensions.Hosting;
 
@@ -29,7 +25,7 @@ public class ConsulHostedService : IHostedService
             Port = _config.Port,
             Checks = _config.Endpoints.Select(x => new AgentServiceCheck
             {
-                Interval = TimeSpan.FromSeconds(x.Internal ?? 10),
+                Interval = TimeSpan.FromSeconds(x.Interval ?? 10),
                 Timeout = TimeSpan.FromSeconds(x.Timeout ?? 10),
                 HTTP = x.Url
             }).ToArray(),

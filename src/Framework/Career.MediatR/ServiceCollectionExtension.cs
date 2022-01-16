@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

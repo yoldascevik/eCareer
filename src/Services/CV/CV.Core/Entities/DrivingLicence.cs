@@ -1,4 +1,3 @@
-using System;
 using Career.Domain;
 
 namespace CurriculumVitae.Core.Entities;

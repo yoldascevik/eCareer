@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Career.Domain.Audit;
+﻿namespace Career.Domain.Audit;
 
 public interface IHasCreationTime
 {

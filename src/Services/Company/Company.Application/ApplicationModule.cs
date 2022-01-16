@@ -1,4 +1,3 @@
-using AutoMapper;
 using Career.CAP;
 using Career.Configuration;
 using Career.EntityFramework;

@@ -1,4 +1,3 @@
-using System;
 using Job.Application.Candidate.Dtos;
 using ICommand = Career.MediatR.Command.ICommand;
 

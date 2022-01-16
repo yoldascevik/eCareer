@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -17,7 +15,7 @@ internal static class QueryableExtensions
             return query;
             
         var type = typeof(T);
-        PropertyInfo keyField = typeof(T).GetProperty("Id");
+        PropertyInfo? keyField = typeof(T).GetProperty("Id");
 
         if (keyField != null)
         {

@@ -1,6 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Career.Exceptions.Exceptions;
 using Career.Repositories.UnitOfWok;
 using Company.Application.Company.Exceptions;

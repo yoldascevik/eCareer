@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
-
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Bogus" Version="32.0.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />

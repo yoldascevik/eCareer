@@ -1,10 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>CurriculumVitae.Application</RootNamespace>
     </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\..\..\Framework\Career.CAP\Career.CAP.csproj" />
       <ProjectReference Include="..\..\..\Framework\Career.Data\Career.Data.csproj" />

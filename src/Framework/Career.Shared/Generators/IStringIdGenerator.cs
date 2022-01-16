@@ -1,7 +1,6 @@
-namespace Career.Shared.Generators
+namespace Career.Shared.Generators;
+
+public interface IStringIdGenerator: IIdGenerator<string>
 {
-    public interface IStringIdGenerator: IIdGenerator<string>
-    {
         
-    }
 }

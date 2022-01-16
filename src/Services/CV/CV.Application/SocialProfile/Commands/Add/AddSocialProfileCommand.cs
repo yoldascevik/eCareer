@@ -1,17 +1,16 @@
 using Career.MediatR.Command;
 using CurriculumVitae.Application.SocialProfile.Dtos;
 
-namespace CurriculumVitae.Application.SocialProfile.Commands.Add
-{
-    public class AddSocialProfileCommand : ICommand<SocialProfileDto>
-    {
-        public AddSocialProfileCommand(string cvId, SocialProfileInputDto socialProfile)
-        {
-            CvId = cvId;
-            SocialProfile = socialProfile;
-        }
+namespace CurriculumVitae.Application.SocialProfile.Commands.Add;
 
-        public string CvId { get; }
-        public SocialProfileInputDto SocialProfile { get; }
+public class AddSocialProfileCommand : ICommand<SocialProfileDto>
+{
+    public AddSocialProfileCommand(string cvId, SocialProfileInputDto socialProfile)
+    {
+        CvId = cvId;
+        SocialProfile = socialProfile;
     }
+
+    public string CvId { get; }
+    public SocialProfileInputDto SocialProfile { get; }
 }

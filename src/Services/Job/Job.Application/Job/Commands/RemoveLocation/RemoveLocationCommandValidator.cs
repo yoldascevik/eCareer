@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Job.Application.Job.Commands.RemoveLocation
+namespace Job.Application.Job.Commands.RemoveLocation;
+
+public class RemoveLocationCommandValidator: AbstractValidator<RemoveLocationCommand>
 {
-    public class RemoveLocationCommandValidator: AbstractValidator<RemoveLocationCommand>
+    public RemoveLocationCommandValidator()
     {
-        public RemoveLocationCommandValidator()
-        {
-            RuleFor(x => x.LocationId).NotNull().NotEmpty();
-            RuleFor(x => x.JobId).NotNull().NotEmpty();
-        }
+        RuleFor(x => x.LocationId).NotNull().NotEmpty();
+        RuleFor(x => x.JobId).NotNull().NotEmpty();
     }
 }

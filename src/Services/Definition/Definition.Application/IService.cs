@@ -1,7 +1,6 @@
-﻿namespace Definition.Application
+﻿namespace Definition.Application;
+
+public interface IService
 {
-    public interface IService
-    {
         
-    }
 }

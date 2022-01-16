@@ -1,14 +1,13 @@
 using CurriculumVitae.Application.SocialProfile.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.SocialProfile
+namespace CurriculumVitae.Application.SocialProfile;
+
+public class SocialProfileInputDtoValidator : AbstractValidator<SocialProfileInputDto>
 {
-    public class SocialProfileInputDtoValidator : AbstractValidator<SocialProfileInputDto>
+    public SocialProfileInputDtoValidator()
     {
-        public SocialProfileInputDtoValidator()
-        {
-            RuleFor(x => x.TypeId).NotEmpty();
-            RuleFor(x => x.UserName).NotEmpty();
-        }
+        RuleFor(x => x.TypeId).NotEmpty();
+        RuleFor(x => x.UserName).NotEmpty();
     }
 }

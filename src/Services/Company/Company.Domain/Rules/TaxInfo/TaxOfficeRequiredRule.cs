@@ -1,18 +1,17 @@
 using Career.Domain.BusinessRule;
 
-namespace Company.Domain.Rules.TaxInfo
+namespace Company.Domain.Rules.TaxInfo;
+
+public class TaxOfficeRequiredRule: IBusinessRule
 {
-    public class TaxOfficeRequiredRule: IBusinessRule
+    private readonly string _taxOffice;
+
+    public TaxOfficeRequiredRule(string taxOffice)
     {
-        private readonly string _taxOffice;
-
-        public TaxOfficeRequiredRule(string taxOffice)
-        {
-            _taxOffice = taxOffice;
-        }
-
-        public bool IsBroken() => string.IsNullOrEmpty(_taxOffice);
-        
-        public string Message => "Tax office is required.";
+        _taxOffice = taxOffice;
     }
+
+    public bool IsBroken() => string.IsNullOrEmpty(_taxOffice);
+        
+    public string Message => "Tax office is required.";
 }

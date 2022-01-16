@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace Job.Application.Job.Commands.SendForApproval
+namespace Job.Application.Job.Commands.SendForApproval;
+
+public class SendJobForApprovalCommandValidator : AbstractValidator<SendJobForApprovalCommand>
 {
-    public class SendJobForApprovalCommandValidator : AbstractValidator<SendJobForApprovalCommand>
+    public SendJobForApprovalCommandValidator()
     {
-        public SendJobForApprovalCommandValidator()
-        {
-            RuleFor(x => x.JobId).NotEmpty();
-        }
+        RuleFor(x => x.JobId).NotEmpty();
     }
 }

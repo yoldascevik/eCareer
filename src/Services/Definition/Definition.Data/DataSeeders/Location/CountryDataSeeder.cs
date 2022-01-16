@@ -5,17 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Definition.Data.DataSeeders.Location
+namespace Definition.Data.DataSeeders.Location;
+
+public class CountryDataSeeder : DataSeederBase<Country>
 {
-    public class CountryDataSeeder : DataSeederBase<Country>
+    public CountryDataSeeder(
+        IMongoRepository<Country> repository, 
+        IHostEnvironment environment, 
+        IConfiguration configuration, 
+        ILogger<CountryDataSeeder> logger) 
+        : base(repository, environment, configuration, logger)
     {
-        public CountryDataSeeder(
-            IMongoRepository<Country> repository, 
-            IHostEnvironment environment, 
-            IConfiguration configuration, 
-            ILogger<CountryDataSeeder> logger) 
-            : base(repository, environment, configuration, logger)
-        {
-        }
     }
 }

@@ -1,8 +1,7 @@
 using Career.EventHub;
 
-namespace Career.Domain.DomainEvent
+namespace Career.Domain.DomainEvent;
+
+public interface IDomainEvent : IEvent
 {
-    public interface IDomainEvent : IEvent
-    {
-    }
 }

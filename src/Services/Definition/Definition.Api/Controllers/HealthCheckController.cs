@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Definition.Api.Controllers
+namespace Definition.Api.Controllers;
+
+[ApiVersion("1.0")]
+[Route("api/HealthCheck")]
+public class HealthCheckController : Controller
 {
-    [ApiVersion("1.0")]
-    [Route("api/HealthCheck")]
-    public class HealthCheckController : Controller
+    [HttpGet("api-status")]
+    [HttpHead("api-status")]
+    public ActionResult ApiStatus()
     {
-        [HttpGet("api-status")]
-        [HttpHead("api-status")]
-        public ActionResult ApiStatus()
-        {
-            return Ok("Definition Api is awake!");
-        }
+        return Ok("Definition Api is awake!");
     }
 }

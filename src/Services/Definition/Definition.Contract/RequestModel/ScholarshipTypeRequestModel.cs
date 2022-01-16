@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Contract.RequestModel
+namespace Definition.Contract.RequestModel;
+
+public class ScholarshipTypeRequestModel
 {
-    public class ScholarshipTypeRequestModel
-    {
-        [Required]
-        public string Name { get; set; }
-    }
+    [Required]
+    public string Name { get; set; }
 }

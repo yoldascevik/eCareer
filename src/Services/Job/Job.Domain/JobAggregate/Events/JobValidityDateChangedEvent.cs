@@ -1,22 +1,20 @@
-using System;
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
 
-namespace Job.Domain.JobAggregate.Events
+namespace Job.Domain.JobAggregate.Events;
+
+public class JobValidityDateChangedEvent : DomainEvent
 {
-    public class JobValidityDateChangedEvent : DomainEvent
+    private JobValidityDateChangedEvent(){} // for serialization
+
+    public JobValidityDateChangedEvent(Job job)
     {
-        private JobValidityDateChangedEvent(){} // for serialization
+        Check.NotNull(job, nameof(job));
 
-        public JobValidityDateChangedEvent(Job job)
-        {
-            Check.NotNull(job, nameof(job));
-
-            JobId = job.Id;
-            ValidityDate = job.ValidityDate;
-        }
-
-        public Guid JobId { get; private set; }
-        public DateTime ValidityDate { get; private set; }
+        JobId = job.Id;
+        ValidityDate = job.ValidityDate;
     }
+
+    public Guid JobId { get; private set; }
+    public DateTime ValidityDate { get; private set; }
 }

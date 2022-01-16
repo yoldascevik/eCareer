@@ -1,9 +1,8 @@
 ﻿
 using Career.Domain.Specifications;
 
-namespace Company.Domain.Rules.Company
+namespace Company.Domain.Rules.Company;
+
+public interface IEmailAddressUniquenessSpecification : ISpecification<string>
 {
-    public interface IEmailAddressUniquenessSpecification : ISpecification<string>
-    {
-    }
 }

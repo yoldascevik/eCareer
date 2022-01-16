@@ -1,20 +1,19 @@
-﻿namespace Company.HttpClient
-{
-    public class ApiEndpointOptions
-    {
-        public ApiEndpointOptions()
-        {
-            DefaultVersion = "1.0";
-        }
-        
-        public ApiEndpointOptions(string apiUrl, string defaultVersion)
-            : this()
-        {
-            ApiUrl = apiUrl;
-            DefaultVersion = defaultVersion;
-        }
+﻿namespace Company.HttpClient;
 
-        public string ApiUrl { get; set; }
-        public string DefaultVersion { get; set; }
+public class ApiEndpointOptions
+{
+    public ApiEndpointOptions()
+    {
+        DefaultVersion = "1.0";
     }
+        
+    public ApiEndpointOptions(string apiUrl, string defaultVersion)
+        : this()
+    {
+        ApiUrl = apiUrl;
+        DefaultVersion = defaultVersion;
+    }
+
+    public string ApiUrl { get; set; }
+    public string DefaultVersion { get; set; }
 }

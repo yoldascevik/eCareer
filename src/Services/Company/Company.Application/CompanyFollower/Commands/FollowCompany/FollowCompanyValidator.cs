@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 
-namespace Company.Application.CompanyFollower.Commands.FollowCompany
+namespace Company.Application.CompanyFollower.Commands.FollowCompany;
+
+public class FollowCompanyValidator : AbstractValidator<FollowCompanyCommand>
 {
-    public class FollowCompanyValidator : AbstractValidator<FollowCompanyCommand>
+    public FollowCompanyValidator()
     {
-        public FollowCompanyValidator()
-        {
-            RuleFor(x => x.UserId).NotEmpty();
-            RuleFor(x => x.CompanyId).NotEmpty();
-        }
+        RuleFor(x => x.UserId).NotEmpty();
+        RuleFor(x => x.CompanyId).NotEmpty();
     }
 }

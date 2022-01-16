@@ -1,38 +1,43 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using System;
-using Career.Configuration;
+﻿using Career.Configuration;
+using Career.Identity.Extensions;
 using Logging;
+using Serilog;
 
-namespace Career.Identity
+var configuration = ConfigurationHelper.GetConfiguration();
+Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+
+try
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var configuration = ConfigurationHelper.GetConfiguration();
-            Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    
+    services.AddControllersWithViews();
+    services.AddCareerIdentityContext(configuration);
+    services.AddCareerIdentity();
+    services.AddCareerIdentityServer(configuration);
+    services.AddCareerConsul(configuration);
+    services.AddAuthentication();
 
-            try
-            {
-                Log.Information("Application starting up...");
+    builder.Host.UseSerilog();
+    
+    var app = builder.Build();
+    
+    if (app.Environment.IsDevelopment())
+        app.UseDeveloperExceptionPage();
 
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "The application failed to start correctly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-    }
+    app.UseStaticFiles();
+    app.UseRouting();
+    app.UseIdentityServer();
+    app.UseAuthorization();
+    app.MapControllers();
+    
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "The application failed to start correctly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

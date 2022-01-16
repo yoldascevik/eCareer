@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Attachment.Commands.Update
+namespace CurriculumVitae.Application.Attachment.Commands.Update;
+
+public class UpdateAttachmentCommandValidator : AbstractValidator<UpdateAttachmentCommand>
 {
-    public class UpdateAttachmentCommandValidator : AbstractValidator<UpdateAttachmentCommand>
+    public UpdateAttachmentCommandValidator()
     {
-        public UpdateAttachmentCommandValidator()
-        {
-            RuleFor(x => x.AttachmentId).NotEmpty();
-            RuleFor(x => x.Attachment).SetValidator(new AttachmentInputDtoValidator());
-        }
+        RuleFor(x => x.AttachmentId).NotEmpty();
+        RuleFor(x => x.Attachment).SetValidator(new AttachmentInputDtoValidator());
     }
 }

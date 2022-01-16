@@ -1,45 +1,59 @@
-using System;
+using ARConsistency;
 using Career.Configuration;
 using Career.EntityFramework;
+using Career.IoC;
+using Career.MediatR;
+using Career.Mvc.Extensions;
+using Career.Shared.Timing;
+using Career.Swagger;
+using Company.Api.Extensions;
+using Company.Application;
 using Company.Infrastructure;
 using Logging;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Company.Api
+var configuration = ConfigurationHelper.GetConfiguration();
+Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+
+try
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var configuration = ConfigurationHelper.GetConfiguration();
-            Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    
+    Clock.Provider = ClockProviders.Utc;
+    
+    services.AddApiVersion();
+    services.AddControllersWithARConsistency(configuration);
+    services.RegisterModule<ApplicationModule>();
+    services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
+    services.AddSwagger();
+    services.AddCareerCAP(configuration);
+    services.AddCareerConsul(configuration);
+    services.AddCareerAuthentication(configuration);
+    services.AddCareerAuthorization();
+    
+    builder.Host.UseSerilog();
+    
+    var app = builder.Build();
+    app.MigrateEntityFrameworkDatabase<CompanyDbContext>();
+    
+    if (app.Environment.IsDevelopment())
+        app.UseDeveloperExceptionPage();
 
-            try
-            {
-                Log.Information("Application starting up...");
-
-                 CreateHostBuilder(args).Build()
-                     .MigrateEntityFrameworkDatabase<CompanyDbContext>()
-                     .Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "The application failed to start correctly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    app.UseSwagger();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseApiResponseConsistency();
+    app.MapControllers();
+    
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "The application failed to start correctly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

@@ -1,15 +1,13 @@
-﻿using System;
-using Career.MediatR.Command;
+﻿using Career.MediatR.Command;
 
-namespace Company.Application.Company.Commands.DeleteCompany
+namespace Company.Application.Company.Commands.DeleteCompany;
+
+public class DeleteCompanyCommand : ICommand
 {
-    public class DeleteCompanyCommand : ICommand
+    public DeleteCompanyCommand(Guid companyId)
     {
-        public DeleteCompanyCommand(Guid companyId)
-        {
-            CompanyId = companyId;
-        }
-
-        public Guid CompanyId { get; set; }
+        CompanyId = companyId;
     }
+
+    public Guid CompanyId { get; set; }
 }

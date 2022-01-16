@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.WorkExperience.Commands.Add
+namespace CurriculumVitae.Application.WorkExperience.Commands.Add;
+
+public class AddWorkExperienceCommandValidator : AbstractValidator<AddWorkExperienceCommand>
 {
-    public class AddWorkExperienceCommandValidator : AbstractValidator<AddWorkExperienceCommand>
+    public AddWorkExperienceCommandValidator()
     {
-        public AddWorkExperienceCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.WorkExperience).SetValidator(new WorkExperienceInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.WorkExperience).SetValidator(new WorkExperienceInputDtoValidator());
     }
- }
+}

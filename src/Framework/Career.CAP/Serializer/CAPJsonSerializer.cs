@@ -1,81 +1,78 @@
-using System;
 using System.Text;
-using System.Threading.Tasks;
 using Career.Exceptions;
 using Career.Extensions.System;
 using DotNetCore.CAP.Messages;
 using DotNetCore.CAP.Serialization;
 using Newtonsoft.Json;
 
-namespace Career.CAP.Serializer
+namespace Career.CAP.Serializer;
+
+public class CAPJsonSerializer : ISerializer
 {
-    public class CAPJsonSerializer : ISerializer
+    private readonly JsonSerializerSettings _serializerSettings;
+
+    public CAPJsonSerializer()
     {
-        private readonly JsonSerializerSettings _serializerSettings;
+        _serializerSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new ReadOnlyContractResolver(),
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+        };
+    }
 
-        public CAPJsonSerializer()
+    public Task<TransportMessage> SerializeAsync(Message message)
+    {
+        Check.NotNull(message, nameof(message));
+            
+        if (message.Value == null)
         {
-            _serializerSettings = new JsonSerializerSettings()
-            {
-                ContractResolver = new ReadOnlyContractResolver(),
-                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-            };
+            return Task.FromResult(new TransportMessage(message.Headers, null));
         }
+            
+        string jsonBody = JsonConvert.SerializeObject(message.Value, message.Value.GetType(), _serializerSettings);
+        var transportMessage = new TransportMessage(message.Headers, Encoding.UTF8.GetBytes(jsonBody));
 
-        public Task<TransportMessage> SerializeAsync(Message message)
+        return Task.FromResult(transportMessage);
+    }
+        
+    public Task<Message> DeserializeAsync(TransportMessage transportMessage, Type valueType)
+    {
+        if (valueType == null || transportMessage.Body == null)
         {
-            Check.NotNull(message, nameof(message));
+            return Task.FromResult(new Message(transportMessage.Headers, null));
+        }
             
-            if (message.Value == null)
-            {
-                return Task.FromResult(new TransportMessage(message.Headers, null));
-            }
-            
-            string jsonBody = JsonConvert.SerializeObject(message.Value, message.Value.GetType(), _serializerSettings);
-            var transportMessage = new TransportMessage(message.Headers, Encoding.UTF8.GetBytes(jsonBody));
+        string serializeBody = Encoding.UTF8.GetString(transportMessage.Body);
+        object deserializeObj = JsonConvert.DeserializeObject(serializeBody, valueType, _serializerSettings);
 
-            return Task.FromResult(transportMessage);
-        }
+        return Task.FromResult(new Message(transportMessage.Headers, deserializeObj));
+    }
         
-        public Task<Message> DeserializeAsync(TransportMessage transportMessage, Type valueType)
+    public string Serialize(Message message)
+    {
+        return JsonConvert.SerializeObject(message, _serializerSettings);
+    }
+        
+    public Message Deserialize(string json)
+    {
+        return JsonConvert.DeserializeObject<Message>(json, _serializerSettings);
+    }
+        
+    public object Deserialize(object value, Type valueType)
+    {
+        if (!IsJsonType(value))
         {
-            if (valueType == null || transportMessage.Body == null)
-            {
-                return Task.FromResult(new Message(transportMessage.Headers, null));
-            }
+            throw new NotSupportedException("Type is not of type json");
+        }
             
-            string serializeBody = Encoding.UTF8.GetString(transportMessage.Body);
-            object deserializeObj = JsonConvert.DeserializeObject(serializeBody, valueType, _serializerSettings);
-
-            return Task.FromResult(new Message(transportMessage.Headers, deserializeObj));
-        }
+        return Deserialize(value.ToString());
+    }
         
-        public string Serialize(Message message)
-        {
-            return JsonConvert.SerializeObject(message, _serializerSettings);
-        }
+    public bool IsJsonType(object jsonObject)
+    {
+        if (jsonObject is string jsonString)
+            return jsonString.IsValidJson();
         
-        public Message Deserialize(string json)
-        {
-            return JsonConvert.DeserializeObject<Message>(json, _serializerSettings);
-        }
-        
-        public object Deserialize(object value, Type valueType)
-        {
-            if (!IsJsonType(value))
-            {
-                throw new NotSupportedException("Type is not of type json");
-            }
-            
-            return Deserialize(value.ToString());
-        }
-        
-        public bool IsJsonType(object jsonObject)
-        {
-            if (jsonObject is string jsonString)
-                return jsonString.IsValidJson();
-        
-            return false;
-        }
+        return false;
     }
 }

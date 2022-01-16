@@ -1,10 +1,7 @@
-using System;
+namespace Career.EventHub;
 
-namespace Career.EventHub
+public interface IEvent
 {
-    public interface IEvent
-    {
-        Guid EventId { get; }
-        DateTime OccurredOn { get; }
-    }
+    Guid EventId { get; }
+    DateTime OccurredOn { get; }
 }

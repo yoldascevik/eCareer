@@ -1,11 +1,8 @@
-﻿using System;
+﻿namespace Definition.Contract.Dto;
 
-namespace Definition.Contract.Dto
+[Serializable]
+public class WorkTypeDto
 {
-    [Serializable]
-    public class WorkTypeDto
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

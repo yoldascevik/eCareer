@@ -1,9 +1,6 @@
-using System.Threading.Tasks;
+namespace Career.EventHub;
 
-namespace Career.EventHub
+public interface IIntegrationEventHandler<TEvent>  where TEvent : IIntegrationEvent
 {
-    public interface IIntegrationEventHandler<TEvent>  where TEvent : IIntegrationEvent
-    {
-        Task Handle(TEvent @event);
-    }
+    Task Handle(TEvent @event);
 }

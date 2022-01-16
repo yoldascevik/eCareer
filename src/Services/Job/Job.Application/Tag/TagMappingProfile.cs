@@ -1,13 +1,12 @@
 using AutoMapper;
 using Job.Application.Tag.Dtos;
 
-namespace Job.Application.Tag
+namespace Job.Application.Tag;
+
+public class TagMappingProfile : Profile
 {
-    public class TagMappingProfile : Profile
+    public TagMappingProfile()
     {
-        public TagMappingProfile()
-        {
-            CreateMap<Domain.TagAggregate.Tag, TagDto>();
-        }
+        CreateMap<Domain.TagAggregate.Tag, TagDto>();
     }
 }

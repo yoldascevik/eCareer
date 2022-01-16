@@ -1,37 +1,35 @@
-﻿using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace Career.Extensions.System
+namespace Career.Extensions.System;
+
+public static class StringExtension
 {
-    public static class StringExtension
+    public static bool IsValidJson(this string text)
     {
-        public static bool IsValidJson(this string text)
+        text = text.Trim();
+        if ((text.StartsWith("{") && text.EndsWith("}")) ||
+            (text.StartsWith("[") && text.EndsWith("]")))
         {
-            text = text.Trim();
-            if ((text.StartsWith("{") && text.EndsWith("}")) ||
-                (text.StartsWith("[") && text.EndsWith("]")))
+            try
             {
-                try
-                {
-                    JsonDocument.Parse(text);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                JsonDocument.Parse(text);
+                return true;
             }
-            else
+            catch (Exception)
             {
                 return false;
             }
         }
-
-        public static bool IsHtml(this string text)
+        else
         {
-            Regex tagRegex = new Regex(@"<\s*([^ >]+)[^>]*>.*?<\s*/\s*\1\s*>");
-            return tagRegex.IsMatch(text);
+            return false;
         }
+    }
+
+    public static bool IsHtml(this string text)
+    {
+        Regex tagRegex = new Regex(@"<\s*([^ >]+)[^>]*>.*?<\s*/\s*\1\s*>");
+        return tagRegex.IsMatch(text);
     }
 }

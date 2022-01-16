@@ -1,4 +1,3 @@
-using AutoMapper;
 using Career.CAP;
 using Career.Configuration;
 using Career.EntityFramework;
@@ -13,28 +12,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Company.Application
+namespace Company.Application;
+
+public class ApplicationModule : Module
 {
-    public class ApplicationModule : Module
+    protected override void Load(IServiceCollection services)
     {
-        protected override void Load(IServiceCollection services)
-        {
-            IConfiguration configuration = ConfigurationHelper.GetConfiguration();
+        IConfiguration configuration = ConfigurationHelper.GetConfiguration();
 
-            services.AddDbContext<CompanyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("CompanyDatabase")));
-            services.AddUnitOfWork<CompanyDbContext>();
+        services.AddDbContext<CompanyDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("CompanyDatabase")));
+        services.AddUnitOfWork<CompanyDbContext>();
 
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<ISectorRefRepository, SectorRefRepository>();
-            services.AddScoped<ICountryRefRepository, CountryRefRepository>();
-            services.AddScoped<ICityRefRepository, CityRefRepository>();
-            services.AddScoped<IDistrictRefRepository, DistrictRefRepository>();
-            services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
+        services.AddScoped<ISectorRefRepository, SectorRefRepository>();
+        services.AddScoped<ICountryRefRepository, CountryRefRepository>();
+        services.AddScoped<ICityRefRepository, CityRefRepository>();
+        services.AddScoped<IDistrictRefRepository, DistrictRefRepository>();
+        services.AddScoped<ICompanyFollowerRepository, CompanyFollowerRepository>();
 
-            services.RegisterCAPEventHandlers(this.GetType());
-            services.RegisterModule<DomainModule>();
+        services.RegisterCAPEventHandlers(this.GetType());
+        services.RegisterModule<DomainModule>();
             
-            services.AddAutoMapper(typeof(CompanyMappinProfile));
-        }
+        services.AddAutoMapper(typeof(CompanyMappinProfile));
     }
 }

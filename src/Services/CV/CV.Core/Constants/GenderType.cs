@@ -1,9 +1,8 @@
-namespace CurriculumVitae.Core.Constants
+namespace CurriculumVitae.Core.Constants;
+
+public enum GenderType
 {
-    public enum GenderType
-    {
-        Male = 1,
-        Female = 2,
-        Unspecified = 0
-    }
+    Male = 1,
+    Female = 2,
+    Unspecified = 0
 }

@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Job.Application.Job.Commands.RemoveEducationLevel
+namespace Job.Application.Job.Commands.RemoveEducationLevel;
+
+public class RemoveEducationLevelCommandValidator: AbstractValidator<RemoveEducationLevelCommand>
 {
-    public class RemoveEducationLevelCommandValidator: AbstractValidator<RemoveEducationLevelCommand>
+    public RemoveEducationLevelCommandValidator()
     {
-        public RemoveEducationLevelCommandValidator()
-        {
-            RuleFor(x => x.EducationLevelId).NotNull().NotEmpty();
-            RuleFor(x => x.JobId).NotNull().NotEmpty();
-        }
+        RuleFor(x => x.EducationLevelId).NotNull().NotEmpty();
+        RuleFor(x => x.JobId).NotNull().NotEmpty();
     }
 }

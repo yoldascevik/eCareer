@@ -1,7 +1,6 @@
-namespace Career.Domain.Entities
+namespace Career.Domain.Entities;
+
+public abstract class Entity
 {
-    public abstract class Entity
-    {
         
-    }
 }

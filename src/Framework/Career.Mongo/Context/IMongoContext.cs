@@ -1,9 +1,8 @@
 ﻿using MongoDB.Driver;
 
-namespace Career.Mongo.Context
+namespace Career.Mongo.Context;
+
+public interface IMongoContext
 {
-    public interface IMongoContext
-    {
-        IMongoDatabase Database { get; }
-    }
+    IMongoDatabase Database { get; }
 }

@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.CoverLetter.Commands.Update
+namespace CurriculumVitae.Application.CoverLetter.Commands.Update;
+
+public class UpdateCoverLetterCommandValidator : AbstractValidator<UpdateCoverLetterCommand>
 {
-    public class UpdateCoverLetterCommandValidator : AbstractValidator<UpdateCoverLetterCommand>
+    public UpdateCoverLetterCommandValidator()
     {
-        public UpdateCoverLetterCommandValidator()
-        {
-            RuleFor(x => x.CoverLetterId).NotEmpty();
-            RuleFor(x => x.CoverLetter).SetValidator(new CoverLetterInputDtoValidator());
-        }
+        RuleFor(x => x.CoverLetterId).NotEmpty();
+        RuleFor(x => x.CoverLetter).SetValidator(new CoverLetterInputDtoValidator());
     }
 }

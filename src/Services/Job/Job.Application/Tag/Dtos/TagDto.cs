@@ -1,10 +1,7 @@
-using System;
+namespace Job.Application.Tag.Dtos;
 
-namespace Job.Application.Tag.Dtos
+public class TagDto
 {
-    public class TagDto
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

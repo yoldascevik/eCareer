@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Job.Application.Job.Commands.UpdateJobTags
+namespace Job.Application.Job.Commands.UpdateJobTags;
+
+public class UpdateJobTagsCommandValidator: AbstractValidator<UpdateJobTagsCommand>
 {
-    public class UpdateJobTagsCommandValidator: AbstractValidator<UpdateJobTagsCommand>
+    public UpdateJobTagsCommandValidator()
     {
-        public UpdateJobTagsCommandValidator()
-        {
-            RuleFor(x => x.JobId).NotNull().NotEmpty();
-            RuleFor(x => x.Tags).NotNull();
-        }
+        RuleFor(x => x.JobId).NotNull().NotEmpty();
+        RuleFor(x => x.Tags).NotNull();
     }
 }

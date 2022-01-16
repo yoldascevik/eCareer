@@ -1,14 +1,13 @@
 using MediatR;
 
-namespace Career.MediatR.Command
-{
-    public interface ICommand: IRequest
-    {
-        
-    }
+namespace Career.MediatR.Command;
 
-    public interface ICommand<out TResponse> : IRequest<TResponse>
-    {
+public interface ICommand: IRequest
+{
         
-    }
+}
+
+public interface ICommand<out TResponse> : IRequest<TResponse>
+{
+        
 }

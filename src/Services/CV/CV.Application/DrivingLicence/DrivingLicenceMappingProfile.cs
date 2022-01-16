@@ -1,14 +1,13 @@
 using AutoMapper;
 using CurriculumVitae.Application.DrivingLicence.Dtos;
 
-namespace CurriculumVitae.Application.DrivingLicence
+namespace CurriculumVitae.Application.DrivingLicence;
+
+public class DrivingLicenceMappingProfile : Profile
 {
-    public class DrivingLicenceMappingProfile : Profile
+    public DrivingLicenceMappingProfile()
     {
-        public DrivingLicenceMappingProfile()
-        {
-            CreateMap<Core.Entities.DrivingLicence, DrivingLicenceDto>();
-            CreateMap<DrivingLicenceInputDto, Core.Entities.DrivingLicence>();
-        }
+        CreateMap<Core.Entities.DrivingLicence, DrivingLicenceDto>();
+        CreateMap<DrivingLicenceInputDto, Core.Entities.DrivingLicence>();
     }
 }

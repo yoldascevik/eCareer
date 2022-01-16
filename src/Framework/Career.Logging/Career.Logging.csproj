@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Logging</RootNamespace>
     </PropertyGroup>
-
+    
     <ItemGroup>
-      <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
-      <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
-      <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
+      <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+      <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+      <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
     </ItemGroup>
 
 </Project>

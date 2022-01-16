@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
-namespace Career.Repositories.Repository
+namespace Career.Repositories.Repository;
+
+public interface ICommandRepository<T> where T : class
 {
-    public interface ICommandRepository<T> where T : class
-    {
-        T Add(T item);
-        Task<T> AddAsync(T item);
+    T Add(T item);
+    Task<T> AddAsync(T item);
 
-        void AddRange(IEnumerable<T> items);
-        Task AddRangeAsync(IEnumerable<T> items);
+    void AddRange(IEnumerable<T> items);
+    Task AddRangeAsync(IEnumerable<T> items);
 
-        T Update(object key, T item);
-        Task<T> UpdateAsync(object key, T item);
+    T Update(object key, T item);
+    Task<T> UpdateAsync(object key, T item);
 
-        void Delete(object key);
-        void Delete(Expression<Func<T, bool>> condition);
-        Task DeleteAsync(object key);
-        Task DeleteAsync(Expression<Func<T, bool>> condition);
-    }
+    void Delete(object key);
+    void Delete(Expression<Func<T, bool>> condition);
+    Task DeleteAsync(object key);
+    Task DeleteAsync(Expression<Func<T, bool>> condition);
 }

@@ -2,14 +2,13 @@
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Location.City
+namespace Definition.Application.Location.City;
+
+public class CityMappingProfile: Profile
 {
-    public class CityMappingProfile: Profile
+    public CityMappingProfile()
     {
-        public CityMappingProfile()
-        {
-            CreateMap<Data.Entities.City, CityDto>();
-            CreateMap<CityRequestModel, Data.Entities.City>();
-        }
+        CreateMap<Data.Entities.City, CityDto>();
+        CreateMap<CityRequestModel, Data.Entities.City>();
     }
 }

@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace Career.Shared.Timing;
 
-namespace Career.Shared.Timing
+public interface IClockProvider
 {
-    public interface IClockProvider
-    {
-        DateTime Now { get; }
+    DateTime Now { get; }
 
-        DateTimeKind Kind { get; }
+    DateTimeKind Kind { get; }
 
-        bool SupportsMultipleTimezone { get; }
+    bool SupportsMultipleTimezone { get; }
 
-        DateTime Normalize(DateTime dateTime);
-    }
+    DateTime Normalize(DateTime dateTime);
 }

@@ -9,25 +9,24 @@ using CurriculumVitae.Infrastructure.Repositories;
 using CurriculumVitae.Infrastructure.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CurriculumVitae.Application
-{
-    public class ApplicationModule: IModule
-    {
-        public void Configure(IServiceCollection services)
-        {
-            services.AddScoped<ICVRepository, CVRepository>();
-            services.AddScoped<IAttachmentRepository, AttachmentRepository>();
-            services.AddScoped<ICoverLetterRepository, CoverLetterRepository>();
-            services.AddScoped<IDisabilityTypeRepository, DisabilityTypeRepository>();
-            services.AddScoped<ISocialProfileTypeRepository, SocialProfileTypeRepository>();
-            
-            services.AddSingleton<IStringIdGenerator, StringObjectIdGenerator>();
+namespace CurriculumVitae.Application;
 
-            services.AddMediatRWithFluentValidation(this.GetType());
-            services.AddAutoMapper(this.GetType());
+public class ApplicationModule: IModule
+{
+    public void Configure(IServiceCollection services)
+    {
+        services.AddScoped<ICVRepository, CVRepository>();
+        services.AddScoped<IAttachmentRepository, AttachmentRepository>();
+        services.AddScoped<ICoverLetterRepository, CoverLetterRepository>();
+        services.AddScoped<IDisabilityTypeRepository, DisabilityTypeRepository>();
+        services.AddScoped<ISocialProfileTypeRepository, SocialProfileTypeRepository>();
             
-            services.RegisterModule<CoreModule>();
-            services.RegisterCAPEventHandlers(this.GetType());
-        }
+        services.AddSingleton<IStringIdGenerator, StringObjectIdGenerator>();
+
+        services.AddMediatRWithFluentValidation(this.GetType());
+        services.AddAutoMapper(this.GetType());
+            
+        services.RegisterModule<CoreModule>();
+        services.RegisterCAPEventHandlers(this.GetType());
     }
 }

@@ -1,15 +1,14 @@
 using CurriculumVitae.Application.CoverLetter.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.CoverLetter
+namespace CurriculumVitae.Application.CoverLetter;
+
+public class CoverLetterInputDtoValidator : AbstractValidator<CoverLetterInputDto>
 {
-    public class CoverLetterInputDtoValidator : AbstractValidator<CoverLetterInputDto>
+    public CoverLetterInputDtoValidator()
     {
-        public CoverLetterInputDtoValidator()
-        {
-            RuleFor(x => x.UserId).NotEmpty();
-            RuleFor(x => x.Title).NotEmpty();
-            RuleFor(x => x.Content).NotEmpty();
-        }
+        RuleFor(x => x.UserId).NotEmpty();
+        RuleFor(x => x.Title).NotEmpty();
+        RuleFor(x => x.Content).NotEmpty();
     }
 }

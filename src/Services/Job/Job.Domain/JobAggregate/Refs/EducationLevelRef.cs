@@ -1,11 +1,10 @@
-namespace Job.Domain.JobAggregate.Refs
+namespace Job.Domain.JobAggregate.Refs;
+
+public class EducationLevelRef: IdNameRef
 {
-    public class EducationLevelRef: IdNameRef
+    private EducationLevelRef(string refId, string name) : base(refId, name)
     {
-        private EducationLevelRef(string refId, string name) : base(refId, name)
-        {
-        }
-        
-        public static EducationLevelRef Create(string refId, string name) => new (refId, name);
     }
+        
+    public static EducationLevelRef Create(string refId, string name) => new (refId, name);
 }

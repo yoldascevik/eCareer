@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace Job.Application.Tag.Commands.Create
+namespace Job.Application.Tag.Commands.Create;
+
+public class CreateTagCommandValidator : AbstractValidator<CreateTagCommand>
 {
-    public class CreateTagCommandValidator : AbstractValidator<CreateTagCommand>
+    public CreateTagCommandValidator()
     {
-        public CreateTagCommandValidator()
-        {
-            RuleFor(x => x.Name).NotNull().NotEmpty();
-        }
+        RuleFor(x => x.Name).NotNull().NotEmpty();
     }
 }

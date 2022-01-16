@@ -1,38 +1,59 @@
-using System;
+using ARConsistency;
 using Career.Configuration;
+using Career.IoC;
+using Career.Mongo;
+using Career.Mvc.Extensions;
+using Career.Shared.Timing;
+using Career.Swagger;
+using CurriculumVitae.Api.Extensions;
+using CurriculumVitae.Application;
+using CurriculumVitae.Infrastructure;
 using Logging;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace CurriculumVitae.Api
+var configuration = ConfigurationHelper.GetConfiguration();
+Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+
+try
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var configuration = ConfigurationHelper.GetConfiguration();
-            Log.Logger = CareerSerilogLoggerFactory.CreateSerilogLogger(configuration);
+    Clock.Provider = ClockProviders.Utc;
+    
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+    
+    services.AddApiVersion();
+    services.AddControllersWithARConsistency(configuration);
+    services.AddMongoContext<CvDbContext>();
+    services.AddMongo();
+    services.RegisterModule<ApplicationModule>();
+    services.AddSwagger();
+    services.AddCareerCAP(configuration);
+    services.AddCareerConsul(configuration);
+    services.AddCareerAuthentication(configuration);
+    services.AddCareerAuthorization();
+    
+    CvDbContext.Configure();
+    builder.Host.UseSerilog();
+    
+    var app = builder.Build();
+    
+    if (app.Environment.IsDevelopment())
+        app.UseDeveloperExceptionPage();
 
-            try
-            {
-                Log.Information("Application starting up...");
-
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "The application failed to start correctly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-    }
+    app.UseSwagger();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseApiResponseConsistency();
+    app.MapControllers();
+    
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "The application failed to start correctly");
+}
+finally
+{
+    Log.CloseAndFlush();
 }

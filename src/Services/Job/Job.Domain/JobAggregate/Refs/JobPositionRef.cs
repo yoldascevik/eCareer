@@ -1,11 +1,10 @@
-namespace Job.Domain.JobAggregate.Refs
+namespace Job.Domain.JobAggregate.Refs;
+
+public class JobPositionRef: IdNameRef
 {
-    public class JobPositionRef: IdNameRef
+    private JobPositionRef(string refId, string name) : base(refId, name)
     {
-        private JobPositionRef(string refId, string name) : base(refId, name)
-        {
-        }
-        
-        public static JobPositionRef Create(string refId, string name) => new (refId, name);
     }
+        
+    public static JobPositionRef Create(string refId, string name) => new (refId, name);
 }

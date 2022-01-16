@@ -1,10 +1,9 @@
 ﻿using Career.Domain;
 using Career.Mongo.Document;
 
-namespace Definition.Data.Entities
+namespace Definition.Data.Entities;
+
+public abstract class LookupDocument : Document, ISoftDeletable
 {
-    public abstract class LookupDocument : Document, ISoftDeletable
-    {
-        public bool IsDeleted { get; set; }
-    }
+    public bool IsDeleted { get; set; }
 }

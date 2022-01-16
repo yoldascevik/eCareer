@@ -2,14 +2,13 @@ using Career.CAP;
 using Career.IoC.IoCModule;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Company.Domain
+namespace Company.Domain;
+
+public class DomainModule: Module
 {
-    public class DomainModule: Module
+    protected override void Load(IServiceCollection services)
     {
-        protected override void Load(IServiceCollection services)
-        {
-            services.RegisterCAPEvents(this.GetType());
-            services.RegisterCAPEventHandlers(this.GetType());
-        }
+        services.RegisterCAPEvents(this.GetType());
+        services.RegisterCAPEventHandlers(this.GetType());
     }
 }

@@ -1,15 +1,13 @@
-using System;
 using Career.MediatR.Command;
 
-namespace Job.Application.Tag.Commands.Delete
+namespace Job.Application.Tag.Commands.Delete;
+
+public class DeleteTagCommand: ICommand
 {
-    public class DeleteTagCommand: ICommand
+    public DeleteTagCommand(Guid tagId)
     {
-        public DeleteTagCommand(Guid tagId)
-        {
-            TagId = tagId;
-        }
-        
-        public Guid TagId { get; }
+        TagId = tagId;
     }
+        
+    public Guid TagId { get; }
 }

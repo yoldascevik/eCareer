@@ -1,11 +1,8 @@
-using System;
+namespace CurriculumVitae.Application.CoverLetter.Dtos;
 
-namespace CurriculumVitae.Application.CoverLetter.Dtos
+public class CoverLetterInputDto
 {
-    public class CoverLetterInputDto
-    {
-        public Guid UserId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-    }
+    public Guid UserId { get; set; }
+    public string Title { get; set; }
+    public string Content { get; set; }
 }

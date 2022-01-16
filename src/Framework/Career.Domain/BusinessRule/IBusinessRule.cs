@@ -1,8 +1,7 @@
-namespace Career.Domain.BusinessRule
+namespace Career.Domain.BusinessRule;
+
+public interface IBusinessRule
 {
-    public interface IBusinessRule
-    {
-        bool IsBroken();
-        string Message { get; }
-    }
+    bool IsBroken();
+    string Message { get; }
 }

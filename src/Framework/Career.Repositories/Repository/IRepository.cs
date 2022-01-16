@@ -1,6 +1,5 @@
-﻿namespace Career.Repositories.Repository
+﻿namespace Career.Repositories.Repository;
+
+public interface IRepository<T> : IQueryRepository<T>, ICommandRepository<T> where T : class
 {
-    public interface IRepository<T> : IQueryRepository<T>, ICommandRepository<T> where T : class
-    {
-    }
 }

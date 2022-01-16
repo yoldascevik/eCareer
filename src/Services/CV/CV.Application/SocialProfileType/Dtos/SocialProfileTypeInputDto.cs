@@ -1,8 +1,7 @@
-namespace CurriculumVitae.Application.SocialProfileType.Dtos
+namespace CurriculumVitae.Application.SocialProfileType.Dtos;
+
+public class SocialProfileTypeInputDto
 {
-    public class SocialProfileTypeInputDto
-    {
-        public string Name { get; set; }
-        public string ProfileUrlPrefix { get; set; }
-    }
+    public string Name { get; set; }
+    public string ProfileUrlPrefix { get; set; }
 }

@@ -1,35 +1,32 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Career.MediatR.Command;
 using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.Cv.Commands.Delete
+namespace CurriculumVitae.Application.Cv.Commands.Delete;
+
+public class DeleteCVCommandHandler: ICommandHandler<DeleteCVCommand>
 {
-    public class DeleteCVCommandHandler: ICommandHandler<DeleteCVCommand>
+    private readonly ICVRepository _cvRepository;
+    private readonly ILogger<DeleteCVCommandHandler> _logger;
+
+    public DeleteCVCommandHandler(ICVRepository cvRepository, ILogger<DeleteCVCommandHandler> logger)
     {
-        private readonly ICVRepository _cvRepository;
-        private readonly ILogger<DeleteCVCommandHandler> _logger;
+        _cvRepository = cvRepository;
+        _logger = logger;
+    }
 
-        public DeleteCVCommandHandler(ICVRepository cvRepository, ILogger<DeleteCVCommandHandler> logger)
+    public async Task<Unit> Handle(DeleteCVCommand request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.Id);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _logger = logger;
+            throw new CVNotFoundException(request.Id);
         }
 
-        public async Task<Unit> Handle(DeleteCVCommand request, CancellationToken cancellationToken)
-        {
-            var cv = await _cvRepository.GetByKeyAsync(request.Id);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.Id);
-            }
-
-            await _cvRepository.DeleteAsync(cv.Id);
-            _logger.LogInformation("CV {FirstName} {LastName} ({CvId}) is deleted", cv.PersonalInfo.FirstName, cv.PersonalInfo.LastName, cv.Id);
+        await _cvRepository.DeleteAsync(cv.Id);
+        _logger.LogInformation("CV {FirstName} {LastName} ({CvId}) is deleted", cv.PersonalInfo.FirstName, cv.PersonalInfo.LastName, cv.Id);
             
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

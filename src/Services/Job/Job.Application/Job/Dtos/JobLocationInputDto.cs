@@ -1,8 +1,7 @@
-namespace Job.Application.Job.Dtos
+namespace Job.Application.Job.Dtos;
+
+public class JobLocationInputDto
 {
-    public class JobLocationInputDto
-    {
-        public IdNameRefDto CountryRef { get; set; }
-        public IdNameRefDto CityRef { get; set; }
-    }
+    public IdNameRefDto CountryRef { get; set; }
+    public IdNameRefDto CityRef { get; set; }
 }

@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace Career.Migration.DataSeeder;
 
-namespace Career.Migration.DataSeeder
+public interface IDataSeeder
 {
-    public interface IDataSeeder
-    {
-        Task SeedDataAsync();
-    }
+    Task SeedDataAsync();
 }

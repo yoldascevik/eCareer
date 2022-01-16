@@ -2,14 +2,13 @@
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Location.Country
+namespace Definition.Application.Location.Country;
+
+public class CountryMappingProfile: Profile
 {
-    public class CountryMappingProfile: Profile
+    public CountryMappingProfile()
     {
-        public CountryMappingProfile()
-        {
-            CreateMap<Data.Entities.Country, CountryDto>();
-            CreateMap<CountryRequestModel, Data.Entities.Country>();
-        }
+        CreateMap<Data.Entities.Country, CountryDto>();
+        CreateMap<CountryRequestModel, Data.Entities.Country>();
     }
 }

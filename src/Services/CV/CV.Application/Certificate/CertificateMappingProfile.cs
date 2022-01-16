@@ -1,14 +1,13 @@
 using AutoMapper;
 using CurriculumVitae.Application.Certificate.Dtos;
 
-namespace CurriculumVitae.Application.Certificate
+namespace CurriculumVitae.Application.Certificate;
+
+public class CertificateMappingProfile : Profile
 {
-    public class CertificateMappingProfile : Profile
+    public CertificateMappingProfile()
     {
-        public CertificateMappingProfile()
-        {
-            CreateMap<Core.Entities.Certificate, CertificateDto>();
-            CreateMap<CertificateInputDto, Core.Entities.Certificate>();
-        }
+        CreateMap<Core.Entities.Certificate, CertificateDto>();
+        CreateMap<CertificateInputDto, Core.Entities.Certificate>();
     }
 }

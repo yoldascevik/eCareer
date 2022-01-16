@@ -1,7 +1,6 @@
-﻿namespace Career.Domain.Audit
+﻿namespace Career.Domain.Audit;
+
+public interface IModificationAudited: IHasModificationTime
 {
-    public interface IModificationAudited: IHasModificationTime
-    {
-        long? LastModifiedUserId { get; set; } 
-    }
+    long? LastModifiedUserId { get; set; } 
 }

@@ -1,31 +1,29 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Career.IoC
+namespace Career.IoC;
+
+public static class DIResolver
 {
-    public static class DIResolver
+    private static IServiceProvider _serviceProvider;
+
+    public static IServiceProvider ServiceProvider
     {
-        private static IServiceProvider _serviceProvider;
-
-        public static IServiceProvider ServiceProvider
+        get
         {
-            get
-            {
-                if (_serviceProvider == null)
-                    throw new ArgumentException("ServiceProvider not set for DIResolver!");   
+            if (_serviceProvider == null)
+                throw new ArgumentException("ServiceProvider not set for DIResolver!");   
 
-                return _serviceProvider;
-            }
+            return _serviceProvider;
         }
+    }
 
-        public static void SetProvider(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+    public static void SetProvider(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
-        public static IServiceScope CreateScope()
-        {
-            return ServiceProvider.CreateScope();
-        }
+    public static IServiceScope CreateScope()
+    {
+        return ServiceProvider.CreateScope();
     }
 }

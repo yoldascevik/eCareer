@@ -1,7 +1,6 @@
-﻿namespace CurriculumVitae.Api.Constants
+﻿namespace CurriculumVitae.Api.Constants;
+
+public class AuthorizationPolicies
 {
-    public class AuthorizationPolicies
-    {
-        public const string ManageCv = "ManageCv";
-    }
+    public const string ManageCv = "ManageCv";
 }

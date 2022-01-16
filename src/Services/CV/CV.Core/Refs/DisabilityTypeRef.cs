@@ -1,7 +1,6 @@
-namespace CurriculumVitae.Core.Refs
+namespace CurriculumVitae.Core.Refs;
+
+public class DisabilityTypeRef : IdNameRef
 {
-    public class DisabilityTypeRef : IdNameRef
-    {
         
-    }
 }

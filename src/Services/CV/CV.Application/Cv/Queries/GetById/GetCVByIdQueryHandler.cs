@@ -5,28 +5,27 @@ using Career.MediatR.Query;
 using CurriculumVitae.Application.Cv.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.Cv.Queries.GetById
+namespace CurriculumVitae.Application.Cv.Queries.GetById;
+
+public class GetCVByIdQueryHandler: IQueryHandler<GetCVByIdQuery, CVDto>
 {
-    public class GetCVByIdQueryHandler: IQueryHandler<GetCVByIdQuery, CVDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+
+    public GetCVByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
+        _cvRepository = cvRepository;
+        _mapper = mapper;
+    }
 
-        public GetCVByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
+    public async Task<CVDto> Handle(GetCVByIdQuery request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _mapper = mapper;
+            throw new CVNotFoundException(request.CvId);
         }
 
-        public async Task<CVDto> Handle(GetCVByIdQuery request, CancellationToken cancellationToken)
-        {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
-
-            return _mapper.Map<CVDto>(cv);
-        }
+        return _mapper.Map<CVDto>(cv);
     }
 }

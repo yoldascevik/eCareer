@@ -2,14 +2,13 @@
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Education.ScholarshipType
+namespace Definition.Application.Education.ScholarshipType;
+
+public class ScholarshipTypeMappingProfile: Profile
 {
-    public class ScholarshipTypeMappingProfile: Profile
+    public ScholarshipTypeMappingProfile()
     {
-        public ScholarshipTypeMappingProfile()
-        {
-            CreateMap<Data.Entities.ScholarshipType, ScholarshipTypeDto>();
-            CreateMap<ScholarshipTypeRequestModel, Data.Entities.ScholarshipType>();
-        }
+        CreateMap<Data.Entities.ScholarshipType, ScholarshipTypeDto>();
+        CreateMap<ScholarshipTypeRequestModel, Data.Entities.ScholarshipType>();
     }
 }

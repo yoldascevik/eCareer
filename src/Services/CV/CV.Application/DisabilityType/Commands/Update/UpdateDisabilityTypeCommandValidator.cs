@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.DisabilityType.Commands.Update
+namespace CurriculumVitae.Application.DisabilityType.Commands.Update;
+
+public class UpdateDisabilityTypeCommandValidator : AbstractValidator<UpdateDisabilityTypeCommand>
 {
-    public class UpdateDisabilityTypeCommandValidator : AbstractValidator<UpdateDisabilityTypeCommand>
+    public UpdateDisabilityTypeCommandValidator()
     {
-        public UpdateDisabilityTypeCommandValidator()
-        {
-            RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.Name).NotEmpty();
-        }
+        RuleFor(x => x.Id).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty();
     }
 }

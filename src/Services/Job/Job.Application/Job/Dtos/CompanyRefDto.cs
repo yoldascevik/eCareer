@@ -1,10 +1,9 @@
 using System;
 
-namespace Job.Application.Job.Dtos
+namespace Job.Application.Job.Dtos;
+
+public class CompanyRefDto
 {
-    public class CompanyRefDto
-    {
-        public Guid RefId { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid RefId { get; set; }
+    public string Name { get; set; }
 }

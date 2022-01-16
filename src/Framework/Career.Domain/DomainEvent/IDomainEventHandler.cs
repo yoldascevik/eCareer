@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 
-namespace Career.Domain.DomainEvent
+namespace Career.Domain.DomainEvent;
+
+public interface IDomainEventHandler<TEvent>  where TEvent : IDomainEvent
 {
-    public interface IDomainEventHandler<TEvent>  where TEvent : IDomainEvent
-    {
-        Task Handle(TEvent domainEvent);
-    }
+    Task Handle(TEvent domainEvent);
 }

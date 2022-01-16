@@ -2,15 +2,14 @@ using Career.Shared.Timing;
 using CurriculumVitae.Application.Certificate.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Certificate
+namespace CurriculumVitae.Application.Certificate;
+
+public class CertificateInputDtoValidator : AbstractValidator<CertificateInputDto>
 {
-    public class CertificateInputDtoValidator : AbstractValidator<CertificateInputDto>
+    public CertificateInputDtoValidator()
     {
-        public CertificateInputDtoValidator()
-        {
-            RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.Institution).NotEmpty();
-            RuleFor(x => x.Date).NotNull().LessThan(Clock.Now);
-        }
+        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Institution).NotEmpty();
+        RuleFor(x => x.Date).NotNull().LessThan(Clock.Now);
     }
 }

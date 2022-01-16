@@ -1,14 +1,13 @@
 using AutoMapper;
 using CurriculumVitae.Application.CoverLetter.Dtos;
 
-namespace CurriculumVitae.Application.CoverLetter
+namespace CurriculumVitae.Application.CoverLetter;
+
+public class CoverLetterMappingProfile : Profile
 {
-    public class CoverLetterMappingProfile : Profile
+    public CoverLetterMappingProfile()
     {
-        public CoverLetterMappingProfile()
-        {
-            CreateMap<Core.Entities.CoverLetter, CoverLetterDto>();
-            CreateMap<CoverLetterInputDto, Core.Entities.CoverLetter>();
-        }
+        CreateMap<Core.Entities.CoverLetter, CoverLetterDto>();
+        CreateMap<CoverLetterInputDto, Core.Entities.CoverLetter>();
     }
 }

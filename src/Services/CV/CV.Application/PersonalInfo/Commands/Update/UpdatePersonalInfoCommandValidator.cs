@@ -1,14 +1,13 @@
 using CurriculumVitae.Application.PersonalInfo.Validators;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.PersonalInfo.Commands.Update
+namespace CurriculumVitae.Application.PersonalInfo.Commands.Update;
+
+public class UpdatePersonalInfoCommandValidator : AbstractValidator<UpdatePersonalInfoCommand>
 {
-    public class UpdatePersonalInfoCommandValidator : AbstractValidator<UpdatePersonalInfoCommand>
+    public UpdatePersonalInfoCommandValidator()
     {
-        public UpdatePersonalInfoCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.PersonalInfo).SetValidator(new PersonalInfoInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.PersonalInfo).SetValidator(new PersonalInfoInputDtoValidator());
     }
 }

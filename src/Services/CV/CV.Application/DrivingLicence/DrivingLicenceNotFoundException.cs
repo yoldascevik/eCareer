@@ -1,11 +1,10 @@
 using Career.Exceptions.Exceptions;
 
-namespace CurriculumVitae.Application.DrivingLicence
+namespace CurriculumVitae.Application.DrivingLicence;
+
+public class DrivingLicenceNotFoundException: NotFoundException
 {
-    public class DrivingLicenceNotFoundException: NotFoundException
-    {
-        public DrivingLicenceNotFoundException(string id)
-            :base($"Driving licence \"{id}\" is not found!")
-        { }
-    }
+    public DrivingLicenceNotFoundException(string id)
+        :base($"Driving licence \"{id}\" is not found!")
+    { }
 }

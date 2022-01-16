@@ -8,34 +8,33 @@ using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.DrivingLicence.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.DrivingLicence.Queries.GetById
+namespace CurriculumVitae.Application.DrivingLicence.Queries.GetById;
+
+public class GetDrivingLicenceByIdQueryHandler : IQueryHandler<GetDrivingLicenceByIdQuery, DrivingLicenceDto>
 {
-    public class GetDrivingLicenceByIdQueryHandler : IQueryHandler<GetDrivingLicenceByIdQuery, DrivingLicenceDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+
+    public GetDrivingLicenceByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
+        _cvRepository = cvRepository;
+        _mapper = mapper;
+    }
 
-        public GetDrivingLicenceByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
+    public async Task<DrivingLicenceDto> Handle(GetDrivingLicenceByIdQuery request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _mapper = mapper;
+            throw new CVNotFoundException(request.CvId);
         }
 
-        public async Task<DrivingLicenceDto> Handle(GetDrivingLicenceByIdQuery request, CancellationToken cancellationToken)
+        var drivingLicence = cv.DrivingLicences.ExcludeDeletedItems().FirstOrDefault(x => x.Id == request.DrivingLicenceId);
+        if (drivingLicence == null)
         {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
-
-            var drivingLicence = cv.DrivingLicences.ExcludeDeletedItems().FirstOrDefault(x => x.Id == request.DrivingLicenceId);
-            if (drivingLicence == null)
-            {
-                throw new DrivingLicenceNotFoundException(request.DrivingLicenceId);
-            }
+            throw new DrivingLicenceNotFoundException(request.DrivingLicenceId);
+        }
             
-            return _mapper.Map<DrivingLicenceDto>(drivingLicence);
-        }
+        return _mapper.Map<DrivingLicenceDto>(drivingLicence);
     }
 }

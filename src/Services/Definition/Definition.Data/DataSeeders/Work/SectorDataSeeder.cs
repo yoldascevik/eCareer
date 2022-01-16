@@ -5,17 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Definition.Data.DataSeeders.Work
+namespace Definition.Data.DataSeeders.Work;
+
+public class SectorDataSeeder : DataSeederBase<Sector>
 {
-    public class SectorDataSeeder : DataSeederBase<Sector>
+    public SectorDataSeeder(
+        IMongoRepository<Sector> repository, 
+        IHostEnvironment environment, 
+        IConfiguration configuration, 
+        ILogger<SectorDataSeeder> logger) 
+        : base(repository, environment, configuration, logger)
     {
-        public SectorDataSeeder(
-            IMongoRepository<Sector> repository, 
-            IHostEnvironment environment, 
-            IConfiguration configuration, 
-            ILogger<SectorDataSeeder> logger) 
-            : base(repository, environment, configuration, logger)
-        {
-        }
     }
 }

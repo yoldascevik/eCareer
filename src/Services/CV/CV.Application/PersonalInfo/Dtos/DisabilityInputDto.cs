@@ -1,13 +1,12 @@
 using System;
 
-namespace CurriculumVitae.Application.PersonalInfo.Dtos
+namespace CurriculumVitae.Application.PersonalInfo.Dtos;
+
+public class DisabilityInputDto
 {
-    public class DisabilityInputDto
-    {
-        public string TypeId { get; set; }
-        public float Rate { get; set; }
-        public DateTime? CertificateStartDate { get; set; }
-        public DateTime? CertificateExpireDate { get; set; }
-        public string Notes { get; set; }
-    }
+    public string TypeId { get; set; }
+    public float Rate { get; set; }
+    public DateTime? CertificateStartDate { get; set; }
+    public DateTime? CertificateExpireDate { get; set; }
+    public string Notes { get; set; }
 }

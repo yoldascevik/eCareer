@@ -1,13 +1,12 @@
 using CurriculumVitae.Application.SocialProfileType.Validators;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.SocialProfileType.Command.Create
+namespace CurriculumVitae.Application.SocialProfileType.Command.Create;
+
+public class CreateSocialProfileTypeCommandValidator : AbstractValidator<CreateSocialProfileTypeCommand>
 {
-    public class CreateSocialProfileTypeCommandValidator : AbstractValidator<CreateSocialProfileTypeCommand>
+    public CreateSocialProfileTypeCommandValidator()
     {
-        public CreateSocialProfileTypeCommandValidator()
-        {
-            RuleFor(x => x).SetValidator(new SocialProfileInputDtoValidator());
-        }
+        RuleFor(x => x).SetValidator(new SocialProfileInputDtoValidator());
     }
 }

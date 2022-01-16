@@ -1,9 +1,8 @@
 using Job.Application.Job.Commands.Create;
 
-namespace Job.Application.Job.Commands.Update
+namespace Job.Application.Job.Commands.Update;
+
+public class UpdateJobCommandValidator: CreateJobCommandValidator
 {
-    public class UpdateJobCommandValidator: CreateJobCommandValidator
-    {
         
-    }
 }

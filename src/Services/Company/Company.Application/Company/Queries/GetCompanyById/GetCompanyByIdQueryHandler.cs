@@ -6,26 +6,25 @@ using Career.MediatR.Query;
 using Company.Application.Company.Dtos;
 using Company.Domain.Repositories;
 
-namespace Company.Application.Company.Queries.GetCompanyById
+namespace Company.Application.Company.Queries.GetCompanyById;
+
+public class GetCompanyByIdQueryHandler: IQueryHandler<GetCompanyByIdQuery, CompanyDto>
 {
-    public class GetCompanyByIdQueryHandler: IQueryHandler<GetCompanyByIdQuery, CompanyDto>
+    private readonly IMapper _mapper;
+    private readonly ICompanyRepository _companyRepository;
+
+    public GetCompanyByIdQueryHandler(ICompanyRepository companyRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICompanyRepository _companyRepository;
+        _companyRepository = companyRepository;
+        _mapper = mapper;
+    }
 
-        public GetCompanyByIdQueryHandler(ICompanyRepository companyRepository, IMapper mapper)
-        {
-            _companyRepository = companyRepository;
-            _mapper = mapper;
-        }
-
-        public async Task<CompanyDto> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken)
-        {
-            var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
-            if (company == null)
-                throw new ItemNotFoundException(request.CompanyId);
+    public async Task<CompanyDto> Handle(GetCompanyByIdQuery request, CancellationToken cancellationToken)
+    {
+        var company = await _companyRepository.GetCompanyByIdAsync(request.CompanyId);
+        if (company == null)
+            throw new ItemNotFoundException(request.CompanyId);
             
-            return _mapper.Map<CompanyDto>(company);
-        }
+        return _mapper.Map<CompanyDto>(company);
     }
 }

@@ -1,22 +1,21 @@
 using Career.Domain.DomainEvent;
 using Career.Exceptions;
 
-namespace Job.Domain.TagAggregate.Events
+namespace Job.Domain.TagAggregate.Events;
+
+public class TagNameChangedEvent: DomainEvent
 {
-    public class TagNameChangedEvent: DomainEvent
+    private TagNameChangedEvent(){} // for serialization
+
+    public TagNameChangedEvent(Tag tag, string oldTagName)
     {
-        private TagNameChangedEvent(){} // for serialization
+        Check.NotNull(tag, nameof(tag));
+        Check.NotNullOrEmpty(oldTagName, nameof(oldTagName));
 
-        public TagNameChangedEvent(Tag tag, string oldTagName)
-        {
-            Check.NotNull(tag, nameof(tag));
-            Check.NotNullOrEmpty(oldTagName, nameof(oldTagName));
-
-            Tag = tag;
-            OldTagName = oldTagName;
-        }
-        
-        public Tag Tag { get; private set; }
-        public string OldTagName { get; private set; }
+        Tag = tag;
+        OldTagName = oldTagName;
     }
+        
+    public Tag Tag { get; private set; }
+    public string OldTagName { get; private set; }
 }

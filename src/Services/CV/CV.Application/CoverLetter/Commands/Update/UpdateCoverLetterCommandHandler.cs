@@ -6,35 +6,34 @@ using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.CoverLetter.Commands.Update
+namespace CurriculumVitae.Application.CoverLetter.Commands.Update;
+
+public class UpdateCoverLetterCommandHandler : ICommandHandler<UpdateCoverLetterCommand>
 {
-    public class UpdateCoverLetterCommandHandler : ICommandHandler<UpdateCoverLetterCommand>
+    private readonly IMapper _mapper;
+    private readonly ICoverLetterRepository _coverLetterRepository;
+    private readonly ILogger<UpdateCoverLetterCommandHandler> _logger;
+
+    public UpdateCoverLetterCommandHandler(ICoverLetterRepository coverLetterRepository, IMapper mapper, ILogger<UpdateCoverLetterCommandHandler> logger)
     {
-        private readonly IMapper _mapper;
-        private readonly ICoverLetterRepository _coverLetterRepository;
-        private readonly ILogger<UpdateCoverLetterCommandHandler> _logger;
+        _coverLetterRepository = coverLetterRepository;
+        _mapper = mapper;
+        _logger = logger;
+    }
 
-        public UpdateCoverLetterCommandHandler(ICoverLetterRepository coverLetterRepository, IMapper mapper, ILogger<UpdateCoverLetterCommandHandler> logger)
+    public async Task<Unit> Handle(UpdateCoverLetterCommand request, CancellationToken cancellationToken)
+    {
+        var coverLetter = await _coverLetterRepository.GetByKeyAsync(request.CoverLetterId);
+        if (coverLetter == null || coverLetter.IsDeleted)
         {
-            _coverLetterRepository = coverLetterRepository;
-            _mapper = mapper;
-            _logger = logger;
+            throw new CoverLetterNotFoundException(request.CoverLetterId);
         }
 
-        public async Task<Unit> Handle(UpdateCoverLetterCommand request, CancellationToken cancellationToken)
-        {
-            var coverLetter = await _coverLetterRepository.GetByKeyAsync(request.CoverLetterId);
-            if (coverLetter == null || coverLetter.IsDeleted)
-            {
-                throw new CoverLetterNotFoundException(request.CoverLetterId);
-            }
+        _mapper.Map(request.CoverLetter, coverLetter);
+        await _coverLetterRepository.UpdateAsync(coverLetter.Id, coverLetter);
 
-            _mapper.Map(request.CoverLetter, coverLetter);
-            await _coverLetterRepository.UpdateAsync(coverLetter.Id, coverLetter);
-
-            _logger.LogInformation("Cover letter \"{CoverLetterId}\" is updated", coverLetter.Id);
+        _logger.LogInformation("Cover letter \"{CoverLetterId}\" is updated", coverLetter.Id);
             
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

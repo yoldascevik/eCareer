@@ -1,11 +1,10 @@
 using Career.Exceptions.Exceptions;
 
-namespace CurriculumVitae.Application.Education
+namespace CurriculumVitae.Application.Education;
+
+public class EducationNotFoundException: NotFoundException
 {
-    public class EducationNotFoundException: NotFoundException
-    {
-        public EducationNotFoundException(string id)
-            :base($"Education \"{id}\" is not found!")
-        { }
-    }
+    public EducationNotFoundException(string id)
+        :base($"Education \"{id}\" is not found!")
+    { }
 }

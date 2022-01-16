@@ -4,21 +4,20 @@ using DotNetCore.CAP;
 using Job.Domain.JobAggregate.Services;
 using Job.Domain.TagAggregate.Events;
 
-namespace Job.Domain.JobAggregate.Events.EventHandlers
+namespace Job.Domain.JobAggregate.Events.EventHandlers;
+
+public class TagDeletedEventHandler : CAPDomainEventHandler<TagDeletedEvent>
 {
-    public class TagDeletedEventHandler : CAPDomainEventHandler<TagDeletedEvent>
+    private readonly IJobDomainService _jobDomainService;
+
+    public TagDeletedEventHandler(IJobDomainService jobDomainService)
     {
-        private readonly IJobDomainService _jobDomainService;
+        _jobDomainService = jobDomainService;
+    }
 
-        public TagDeletedEventHandler(IJobDomainService jobDomainService)
-        {
-            _jobDomainService = jobDomainService;
-        }
-
-        [CapSubscribe(nameof(TagDeletedEvent))]
-        public override async Task Handle(TagDeletedEvent domainEvent)
-        {
-            await _jobDomainService.RemoveTagsFromJobsAsync(domainEvent.Tag);
-        }
+    [CapSubscribe(nameof(TagDeletedEvent))]
+    public override async Task Handle(TagDeletedEvent domainEvent)
+    {
+        await _jobDomainService.RemoveTagsFromJobsAsync(domainEvent.Tag);
     }
 }

@@ -1,6 +1,5 @@
-namespace Career.EventHub
+namespace Career.EventHub;
+
+public abstract class IntegrationEvent : Event, IIntegrationEvent
 {
-    public abstract class IntegrationEvent : Event, IIntegrationEvent
-    {
-    }
 }

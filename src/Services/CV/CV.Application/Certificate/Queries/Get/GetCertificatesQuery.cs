@@ -2,15 +2,14 @@ using System.Collections.Generic;
 using Career.MediatR.Query;
 using CurriculumVitae.Application.Certificate.Dtos;
 
-namespace CurriculumVitae.Application.Certificate.Queries.Get
-{
-    public class GetCertificatesQuery : IQuery<List<CertificateDto>>
-    {
-        public GetCertificatesQuery(string cvId)
-        {
-            CvId = cvId;
-        }
+namespace CurriculumVitae.Application.Certificate.Queries.Get;
 
-        public string CvId { get; }
+public class GetCertificatesQuery : IQuery<List<CertificateDto>>
+{
+    public GetCertificatesQuery(string cvId)
+    {
+        CvId = cvId;
     }
+
+    public string CvId { get; }
 }

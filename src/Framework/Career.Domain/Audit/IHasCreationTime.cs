@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Career.Domain.Audit
+namespace Career.Domain.Audit;
+
+public interface IHasCreationTime
 {
-    public interface IHasCreationTime
-    {
-        DateTime CreationTime { get; set; }
-    }
+    DateTime CreationTime { get; set; }
 }

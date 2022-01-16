@@ -1,7 +1,6 @@
-namespace Career.Domain
+namespace Career.Domain;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot
-    {
         
-    }
 }

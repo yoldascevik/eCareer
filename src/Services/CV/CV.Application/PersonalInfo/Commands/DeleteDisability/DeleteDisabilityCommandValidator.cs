@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability
+namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability;
+
+public class DeleteDisabilityCommandValidator : AbstractValidator<DeleteDisabilityCommand>
 {
-    public class DeleteDisabilityCommandValidator : AbstractValidator<DeleteDisabilityCommand>
+    public DeleteDisabilityCommandValidator()
     {
-        public DeleteDisabilityCommandValidator()
-        {
-            RuleFor(x => x.Id).NotEmpty();
-        }
+        RuleFor(x => x.Id).NotEmpty();
     }
 }

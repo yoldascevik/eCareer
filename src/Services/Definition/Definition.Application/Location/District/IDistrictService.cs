@@ -5,26 +5,25 @@ using Career.Data.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Location.District
-{
-    public interface IDistrictService : IService
-    {
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<PagedList<DistrictDto>> GetAsync(PaginationFilter paginationFilter);
-        
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<PagedList<DistrictDto>> GetByCityId(string cityId, PaginationFilter paginationFilter);
-        
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<DistrictDto> GetByIdAsync(string id);
-        
-        [CacheInvalidate]
-        Task<DistrictDto> CreateAsync(DistrictRequestModel requestModel);
+namespace Definition.Application.Location.District;
 
-        [CacheInvalidate]
-        Task<DistrictDto> UpdateAsync(string id, DistrictRequestModel requestModel);
+public interface IDistrictService : IService
+{
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<PagedList<DistrictDto>> GetAsync(PaginationFilter paginationFilter);
         
-        [CacheInvalidate]
-        Task DeleteAsync(string id);
-    }
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<PagedList<DistrictDto>> GetByCityId(string cityId, PaginationFilter paginationFilter);
+        
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<DistrictDto> GetByIdAsync(string id);
+        
+    [CacheInvalidate]
+    Task<DistrictDto> CreateAsync(DistrictRequestModel requestModel);
+
+    [CacheInvalidate]
+    Task<DistrictDto> UpdateAsync(string id, DistrictRequestModel requestModel);
+        
+    [CacheInvalidate]
+    Task DeleteAsync(string id);
 }

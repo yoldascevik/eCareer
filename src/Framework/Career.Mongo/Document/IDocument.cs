@@ -1,7 +1,6 @@
-﻿namespace Career.Mongo.Document
+﻿namespace Career.Mongo.Document;
+
+public interface IDocument
 {
-    public interface IDocument
-    {
-        string Id { get; set; }
-    }
+    string Id { get; set; }
 }

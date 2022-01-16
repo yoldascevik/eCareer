@@ -1,13 +1,12 @@
 ﻿using Career.Mongo.Context;
 using MongoDB.Driver;
 
-namespace Definition.Data
+namespace Definition.Data;
+
+public class DefinitionContext : MongoContext
 {
-    public class DefinitionContext : MongoContext
+    public DefinitionContext(IMongoDatabase database) 
+        : base(database)
     {
-        public DefinitionContext(IMongoDatabase database) 
-            : base(database)
-        {
-        }
     }
 }

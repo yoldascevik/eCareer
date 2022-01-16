@@ -1,19 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace Logging
+namespace Logging;
+
+public class CareerSerilogLoggerFactory
 {
-    public class CareerSerilogLoggerFactory
+    public static ILogger CreateSerilogLogger(IConfiguration configuration)
     {
-        public static ILogger CreateSerilogLogger(IConfiguration configuration)
-        {
-            string applicationName = configuration["Serilog:ApplicationName"];
+        string applicationName = configuration["Serilog:ApplicationName"];
             
-            return new LoggerConfiguration()
-                .Enrich.WithProperty("ApplicationContext", applicationName)
-                .Enrich.FromLogContext()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-        }
+        return new LoggerConfiguration()
+            .Enrich.WithProperty("ApplicationContext", applicationName)
+            .Enrich.FromLogContext()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
     }
 }

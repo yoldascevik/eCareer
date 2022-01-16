@@ -1,7 +1,6 @@
-﻿namespace CurriculumVitae.Api.Constants
+﻿namespace CurriculumVitae.Api.Constants;
+
+public enum AuthorizationRoles
 {
-    public enum AuthorizationRoles
-    {
-        Candidate       = 0
-    }
+    Candidate       = 0
 }

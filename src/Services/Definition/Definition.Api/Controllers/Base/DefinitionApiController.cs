@@ -2,13 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Definition.Api.Controllers.Base
+namespace Definition.Api.Controllers.Base;
+
+[Authorize]
+[ApiVersion("1.0")]
+[Route("api/[controller]")]
+public abstract class DefinitionApiController: CareerApiController
 {
-    [Authorize]
-    [ApiVersion("1.0")]
-    [Route("api/[controller]")]
-    public abstract class DefinitionApiController: CareerApiController
-    {
         
-    }
 }

@@ -19,51 +19,50 @@ using Microsoft.Extensions.Hosting;
 using Definition.Data;
 using Definition.Data.DataSeeders.Location;
 
-namespace Definition.Api
+namespace Definition.Api;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        Configuration = configuration;
+    }
 
-        public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddApiVersion();
-            services.AddControllers()
-                .AddApiResponseConsistency(options =>
-                {
-                    Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
-                    options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddApiVersion();
+        services.AddControllers()
+            .AddApiResponseConsistency(options =>
+            {
+                Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
+                options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddAutoMapper(typeof(CityMappingProfile));
-            services.AddMongoContext<DefinitionContext>();
-            services.AddMongo();
-            services.AddSwagger();
-            services.RegisterModule<DefinitionModule>();
-            services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
-            services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
-            services.AddCareerConsul(Configuration);
-            services.AddCareerAuthentication(Configuration);
-            services.AddCareerAuthorization();
-        }
+        services.AddAutoMapper(typeof(CityMappingProfile));
+        services.AddMongoContext<DefinitionContext>();
+        services.AddMongo();
+        services.AddSwagger();
+        services.RegisterModule<DefinitionModule>();
+        services.RegisterAllTypes<IDataSeeder>(ServiceLifetime.Scoped, typeof(CityDataSeeder));
+        services.AddCareerDistributedRedisCache(options => Configuration.Bind("Redis", options), typeof(ICityService));
+        services.AddCareerConsul(Configuration);
+        services.AddCareerAuthentication(Configuration);
+        services.AddCareerAuthorization();
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
 
-            app.UseSwagger();
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseApiResponseConsistency();
-            app.UseEndpoints(builder => builder.MapControllers());
-        }
+        app.UseSwagger();
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseApiResponseConsistency();
+        app.UseEndpoints(builder => builder.MapControllers());
     }
 }

@@ -1,14 +1,13 @@
 using CurriculumVitae.Application.Cv.Dtos;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Cv.Validators
+namespace CurriculumVitae.Application.Cv.Validators;
+
+public class IdNameRefDtoValidator : AbstractValidator<IdNameRefDto>
 {
-    public class IdNameRefDtoValidator : AbstractValidator<IdNameRefDto>
+    public IdNameRefDtoValidator()
     {
-        public IdNameRefDtoValidator()
-        {
-            RuleFor(x => x.Id).NotNull();
-            RuleFor(x => x.Name).NotNull();
-        }
+        RuleFor(x => x.Id).NotNull();
+        RuleFor(x => x.Name).NotNull();
     }
 }

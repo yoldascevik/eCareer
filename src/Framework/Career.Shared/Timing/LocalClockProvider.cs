@@ -1,33 +1,32 @@
 using System;
 
-namespace Career.Shared.Timing
+namespace Career.Shared.Timing;
+
+public class LocalClockProvider : IClockProvider
 {
-    public class LocalClockProvider : IClockProvider
+    public DateTime Now => DateTime.Now;
+
+    public DateTimeKind Kind => DateTimeKind.Local;
+
+    public bool SupportsMultipleTimezone => false;
+
+    public DateTime Normalize(DateTime dateTime)
     {
-        public DateTime Now => DateTime.Now;
-
-        public DateTimeKind Kind => DateTimeKind.Local;
-
-        public bool SupportsMultipleTimezone => false;
-
-        public DateTime Normalize(DateTime dateTime)
+        if (dateTime.Kind == DateTimeKind.Unspecified)
         {
-            if (dateTime.Kind == DateTimeKind.Unspecified)
-            {
-                return DateTime.SpecifyKind(dateTime, DateTimeKind.Local);
-            }
-
-            if (dateTime.Kind == DateTimeKind.Utc)
-            {
-                return dateTime.ToLocalTime();
-            }
-
-            return dateTime;
+            return DateTime.SpecifyKind(dateTime, DateTimeKind.Local);
         }
 
-        internal LocalClockProvider()
+        if (dateTime.Kind == DateTimeKind.Utc)
         {
-
+            return dateTime.ToLocalTime();
         }
+
+        return dateTime;
+    }
+
+    internal LocalClockProvider()
+    {
+
     }
 }

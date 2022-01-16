@@ -1,9 +1,8 @@
 using Career.MediatR.Command;
 
-namespace CurriculumVitae.Application.DisabilityType.Commands.Create
+namespace CurriculumVitae.Application.DisabilityType.Commands.Create;
+
+public class CreateDisabilityTypeCommand : ICommand<DisabilityTypeDto>
 {
-    public class CreateDisabilityTypeCommand : ICommand<DisabilityTypeDto>
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

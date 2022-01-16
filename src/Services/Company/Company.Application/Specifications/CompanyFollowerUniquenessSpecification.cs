@@ -4,20 +4,19 @@ using Career.Domain.Specifications;
 using Company.Domain.Repositories;
 using Company.Domain.Rules.CompanyFollower;
 
-namespace Company.Application.Specifications
+namespace Company.Application.Specifications;
+
+public class CompanyFollowerUniquenessSpecification: Specification<Domain.Entities.CompanyFollower>, ICompanyFollowerUniquenessSpecification
 {
-    public class CompanyFollowerUniquenessSpecification: Specification<Domain.Entities.CompanyFollower>, ICompanyFollowerUniquenessSpecification
+    private readonly ICompanyFollowerRepository _companyFollowerRepository;
+
+    public CompanyFollowerUniquenessSpecification(ICompanyFollowerRepository companyFollowerRepository)
     {
-        private readonly ICompanyFollowerRepository _companyFollowerRepository;
+        _companyFollowerRepository = companyFollowerRepository;
+    }
 
-        public CompanyFollowerUniquenessSpecification(ICompanyFollowerRepository companyFollowerRepository)
-        {
-            _companyFollowerRepository = companyFollowerRepository;
-        }
-
-        public override Expression<Func<Domain.Entities.CompanyFollower, bool>> ToExpression()
-        {
-            return follower => !_companyFollowerRepository.CheckUserExistsInCompanyFollowers(follower.CompanyId, follower.UserId);
-        }
+    public override Expression<Func<Domain.Entities.CompanyFollower, bool>> ToExpression()
+    {
+        return follower => !_companyFollowerRepository.CheckUserExistsInCompanyFollowers(follower.CompanyId, follower.UserId);
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Job.Api.Constants
+﻿namespace Job.Api.Constants;
+
+public enum AuthorizationRoles
 {
-    public enum AuthorizationRoles
-    {
-        JobAdmin        = 0,
-        JobPublisher    = 1,
-        Candidate       = 2
-    }
+    JobAdmin        = 0,
+    JobPublisher    = 1,
+    Candidate       = 2
 }

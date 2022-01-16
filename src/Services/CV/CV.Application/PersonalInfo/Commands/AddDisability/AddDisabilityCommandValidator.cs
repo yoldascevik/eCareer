@@ -1,14 +1,13 @@
 using CurriculumVitae.Application.PersonalInfo.Validators;
 using FluentValidation;
 
-namespace CurriculumVitae.Application.PersonalInfo.Commands.AddDisability
+namespace CurriculumVitae.Application.PersonalInfo.Commands.AddDisability;
+
+public class AddDisabilityCommandValidator : AbstractValidator<AddDisabilityCommand>
 {
-    public class AddDisabilityCommandValidator : AbstractValidator<AddDisabilityCommand>
+    public AddDisabilityCommandValidator()
     {
-        public AddDisabilityCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.DisabilityInfo).SetValidator(new DisabilityInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.DisabilityInfo).SetValidator(new DisabilityInputDtoValidator());
     }
 }

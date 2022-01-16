@@ -9,34 +9,33 @@ using CurriculumVitae.Application.PersonalInfo.Dtos;
 using CurriculumVitae.Application.PersonalInfo.Exceptions;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById
+namespace CurriculumVitae.Application.PersonalInfo.Queries.GetDisabilityById;
+
+public class GetDisabilityByIdQueryHandler : IQueryHandler<GetDisabilityByIdQuery, DisabilityDto>
 {
-    public class GetDisabilityByIdQueryHandler : IQueryHandler<GetDisabilityByIdQuery, DisabilityDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+
+    public GetDisabilityByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
+        _cvRepository = cvRepository;
+        _mapper = mapper;
+    }
 
-        public GetDisabilityByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
+    public async Task<DisabilityDto> Handle(GetDisabilityByIdQuery request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _mapper = mapper;
+            throw new CVNotFoundException(request.CvId);
         }
 
-        public async Task<DisabilityDto> Handle(GetDisabilityByIdQuery request, CancellationToken cancellationToken)
+        var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().First(x => x.Id == request.DisabilityId);
+        if (disability == null)
         {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
-
-            var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().First(x => x.Id == request.DisabilityId);
-            if (disability == null)
-            {
-                throw new DisabilityNotFoundException(request.DisabilityId);
-            }
-
-            return _mapper.Map<DisabilityDto>(disability);
+            throw new DisabilityNotFoundException(request.DisabilityId);
         }
+
+        return _mapper.Map<DisabilityDto>(disability);
     }
 }

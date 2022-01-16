@@ -1,14 +1,13 @@
 using Career.MediatR.Command;
 
-namespace CurriculumVitae.Application.DisabilityType.Commands.Delete
+namespace CurriculumVitae.Application.DisabilityType.Commands.Delete;
+
+public class DeleteDisabilityTypeCommand : ICommand
 {
-    public class DeleteDisabilityTypeCommand : ICommand
+    public DeleteDisabilityTypeCommand(string id)
     {
-        public DeleteDisabilityTypeCommand(string id)
-        {
-            Id = id;
-        }
-        
-        public string Id { get; }
+        Id = id;
     }
+        
+    public string Id { get; }
 }

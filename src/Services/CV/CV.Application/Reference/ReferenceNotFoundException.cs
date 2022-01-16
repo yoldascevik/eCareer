@@ -1,11 +1,10 @@
 using Career.Exceptions.Exceptions;
 
-namespace CurriculumVitae.Application.Reference
+namespace CurriculumVitae.Application.Reference;
+
+public class ReferenceNotFoundException: NotFoundException
 {
-    public class ReferenceNotFoundException: NotFoundException
-    {
-        public ReferenceNotFoundException(string id)
-            :base($"Reference \"{id}\" is not found!")
-        { }
-    }
+    public ReferenceNotFoundException(string id)
+        :base($"Reference \"{id}\" is not found!")
+    { }
 }

@@ -1,17 +1,16 @@
 using System;
 using Career.MediatR.Command;
 
-namespace Job.Application.Job.Commands.RemoveLocation
-{
-    public class RemoveLocationCommand: ICommand
-    {
-        public RemoveLocationCommand(Guid jobId, Guid locationId)
-        {
-            JobId = jobId;
-            LocationId = locationId;
-        }
+namespace Job.Application.Job.Commands.RemoveLocation;
 
-        public Guid JobId { get; }
-        public Guid LocationId { get; }
+public class RemoveLocationCommand: ICommand
+{
+    public RemoveLocationCommand(Guid jobId, Guid locationId)
+    {
+        JobId = jobId;
+        LocationId = locationId;
     }
+
+    public Guid JobId { get; }
+    public Guid LocationId { get; }
 }

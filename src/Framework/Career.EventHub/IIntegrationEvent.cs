@@ -1,6 +1,5 @@
-namespace Career.EventHub
+namespace Career.EventHub;
+
+public interface IIntegrationEvent : IEvent
 {
-    public interface IIntegrationEvent : IEvent
-    {
-    }
 }

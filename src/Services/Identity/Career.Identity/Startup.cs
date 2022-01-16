@@ -5,41 +5,40 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Career.Identity
+namespace Career.Identity;
+
+public class Startup
 {
-    public class Startup
+    public IWebHostEnvironment Environment { get; }
+    public IConfiguration Configuration { get; }
+
+    public Startup(IWebHostEnvironment environment, IConfiguration configuration)
     {
-        public IWebHostEnvironment Environment { get; }
-        public IConfiguration Configuration { get; }
+        Environment = environment;
+        Configuration = configuration;
+    }
 
-        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+        services.AddCareerIdentityContext(Configuration);
+        services.AddCareerIdentity();
+        services.AddCareerIdentityServer(Configuration);
+        services.AddCareerConsul(Configuration);
+        services.AddAuthentication();
+    }
+
+    public void Configure(IApplicationBuilder app)
+    {
+        if (Environment.IsDevelopment())
         {
-            Environment = environment;
-            Configuration = configuration;
+            app.UseDeveloperExceptionPage();
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-            services.AddCareerIdentityContext(Configuration);
-            services.AddCareerIdentity();
-            services.AddCareerIdentityServer(Configuration);
-            services.AddCareerConsul(Configuration);
-            services.AddAuthentication();
-        }
-
-        public void Configure(IApplicationBuilder app)
-        {
-            if (Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseIdentityServer();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
-        }
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseIdentityServer();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
     }
 }

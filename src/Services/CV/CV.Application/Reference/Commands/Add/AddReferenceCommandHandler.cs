@@ -8,42 +8,41 @@ using CurriculumVitae.Application.Reference.Dtos;
 using CurriculumVitae.Core.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.Reference.Commands.Add
+namespace CurriculumVitae.Application.Reference.Commands.Add;
+
+public class AddReferenceCommandHandler : ICommandHandler<AddReferenceCommand, ReferenceDto>
 {
-    public class AddReferenceCommandHandler : ICommandHandler<AddReferenceCommand, ReferenceDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+    private readonly IStringIdGenerator _stringIdGenerator;
+    private readonly ILogger<AddReferenceCommandHandler> _logger;
+
+    public AddReferenceCommandHandler(
+        ICVRepository cvRepository, 
+        IMapper mapper, 
+        IStringIdGenerator stringIdGenerator,
+        ILogger<AddReferenceCommandHandler> logger)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
-        private readonly IStringIdGenerator _stringIdGenerator;
-        private readonly ILogger<AddReferenceCommandHandler> _logger;
+        _mapper = mapper;
+        _logger = logger;
+        _cvRepository = cvRepository;
+        _stringIdGenerator = stringIdGenerator;
+    }
 
-        public AddReferenceCommandHandler(
-            ICVRepository cvRepository, 
-            IMapper mapper, 
-            IStringIdGenerator stringIdGenerator,
-            ILogger<AddReferenceCommandHandler> logger)
-        {
-            _mapper = mapper;
-            _logger = logger;
-            _cvRepository = cvRepository;
-            _stringIdGenerator = stringIdGenerator;
-        }
-
-        public async Task<ReferenceDto> Handle(AddReferenceCommand request, CancellationToken cancellationToken)
-        {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-                throw new CVNotFoundException(request.CvId);
+    public async Task<ReferenceDto> Handle(AddReferenceCommand request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
+            throw new CVNotFoundException(request.CvId);
   
-            var reference = _mapper.Map<Data.Entities.Reference>(request.Reference);
-            reference.Id = _stringIdGenerator.Generate();
+        var reference = _mapper.Map<Data.Entities.Reference>(request.Reference);
+        reference.Id = _stringIdGenerator.Generate();
 
-            cv.References.Add(reference);
+        cv.References.Add(reference);
 
-            await _cvRepository.UpdateAsync(cv.Id, cv);
-            _logger.LogInformation("New reference ({ReferenceId}) added to CV ({CvId})", reference.Id, cv.Id);
+        await _cvRepository.UpdateAsync(cv.Id, cv);
+        _logger.LogInformation("New reference ({ReferenceId}) added to CV ({CvId})", reference.Id, cv.Id);
 
-            return _mapper.Map<ReferenceDto>(reference);
-        }
+        return _mapper.Map<ReferenceDto>(reference);
     }
 }

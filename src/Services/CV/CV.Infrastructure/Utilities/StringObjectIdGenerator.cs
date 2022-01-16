@@ -1,13 +1,12 @@
 using Career.Shared.Generators;
 using MongoDB.Bson;
 
-namespace CurriculumVitae.Infrastructure.Utilities
+namespace CurriculumVitae.Infrastructure.Utilities;
+
+public class StringObjectIdGenerator : IStringIdGenerator
 {
-    public class StringObjectIdGenerator : IStringIdGenerator
+    public string Generate()
     {
-        public string Generate()
-        {
-            return ObjectId.GenerateNewId().ToString();
-        }
+        return ObjectId.GenerateNewId().ToString();
     }
 }

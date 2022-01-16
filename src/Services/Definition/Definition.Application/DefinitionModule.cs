@@ -11,29 +11,28 @@ using Definition.Application.Work.Sector;
 using Definition.Application.Work.WorkType;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Definition.Application
-{
-    public class DefinitionModule: Module
-    {
-        protected override void Load(IServiceCollection services)
-        {
-            // location services
-            services.AddScoped<ICountryService, CountryService>();
-            services.AddScoped<ICityService, CityService>();
-            services.AddScoped<IDistrictService, DistrictService>();
-            
-            // education services
-            services.AddScoped<IEducationLevelService, EducationLevelService>();
-            services.AddScoped<IEducationTypeService, EducationTypeService>();
-            services.AddScoped<IScholarshipTypeService, ScholarshipTypeService>();
-            
-            // work services
-            services.AddScoped<ISectorService, SectorService>();
-            services.AddScoped<IWorkTypeService, WorkTypeService>();
-            services.AddScoped<IJobPositionService, JobPositionService>();
+namespace Definition.Application;
 
-            // other
-            services.AddScoped<ILanguageService, LanguageService>();
-        }
+public class DefinitionModule: Module
+{
+    protected override void Load(IServiceCollection services)
+    {
+        // location services
+        services.AddScoped<ICountryService, CountryService>();
+        services.AddScoped<ICityService, CityService>();
+        services.AddScoped<IDistrictService, DistrictService>();
+            
+        // education services
+        services.AddScoped<IEducationLevelService, EducationLevelService>();
+        services.AddScoped<IEducationTypeService, EducationTypeService>();
+        services.AddScoped<IScholarshipTypeService, ScholarshipTypeService>();
+            
+        // work services
+        services.AddScoped<ISectorService, SectorService>();
+        services.AddScoped<IWorkTypeService, WorkTypeService>();
+        services.AddScoped<IJobPositionService, JobPositionService>();
+
+        // other
+        services.AddScoped<ILanguageService, LanguageService>();
     }
 }

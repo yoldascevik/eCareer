@@ -5,26 +5,25 @@ using Career.Data.Pagination;
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Location.City
+namespace Definition.Application.Location.City;
+
+public interface ICityService : IService
 {
-    public interface ICityService : IService
-    {
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<PagedList<CityDto>> GetAsync(PaginationFilter paginationFilter);
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<PagedList<CityDto>> GetAsync(PaginationFilter paginationFilter);
         
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<PagedList<CityDto>> GetByCountryId(string countryId, PaginationFilter paginationFilter);
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<PagedList<CityDto>> GetByCountryId(string countryId, PaginationFilter paginationFilter);
         
-        [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
-        Task<CityDto> GetByIdAsync(string id);
+    [Cache(TTL = 30 * TTLMultiplier.Day, SlidingExpiration = false)]
+    Task<CityDto> GetByIdAsync(string id);
         
-        [CacheInvalidate]
-        Task<CityDto> CreateAsync(CityRequestModel requestModel);
+    [CacheInvalidate]
+    Task<CityDto> CreateAsync(CityRequestModel requestModel);
         
-        [CacheInvalidate]
-        Task<CityDto> UpdateAsync(string id, CityRequestModel requestModel);
+    [CacheInvalidate]
+    Task<CityDto> UpdateAsync(string id, CityRequestModel requestModel);
         
-        [CacheInvalidate]
-        Task DeleteAsync(string id);
-    }
+    [CacheInvalidate]
+    Task DeleteAsync(string id);
 }

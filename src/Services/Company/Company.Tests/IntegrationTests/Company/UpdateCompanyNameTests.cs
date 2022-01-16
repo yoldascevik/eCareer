@@ -12,62 +12,61 @@ using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Xunit;
 
-namespace Company.Tests.IntegrationTests.Company
+namespace Company.Tests.IntegrationTests.Company;
+
+public class UpdateCompanyNameTests
 {
-    public class UpdateCompanyNameTests
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly ICompanyRepository _companyRepository;
+    private readonly ILogger<UpdateCompanyNameHandler> _logger;
+
+    public UpdateCompanyNameTests()
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ICompanyRepository _companyRepository;
-        private readonly ILogger<UpdateCompanyNameHandler> _logger;
+        _unitOfWork = Substitute.For<IUnitOfWork>();
+        _companyRepository = Substitute.For<ICompanyRepository>();
+        _logger = Substitute.For<ILogger<UpdateCompanyNameHandler>>();
+    }
 
-        public UpdateCompanyNameTests()
-        {
-            _unitOfWork = Substitute.For<IUnitOfWork>();
-            _companyRepository = Substitute.For<ICompanyRepository>();
-            _logger = Substitute.For<ILogger<UpdateCompanyNameHandler>>();
-        }
+    [Fact]
+    public async Task UpdateCompanyNameHandler_ShouldExpectedName_WhenCompanyNameChanged()
+    {
+        // Arrange
+        var company = CompanyFaker.CreateFakeCompany();
+        var command = GetCommand(company.Id);
+        var commandHandler = new UpdateCompanyNameHandler(_unitOfWork, _companyRepository, _logger);
 
-        [Fact]
-        public async Task UpdateCompanyNameHandler_ShouldExpectedName_WhenCompanyNameChanged()
-        {
-            // Arrange
-            var company = CompanyFaker.CreateFakeCompany();
-            var command = GetCommand(company.Id);
-            var commandHandler = new UpdateCompanyNameHandler(_unitOfWork, _companyRepository, _logger);
+        _companyRepository.GetCompanyByIdAsync(command.CompanyId).Returns(company);
 
-            _companyRepository.GetCompanyByIdAsync(command.CompanyId).Returns(company);
+        // Act
+        await commandHandler.Handle(command, CancellationToken.None);
 
-            // Act
-            await commandHandler.Handle(command, CancellationToken.None);
-
-            // Assert
-            Assert.Equal(command.CompanyName, company.Name);
-            await _unitOfWork.Received().SaveChangesAsync();
-        }
+        // Assert
+        Assert.Equal(command.CompanyName, company.Name);
+        await _unitOfWork.Received().SaveChangesAsync();
+    }
         
-        [Fact]
-        public async Task UpdateCompanyNameHandler_ThrowNotFoundException_WhenCompanyNotExists()
-        {
-            // Arrange
-            var company = CompanyFaker.CreateFakeCompany();
-            var command = GetCommand(company.Id);
-            var commandHandler = new UpdateCompanyNameHandler(_unitOfWork, _companyRepository, _logger);
+    [Fact]
+    public async Task UpdateCompanyNameHandler_ThrowNotFoundException_WhenCompanyNotExists()
+    {
+        // Arrange
+        var company = CompanyFaker.CreateFakeCompany();
+        var command = GetCommand(company.Id);
+        var commandHandler = new UpdateCompanyNameHandler(_unitOfWork, _companyRepository, _logger);
             
-            _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
+        _companyRepository.GetCompanyByIdAsync(company.Id).ReturnsNull();
         
-            // Act
-            var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
+        // Act
+        var actualException = await Assert.ThrowsAsync<CompanyNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
         
-            // Assert
-            Assert.NotNull(actualException);
-        }
+        // Assert
+        Assert.NotNull(actualException);
+    }
 
-        private UpdateCompanyNameCommand GetCommand(Guid companyId)
-        {
-            var faker = new Faker();
-            var command = new UpdateCompanyNameCommand(companyId, faker.Company.CompanyName());
+    private UpdateCompanyNameCommand GetCommand(Guid companyId)
+    {
+        var faker = new Faker();
+        var command = new UpdateCompanyNameCommand(companyId, faker.Company.CompanyName());
 
-            return command;
-        }
+        return command;
     }
 }

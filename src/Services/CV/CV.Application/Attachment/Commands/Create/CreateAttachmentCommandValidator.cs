@@ -1,7 +1,6 @@
-namespace CurriculumVitae.Application.Attachment.Commands.Create
+namespace CurriculumVitae.Application.Attachment.Commands.Create;
+
+public class CreateAttachmentCommandValidator : AttachmentInputDtoValidator
 {
-    public class CreateAttachmentCommandValidator : AttachmentInputDtoValidator
-    {
         
-    }
 }

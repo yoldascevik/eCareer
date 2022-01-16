@@ -1,14 +1,13 @@
 using AutoMapper;
 using CurriculumVitae.Application.Education.Dtos;
 
-namespace CurriculumVitae.Application.Education
+namespace CurriculumVitae.Application.Education;
+
+public class EducationMappingProfile : Profile
 {
-    public class EducationMappingProfile : Profile
+    public EducationMappingProfile()
     {
-        public EducationMappingProfile()
-        {
-            CreateMap<Core.Entities.Education, EducationDto>();
-            CreateMap<EducationInputDto, Core.Entities.Education>();
-        }
+        CreateMap<Core.Entities.Education, EducationDto>();
+        CreateMap<EducationInputDto, Core.Entities.Education>();
     }
 }

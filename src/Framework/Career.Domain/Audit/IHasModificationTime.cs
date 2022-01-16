@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Career.Domain.Audit
+namespace Career.Domain.Audit;
+
+public interface IHasModificationTime
 {
-    public interface IHasModificationTime
-    {
-        DateTime? LastModificationTime { get; set; }
-    }
+    DateTime? LastModificationTime { get; set; }
 }

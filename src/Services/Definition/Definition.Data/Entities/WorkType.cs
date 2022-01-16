@@ -1,7 +1,6 @@
-namespace Definition.Data.Entities
+namespace Definition.Data.Entities;
+
+public class WorkType: LookupDocument
 {
-    public class WorkType: LookupDocument
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

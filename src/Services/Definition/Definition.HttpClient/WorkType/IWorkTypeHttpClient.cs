@@ -4,12 +4,11 @@ using Career.Data.Pagination;
 using Career.Http.HttpClient;
 using Definition.Contract.Dto;
 
-namespace Definition.HttpClient.WorkType
+namespace Definition.HttpClient.WorkType;
+
+public interface IWorkTypeHttpClient: ICareerHttpClient
 {
-    public interface IWorkTypeHttpClient: ICareerHttpClient
-    {
-        Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter);
+    Task<ConsistentApiResponse<PagedList<WorkTypeDto>>> GetAsync(PaginationFilter paginationFilter);
         
-        Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id);
-    }
+    Task<ConsistentApiResponse<WorkTypeDto>> GetByIdAsync(string id);
 }

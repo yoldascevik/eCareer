@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Career.IoC.IoCModule
+namespace Career.IoC.IoCModule;
+
+public interface IModule
 {
-    public interface IModule
-    {
-        void Configure(IServiceCollection services);
-    }
+    void Configure(IServiceCollection services);
 }

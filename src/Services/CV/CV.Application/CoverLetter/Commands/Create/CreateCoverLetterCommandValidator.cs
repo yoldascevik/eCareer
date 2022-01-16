@@ -1,7 +1,6 @@
-namespace CurriculumVitae.Application.CoverLetter.Commands.Create
+namespace CurriculumVitae.Application.CoverLetter.Commands.Create;
+
+public class CreateCoverLetterCommandValidator : CoverLetterInputDtoValidator
 {
-    public class CreateCoverLetterCommandValidator : CoverLetterInputDtoValidator
-    {
         
-    }
 }

@@ -2,14 +2,13 @@
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Education.EducationType
+namespace Definition.Application.Education.EducationType;
+
+public class EducationTypeMappingProfile: Profile
 {
-    public class EducationTypeMappingProfile: Profile
+    public EducationTypeMappingProfile()
     {
-        public EducationTypeMappingProfile()
-        {
-            CreateMap<Data.Entities.EducationType, EducationTypeDto>();
-            CreateMap<EducationTypeRequestModel, Data.Entities.EducationType>();
-        }
+        CreateMap<Data.Entities.EducationType, EducationTypeDto>();
+        CreateMap<EducationTypeRequestModel, Data.Entities.EducationType>();
     }
 }

@@ -4,12 +4,11 @@ using Career.Data.Pagination;
 using Career.Http.HttpClient;
 using Definition.Contract.Dto;
 
-namespace Definition.HttpClient.ScholarshipType
+namespace Definition.HttpClient.ScholarshipType;
+
+public interface IScholarshipTypeHttpClient: ICareerHttpClient
 {
-    public interface IScholarshipTypeHttpClient: ICareerHttpClient
-    {
-        Task<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>> GetAsync(PaginationFilter paginationFilter);
+    Task<ConsistentApiResponse<PagedList<ScholarshipTypeDto>>> GetAsync(PaginationFilter paginationFilter);
         
-        Task<ConsistentApiResponse<ScholarshipTypeDto>> GetByIdAsync(string id);
-    }
+    Task<ConsistentApiResponse<ScholarshipTypeDto>> GetByIdAsync(string id);
 }

@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Company.Application.Company.Commands.DeleteAddress
+namespace Company.Application.Company.Commands.DeleteAddress;
+
+public class DeleteAddressCommandValidator : AbstractValidator<DeleteAddressCommand>
 {
-    public class DeleteAddressCommandValidator : AbstractValidator<DeleteAddressCommand>
+    public DeleteAddressCommandValidator()
     {
-        public DeleteAddressCommandValidator()
-        {
-            RuleFor(x => x.CompanyId).NotEmpty();
-            RuleFor(x => x.AddressId).NotEmpty();
-        }
+        RuleFor(x => x.CompanyId).NotEmpty();
+        RuleFor(x => x.AddressId).NotEmpty();
     }
 }

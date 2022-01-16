@@ -4,55 +4,54 @@ using Career.Domain.Entities;
 using Career.Shared.Timing;
 using Job.Domain.TagAggregate.Events;
 
-namespace Job.Domain.TagAggregate
+namespace Job.Domain.TagAggregate;
+
+public class Tag : DomainEntity, IAggregateRoot
 {
-    public class Tag : DomainEntity, IAggregateRoot
+    private Tag() { }
+
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public DateTime? LastModificationTime { get; private set; }
+    public Guid? LastModifiedUserId { get; private set; }
+
+    public static Tag Create(string name)
     {
-        private Tag() { }
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentNullException(nameof(name));
 
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public bool IsDeleted { get; private set; }
-        public DateTime? LastModificationTime { get; private set; }
-        public Guid? LastModifiedUserId { get; private set; }
-
-        public static Tag Create(string name)
+        return new Tag
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
+            Id = Guid.NewGuid(),
+            Name = name.ToLowerInvariant(),
+            LastModificationTime = Clock.Now,
+            LastModifiedUserId = Guid.Empty //Todo
+        };
+    }
 
-            return new Tag
-            {
-                Id = Guid.NewGuid(),
-                Name = name.ToLowerInvariant(),
-                LastModificationTime = Clock.Now,
-                LastModifiedUserId = Guid.Empty //Todo
-            };
-        }
+    public Tag SetName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentNullException(nameof(name));
 
-        public Tag SetName(string name)
+        string oldTagName = Name;
+        Name = name.ToLowerInvariant();
+        LastModificationTime = Clock.Now;
+        LastModifiedUserId = Guid.Empty; //Todo
+
+        AddDomainEvent(new TagNameChangedEvent(this, oldTagName));
+        return this;
+    }
+
+    public void MarkAsDelete()
+    {
+        if (!IsDeleted)
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-
-            string oldTagName = Name;
-            Name = name.ToLowerInvariant();
+            IsDeleted = true;
             LastModificationTime = Clock.Now;
             LastModifiedUserId = Guid.Empty; //Todo
-
-            AddDomainEvent(new TagNameChangedEvent(this, oldTagName));
-            return this;
-        }
-
-        public void MarkAsDelete()
-        {
-            if (!IsDeleted)
-            {
-                IsDeleted = true;
-                LastModificationTime = Clock.Now;
-                LastModifiedUserId = Guid.Empty; //Todo
-                AddDomainEvent(new TagDeletedEvent(this));
-            }
+            AddDomainEvent(new TagDeletedEvent(this));
         }
     }
 }

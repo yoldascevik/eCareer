@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace Job.Application.Job.Commands.RemoveWorkType
+namespace Job.Application.Job.Commands.RemoveWorkType;
+
+public class RemoveWorkTypeCommandValidator: AbstractValidator<RemoveWorkTypeCommand>
 {
-    public class RemoveWorkTypeCommandValidator: AbstractValidator<RemoveWorkTypeCommand>
+    public RemoveWorkTypeCommandValidator()
     {
-        public RemoveWorkTypeCommandValidator()
-        {
-            RuleFor(x => x.WorkTypeId).NotNull().NotEmpty();
-            RuleFor(x => x.JobId).NotNull().NotEmpty();
-        }
+        RuleFor(x => x.WorkTypeId).NotNull().NotEmpty();
+        RuleFor(x => x.JobId).NotNull().NotEmpty();
     }
 }

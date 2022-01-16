@@ -5,17 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Definition.Data.DataSeeders.Work
+namespace Definition.Data.DataSeeders.Work;
+
+public class JobPositionDataSeeder : DataSeederBase<JobPosition>
 {
-    public class JobPositionDataSeeder : DataSeederBase<JobPosition>
+    public JobPositionDataSeeder(
+        IMongoRepository<JobPosition> repository, 
+        IHostEnvironment environment, 
+        IConfiguration configuration, 
+        ILogger<JobPositionDataSeeder> logger) 
+        : base(repository, environment, configuration, logger)
     {
-        public JobPositionDataSeeder(
-            IMongoRepository<JobPosition> repository, 
-            IHostEnvironment environment, 
-            IConfiguration configuration, 
-            ILogger<JobPositionDataSeeder> logger) 
-            : base(repository, environment, configuration, logger)
-        {
-        }
     }
 }

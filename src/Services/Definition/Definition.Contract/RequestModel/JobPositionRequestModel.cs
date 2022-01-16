@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Contract.RequestModel
+namespace Definition.Contract.RequestModel;
+
+public class JobPositionRequestModel
 {
-    public class JobPositionRequestModel
-    {
-        [Required]
-        public string SectorId { get; set; }
+    [Required]
+    public string SectorId { get; set; }
         
-        [Required]
-        public string Name { get; set; }
-    }
+    [Required]
+    public string Name { get; set; }
 }

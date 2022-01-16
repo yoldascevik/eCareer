@@ -1,7 +1,6 @@
-namespace Career.Shared.Generators
+namespace Career.Shared.Generators;
+
+public interface IIdGenerator<TId>
 {
-    public interface IIdGenerator<TId>
-    {
-        TId Generate();
-    }
+    TId Generate();
 }

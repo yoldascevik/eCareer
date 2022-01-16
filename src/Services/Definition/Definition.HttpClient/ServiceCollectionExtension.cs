@@ -3,30 +3,29 @@ using Career.Http;
 using Career.IoC;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Definition.HttpClient
+namespace Definition.HttpClient;
+
+public static class ServiceCollectionExtension
 {
-    public static class ServiceCollectionExtension
+    public static IServiceCollection AddDefinitionApiHttpClient(this IServiceCollection services, ApiEndpointOptions options)
     {
-        public static IServiceCollection AddDefinitionApiHttpClient(this IServiceCollection services, ApiEndpointOptions options)
-        {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
+        if (options == null)
+            throw new ArgumentNullException(nameof(options));
             
-            services.AddCareerHttpClient();
-            services.RegisterModule(new DefinitionHttpClientModule(options));
+        services.AddCareerHttpClient();
+        services.RegisterModule(new DefinitionHttpClientModule(options));
 
-            return services;
-        }
+        return services;
+    }
         
-        public static IServiceCollection AddDefinitionApiHttpClient(this IServiceCollection services, Action<ApiEndpointOptions> options)
-        {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
+    public static IServiceCollection AddDefinitionApiHttpClient(this IServiceCollection services, Action<ApiEndpointOptions> options)
+    {
+        if (options == null)
+            throw new ArgumentNullException(nameof(options));
             
-            var apiEndpointOptions = new ApiEndpointOptions();
-            options.Invoke(apiEndpointOptions);
+        var apiEndpointOptions = new ApiEndpointOptions();
+        options.Invoke(apiEndpointOptions);
 
-            return services.AddDefinitionApiHttpClient(apiEndpointOptions);
-        }
+        return services.AddDefinitionApiHttpClient(apiEndpointOptions);
     }
 }

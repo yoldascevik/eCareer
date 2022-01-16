@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Education.Commands.Add
+namespace CurriculumVitae.Application.Education.Commands.Add;
+
+public class AddEducationCommandValidator : AbstractValidator<AddEducationCommand>
 {
-    public class AddEducationCommandValidator : AbstractValidator<AddEducationCommand>
+    public AddEducationCommandValidator()
     {
-        public AddEducationCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.Education).SetValidator(new EducationInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.Education).SetValidator(new EducationInputDtoValidator());
     }
- }
+}

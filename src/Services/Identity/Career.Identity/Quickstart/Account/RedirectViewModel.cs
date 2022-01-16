@@ -3,10 +3,9 @@
 
 
 
-namespace Career.Identity.Quickstart.Account
+namespace Career.Identity.Quickstart.Account;
+
+public class RedirectViewModel
 {
-    public class RedirectViewModel
-    {
-        public string RedirectUrl { get; set; }
-    }
+    public string RedirectUrl { get; set; }
 }

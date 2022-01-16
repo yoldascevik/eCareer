@@ -8,39 +8,38 @@ using Job.Domain.JobAggregate.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Job.Application.Candidate.Commands.Withdraw
+namespace Job.Application.Candidate.Commands.Withdraw;
+
+public class WithdrawCandidateCommandHandler : ICommandHandler<WithdrawCandidateCommand>
 {
-    public class WithdrawCandidateCommandHandler : ICommandHandler<WithdrawCandidateCommand>
+    private readonly IJobRepository _jobRepository;
+    private readonly ICandidateRepository _candidateRepository;
+    private readonly ILogger<WithdrawCandidateCommandHandler> _logger;
+
+    public WithdrawCandidateCommandHandler(IJobRepository jobRepository,
+        ICandidateRepository candidateRepository,
+        ILogger<WithdrawCandidateCommandHandler> logger)
     {
-        private readonly IJobRepository _jobRepository;
-        private readonly ICandidateRepository _candidateRepository;
-        private readonly ILogger<WithdrawCandidateCommandHandler> _logger;
+        _logger = logger;
+        _jobRepository = jobRepository;
+        _candidateRepository = candidateRepository;
+    }
 
-        public WithdrawCandidateCommandHandler(IJobRepository jobRepository,
-            ICandidateRepository candidateRepository,
-            ILogger<WithdrawCandidateCommandHandler> logger)
-        {
-            _logger = logger;
-            _jobRepository = jobRepository;
-            _candidateRepository = candidateRepository;
-        }
+    public async Task<Unit> Handle(WithdrawCandidateCommand request, CancellationToken cancellationToken)
+    {
+        var candidate = await _candidateRepository.GetByIdAsync(request.CandidateId);
+        if (candidate is null)
+            throw new CandidateNotFoundException(request.CandidateId);
 
-        public async Task<Unit> Handle(WithdrawCandidateCommand request, CancellationToken cancellationToken)
-        {
-            var candidate = await _candidateRepository.GetByIdAsync(request.CandidateId);
-            if (candidate is null)
-                throw new CandidateNotFoundException(request.CandidateId);
+        var job = await _jobRepository.GetByIdAsync(candidate.JobId);
+        if (job is null)
+            throw new JobNotFoundException(candidate.JobId);
 
-            var job = await _jobRepository.GetByIdAsync(candidate.JobId);
-            if (job is null)
-                throw new JobNotFoundException(candidate.JobId);
+        job.WithdrawCandidate(candidate);
+        await _jobRepository.UpdateAsync(job.Id, job);
 
-            job.WithdrawCandidate(candidate);
-            await _jobRepository.UpdateAsync(job.Id, job);
+        _logger.LogInformation("Candidate {CandidateId} is withrawn from job {JobId}", candidate.Id, job.Id);
 
-            _logger.LogInformation("Candidate {CandidateId} is withrawn from job {JobId}", candidate.Id, job.Id);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

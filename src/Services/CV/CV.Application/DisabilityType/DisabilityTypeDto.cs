@@ -1,8 +1,7 @@
-namespace CurriculumVitae.Application.DisabilityType
+namespace CurriculumVitae.Application.DisabilityType;
+
+public class DisabilityTypeDto
 {
-    public class DisabilityTypeDto
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

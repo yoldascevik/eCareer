@@ -1,7 +1,6 @@
-﻿namespace Career.Domain.Audit
+﻿namespace Career.Domain.Audit;
+
+public interface ICreationAudited: IHasCreationTime
 {
-    public interface ICreationAudited: IHasCreationTime
-    {
-        long? CreatorUserId { get; set; } 
-    }
+    long? CreatorUserId { get; set; } 
 }

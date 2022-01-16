@@ -13,80 +13,79 @@ using Definition.HttpClient.Sector;
 using Definition.HttpClient.WorkType;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Definition.HttpClient
+namespace Definition.HttpClient;
+
+public class DefinitionHttpClientModule : Module
 {
-    public class DefinitionHttpClientModule : Module
+    private readonly ApiEndpointOptions _options;
+        
+    public DefinitionHttpClientModule(ApiEndpointOptions options)
     {
-        private readonly ApiEndpointOptions _options;
+        _options = options;
+    }
         
-        public DefinitionHttpClientModule(ApiEndpointOptions options)
+    protected override void Load(IServiceCollection services)
+    {
+        var defaultApiVersion = Version.Parse(_options.DefaultVersion ?? "1.0");
+            
+        services.AddHttpClientWithRetryPolicy<ICityHttpClient, CityHttpClient>(config =>
         {
-            _options = options;
-        }
-        
-        protected override void Load(IServiceCollection services)
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/cities/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
+            
+        services.AddHttpClientWithRetryPolicy<ICountryHttpClient, CountryHttpClient>(config =>
         {
-            var defaultApiVersion = Version.Parse(_options.DefaultVersion ?? "1.0");
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/countries/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<ICityHttpClient, CityHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/cities/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<IDistrictHttpClient, DistrictHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/districts/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<ICountryHttpClient, CountryHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/countries/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<IEducationLevelHttpClient, EducationLevelHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/levels/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<IDistrictHttpClient, DistrictHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/locations/districts/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<IEducationTypeHttpClient, EducationTypeHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/types/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<IEducationLevelHttpClient, EducationLevelHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/levels/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<IJobPositionHttpClient, JobPositionHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/positions/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<IEducationTypeHttpClient, EducationTypeHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/types/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<ILanguageHttpClient, LanguageHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/languages/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<IJobPositionHttpClient, JobPositionHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/positions/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<IScholarshipTypeHttpClient, ScholarshipTypeHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/scholarshiptypes/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<ILanguageHttpClient, LanguageHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/languages/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
+        services.AddHttpClientWithRetryPolicy<ISectorHttpClient, SectorHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/sectors/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
             
-            services.AddHttpClientWithRetryPolicy<IScholarshipTypeHttpClient, ScholarshipTypeHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/education/scholarshiptypes/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
-            
-            services.AddHttpClientWithRetryPolicy<ISectorHttpClient, SectorHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/sectors/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
-            
-            services.AddHttpClientWithRetryPolicy<IWorkTypeHttpClient, WorkTypeHttpClient>(config =>
-            {
-                config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/types/");
-                config.DefaultRequestVersion = defaultApiVersion;
-            });
-        }
+        services.AddHttpClientWithRetryPolicy<IWorkTypeHttpClient, WorkTypeHttpClient>(config =>
+        {
+            config.BaseAddress = new Uri($"{_options.ApiUrl}/api/work/types/");
+            config.DefaultRequestVersion = defaultApiVersion;
+        });
     }
 }

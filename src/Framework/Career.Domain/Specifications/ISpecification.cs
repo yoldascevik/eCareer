@@ -1,11 +1,10 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Career.Domain.Specifications
+namespace Career.Domain.Specifications;
+
+public interface ISpecification<T>
 {
-    public interface ISpecification<T>
-    {
-        Expression<Func<T, bool>> ToExpression();
-        bool IsSatisfiedBy(T obj);
-    }
+    Expression<Func<T, bool>> ToExpression();
+    bool IsSatisfiedBy(T obj);
 }

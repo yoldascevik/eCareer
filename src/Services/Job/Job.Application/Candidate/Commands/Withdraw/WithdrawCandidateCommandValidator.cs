@@ -1,12 +1,11 @@
 using FluentValidation;
 
-namespace Job.Application.Candidate.Commands.Withdraw
+namespace Job.Application.Candidate.Commands.Withdraw;
+
+public class WithdrawCandidateCommandValidator: AbstractValidator<WithdrawCandidateCommand>
 {
-    public class WithdrawCandidateCommandValidator: AbstractValidator<WithdrawCandidateCommand>
+    public WithdrawCandidateCommandValidator()
     {
-        public WithdrawCandidateCommandValidator()
-        {
-            RuleFor(x => x.CandidateId).NotNull().NotEmpty();
-        }
+        RuleFor(x => x.CandidateId).NotNull().NotEmpty();
     }
 }

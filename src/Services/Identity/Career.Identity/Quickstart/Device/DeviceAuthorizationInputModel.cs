@@ -4,10 +4,9 @@
 
 using Career.Identity.Quickstart.Consent;
 
-namespace Career.Identity.Quickstart.Device
+namespace Career.Identity.Quickstart.Device;
+
+public class DeviceAuthorizationInputModel : ConsentInputModel
 {
-    public class DeviceAuthorizationInputModel : ConsentInputModel
-    {
-        public string UserCode { get; set; }
-    }
+    public string UserCode { get; set; }
 }

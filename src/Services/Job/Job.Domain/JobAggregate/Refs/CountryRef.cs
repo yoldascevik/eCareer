@@ -1,11 +1,10 @@
-namespace Job.Domain.JobAggregate.Refs
+namespace Job.Domain.JobAggregate.Refs;
+
+public class CountryRef: IdNameRef
 {
-    public class CountryRef: IdNameRef
+    private CountryRef(string refId, string name) : base(refId, name)
     {
-        private CountryRef(string refId, string name) : base(refId, name)
-        {
-        }
-        
-        public static CountryRef Create(string refId, string name) => new (refId, name);
     }
+        
+    public static CountryRef Create(string refId, string name) => new (refId, name);
 }

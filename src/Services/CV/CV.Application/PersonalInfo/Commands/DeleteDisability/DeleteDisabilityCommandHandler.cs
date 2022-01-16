@@ -9,39 +9,38 @@ using CurriculumVitae.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability
+namespace CurriculumVitae.Application.PersonalInfo.Commands.DeleteDisability;
+
+public class DeleteDisabilityCommandHandler : ICommandHandler<DeleteDisabilityCommand>
 {
-    public class DeleteDisabilityCommandHandler : ICommandHandler<DeleteDisabilityCommand>
+    private readonly ICVRepository _cvRepository;
+    private readonly ILogger<DeleteDisabilityCommandHandler> _logger;
+
+    public DeleteDisabilityCommandHandler(ICVRepository cvRepository, ILogger<DeleteDisabilityCommandHandler> logger)
     {
-        private readonly ICVRepository _cvRepository;
-        private readonly ILogger<DeleteDisabilityCommandHandler> _logger;
+        _cvRepository = cvRepository;
+        _logger = logger;
+    }
 
-        public DeleteDisabilityCommandHandler(ICVRepository cvRepository, ILogger<DeleteDisabilityCommandHandler> logger)
+    public async Task<Unit> Handle(DeleteDisabilityCommand request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _logger = logger;
+            throw new CVNotFoundException(request.CvId);
         }
-
-        public async Task<Unit> Handle(DeleteDisabilityCommand request, CancellationToken cancellationToken)
-        {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
             
-            var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().FirstOrDefault(x=> x.Id == request.Id);
-            if (disability == null)
-            {
-                throw new DisabilityNotFoundException(request.Id);
-            }
-
-            disability.IsDeleted = true;
-            await _cvRepository.UpdateAsync(cv.Id, cv);
-
-            _logger.LogInformation("Disability ({DisabilityId}) deleted in CV ({CvId})", disability.Id, cv.Id);
-
-            return Unit.Value;
+        var disability = cv.PersonalInfo.Disabilities.ExcludeDeletedItems().FirstOrDefault(x=> x.Id == request.Id);
+        if (disability == null)
+        {
+            throw new DisabilityNotFoundException(request.Id);
         }
+
+        disability.IsDeleted = true;
+        await _cvRepository.UpdateAsync(cv.Id, cv);
+
+        _logger.LogInformation("Disability ({DisabilityId}) deleted in CV ({CvId})", disability.Id, cv.Id);
+
+        return Unit.Value;
     }
 }

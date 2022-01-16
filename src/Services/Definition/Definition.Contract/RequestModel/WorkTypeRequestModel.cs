@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Contract.RequestModel
+namespace Definition.Contract.RequestModel;
+
+public class WorkTypeRequestModel
 {
-    public class WorkTypeRequestModel
-    {
-        [Required]
-        public string Name { get; set; }
-    }
+    [Required]
+    public string Name { get; set; }
 }

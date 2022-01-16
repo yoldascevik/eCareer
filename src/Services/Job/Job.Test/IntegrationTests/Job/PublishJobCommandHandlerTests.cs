@@ -14,109 +14,108 @@ using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using Xunit;
 
-namespace Job.Test.IntegrationTests.Job
+namespace Job.Test.IntegrationTests.Job;
+
+public class PublishJobCommandHandlerTests
 {
-    public class PublishJobCommandHandlerTests
+    private readonly IJobRepository _jobRepository;
+    private readonly ILogger<PublishJobCommandHandler> _logger;
+
+    public PublishJobCommandHandlerTests()
     {
-        private readonly IJobRepository _jobRepository;
-        private readonly ILogger<PublishJobCommandHandler> _logger;
+        _jobRepository = Substitute.For<IJobRepository>();
+        _logger = Substitute.For<ILogger<PublishJobCommandHandler>>();
+    }
+        
+    [Fact]
+    public async Task PublishJob_ShouldBeJobStatusEqualsToPublished_WhenJobPublished()
+    {
+        // Arrange
+        var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
+        var validityDate = DateTime.Now.AddDays(10);
+        var expectedJobStatus = JobStatus.Published; 
+        var command = new PublishJobCommand(job.Id, validityDate);
+        var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
+            
+        _jobRepository.GetByIdAsync(job.Id).Returns(job);
+            
+        // Act
+        await commandHandler.Handle(command, CancellationToken.None);
 
-        public PublishJobCommandHandlerTests()
-        {
-            _jobRepository = Substitute.For<IJobRepository>();
-            _logger = Substitute.For<ILogger<PublishJobCommandHandler>>();
-        }
+        // Assert
+        Assert.Equal(expectedJobStatus, job.Status);
+        await _jobRepository.Received().UpdateAsync(job.Id, job);
+    }
         
-        [Fact]
-        public async Task PublishJob_ShouldBeJobStatusEqualsToPublished_WhenJobPublished()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
-            var validityDate = DateTime.Now.AddDays(10);
-            var expectedJobStatus = JobStatus.Published; 
-            var command = new PublishJobCommand(job.Id, validityDate);
-            var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
+    [Fact]
+    public async Task PublishJob_ShouldBeLogInformation_WhenJobPublished()
+    {
+        // Arrange
+        var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
+        var validityDate = DateTime.Now.AddDays(10);
+        var command = new PublishJobCommand(job.Id, validityDate);
+        var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
+        _jobRepository.GetByIdAsync(job.Id).Returns(job);
+        
+        // Act
+        await commandHandler.Handle(command, CancellationToken.None);
+        
+        // Assert
+        _logger.ReceivedWithAnyArgs().LogInformation("");
+    }
+        
+    [Fact]
+    public async Task PublishJob_ThrowBusinessException_WhenJobStatusNotSuitable()
+    {
+        // Arrange
+        var job = JobFaker.CreateFakeJob();
+        var validityDate = DateTime.Now.AddDays(10);
+        var command = new PublishJobCommand(job.Id, validityDate);
+        var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
-            // Act
-            await commandHandler.Handle(command, CancellationToken.None);
+        _jobRepository.GetByIdAsync(job.Id).Returns(job);
 
-            // Assert
-            Assert.Equal(expectedJobStatus, job.Status);
-            await _jobRepository.Received().UpdateAsync(job.Id, job);
-        }
+        // Act
+        var actualException = await Assert.ThrowsAsync<BusinessException>(() => commandHandler.Handle(command, CancellationToken.None));
         
-        [Fact]
-        public async Task PublishJob_ShouldBeLogInformation_WhenJobPublished()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
-            var validityDate = DateTime.Now.AddDays(10);
-            var command = new PublishJobCommand(job.Id, validityDate);
-            var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
+        // Assert
+        Assert.Equal("The status of the job is not suitable.", actualException.Message);
+    }
+        
+    [Fact]
+    public async Task PublishJob_ThrowBusinessRuleValidationException_For_ValidityDateMustBeValidRule_WhenValidityDateNotValid()
+    {
+        // Arrange
+        var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
+        var validityDate = DateTime.Now.AddDays(-1);
+        var command = new PublishJobCommand(job.Id, validityDate);
+        var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
             
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
-        
-            // Act
-            await commandHandler.Handle(command, CancellationToken.None);
-        
-            // Assert
-            _logger.ReceivedWithAnyArgs().LogInformation("");
-        }
-        
-        [Fact]
-        public async Task PublishJob_ThrowBusinessException_WhenJobStatusNotSuitable()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob();
-            var validityDate = DateTime.Now.AddDays(10);
-            var command = new PublishJobCommand(job.Id, validityDate);
-            var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
+        _jobRepository.GetByIdAsync(job.Id).Returns(job);
             
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
+        // Act
+        var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));
 
-            // Act
-            var actualException = await Assert.ThrowsAsync<BusinessException>(() => commandHandler.Handle(command, CancellationToken.None));
+        // Assert
+        Assert.Equal(typeof(ValidityDateMustBeValidRule), actualException.BrokenRule.GetType());
+    }
         
-            // Assert
-            Assert.Equal("The status of the job is not suitable.", actualException.Message);
-        }
+    [Fact]
+    public async Task PublishJob_ThrowNotFoundException_WhenJobNotExists()
+    {
+        // Arrange
+        var job = JobFaker.CreateFakeJob();
+        var validityDate = DateTime.Now.AddDays(10);
+        var command = new PublishJobCommand(job.Id, validityDate);
+        var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
+            
+        _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
         
-        [Fact]
-        public async Task PublishJob_ThrowBusinessRuleValidationException_For_ValidityDateMustBeValidRule_WhenValidityDateNotValid()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob(FakeJobStatus.WaitingForApproval);
-            var validityDate = DateTime.Now.AddDays(-1);
-            var command = new PublishJobCommand(job.Id, validityDate);
-            var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
-            
-            _jobRepository.GetByIdAsync(job.Id).Returns(job);
-            
-            // Act
-            var actualException = await Assert.ThrowsAsync<BusinessRuleValidationException>(() => commandHandler.Handle(command, CancellationToken.None));
+        // Act
+        var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
 
-            // Assert
-            Assert.Equal(typeof(ValidityDateMustBeValidRule), actualException.BrokenRule.GetType());
-        }
-        
-        [Fact]
-        public async Task PublishJob_ThrowNotFoundException_WhenJobNotExists()
-        {
-            // Arrange
-            var job = JobFaker.CreateFakeJob();
-            var validityDate = DateTime.Now.AddDays(10);
-            var command = new PublishJobCommand(job.Id, validityDate);
-            var commandHandler = new PublishJobCommandHandler(_jobRepository, _logger);
-            
-            _jobRepository.GetByIdAsync(job.Id).ReturnsNull();
-        
-            // Act
-            var actualException = await Assert.ThrowsAsync<JobNotFoundException>(() => commandHandler.Handle(command, CancellationToken.None));
-
-            // Assert
-            Assert.IsType<JobNotFoundException>(actualException);
-        }
+        // Assert
+        Assert.IsType<JobNotFoundException>(actualException);
     }
 }

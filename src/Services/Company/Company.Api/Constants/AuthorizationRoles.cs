@@ -1,8 +1,7 @@
-﻿namespace Company.Api.Constants
+﻿namespace Company.Api.Constants;
+
+public enum AuthorizationRoles
 {
-    public enum AuthorizationRoles
-    {
-        CompanyAdmin    = 0,
-        Candidate       = 1
-    }
+    CompanyAdmin    = 0,
+    Candidate       = 1
 }

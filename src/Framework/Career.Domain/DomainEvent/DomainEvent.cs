@@ -1,8 +1,7 @@
 using Career.EventHub;
 
-namespace Career.Domain.DomainEvent
+namespace Career.Domain.DomainEvent;
+
+public abstract class DomainEvent : Event, IDomainEvent
 {
-    public abstract class DomainEvent : Event, IDomainEvent
-    {
-    }
 }

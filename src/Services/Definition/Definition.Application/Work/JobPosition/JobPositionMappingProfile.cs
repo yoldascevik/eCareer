@@ -2,14 +2,13 @@
 using Definition.Contract.Dto;
 using Definition.Contract.RequestModel;
 
-namespace Definition.Application.Work.JobPosition
+namespace Definition.Application.Work.JobPosition;
+
+public class JobPositionMappingProfile: Profile
 {
-    public class JobPositionMappingProfile: Profile
+    public JobPositionMappingProfile()
     {
-        public JobPositionMappingProfile()
-        {
-            CreateMap<Data.Entities.JobPosition, JobPositionDto>();
-            CreateMap<JobPositionRequestModel, Data.Entities.JobPosition>();
-        }
+        CreateMap<Data.Entities.JobPosition, JobPositionDto>();
+        CreateMap<JobPositionRequestModel, Data.Entities.JobPosition>();
     }
 }

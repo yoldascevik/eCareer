@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.Certificate.Commands.Add
+namespace CurriculumVitae.Application.Certificate.Commands.Add;
+
+public class AddCertificateCommandValidator : AbstractValidator<AddCertificateCommand>
 {
-    public class AddCertificateCommandValidator : AbstractValidator<AddCertificateCommand>
+    public AddCertificateCommandValidator()
     {
-        public AddCertificateCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.Certificate).SetValidator(new CertificateInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.Certificate).SetValidator(new CertificateInputDtoValidator());
     }
- }
+}

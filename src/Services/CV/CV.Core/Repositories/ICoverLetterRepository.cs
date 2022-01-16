@@ -3,10 +3,9 @@ using System.Linq;
 using Career.Repositories.Repository;
 using CurriculumVitae.Core.Entities;
 
-namespace CurriculumVitae.Core.Repositories
+namespace CurriculumVitae.Core.Repositories;
+
+public interface ICoverLetterRepository : IRepository<CoverLetter>
 {
-    public interface ICoverLetterRepository : IRepository<CoverLetter>
-    {
-        IQueryable<CoverLetter> GetByUserId(Guid userId);
-    }
+    IQueryable<CoverLetter> GetByUserId(Guid userId);
 }

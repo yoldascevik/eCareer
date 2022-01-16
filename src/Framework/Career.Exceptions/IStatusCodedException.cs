@@ -1,7 +1,6 @@
-﻿namespace Career.Exceptions
+﻿namespace Career.Exceptions;
+
+public interface IStatusCodedException
 {
-    public interface IStatusCodedException
-    {
-        public int StatusCode { get; set; }
-    }
+    public int StatusCode { get; set; }
 }

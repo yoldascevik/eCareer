@@ -1,7 +1,6 @@
-namespace CurriculumVitae.Core.Refs
+namespace CurriculumVitae.Core.Refs;
+
+public class SocialProfileTypeRef : IdNameRef
 {
-    public class SocialProfileTypeRef : IdNameRef
-    {
-        public string ProfileUrlPrefix { get; set; }
-    }
+    public string ProfileUrlPrefix { get; set; }
 }

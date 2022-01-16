@@ -8,34 +8,33 @@ using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.SocialProfile.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.SocialProfile.Queries.GetById
+namespace CurriculumVitae.Application.SocialProfile.Queries.GetById;
+
+public class GetSocialProfileByIdQueryHandler : IQueryHandler<GetSocialProfileByIdQuery, SocialProfileDto>
 {
-    public class GetSocialProfileByIdQueryHandler : IQueryHandler<GetSocialProfileByIdQuery, SocialProfileDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+
+    public GetSocialProfileByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
+        _cvRepository = cvRepository;
+        _mapper = mapper;
+    }
 
-        public GetSocialProfileByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
+    public async Task<SocialProfileDto> Handle(GetSocialProfileByIdQuery request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _mapper = mapper;
+            throw new CVNotFoundException(request.CvId);
         }
 
-        public async Task<SocialProfileDto> Handle(GetSocialProfileByIdQuery request, CancellationToken cancellationToken)
+        var socialProfile = cv.SocialProfiles.ExcludeDeletedItems().FirstOrDefault(x => x.Id == request.SocialProfileId);
+        if (socialProfile == null)
         {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
-
-            var socialProfile = cv.SocialProfiles.ExcludeDeletedItems().FirstOrDefault(x => x.Id == request.SocialProfileId);
-            if (socialProfile == null)
-            {
-                throw new SocialProfileNotFoundException(request.SocialProfileId);
-            }
+            throw new SocialProfileNotFoundException(request.SocialProfileId);
+        }
             
-            return _mapper.Map<SocialProfileDto>(socialProfile);
-        }
+        return _mapper.Map<SocialProfileDto>(socialProfile);
     }
 }

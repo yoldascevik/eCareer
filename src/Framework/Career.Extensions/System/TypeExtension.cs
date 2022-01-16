@@ -1,7 +1,6 @@
-﻿namespace Career.Extensions.System
+﻿namespace Career.Extensions.System;
+
+public static class TypeExtension
 {
-    public static class TypeExtension
-    {
-        public static T As<T>(this object instance) => (T)instance;
-    }
+    public static T As<T>(this object instance) => (T)instance;
 }

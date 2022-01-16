@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Definition.Contract.RequestModel
-{
-    public class EducationLevelRequestModel
-    {
-        [Required]
-        public int Level { get; set; }
+namespace Definition.Contract.RequestModel;
 
-        [Required]
-        public string Name { get; set; }
-    }
+public class EducationLevelRequestModel
+{
+    [Required]
+    public int Level { get; set; }
+
+    [Required]
+    public string Name { get; set; }
 }

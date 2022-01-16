@@ -1,7 +1,6 @@
-﻿namespace Definition.Data.Entities
+﻿namespace Definition.Data.Entities;
+
+public class EducationType: LookupDocument
 {
-    public class EducationType: LookupDocument
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

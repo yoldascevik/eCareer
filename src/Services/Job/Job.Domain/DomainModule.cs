@@ -3,15 +3,14 @@ using Career.IoC.IoCModule;
 using Job.Domain.JobAggregate.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Job.Domain
+namespace Job.Domain;
+
+public class DomainModule: Module
 {
-    public class DomainModule: Module
+    protected override void Load(IServiceCollection services)
     {
-        protected override void Load(IServiceCollection services)
-        {
-            services.AddScoped<IJobDomainService, JobDomainService>();
-            services.RegisterCAPEvents(this.GetType());
-            services.RegisterCAPEventHandlers(this.GetType());
-        }
+        services.AddScoped<IJobDomainService, JobDomainService>();
+        services.RegisterCAPEvents(this.GetType());
+        services.RegisterCAPEventHandlers(this.GetType());
     }
 }

@@ -7,50 +7,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using Career.Migration.DataSeeder;
 
-namespace Career.Migration
+namespace Career.Migration;
+
+public static class HostExtensions
 {
-    public static class HostExtensions
+    public static IHost MigrateDatabase<TDataSeeder>(this IHost host) where TDataSeeder : IDataSeeder
     {
-        public static IHost MigrateDatabase<TDataSeeder>(this IHost host) where TDataSeeder : IDataSeeder
+        using IServiceScope scope = host.Services.CreateScope();
+        IServiceProvider services = scope.ServiceProvider;
+        TDataSeeder dataSeeder = services.GetService<TDataSeeder>();
+        var logger = services.GetRequiredService<ILogger<TDataSeeder>>();
+
+        try
         {
-            using IServiceScope scope = host.Services.CreateScope();
-            IServiceProvider services = scope.ServiceProvider;
-            TDataSeeder dataSeeder = services.GetService<TDataSeeder>();
-            var logger = services.GetRequiredService<ILogger<TDataSeeder>>();
-
-            try
-            {
-                dataSeeder.SeedDataAsync().Wait();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while migrating the database");
-            }
-
-            return host;
+            dataSeeder.SeedDataAsync().Wait();
         }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while migrating the database");
+        }
+
+        return host;
+    }
         
-        public static IHost MigrateDatabase(this IHost host, Type dataSeederAssemblyMarkerType)
-        {
-            using IServiceScope scope = host.Services.CreateScope();
-            IServiceProvider services = scope.ServiceProvider;
-            var logger = services.GetRequiredService<ILogger<IDataSeeder>>();
-            IEnumerable<IDataSeeder> registeredDataSeeders = services.GetServices<IDataSeeder>();
+    public static IHost MigrateDatabase(this IHost host, Type dataSeederAssemblyMarkerType)
+    {
+        using IServiceScope scope = host.Services.CreateScope();
+        IServiceProvider services = scope.ServiceProvider;
+        var logger = services.GetRequiredService<ILogger<IDataSeeder>>();
+        IEnumerable<IDataSeeder> registeredDataSeeders = services.GetServices<IDataSeeder>();
 
-            var seedDataActions = registeredDataSeeders
-                .Select(x => x.SeedDataAsync())
-                .ToArray();
+        var seedDataActions = registeredDataSeeders
+            .Select(x => x.SeedDataAsync())
+            .ToArray();
             
-            try
-            {
-                Task.WaitAll(seedDataActions);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while migrating the database");
-            }
-
-            return host;
+        try
+        {
+            Task.WaitAll(seedDataActions);
         }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while migrating the database");
+        }
+
+        return host;
     }
 }

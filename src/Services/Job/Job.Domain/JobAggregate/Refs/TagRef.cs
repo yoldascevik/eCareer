@@ -2,31 +2,30 @@ using System;
 using Career.Exceptions;
 using Job.Domain.TagAggregate;
 
-namespace Job.Domain.JobAggregate.Refs
+namespace Job.Domain.JobAggregate.Refs;
+
+public class TagRef
 {
-    public class TagRef
-    {
-        private TagRef() { }
+    private TagRef() { }
         
-        public Guid TagId { get; private init; }
-        public string Name { get; private set; }
+    public Guid TagId { get; private init; }
+    public string Name { get; private set; }
 
-        public static TagRef CreateFromTag(Tag tag)
+    public static TagRef CreateFromTag(Tag tag)
+    {
+        Check.NotNull(tag, nameof(tag));
+        return new TagRef()
         {
-            Check.NotNull(tag, nameof(tag));
-            return new TagRef()
-            {
-                TagId = tag.Id,
-                Name = tag.Name
-            };
-        }
+            TagId = tag.Id,
+            Name = tag.Name
+        };
+    }
 
-        public TagRef SetName(string name)
-        {
-            Check.NotNullOrEmpty(name, nameof(name));
-            Name = name;
+    public TagRef SetName(string name)
+    {
+        Check.NotNullOrEmpty(name, nameof(name));
+        Name = name;
 
-            return this;
-        }
+        return this;
     }
 }

@@ -7,34 +7,33 @@ using CurriculumVitae.Application.Cv;
 using CurriculumVitae.Application.LanguageSkill.Dtos;
 using CurriculumVitae.Core.Repositories;
 
-namespace CurriculumVitae.Application.LanguageSkill.Queries.GetById
+namespace CurriculumVitae.Application.LanguageSkill.Queries.GetById;
+
+public class GetLanguageSkillByIdQueryHandler : IQueryHandler<GetLanguageSkillByIdQuery, LanguageSkillDto>
 {
-    public class GetLanguageSkillByIdQueryHandler : IQueryHandler<GetLanguageSkillByIdQuery, LanguageSkillDto>
+    private readonly IMapper _mapper;
+    private readonly ICVRepository _cvRepository;
+
+    public GetLanguageSkillByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ICVRepository _cvRepository;
+        _cvRepository = cvRepository;
+        _mapper = mapper;
+    }
 
-        public GetLanguageSkillByIdQueryHandler(ICVRepository cvRepository, IMapper mapper)
+    public async Task<LanguageSkillDto> Handle(GetLanguageSkillByIdQuery request, CancellationToken cancellationToken)
+    {
+        var cv = await _cvRepository.GetByKeyAsync(request.CvId);
+        if (cv == null || cv.IsDeleted)
         {
-            _cvRepository = cvRepository;
-            _mapper = mapper;
+            throw new CVNotFoundException(request.CvId);
         }
 
-        public async Task<LanguageSkillDto> Handle(GetLanguageSkillByIdQuery request, CancellationToken cancellationToken)
+        var languageSkill = cv.LanguageSkills.FirstOrDefault(x => x.Id == request.LanguageSkillId);
+        if (languageSkill == null)
         {
-            var cv = await _cvRepository.GetByKeyAsync(request.CvId);
-            if (cv == null || cv.IsDeleted)
-            {
-                throw new CVNotFoundException(request.CvId);
-            }
-
-            var languageSkill = cv.LanguageSkills.FirstOrDefault(x => x.Id == request.LanguageSkillId);
-            if (languageSkill == null)
-            {
-                throw new LanguageSkillNotFoundException(request.LanguageSkillId);
-            }
+            throw new LanguageSkillNotFoundException(request.LanguageSkillId);
+        }
             
-            return _mapper.Map<LanguageSkillDto>(languageSkill);
-        }
+        return _mapper.Map<LanguageSkillDto>(languageSkill);
     }
 }

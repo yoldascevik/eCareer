@@ -1,13 +1,12 @@
 using FluentValidation;
 
-namespace CurriculumVitae.Application.DrivingLicence.Commands.Add
+namespace CurriculumVitae.Application.DrivingLicence.Commands.Add;
+
+public class AddDrivingLicenceCommandValidator : AbstractValidator<AddDrivingLicenceCommand>
 {
-    public class AddDrivingLicenceCommandValidator : AbstractValidator<AddDrivingLicenceCommand>
+    public AddDrivingLicenceCommandValidator()
     {
-        public AddDrivingLicenceCommandValidator()
-        {
-            RuleFor(x => x.CvId).NotEmpty();
-            RuleFor(x => x.DrivingLicence).SetValidator(new DrivingLicenceInputDtoValidator());
-        }
+        RuleFor(x => x.CvId).NotEmpty();
+        RuleFor(x => x.DrivingLicence).SetValidator(new DrivingLicenceInputDtoValidator());
     }
 }

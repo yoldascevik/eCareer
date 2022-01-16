@@ -15,72 +15,71 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Company.Api
+namespace Company.Api;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        Configuration = configuration;
+    }
 
-        public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; }
         
-        public void ConfigureServices(IServiceCollection services)
-        {
-            Clock.Provider = ClockProviders.Utc;
+    public void ConfigureServices(IServiceCollection services)
+    {
+        Clock.Provider = ClockProviders.Utc;
             
-            services.AddApiVersion();
-            services.AddControllers()
-                .AddApiResponseConsistency(options =>
-                {
-                    Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
-                    options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            
-            services.RegisterModule<ApplicationModule>();
-            services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
-            services.AddSwagger();
-            
-            services.AddCareerCAP(capOptions =>
+        services.AddApiVersion();
+        services.AddControllers()
+            .AddApiResponseConsistency(options =>
             {
-                capOptions.UseRabbitMQ(opt => // Transport
-                {
-                    opt.Password = Configuration["rabbitMQSettings:password"];
-                    opt.UserName = Configuration["rabbitMQSettings:username"];
-                    opt.HostName = Configuration["rabbitMQSettings:host"];
-                    opt.Port = int.Parse(Configuration["rabbitMQSettings:port"]);
-                });
-                capOptions.UseMongoDB(opt => // Persistence
-                {
-                    opt.DatabaseConnection = Configuration["EventBusStorage:connectionString"];
-                    opt.DatabaseName = Configuration["EventBusStorage:database"];
-                    opt.PublishedCollection = "publishedEvents";
-                    opt.ReceivedCollection = "receivedEvents";
-                });
-                capOptions.UseDashboard();
-                capOptions.FailedRetryCount = 3;
-                capOptions.FailedRetryInterval = 60;
-            });
+                Configuration.GetSection("ARConsistency").Bind(options.ResponseOptions);
+                options.ExceptionStatusCodeHandler.RegisterStatusCodedExceptionBaseType<IStatusCodedException>(type=>type.StatusCode);
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
-            services.AddCareerConsul(Configuration);
-            services.AddCareerAuthentication(Configuration);
-            services.AddCareerAuthorization();
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        services.RegisterModule<ApplicationModule>();
+        services.AddMediatRWithFluentValidation(typeof(ApplicationModule));
+        services.AddSwagger();
+            
+        services.AddCareerCAP(capOptions =>
         {
-            if (env.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+            capOptions.UseRabbitMQ(opt => // Transport
+            {
+                opt.Password = Configuration["rabbitMQSettings:password"];
+                opt.UserName = Configuration["rabbitMQSettings:username"];
+                opt.HostName = Configuration["rabbitMQSettings:host"];
+                opt.Port = int.Parse(Configuration["rabbitMQSettings:port"]);
+            });
+            capOptions.UseMongoDB(opt => // Persistence
+            {
+                opt.DatabaseConnection = Configuration["EventBusStorage:connectionString"];
+                opt.DatabaseName = Configuration["EventBusStorage:database"];
+                opt.PublishedCollection = "publishedEvents";
+                opt.ReceivedCollection = "receivedEvents";
+            });
+            capOptions.UseDashboard();
+            capOptions.FailedRetryCount = 3;
+            capOptions.FailedRetryInterval = 60;
+        });
+            
+        services.AddCareerConsul(Configuration);
+        services.AddCareerAuthentication(Configuration);
+        services.AddCareerAuthorization();
+    }
 
-            app.UseSwagger();
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
 
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseApiResponseConsistency();
-            app.UseEndpoints(builder => builder.MapControllers());
-        }
+        app.UseSwagger();
+
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseApiResponseConsistency();
+        app.UseEndpoints(builder => builder.MapControllers());
     }
 }

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MMLib.SwaggerForOcelot" Version="4.8.0" />
+        <PackageReference Include="Ocelot" Version="18.0.0" />
+        <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0" />
+        <PackageReference Include="Ocelot.Provider.Polly" Version="18.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Framework\Career.Logging\Career.Logging.csproj" />
+    </ItemGroup>
+
+</Project>

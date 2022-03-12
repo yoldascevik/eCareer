@@ -17,6 +17,14 @@ services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
+  gateway.web.api:
+    image: ${DOCKER_REGISTRY-}gateway.web.api
+    build:
+      context: .
+      dockerfile: src/Gateways/Gateway.Web.Api/Dockerfile
+    depends_on:
+      - consul
+
   identity.api:
     image: ${DOCKER_REGISTRY-}identity.api
     build:

@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\Framework\Career.Logging\Career.Logging.csproj" />
     </ItemGroup>
 

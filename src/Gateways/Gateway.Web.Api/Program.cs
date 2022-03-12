@@ -1,3 +1,4 @@
+using Gateway.Web.Api.Extensions;
 using Gateway.Web.Api.Helpers;
 using Logging;
 using Ocelot.DependencyInjection;
@@ -15,6 +16,7 @@ try
     var services = builder.Services;
 
     services.AddControllers();
+    services.AddCareerConsul(configuration);
     services.AddOcelot(configuration)
         .AddConsul()
         .AddPolly();
@@ -32,8 +34,9 @@ try
         app.UseDeveloperExceptionPage();
 
     app.UseCors();
-    app.UseSwaggerForOcelotUI();
     app.UseRouting();
+    app.UseSwaggerForOcelotUI();
+    app.UseHealtCheckApiEndpoints();
     app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     app.UseOcelot().Wait();
 

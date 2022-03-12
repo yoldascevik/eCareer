@@ -1,0 +1,43 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamScheme": "http",
+      "ServiceName": "Company.Api",
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/company/api/{everything}",
+      "SwaggerKey": "company",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT", "DELETE"],
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 1000,
+        "TimeoutValue": 5000
+      },
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  },
+  "SwaggerEndPoints": [
+    {
+      "Key": "company",
+      "Config": [
+        {
+          "Name": "Company API",
+          "Version": "v1",
+          "Service": {
+            "Name": "Company.Api",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    }
+  ]
+}

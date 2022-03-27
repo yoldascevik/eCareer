@@ -11,6 +11,7 @@ public static class IdentityServerExtensions
     {
         var builder = services.AddIdentityServer(options =>
             {
+                options.IssuerUri = configuration["IssuerUrlForDevelopment"];
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;

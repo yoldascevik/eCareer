@@ -17,7 +17,7 @@ public static class ServiceExtensions
         services.AddSingleton(context =>
         {
             IConfiguration configuration = context.GetService<IConfiguration>();
-            string connectionStrings = configuration["mongo:connectionString"];
+            string connectionStrings = configuration["MongoDb:ConnectionString"];
             if (string.IsNullOrWhiteSpace(connectionStrings))
                 throw new MongoConfigurationException("Mongo connectionstring not found!");
 
@@ -28,7 +28,7 @@ public static class ServiceExtensions
         {
             IConfiguration configuration = context.GetService<IConfiguration>();
             MongoClient client = context.GetService<MongoClient>();
-            string databaseName = configuration["mongo:database"];
+            string databaseName = configuration["MongoDb:Database"];
             if (string.IsNullOrWhiteSpace(databaseName))
                 throw new MongoConfigurationException("Mongo database name not found!");
 

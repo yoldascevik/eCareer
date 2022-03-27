@@ -49,15 +49,15 @@ public static class ServiceCollectionExtensions
         {
             capOptions.UseRabbitMQ(opt => // Transport
             {
-                opt.Password = configuration["rabbitMQSettings:password"];
-                opt.UserName = configuration["rabbitMQSettings:username"];
-                opt.HostName = configuration["rabbitMQSettings:host"];
-                opt.Port = int.Parse(configuration["rabbitMQSettings:port"]);
+                opt.UserName = configuration["RabbitMQSettings:Username"];
+                opt.Password = configuration["RabbitMQSettings:Password"];
+                opt.HostName = configuration["RabbitMQSettings:Host"];
+                opt.Port = int.Parse(configuration["RabbitMQSettings:Port"]);
             });
             capOptions.UseMongoDB(opt => // Persistence
             {
-                opt.DatabaseConnection = configuration["mongo:connectionString"];
-                opt.DatabaseName = configuration["mongo:database"];
+                opt.DatabaseConnection = configuration["MongoDb:ConnectionString"];
+                opt.DatabaseName = configuration["MongoDb:Database"];
                 opt.PublishedCollection = "publishedEvents";
                 opt.ReceivedCollection = "receivedEvents";
             });
